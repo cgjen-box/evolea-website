@@ -1,6 +1,6 @@
 ---
 interface Props {
-  variant?: 'hero' | 'section' | 'minimal';
+  variant?: 'hero' | 'section' | 'minimal' | 'vibrant';
   class?: string;
 }
 
@@ -9,38 +9,65 @@ const { variant = 'section', class: className = '' } = Astro.props;
 
 {variant === 'hero' && (
   <div class:list={['floating-shapes-container', className]} aria-hidden="true">
-    <!-- Large background blobs -->
-    <div class="floating-shape floating-shape-purple w-96 h-96 -top-48 -right-48 animate-float-slow opacity-30"></div>
-    <div class="floating-shape floating-shape-orange w-64 h-64 top-1/4 -left-32 animate-float opacity-40"></div>
-    <div class="floating-shape floating-shape-green w-48 h-48 bottom-1/4 right-1/4 animate-float-delayed opacity-30"></div>
-    <div class="floating-shape floating-shape-yellow w-32 h-32 bottom-1/3 left-1/4 animate-float-slow opacity-40"></div>
-    <div class="floating-shape floating-shape-sky w-40 h-40 top-1/3 right-1/3 animate-float opacity-30"></div>
+    <!-- Large background blobs - VIBRANT -->
+    <div class="floating-shape floating-shape-purple w-[500px] h-[500px] -top-64 -right-64 animate-float-slow opacity-50"></div>
+    <div class="floating-shape floating-shape-orange w-80 h-80 top-1/4 -left-40 animate-float opacity-60"></div>
+    <div class="floating-shape floating-shape-green w-64 h-64 bottom-1/4 right-1/4 animate-float-delayed opacity-50"></div>
+    <div class="floating-shape floating-shape-yellow w-48 h-48 bottom-1/3 left-1/4 animate-float-slow opacity-60"></div>
+    <div class="floating-shape floating-shape-sky w-56 h-56 top-1/3 right-1/3 animate-float opacity-50"></div>
+    <div class="floating-shape floating-shape-coral w-40 h-40 top-2/3 left-1/3 animate-float-delayed opacity-50"></div>
+    <div class="floating-shape floating-shape-mint w-36 h-36 top-1/2 right-1/4 animate-float opacity-45"></div>
 
-    <!-- Small accent circles -->
-    <div class="floating-shape floating-shape-coral w-8 h-8 top-1/4 right-1/4 animate-pulse-soft"></div>
-    <div class="floating-shape floating-shape-yellow w-6 h-6 bottom-1/2 left-1/3 animate-pulse-soft" style="animation-delay: 1s;"></div>
-    <div class="floating-shape floating-shape-green w-10 h-10 top-2/3 right-1/5 animate-pulse-soft" style="animation-delay: 2s;"></div>
+    <!-- Small accent circles - More visible -->
+    <div class="floating-shape floating-shape-coral w-12 h-12 top-1/4 right-1/4 animate-pulse-soft opacity-80"></div>
+    <div class="floating-shape floating-shape-yellow w-10 h-10 bottom-1/2 left-1/3 animate-pulse-soft opacity-80" style="animation-delay: 1s;"></div>
+    <div class="floating-shape floating-shape-green w-14 h-14 top-2/3 right-1/5 animate-pulse-soft opacity-70" style="animation-delay: 2s;"></div>
+    <div class="floating-shape floating-shape-sky w-8 h-8 top-1/3 left-1/5 animate-pulse-soft opacity-80" style="animation-delay: 0.5s;"></div>
+    <div class="floating-shape floating-shape-pink w-10 h-10 bottom-1/4 right-1/3 animate-pulse-soft opacity-70" style="animation-delay: 1.5s;"></div>
+  </div>
+)}
+
+{variant === 'vibrant' && (
+  <div class:list={['floating-shapes-container', className]} aria-hidden="true">
+    <!-- MAXIMUM VIBRANT - Rainbow spectrum -->
+    <div class="floating-shape floating-shape-coral w-96 h-96 -top-48 -left-48 animate-float-slow opacity-60"></div>
+    <div class="floating-shape floating-shape-orange w-80 h-80 top-0 right-1/4 animate-float opacity-55"></div>
+    <div class="floating-shape floating-shape-yellow w-72 h-72 top-1/4 left-1/3 animate-float-delayed opacity-60"></div>
+    <div class="floating-shape floating-shape-green w-64 h-64 top-1/2 right-1/3 animate-float opacity-55"></div>
+    <div class="floating-shape floating-shape-sky w-80 h-80 bottom-1/4 left-1/4 animate-float-slow opacity-60"></div>
+    <div class="floating-shape floating-shape-purple w-72 h-72 bottom-0 right-0 animate-float-delayed opacity-55"></div>
+    <div class="floating-shape floating-shape-mint w-48 h-48 top-1/3 -left-24 animate-float opacity-50"></div>
+    <div class="floating-shape floating-shape-pink w-56 h-56 bottom-1/3 right-1/4 animate-float-slow opacity-50"></div>
+
+    <!-- Accent dots -->
+    <div class="floating-shape floating-shape-coral w-16 h-16 top-1/4 left-1/4 animate-pulse-soft opacity-90"></div>
+    <div class="floating-shape floating-shape-yellow w-12 h-12 top-1/2 right-1/4 animate-pulse-soft opacity-90" style="animation-delay: 0.5s;"></div>
+    <div class="floating-shape floating-shape-green w-14 h-14 bottom-1/3 left-1/3 animate-pulse-soft opacity-85" style="animation-delay: 1s;"></div>
+    <div class="floating-shape floating-shape-sky w-10 h-10 top-2/3 right-1/3 animate-pulse-soft opacity-90" style="animation-delay: 1.5s;"></div>
   </div>
 )}
 
 {variant === 'section' && (
   <div class:list={['floating-shapes-container', className]} aria-hidden="true">
-    <!-- Medium decorative blobs -->
-    <div class="floating-shape floating-shape-purple w-64 h-64 -top-32 -right-32 animate-float-slow opacity-20"></div>
-    <div class="floating-shape floating-shape-orange w-48 h-48 -bottom-24 -left-24 animate-float opacity-25"></div>
-    <div class="floating-shape floating-shape-green w-32 h-32 top-1/2 -right-16 animate-float-delayed opacity-20"></div>
+    <!-- Medium decorative blobs - More visible -->
+    <div class="floating-shape floating-shape-purple w-80 h-80 -top-40 -right-40 animate-float-slow opacity-40"></div>
+    <div class="floating-shape floating-shape-orange w-64 h-64 -bottom-32 -left-32 animate-float opacity-45"></div>
+    <div class="floating-shape floating-shape-green w-48 h-48 top-1/2 -right-24 animate-float-delayed opacity-40"></div>
+    <div class="floating-shape floating-shape-sky w-40 h-40 top-1/4 left-0 animate-float opacity-35"></div>
 
-    <!-- Accent circles -->
-    <div class="floating-shape floating-shape-yellow w-6 h-6 top-1/4 left-1/4 animate-pulse-soft opacity-60"></div>
-    <div class="floating-shape floating-shape-coral w-4 h-4 bottom-1/3 right-1/3 animate-pulse-soft opacity-60" style="animation-delay: 1.5s;"></div>
+    <!-- Accent circles - More visible -->
+    <div class="floating-shape floating-shape-yellow w-10 h-10 top-1/4 left-1/4 animate-pulse-soft opacity-80"></div>
+    <div class="floating-shape floating-shape-coral w-8 h-8 bottom-1/3 right-1/3 animate-pulse-soft opacity-80" style="animation-delay: 1.5s;"></div>
+    <div class="floating-shape floating-shape-mint w-6 h-6 top-2/3 left-1/2 animate-pulse-soft opacity-75" style="animation-delay: 0.8s;"></div>
   </div>
 )}
 
 {variant === 'minimal' && (
   <div class:list={['floating-shapes-container', className]} aria-hidden="true">
-    <!-- Subtle accent shapes -->
-    <div class="floating-shape floating-shape-purple w-32 h-32 -top-16 -right-16 animate-float-slow opacity-15"></div>
-    <div class="floating-shape floating-shape-orange w-24 h-24 -bottom-12 -left-12 animate-float opacity-15"></div>
+    <!-- Subtle accent shapes - Slightly more visible -->
+    <div class="floating-shape floating-shape-purple w-48 h-48 -top-24 -right-24 animate-float-slow opacity-30"></div>
+    <div class="floating-shape floating-shape-orange w-40 h-40 -bottom-20 -left-20 animate-float opacity-30"></div>
+    <div class="floating-shape floating-shape-green w-6 h-6 top-1/3 right-1/4 animate-pulse-soft opacity-70"></div>
   </div>
 )}
 
@@ -50,46 +77,56 @@ const { variant = 'section', class: className = '' } = Astro.props;
     z-index: 1;
   }
 
-  /* Floating shape positioning helpers */
   .floating-shape {
     @apply absolute rounded-full;
     will-change: transform;
   }
 
-  /* Position utilities for shapes */
-  .right-1\/5 {
-    right: 20%;
+  .right-1\/5 { right: 20%; }
+  .left-1\/5 { left: 20%; }
+
+  /* VIBRANT color gradients */
+  .floating-shape-purple {
+    background: radial-gradient(circle, rgba(155, 77, 202, 0.8) 0%, rgba(123, 91, 160, 0.4) 70%, transparent 100%);
+  }
+  .floating-shape-orange {
+    background: radial-gradient(circle, rgba(255, 107, 53, 0.8) 0%, rgba(255, 159, 28, 0.4) 70%, transparent 100%);
+  }
+  .floating-shape-green {
+    background: radial-gradient(circle, rgba(46, 196, 182, 0.8) 0%, rgba(125, 206, 160, 0.4) 70%, transparent 100%);
+  }
+  .floating-shape-yellow {
+    background: radial-gradient(circle, rgba(255, 210, 63, 0.9) 0%, rgba(255, 224, 102, 0.5) 70%, transparent 100%);
+  }
+  .floating-shape-sky {
+    background: radial-gradient(circle, rgba(58, 134, 255, 0.8) 0%, rgba(93, 173, 226, 0.4) 70%, transparent 100%);
+  }
+  .floating-shape-coral {
+    background: radial-gradient(circle, rgba(255, 77, 109, 0.8) 0%, rgba(255, 117, 143, 0.4) 70%, transparent 100%);
+  }
+  .floating-shape-mint {
+    background: radial-gradient(circle, rgba(0, 245, 212, 0.8) 0%, rgba(46, 196, 182, 0.4) 70%, transparent 100%);
+  }
+  .floating-shape-pink {
+    background: radial-gradient(circle, rgba(255, 105, 180, 0.8) 0%, rgba(255, 182, 193, 0.4) 70%, transparent 100%);
   }
 
-  /* Blur effect for larger shapes */
-  .floating-shape.w-96,
-  .floating-shape.w-64,
-  .floating-shape.w-48 {
+  /* Blur for large shapes */
+  .floating-shape.w-\[500px\],
+  .floating-shape.w-96, .floating-shape.w-80, .floating-shape.w-72, .floating-shape.w-64 {
+    filter: blur(60px);
+  }
+  .floating-shape.w-56, .floating-shape.w-48, .floating-shape.w-40, .floating-shape.w-36 {
     filter: blur(40px);
   }
-
-  .floating-shape.w-40,
-  .floating-shape.w-32 {
-    filter: blur(20px);
+  .floating-shape.w-32, .floating-shape.w-24 {
+    filter: blur(25px);
+  }
+  .floating-shape.w-16, .floating-shape.w-14, .floating-shape.w-12, .floating-shape.w-10, .floating-shape.w-8, .floating-shape.w-6 {
+    filter: blur(4px);
   }
 
-  .floating-shape.w-24,
-  .floating-shape.w-16 {
-    filter: blur(10px);
-  }
-
-  /* Small accent shapes have less blur */
-  .floating-shape.w-10,
-  .floating-shape.w-8,
-  .floating-shape.w-6,
-  .floating-shape.w-4 {
-    filter: blur(2px);
-  }
-
-  /* Reduce motion: disable animations */
   @media (prefers-reduced-motion: reduce) {
-    .floating-shape {
-      animation: none !important;
-    }
+    .floating-shape { animation: none !important; }
   }
 </style>
