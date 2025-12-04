@@ -1,0 +1,68 @@
+---
+import Base from '@layouts/Base.astro';
+import { getLangFromUrl, useTranslations, useTranslatedPath } from '@i18n/utils';
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+const translatePath = useTranslatedPath(lang);
+---
+
+<Base title="About Us" description="EVOLEA is a non-profit organization based in Zurich. We offer educational programs for children on the autism spectrum or with ADHD.">
+  <section class="py-20 px-4">
+    <div class="container mx-auto max-w-4xl">
+      <h1 class="text-4xl md:text-5xl font-bold text-evolea-purple mb-6 text-center">
+        {t('about.title')}
+      </h1>
+      <p class="text-xl text-evolea-text-light text-center max-w-2xl mx-auto mb-16">
+        {t('about.description')}
+      </p>
+      
+      <div class="space-y-12">
+        <div class="bg-white rounded-evolea-lg p-8 shadow-sm">
+          <h2 class="text-2xl font-semibold text-evolea-purple mb-4">Our Mission</h2>
+          <p class="text-evolea-text-light">
+            EVOLEA creates spaces for children on the spectrum to flourish and go their own way happily and self-determined. We complement regular schooling with specialized support programs.
+          </p>
+        </div>
+        
+        <div class="bg-white rounded-evolea-lg p-8 shadow-sm">
+          <h2 class="text-2xl font-semibold text-evolea-purple mb-4">Our Values</h2>
+          <ul class="space-y-4 text-evolea-text-light">
+            <li class="flex items-start gap-3">
+              <span class="text-evolea-green text-xl">✓</span>
+              <span><strong>Evidence-based:</strong> Our work is based on scientific findings.</span>
+            </li>
+            <li class="flex items-start gap-3">
+              <span class="text-evolea-green text-xl">✓</span>
+              <span><strong>Individual:</strong> Each child is met where they are.</span>
+            </li>
+            <li class="flex items-start gap-3">
+              <span class="text-evolea-green text-xl">✓</span>
+              <span><strong>Inclusive:</strong> We see strengths, not deficits.</span>
+            </li>
+            <li class="flex items-start gap-3">
+              <span class="text-evolea-green text-xl">✓</span>
+              <span><strong>Empathetic:</strong> We meet children and families with respect and openness.</span>
+            </li>
+          </ul>
+        </div>
+        
+        <div class="bg-white rounded-evolea-lg p-8 shadow-sm">
+          <h2 class="text-2xl font-semibold text-evolea-purple mb-4">The Organization</h2>
+          <p class="text-evolea-text-light">
+            EVOLEA is a non-profit organization based in Zurich, Switzerland. We are politically and religiously independent. The organization was founded to support families with children on the autism spectrum or with ADHD.
+          </p>
+        </div>
+      </div>
+      
+      <div class="mt-12 text-center">
+        <a href={translatePath('/team/')} class="btn-secondary mr-4">
+          Meet the Team
+        </a>
+        <a href={translatePath('/contact/')} class="btn-primary">
+          {t('common.contact')}
+        </a>
+      </div>
+    </div>
+  </section>
+</Base>

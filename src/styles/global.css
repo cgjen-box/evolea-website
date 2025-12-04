@@ -1,0 +1,39 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+
+  :focus-visible {
+    @apply outline-2 outline-evolea-purple outline-offset-2;
+  }
+
+  /* Respect reduced motion preferences */
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+}
+
+@layer components {
+  .btn-primary {
+    @apply inline-block bg-evolea-purple text-white font-semibold px-8 py-4 rounded-evolea hover:bg-evolea-purple-dark transition-colors;
+  }
+
+  .btn-secondary {
+    @apply inline-block bg-white text-evolea-purple font-semibold px-8 py-4 rounded-evolea border-2 border-evolea-purple hover:bg-evolea-purple/5 transition-colors;
+  }
+
+  .container {
+    @apply mx-auto px-4;
+  }
+}

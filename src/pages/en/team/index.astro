@@ -1,0 +1,40 @@
+---
+import Base from '@layouts/Base.astro';
+import { getLangFromUrl, useTranslations, useTranslatedPath } from '@i18n/utils';
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+const translatePath = useTranslatedPath(lang);
+---
+
+<Base title="Team" description="Meet the EVOLEA team - experienced professionals from special education, psychology, and pedagogy.">
+  <section class="py-20 px-4">
+    <div class="container mx-auto max-w-4xl">
+      <h1 class="text-4xl md:text-5xl font-bold text-evolea-purple mb-6 text-center">
+        {t('team.title')}
+      </h1>
+      <p class="text-xl text-evolea-text-light text-center max-w-2xl mx-auto mb-16">
+        {t('team.description')}
+      </p>
+      
+      <div class="bg-white rounded-evolea-lg p-8 shadow-sm">
+        <h2 class="text-2xl font-semibold text-evolea-purple mb-4">Our Team</h2>
+        <p class="text-evolea-text-light mb-6">
+          At EVOLEA, experienced professionals from various fields work together. Our team combines expertise from special education, psychology, pedagogy, and social work.
+        </p>
+        <p class="text-evolea-text-light mb-6">
+          What unites us: the conviction that every child is unique and has the right to develop at their own pace. We meet children and families with empathy, openness, and respect.
+        </p>
+        <p class="text-evolea-text-light">
+          All staff members regularly participate in professional development and work according to current scientific standards.
+        </p>
+      </div>
+      
+      <div class="mt-12 text-center">
+        <a href={translatePath('/contact/')} class="btn-primary">
+          {t('common.contact')}
+        </a>
+      </div>
+    </div>
+  </section>
+</Base>

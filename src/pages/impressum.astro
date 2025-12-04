@@ -1,0 +1,55 @@
+---
+import Base from '@layouts/Base.astro';
+import { getLangFromUrl, useTranslations, useTranslatedPath } from '@i18n/utils';
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+const translatePath = useTranslatedPath(lang);
+---
+
+<Base title="Impressum" description="Impressum von EVOLEA Verein.">
+  <section class="py-20 px-4">
+    <div class="container mx-auto max-w-4xl">
+      <h1 class="text-4xl md:text-5xl font-bold text-evolea-purple mb-12">
+        Impressum
+      </h1>
+      
+      <div class="prose prose-lg max-w-none space-y-8 text-evolea-text-light">
+        <section>
+          <h2 class="text-2xl font-semibold text-evolea-purple mb-4">Angaben gemäss Art. 3 DSG</h2>
+          <p>
+            EVOLEA Verein<br/>
+            Zürich, Schweiz
+          </p>
+        </section>
+        
+        <section>
+          <h2 class="text-2xl font-semibold text-evolea-purple mb-4">Kontakt</h2>
+          <p>
+            E-Mail: hello@evolea.ch
+          </p>
+        </section>
+        
+        <section>
+          <h2 class="text-2xl font-semibold text-evolea-purple mb-4">Haftungsausschluss</h2>
+          <p>
+            Der Autor übernimmt keine Gewähr für die Richtigkeit, Genauigkeit, Aktualität, Zuverlässigkeit und Vollständigkeit der Informationen. Haftungsansprüche gegen den Autor wegen Schäden materieller oder immaterieller Art, die aus dem Zugriff oder der Nutzung bzw. Nichtnutzung der veröffentlichten Informationen entstanden sind, werden ausgeschlossen.
+          </p>
+        </section>
+        
+        <section>
+          <h2 class="text-2xl font-semibold text-evolea-purple mb-4">Urheberrechte</h2>
+          <p>
+            Die Urheber- und alle anderen Rechte an Inhalten, Bildern, Fotos oder anderen Dateien auf dieser Website gehören ausschliesslich EVOLEA Verein oder den speziell genannten Rechteinhabern. Für die Reproduktion jeglicher Elemente ist die schriftliche Zustimmung des Urheberrechtsträgers im Voraus einzuholen.
+          </p>
+        </section>
+      </div>
+      
+      <div class="mt-12">
+        <a href={translatePath('/')} class="text-evolea-purple hover:text-evolea-purple-dark transition-colors">
+          ← {t('common.backHome')}
+        </a>
+      </div>
+    </div>
+  </section>
+</Base>

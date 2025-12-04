@@ -1,0 +1,55 @@
+---
+import Base from '@layouts/Base.astro';
+import { getLangFromUrl, useTranslations, useTranslatedPath } from '@i18n/utils';
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+const translatePath = useTranslatedPath(lang);
+---
+
+<Base title="Legal Notice" description="Legal notice of EVOLEA.">
+  <section class="py-20 px-4">
+    <div class="container mx-auto max-w-4xl">
+      <h1 class="text-4xl md:text-5xl font-bold text-evolea-purple mb-12">
+        Legal Notice
+      </h1>
+      
+      <div class="prose prose-lg max-w-none space-y-8 text-evolea-text-light">
+        <section>
+          <h2 class="text-2xl font-semibold text-evolea-purple mb-4">Organization</h2>
+          <p>
+            EVOLEA Verein<br/>
+            Zurich, Switzerland
+          </p>
+        </section>
+        
+        <section>
+          <h2 class="text-2xl font-semibold text-evolea-purple mb-4">Contact</h2>
+          <p>
+            Email: hello@evolea.ch
+          </p>
+        </section>
+        
+        <section>
+          <h2 class="text-2xl font-semibold text-evolea-purple mb-4">Disclaimer</h2>
+          <p>
+            The author assumes no liability for the correctness, accuracy, timeliness, reliability, or completeness of the information. Liability claims against the author for damages of a material or immaterial nature arising from access to, use or non-use of the published information are excluded.
+          </p>
+        </section>
+        
+        <section>
+          <h2 class="text-2xl font-semibold text-evolea-purple mb-4">Copyright</h2>
+          <p>
+            The copyright and all other rights to content, images, photos, or other files on this website belong exclusively to EVOLEA Verein or the specifically named rights holders. Written consent from the copyright holder must be obtained in advance for the reproduction of any elements.
+          </p>
+        </section>
+      </div>
+      
+      <div class="mt-12">
+        <a href={translatePath('/')} class="text-evolea-purple hover:text-evolea-purple-dark transition-colors">
+          ← {t('common.backHome')}
+        </a>
+      </div>
+    </div>
+  </section>
+</Base>

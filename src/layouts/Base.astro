@@ -6,6 +6,7 @@ import '@fontsource/poppins/400.css';
 import '@fontsource/poppins/500.css';
 import '@fontsource/poppins/600.css';
 import '@fontsource/poppins/700.css';
+import '../styles/global.css';
 
 interface Props {
   title: string;
@@ -63,7 +64,7 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   </head>
-  <body class="bg-evolea-cream text-evolea-text min-h-screen flex flex-col antialiased">
+  <body class="bg-evolea-cream text-evolea-text min-h-screen flex flex-col antialiased font-sans">
     <a href="#main-content" class="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-50 focus:bg-evolea-purple focus:text-white focus:px-4 focus:py-2 focus:rounded-evolea-sm">
       {lang === 'de' ? 'Zum Hauptinhalt springen' : 'Skip to main content'}
     </a>
@@ -77,59 +78,3 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
     <Footer />
   </body>
 </html>
-
-<style is:global>
-  :root {
-    --color-evolea-purple: #6B4C8A;
-    --color-evolea-purple-light: #8B6CAA;
-    --color-evolea-purple-dark: #4A3460;
-    --color-evolea-cream: #FDF8F3;
-    --color-evolea-green: #7CB97C;
-    --color-evolea-orange: #E8A858;
-    --color-evolea-text: #2D2A32;
-    --color-evolea-text-light: #5C5762;
-  }
-
-  * {
-    box-sizing: border-box;
-  }
-
-  html {
-    font-family: 'Poppins', system-ui, sans-serif;
-  }
-
-  /* Respect reduced motion preferences */
-  @media (prefers-reduced-motion: reduce) {
-    *,
-    *::before,
-    *::after {
-      animation-duration: 0.01ms !important;
-      animation-iteration-count: 1 !important;
-      transition-duration: 0.01ms !important;
-      scroll-behavior: auto !important;
-    }
-  }
-
-  /* Focus styles for accessibility */
-  :focus-visible {
-    outline: 2px solid var(--color-evolea-purple);
-    outline-offset: 2px;
-  }
-
-  /* Utility classes */
-  .bg-evolea-cream { background-color: var(--color-evolea-cream); }
-  .bg-evolea-purple { background-color: var(--color-evolea-purple); }
-  .bg-evolea-purple-light { background-color: var(--color-evolea-purple-light); }
-  .bg-evolea-purple-dark { background-color: var(--color-evolea-purple-dark); }
-  .bg-evolea-green { background-color: var(--color-evolea-green); }
-  .bg-evolea-orange { background-color: var(--color-evolea-orange); }
-
-  .text-evolea-purple { color: var(--color-evolea-purple); }
-  .text-evolea-purple-dark { color: var(--color-evolea-purple-dark); }
-  .text-evolea-text { color: var(--color-evolea-text); }
-  .text-evolea-text-light { color: var(--color-evolea-text-light); }
-
-  .rounded-evolea-sm { border-radius: 12px; }
-  .rounded-evolea { border-radius: 16px; }
-  .rounded-evolea-lg { border-radius: 24px; }
-</style>

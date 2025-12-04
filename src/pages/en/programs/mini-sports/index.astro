@@ -1,0 +1,53 @@
+---
+import Base from '@layouts/Base.astro';
+import { getLangFromUrl, useTranslations, useTranslatedPath } from '@i18n/utils';
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+const translatePath = useTranslatedPath(lang);
+---
+
+<Base title="Mini Sports" description="Sports group for children on the autism spectrum or with ADHD (ages 5-8).">
+  <section class="py-20 px-4">
+    <div class="container mx-auto max-w-4xl">
+      <nav class="mb-8 text-sm text-evolea-text-light">
+        <a href={translatePath('/')} class="hover:text-evolea-purple">Home</a>
+        <span class="mx-2">/</span>
+        <a href={translatePath('/programs/')} class="hover:text-evolea-purple">Programs</a>
+        <span class="mx-2">/</span>
+        <span class="text-evolea-purple">Mini Sports</span>
+      </nav>
+      
+      <div class="text-6xl mb-6">⚽</div>
+      <h1 class="text-4xl md:text-5xl font-bold text-evolea-purple mb-6">
+        Mini Sports
+      </h1>
+      <p class="text-xl text-evolea-text-light mb-8">
+        Sports group for children on the spectrum or with ADHD
+      </p>
+      
+      <div class="prose prose-lg max-w-none">
+        <h2 class="text-2xl font-semibold text-evolea-purple mt-12 mb-4">Who is it for?</h2>
+        <p class="text-evolea-text-light mb-6">
+          This program is designed for children on the autism spectrum or with ADHD aged 5-8 who enjoy physical activity.
+        </p>
+        
+        <h2 class="text-2xl font-semibold text-evolea-purple mt-12 mb-4">What do we do?</h2>
+        <p class="text-evolea-text-light mb-6">
+          In our sports group, we combine movement with social interaction. We do gymnastics, play group games, and develop motor skills in a safe environment.
+        </p>
+        
+        <h2 class="text-2xl font-semibold text-evolea-purple mt-12 mb-4">Our approach</h2>
+        <p class="text-evolea-text-light mb-6">
+          Sessions are clearly structured and predictable. We work with visual aids and small groups. Each child can participate at their own pace.
+        </p>
+      </div>
+      
+      <div class="mt-12">
+        <a href={translatePath('/contact/')} class="btn-primary">
+          {t('common.contact')}
+        </a>
+      </div>
+    </div>
+  </section>
+</Base>

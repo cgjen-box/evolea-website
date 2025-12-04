@@ -1,0 +1,53 @@
+---
+import Base from '@layouts/Base.astro';
+import { getLangFromUrl, useTranslations, useTranslatedPath } from '@i18n/utils';
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+const translatePath = useTranslatedPath(lang);
+---
+
+<Base title="Mini Turnen" description="Turngruppe für Kinder im Autismus Spektrum oder mit ADHS (5-8 Jahre).">
+  <section class="py-20 px-4">
+    <div class="container mx-auto max-w-4xl">
+      <nav class="mb-8 text-sm text-evolea-text-light">
+        <a href={translatePath('/')} class="hover:text-evolea-purple">Startseite</a>
+        <span class="mx-2">/</span>
+        <a href={translatePath('/angebote/')} class="hover:text-evolea-purple">Angebote</a>
+        <span class="mx-2">/</span>
+        <span class="text-evolea-purple">Mini Turnen</span>
+      </nav>
+      
+      <div class="text-6xl mb-6">⚽</div>
+      <h1 class="text-4xl md:text-5xl font-bold text-evolea-purple mb-6">
+        Mini Turnen
+      </h1>
+      <p class="text-xl text-evolea-text-light mb-8">
+        Turngruppe für Kinder im Spektrum oder mit ADHS
+      </p>
+      
+      <div class="prose prose-lg max-w-none">
+        <h2 class="text-2xl font-semibold text-evolea-purple mt-12 mb-4">Für wen?</h2>
+        <p class="text-evolea-text-light mb-6">
+          Das Angebot richtet sich an Kinder im Autismus Spektrum oder mit ADHS im Alter von 5-8 Jahren, die Freude an Bewegung haben.
+        </p>
+        
+        <h2 class="text-2xl font-semibold text-evolea-purple mt-12 mb-4">Was machen wir?</h2>
+        <p class="text-evolea-text-light mb-6">
+          In unserer Turngruppe verbinden wir Bewegung mit sozialer Interaktion. Wir turnen, spielen Gruppenspiele und fördern motorische Fähigkeiten in einem sicheren Rahmen.
+        </p>
+        
+        <h2 class="text-2xl font-semibold text-evolea-purple mt-12 mb-4">Unser Ansatz</h2>
+        <p class="text-evolea-text-light mb-6">
+          Die Stunden sind klar strukturiert und vorhersehbar. Wir arbeiten mit visuellen Hilfsmitteln und kleinen Gruppen. Jedes Kind kann in seinem Tempo teilnehmen.
+        </p>
+      </div>
+      
+      <div class="mt-12">
+        <a href={translatePath('/kontakt/')} class="btn-primary">
+          {t('common.contact')}
+        </a>
+      </div>
+    </div>
+  </section>
+</Base>

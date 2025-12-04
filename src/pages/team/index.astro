@@ -1,0 +1,48 @@
+---
+import Base from '@layouts/Base.astro';
+import { getLangFromUrl, useTranslations, useTranslatedPath } from '@i18n/utils';
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+const translatePath = useTranslatedPath(lang);
+
+const team = [
+  {
+    name: 'Team EVOLEA',
+    role: 'Pädagogisches Team',
+    bio: 'Unser interdisziplinäres Team besteht aus erfahrenen Fachpersonen aus den Bereichen Heilpädagogik, Psychologie und Pädagogik.',
+  },
+];
+---
+
+<Base title="Team" description="Lernen Sie das Team von EVOLEA kennen - erfahrene Fachpersonen aus Heilpädagogik, Psychologie und Pädagogik.">
+  <section class="py-20 px-4">
+    <div class="container mx-auto max-w-4xl">
+      <h1 class="text-4xl md:text-5xl font-bold text-evolea-purple mb-6 text-center">
+        {t('team.title')}
+      </h1>
+      <p class="text-xl text-evolea-text-light text-center max-w-2xl mx-auto mb-16">
+        {t('team.description')}
+      </p>
+      
+      <div class="bg-white rounded-evolea-lg p-8 shadow-sm">
+        <h2 class="text-2xl font-semibold text-evolea-purple mb-4">Unser Team</h2>
+        <p class="text-evolea-text-light mb-6">
+          Bei EVOLEA arbeiten erfahrene Fachpersonen aus verschiedenen Bereichen zusammen. Unser Team vereint Expertise aus Heilpädagogik, Psychologie, Pädagogik und Sozialarbeit.
+        </p>
+        <p class="text-evolea-text-light mb-6">
+          Was uns verbindet: Die Überzeugung, dass jedes Kind einzigartig ist und das Recht hat, sich in seinem eigenen Tempo zu entwickeln. Wir begegnen Kindern und Familien mit Empathie, Offenheit und Respekt.
+        </p>
+        <p class="text-evolea-text-light">
+          Alle Mitarbeitenden bilden sich regelmässig weiter und arbeiten nach aktuellen wissenschaftlichen Standards.
+        </p>
+      </div>
+      
+      <div class="mt-12 text-center">
+        <a href={translatePath('/kontakt/')} class="btn-primary">
+          {t('common.contact')}
+        </a>
+      </div>
+    </div>
+  </section>
+</Base>

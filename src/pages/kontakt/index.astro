@@ -1,0 +1,84 @@
+---
+import Base from '@layouts/Base.astro';
+import { getLangFromUrl, useTranslations, useTranslatedPath } from '@i18n/utils';
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+const translatePath = useTranslatedPath(lang);
+---
+
+<Base title="Kontakt" description="Kontaktieren Sie EVOLEA - wir freuen uns auf Ihre Anfrage.">
+  <section class="py-20 px-4">
+    <div class="container mx-auto max-w-4xl">
+      <h1 class="text-4xl md:text-5xl font-bold text-evolea-purple mb-6 text-center">
+        {t('nav.contact')}
+      </h1>
+      <p class="text-xl text-evolea-text-light text-center max-w-2xl mx-auto mb-16">
+        {t('contact.cta')}
+      </p>
+      
+      <div class="grid md:grid-cols-2 gap-12">
+        <div>
+          <h2 class="text-2xl font-semibold text-evolea-purple mb-6">Kontaktdaten</h2>
+          <div class="space-y-4 text-evolea-text-light">
+            <p>
+              <strong class="block text-evolea-text">E-Mail</strong>
+              <a href="mailto:hello@evolea.ch" class="hover:text-evolea-purple transition-colors">
+                hello@evolea.ch
+              </a>
+            </p>
+            <p>
+              <strong class="block text-evolea-text">Standort</strong>
+              Zürich, Schweiz
+            </p>
+            <p>
+              <strong class="block text-evolea-text">Instagram</strong>
+              <a href="https://www.instagram.com/evolea.verein/" target="_blank" rel="noopener noreferrer" class="hover:text-evolea-purple transition-colors">
+                @evolea.verein
+              </a>
+            </p>
+          </div>
+        </div>
+        
+        <div class="bg-white rounded-evolea-lg p-8 shadow-sm">
+          <h2 class="text-2xl font-semibold text-evolea-purple mb-6">Anfrage senden</h2>
+          <form action="https://formspree.io/f/your-form-id" method="POST" class="space-y-6">
+            <div>
+              <label for="name" class="block text-sm font-medium text-evolea-text mb-2">Name</label>
+              <input
+                type="text"
+                id="name"
+                name="name"
+                required
+                class="w-full px-4 py-3 rounded-evolea-sm border border-evolea-purple/20 focus:border-evolea-purple focus:ring-2 focus:ring-evolea-purple/20 outline-none transition-colors"
+              />
+            </div>
+            <div>
+              <label for="email" class="block text-sm font-medium text-evolea-text mb-2">E-Mail</label>
+              <input
+                type="email"
+                id="email"
+                name="email"
+                required
+                class="w-full px-4 py-3 rounded-evolea-sm border border-evolea-purple/20 focus:border-evolea-purple focus:ring-2 focus:ring-evolea-purple/20 outline-none transition-colors"
+              />
+            </div>
+            <div>
+              <label for="message" class="block text-sm font-medium text-evolea-text mb-2">Nachricht</label>
+              <textarea
+                id="message"
+                name="message"
+                rows="4"
+                required
+                class="w-full px-4 py-3 rounded-evolea-sm border border-evolea-purple/20 focus:border-evolea-purple focus:ring-2 focus:ring-evolea-purple/20 outline-none transition-colors resize-none"
+              ></textarea>
+            </div>
+            <button type="submit" class="btn-primary w-full">
+              Nachricht senden
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+</Base>

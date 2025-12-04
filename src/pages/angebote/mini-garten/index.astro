@@ -1,0 +1,53 @@
+---
+import Base from '@layouts/Base.astro';
+import { getLangFromUrl, useTranslations, useTranslatedPath } from '@i18n/utils';
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+const translatePath = useTranslatedPath(lang);
+---
+
+<Base title="Mini Garten" description="Gruppensetting zur Vorbereitung für den Kindergarten für Kinder im Autismus Spektrum (3-6 Jahre).">
+  <section class="py-20 px-4">
+    <div class="container mx-auto max-w-4xl">
+      <nav class="mb-8 text-sm text-evolea-text-light">
+        <a href={translatePath('/')} class="hover:text-evolea-purple">Startseite</a>
+        <span class="mx-2">/</span>
+        <a href={translatePath('/angebote/')} class="hover:text-evolea-purple">Angebote</a>
+        <span class="mx-2">/</span>
+        <span class="text-evolea-purple">Mini Garten</span>
+      </nav>
+      
+      <div class="text-6xl mb-6">🌱</div>
+      <h1 class="text-4xl md:text-5xl font-bold text-evolea-purple mb-6">
+        Mini Garten
+      </h1>
+      <p class="text-xl text-evolea-text-light mb-8">
+        Gruppensetting zur Vorbereitung für den Kindergarten
+      </p>
+      
+      <div class="prose prose-lg max-w-none">
+        <h2 class="text-2xl font-semibold text-evolea-purple mt-12 mb-4">Für wen?</h2>
+        <p class="text-evolea-text-light mb-6">
+          Das Angebot richtet sich an Kinder im Autismus Spektrum im Alter von 3-6 Jahren, die sich auf den Kindergarten vorbereiten.
+        </p>
+        
+        <h2 class="text-2xl font-semibold text-evolea-purple mt-12 mb-4">Was machen wir?</h2>
+        <p class="text-evolea-text-light mb-6">
+          In kleinen Gruppen üben wir spielerisch Kompetenzen, die für den Kindergartenalltag wichtig sind: Soziale Interaktion, gemeinsames Spielen, Gruppenaktivitäten und die Struktur eines Kindergartentages.
+        </p>
+        
+        <h2 class="text-2xl font-semibold text-evolea-purple mt-12 mb-4">Unser Ansatz</h2>
+        <p class="text-evolea-text-light mb-6">
+          Wir arbeiten evidenzbasiert und individuell. Jedes Kind wird dort abgeholt, wo es steht. Die Gruppengrösse ist bewusst klein gehalten, um auf jedes Kind eingehen zu können.
+        </p>
+      </div>
+      
+      <div class="mt-12">
+        <a href={translatePath('/kontakt/')} class="btn-primary">
+          {t('common.contact')}
+        </a>
+      </div>
+    </div>
+  </section>
+</Base>

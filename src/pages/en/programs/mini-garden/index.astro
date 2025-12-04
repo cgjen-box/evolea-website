@@ -1,0 +1,53 @@
+---
+import Base from '@layouts/Base.astro';
+import { getLangFromUrl, useTranslations, useTranslatedPath } from '@i18n/utils';
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+const translatePath = useTranslatedPath(lang);
+---
+
+<Base title="Mini Garden" description="Group setting to prepare for kindergarten for children on the autism spectrum (ages 3-6).">
+  <section class="py-20 px-4">
+    <div class="container mx-auto max-w-4xl">
+      <nav class="mb-8 text-sm text-evolea-text-light">
+        <a href={translatePath('/')} class="hover:text-evolea-purple">Home</a>
+        <span class="mx-2">/</span>
+        <a href={translatePath('/programs/')} class="hover:text-evolea-purple">Programs</a>
+        <span class="mx-2">/</span>
+        <span class="text-evolea-purple">Mini Garden</span>
+      </nav>
+      
+      <div class="text-6xl mb-6">🌱</div>
+      <h1 class="text-4xl md:text-5xl font-bold text-evolea-purple mb-6">
+        Mini Garden
+      </h1>
+      <p class="text-xl text-evolea-text-light mb-8">
+        Group setting to prepare for kindergarten
+      </p>
+      
+      <div class="prose prose-lg max-w-none">
+        <h2 class="text-2xl font-semibold text-evolea-purple mt-12 mb-4">Who is it for?</h2>
+        <p class="text-evolea-text-light mb-6">
+          This program is designed for children on the autism spectrum aged 3-6 who are preparing for kindergarten.
+        </p>
+        
+        <h2 class="text-2xl font-semibold text-evolea-purple mt-12 mb-4">What do we do?</h2>
+        <p class="text-evolea-text-light mb-6">
+          In small groups, we playfully practice skills important for kindergarten: social interaction, playing together, group activities, and the structure of a kindergarten day.
+        </p>
+        
+        <h2 class="text-2xl font-semibold text-evolea-purple mt-12 mb-4">Our approach</h2>
+        <p class="text-evolea-text-light mb-6">
+          We work evidence-based and individually. Each child is met where they are. Group sizes are intentionally small to ensure individual attention.
+        </p>
+      </div>
+      
+      <div class="mt-12">
+        <a href={translatePath('/contact/')} class="btn-primary">
+          {t('common.contact')}
+        </a>
+      </div>
+    </div>
+  </section>
+</Base>

@@ -1,0 +1,50 @@
+---
+import Base from '@layouts/Base.astro';
+import ProgramCard from '@components/ProgramCard.astro';
+import { getLangFromUrl, useTranslations, useTranslatedPath } from '@i18n/utils';
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+const translatePath = useTranslatedPath(lang);
+---
+
+<Base title="Programs" description="EVOLEA offers various support programs for children on the autism spectrum or with ADHD: Mini Garden, Mini Projects, Mini Sports, and School Consultation.">
+  <section class="py-20 px-4">
+    <div class="container mx-auto max-w-6xl">
+      <h1 class="text-4xl md:text-5xl font-bold text-evolea-purple mb-6 text-center">
+        {t('nav.programs')}
+      </h1>
+      <p class="text-xl text-evolea-text-light text-center max-w-2xl mx-auto mb-16">
+        Our programs are specially designed for children on the spectrum and with ADHD. All programs are evidence-based.
+      </p>
+      
+      <div class="grid md:grid-cols-2 gap-8">
+        <ProgramCard
+          title={t('programs.miniGarten')}
+          description={t('programs.miniGarten.desc')}
+          href={translatePath('/programs/mini-garden/')}
+          icon="🌱"
+        />
+        <ProgramCard
+          title={t('programs.miniProjekte')}
+          description={t('programs.miniProjekte.desc')}
+          href={translatePath('/programs/mini-projects/')}
+          icon="🎨"
+        />
+        <ProgramCard
+          title={t('programs.miniTurnen')}
+          description={t('programs.miniTurnen.desc')}
+          href={translatePath('/programs/mini-sports/')}
+          icon="⚽"
+        />
+        <ProgramCard
+          title={t('programs.schulberatung')}
+          description={t('programs.schulberatung.desc')}
+          href={translatePath('/programs/school-consultation/')}
+          icon="🏫"
+          variant="featured"
+        />
+      </div>
+    </div>
+  </section>
+</Base>

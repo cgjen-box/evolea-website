@@ -1,0 +1,53 @@
+---
+import Base from '@layouts/Base.astro';
+import { getLangFromUrl, useTranslations, useTranslatedPath } from '@i18n/utils';
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+const translatePath = useTranslatedPath(lang);
+---
+
+<Base title="Mini Projects" description="Social skills group for children on the autism spectrum (ages 5-8).">
+  <section class="py-20 px-4">
+    <div class="container mx-auto max-w-4xl">
+      <nav class="mb-8 text-sm text-evolea-text-light">
+        <a href={translatePath('/')} class="hover:text-evolea-purple">Home</a>
+        <span class="mx-2">/</span>
+        <a href={translatePath('/programs/')} class="hover:text-evolea-purple">Programs</a>
+        <span class="mx-2">/</span>
+        <span class="text-evolea-purple">Mini Projects</span>
+      </nav>
+      
+      <div class="text-6xl mb-6">🎨</div>
+      <h1 class="text-4xl md:text-5xl font-bold text-evolea-purple mb-6">
+        Mini Projects
+      </h1>
+      <p class="text-xl text-evolea-text-light mb-8">
+        Social skills group for children on the spectrum
+      </p>
+      
+      <div class="prose prose-lg max-w-none">
+        <h2 class="text-2xl font-semibold text-evolea-purple mt-12 mb-4">Who is it for?</h2>
+        <p class="text-evolea-text-light mb-6">
+          This program is designed for children on the autism spectrum aged 5-8 who want to develop their social skills in a supportive environment.
+        </p>
+        
+        <h2 class="text-2xl font-semibold text-evolea-purple mt-12 mb-4">What do we do?</h2>
+        <p class="text-evolea-text-light mb-6">
+          Through thematic projects, we work on social skills: communication, cooperation, perspective-taking, and problem-solving. Projects are creative and practical.
+        </p>
+        
+        <h2 class="text-2xl font-semibold text-evolea-purple mt-12 mb-4">Our approach</h2>
+        <p class="text-evolea-text-light mb-6">
+          We use children's interests as a starting point. In small groups, we create safe spaces where social interaction can be practiced and positive experiences collected.
+        </p>
+      </div>
+      
+      <div class="mt-12">
+        <a href={translatePath('/contact/')} class="btn-primary">
+          {t('common.contact')}
+        </a>
+      </div>
+    </div>
+  </section>
+</Base>

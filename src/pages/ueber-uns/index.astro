@@ -1,0 +1,68 @@
+---
+import Base from '@layouts/Base.astro';
+import { getLangFromUrl, useTranslations, useTranslatedPath } from '@i18n/utils';
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+const translatePath = useTranslatedPath(lang);
+---
+
+<Base title="Über uns" description="EVOLEA ist ein gemeinnütziger Verein mit Sitz in Zürich. Wir bieten Bildungsangebote für Kinder im Autismus Spektrum oder mit ADHS.">
+  <section class="py-20 px-4">
+    <div class="container mx-auto max-w-4xl">
+      <h1 class="text-4xl md:text-5xl font-bold text-evolea-purple mb-6 text-center">
+        {t('about.title')}
+      </h1>
+      <p class="text-xl text-evolea-text-light text-center max-w-2xl mx-auto mb-16">
+        {t('about.description')}
+      </p>
+      
+      <div class="space-y-12">
+        <div class="bg-white rounded-evolea-lg p-8 shadow-sm">
+          <h2 class="text-2xl font-semibold text-evolea-purple mb-4">Unsere Mission</h2>
+          <p class="text-evolea-text-light">
+            EVOLEA schafft Räume, damit sich Kinder im Spektrum entfalten und ihren Weg glücklich und selbstbestimmt gehen können. Wir ergänzen die Regelschule mit spezialisierten Förderangeboten.
+          </p>
+        </div>
+        
+        <div class="bg-white rounded-evolea-lg p-8 shadow-sm">
+          <h2 class="text-2xl font-semibold text-evolea-purple mb-4">Unsere Werte</h2>
+          <ul class="space-y-4 text-evolea-text-light">
+            <li class="flex items-start gap-3">
+              <span class="text-evolea-green text-xl">✓</span>
+              <span><strong>Evidenzbasiert:</strong> Unsere Arbeit basiert auf wissenschaftlichen Erkenntnissen.</span>
+            </li>
+            <li class="flex items-start gap-3">
+              <span class="text-evolea-green text-xl">✓</span>
+              <span><strong>Individuell:</strong> Jedes Kind wird dort abgeholt, wo es steht.</span>
+            </li>
+            <li class="flex items-start gap-3">
+              <span class="text-evolea-green text-xl">✓</span>
+              <span><strong>Inklusiv:</strong> Wir sehen Stärken, nicht Defizite.</span>
+            </li>
+            <li class="flex items-start gap-3">
+              <span class="text-evolea-green text-xl">✓</span>
+              <span><strong>Empathisch:</strong> Wir begegnen Kindern und Familien mit Respekt und Offenheit.</span>
+            </li>
+          </ul>
+        </div>
+        
+        <div class="bg-white rounded-evolea-lg p-8 shadow-sm">
+          <h2 class="text-2xl font-semibold text-evolea-purple mb-4">Der Verein</h2>
+          <p class="text-evolea-text-light">
+            EVOLEA ist ein gemeinnütziger Verein mit Sitz in Zürich. Wir sind politisch und konfessionell unabhängig. Der Verein wurde gegründet, um Familien mit Kindern im Autismus Spektrum oder mit ADHS zu unterstützen.
+          </p>
+        </div>
+      </div>
+      
+      <div class="mt-12 text-center">
+        <a href={translatePath('/team/')} class="btn-secondary mr-4">
+          Zum Team
+        </a>
+        <a href={translatePath('/kontakt/')} class="btn-primary">
+          {t('common.contact')}
+        </a>
+      </div>
+    </div>
+  </section>
+</Base>

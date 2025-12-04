@@ -1,0 +1,57 @@
+---
+import Base from '@layouts/Base.astro';
+import { getLangFromUrl, useTranslations, useTranslatedPath } from '@i18n/utils';
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+const translatePath = useTranslatedPath(lang);
+---
+
+<Base title="Privacy Policy" description="Privacy policy of EVOLEA.">
+  <section class="py-20 px-4">
+    <div class="container mx-auto max-w-4xl">
+      <h1 class="text-4xl md:text-5xl font-bold text-evolea-purple mb-12">
+        Privacy Policy
+      </h1>
+      
+      <div class="prose prose-lg max-w-none space-y-8 text-evolea-text-light">
+        <section>
+          <h2 class="text-2xl font-semibold text-evolea-purple mb-4">1. Responsible Party</h2>
+          <p>
+            Responsible for data processing on this website:<br/>
+            EVOLEA Verein<br/>
+            Zurich, Switzerland<br/>
+            Email: hello@evolea.ch
+          </p>
+        </section>
+        
+        <section>
+          <h2 class="text-2xl font-semibold text-evolea-purple mb-4">2. Data Collection and Processing</h2>
+          <p>
+            When visiting our website, general information is automatically collected. This information (server log files) includes the type of web browser, the operating system used, the domain name of your Internet service provider, and similar data.
+          </p>
+        </section>
+        
+        <section>
+          <h2 class="text-2xl font-semibold text-evolea-purple mb-4">3. Contact Form</h2>
+          <p>
+            When you send us inquiries via the contact form, your details from the form, including the contact information you provide, will be stored for the purpose of processing your inquiry and for follow-up questions.
+          </p>
+        </section>
+        
+        <section>
+          <h2 class="text-2xl font-semibold text-evolea-purple mb-4">4. Your Rights</h2>
+          <p>
+            You have the right to information, correction, deletion, and restriction of processing of your personal data. If you have any questions, please contact us.
+          </p>
+        </section>
+      </div>
+      
+      <div class="mt-12">
+        <a href={translatePath('/')} class="text-evolea-purple hover:text-evolea-purple-dark transition-colors">
+          ← {t('common.backHome')}
+        </a>
+      </div>
+    </div>
+  </section>
+</Base>
