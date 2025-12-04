@@ -14,11 +14,13 @@ interface Props {
   showScrollIndicator?: boolean;
 }
 
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+
 const {
   title,
   subtitle,
-  videoSrc = '/videos/hero.mp4',
-  posterSrc = '/images/hero-poster.jpg',
+  videoSrc = `${base}/videos/hero.mp4`,
+  posterSrc = `${base}/images/hero-poster.jpg`,
   primaryButtonText,
   primaryButtonHref,
   secondaryButtonText,

@@ -32,6 +32,7 @@ const {
 const lang = getLangFromUrl(Astro.url);
 const alternates = getLanguageAlternates(Astro.url);
 const canonicalURL = new URL(Astro.url.pathname, Astro.site);
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 ---
 
 <!doctype html>
@@ -72,8 +73,8 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
     <meta property="twitter:image" content={new URL(image, Astro.site)} />
 
     <!-- Favicon -->
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <link rel="icon" type="image/svg+xml" href={`${base}/favicon.svg`} />
+    <link rel="apple-touch-icon" href={`${base}/apple-touch-icon.png`} />
 
     <!-- Preload critical assets -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -81,7 +82,7 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 
     <!-- Preload hero video for homepage -->
     {transparentHeader && (
-      <link rel="preload" as="video" href="/videos/hero.mp4" />
+      <link rel="preload" as="video" href={`${base}/videos/hero.mp4`} />
     )}
   </head>
   <body class="bg-evolea-cream text-evolea-text min-h-screen flex flex-col antialiased font-sans">

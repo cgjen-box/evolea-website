@@ -1,10 +1,20 @@
 import { ui, defaultLang, showDefaultLang, type Lang } from './ui';
 
 /**
+ * Get the base URL without trailing slash
+ */
+function getBase(): string {
+  return import.meta.env.BASE_URL.replace(/\/$/, '');
+}
+
+/**
  * Get the language from the current URL
  */
 export function getLangFromUrl(url: URL): Lang {
-  const [, lang] = url.pathname.split('/');
+  const base = getBase();
+  // Remove base path from pathname before checking language
+  const pathWithoutBase = url.pathname.replace(base, '') || '/';
+  const [, lang] = pathWithoutBase.split('/');
   if (lang in ui) return lang as Lang;
   return defaultLang;
 }
@@ -20,13 +30,16 @@ export function useTranslations(lang: Lang) {
 
 /**
  * Get a translated path for the given language
+ * Includes the base path for deployment to subdirectories (e.g., GitHub Pages)
  */
 export function useTranslatedPath(lang: Lang) {
   return function translatePath(path: string, l: Lang = lang): string {
+    const base = getBase();
     const normalizedPath = path.startsWith('/') ? path : `/${path}`;
-    return !showDefaultLang && l === defaultLang
+    const langPath = !showDefaultLang && l === defaultLang
       ? normalizedPath
       : `/${l}${normalizedPath}`;
+    return `${base}${langPath}`;
   };
 }
 
@@ -44,9 +57,10 @@ export function getAlternatePath(url: URL): string {
   const lang = getLangFromUrl(url);
   const alternateLang = getAlternateLang(lang);
   const translatePath = useTranslatedPath(alternateLang);
+  const base = getBase();
 
-  // Remove current language prefix if present
-  let path = url.pathname;
+  // Remove base path and current language prefix if present
+  let path = url.pathname.replace(base, '') || '/';
   if (lang !== defaultLang) {
     path = path.replace(`/${lang}`, '') || '/';
   }
@@ -59,15 +73,16 @@ export function getAlternatePath(url: URL): string {
  */
 export function getLanguageAlternates(url: URL): Array<{ lang: Lang; href: string }> {
   const currentLang = getLangFromUrl(url);
+  const base = getBase();
 
   // Get the base path without language prefix
-  let basePath = url.pathname;
+  let basePath = url.pathname.replace(base, '') || '/';
   if (currentLang !== defaultLang) {
     basePath = basePath.replace(`/${currentLang}`, '') || '/';
   }
 
   return [
-    { lang: 'de', href: basePath },
-    { lang: 'en', href: `/en${basePath === '/' ? '' : basePath}` },
+    { lang: 'de', href: `${base}${basePath}` },
+    { lang: 'en', href: `${base}/en${basePath === '/' ? '' : basePath}` },
   ];
 }
