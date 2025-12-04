@@ -1,7 +1,12 @@
 ---
-import { getLangFromUrl, useTranslations, useTranslatedPath, getAlternatePath } from '@i18n/utils';
-import { languages } from '@i18n/ui';
+import { getLangFromUrl, useTranslations, useTranslatedPath } from '@i18n/utils';
 import LanguagePicker from './LanguagePicker.astro';
+
+interface Props {
+  transparent?: boolean;
+}
+
+const { transparent = false } = Astro.props;
 
 const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
@@ -11,30 +16,44 @@ const navItems = [
   { key: 'nav.programs', href: '/angebote/' },
   { key: 'nav.about', href: '/ueber-uns/' },
   { key: 'nav.team', href: '/team/' },
-  { key: 'nav.blog', href: '/blog/' },
   { key: 'nav.contact', href: '/kontakt/' },
 ] as const;
 ---
 
-<header class="sticky top-0 z-50 bg-evolea-cream/95 backdrop-blur-sm border-b border-evolea-purple/10">
-  <nav class="container mx-auto px-4 py-4 flex items-center justify-between" aria-label={lang === 'de' ? 'Hauptnavigation' : 'Main navigation'}>
+<header
+  id="main-header"
+  class:list={[
+    'fixed top-0 left-0 right-0 z-header transition-all duration-300',
+    transparent ? 'header-transparent' : 'header-solid',
+  ]}
+  data-transparent={transparent}
+>
+  <nav
+    class="container mx-auto px-4 py-4 flex items-center justify-between"
+    aria-label={lang === 'de' ? 'Hauptnavigation' : 'Main navigation'}
+  >
     <!-- Logo -->
-    <a href={translatePath('/')} class="flex items-center gap-2 text-evolea-purple font-semibold text-xl hover:text-evolea-purple-dark transition-colors">
-      <svg class="w-8 h-8" viewBox="0 0 32 32" fill="currentColor" aria-hidden="true">
-        <circle cx="16" cy="16" r="14" fill="currentColor" opacity="0.1"/>
-        <text x="16" y="21" font-size="14" font-weight="600" text-anchor="middle" fill="currentColor">E</text>
+    <a
+      href={translatePath('/')}
+      class="flex items-center gap-2 font-display font-bold text-xl transition-colors logo-link"
+    >
+      <svg class="w-10 h-10" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <circle cx="20" cy="20" r="18" class="fill-current opacity-20"/>
+        <circle cx="20" cy="20" r="14" class="fill-current opacity-30"/>
+        <text x="20" y="26" font-size="16" font-weight="700" text-anchor="middle" class="fill-current">E</text>
       </svg>
       <span>EVOLEA</span>
     </a>
 
     <!-- Desktop Navigation -->
-    <div class="hidden md:flex items-center gap-6">
+    <div class="hidden md:flex items-center gap-8">
       {navItems.map(({ key, href }) => (
         <a
           href={translatePath(href)}
-          class="text-evolea-text hover:text-evolea-purple transition-colors font-medium"
+          class="nav-link font-medium transition-colors relative"
         >
           {t(key)}
+          <span class="nav-link-underline"></span>
         </a>
       ))}
       <LanguagePicker />
@@ -43,14 +62,17 @@ const navItems = [
     <!-- Mobile Menu Button -->
     <button
       type="button"
-      class="md:hidden p-2 text-evolea-purple hover:bg-evolea-purple/10 rounded-evolea-sm transition-colors"
+      class="md:hidden p-2 rounded-evolea-sm transition-colors mobile-menu-btn"
       aria-expanded="false"
       aria-controls="mobile-menu"
       aria-label={lang === 'de' ? 'Menü öffnen' : 'Open menu'}
       id="mobile-menu-button"
     >
-      <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+      <svg class="w-6 h-6 menu-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+      </svg>
+      <svg class="w-6 h-6 close-icon hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
       </svg>
     </button>
   </nav>
@@ -58,40 +80,190 @@ const navItems = [
   <!-- Mobile Navigation -->
   <div
     id="mobile-menu"
-    class="hidden md:hidden absolute top-full left-0 right-0 bg-evolea-cream border-b border-evolea-purple/10 shadow-lg"
+    class="mobile-menu md:hidden fixed inset-0 top-[72px] bg-evolea-cream/98 backdrop-blur-lg transform translate-x-full transition-transform duration-300 ease-smooth-out"
+    aria-hidden="true"
   >
-    <div class="container mx-auto px-4 py-4 flex flex-col gap-4">
-      {navItems.map(({ key, href }) => (
+    <nav class="container mx-auto px-4 py-8 flex flex-col">
+      {navItems.map(({ key, href }, index) => (
         <a
           href={translatePath(href)}
-          class="text-evolea-text hover:text-evolea-purple transition-colors font-medium py-2"
+          class="mobile-nav-link py-4 text-2xl font-display font-semibold text-evolea-purple border-b border-evolea-purple/10 transition-colors hover:text-evolea-orange"
+          style={`animation-delay: ${index * 0.1}s`}
         >
           {t(key)}
         </a>
       ))}
-      <div class="pt-2 border-t border-evolea-purple/10">
+      <div class="pt-6 mt-2">
         <LanguagePicker />
       </div>
-    </div>
+
+      <!-- Mobile CTA -->
+      <a
+        href={translatePath('/kontakt/')}
+        class="btn-primary mt-8 text-center"
+      >
+        {t('contact.cta')}
+      </a>
+    </nav>
   </div>
 </header>
 
+<style>
+  /* Transparent header (for hero sections) */
+  .header-transparent {
+    @apply bg-transparent;
+  }
+
+  .header-transparent .logo-link {
+    @apply text-white;
+  }
+
+  .header-transparent .nav-link {
+    @apply text-white/90 hover:text-white;
+  }
+
+  .header-transparent .mobile-menu-btn {
+    @apply text-white hover:bg-white/10;
+  }
+
+  /* Solid header (scrolled or non-hero pages) */
+  .header-solid {
+    @apply bg-evolea-cream/95 backdrop-blur-md shadow-soft;
+  }
+
+  .header-solid .logo-link {
+    @apply text-evolea-purple hover:text-evolea-purple-dark;
+  }
+
+  .header-solid .nav-link {
+    @apply text-evolea-text hover:text-evolea-purple;
+  }
+
+  .header-solid .mobile-menu-btn {
+    @apply text-evolea-purple hover:bg-evolea-purple/10;
+  }
+
+  /* Scrolled state (added via JS) */
+  .header-scrolled {
+    @apply bg-evolea-cream/95 backdrop-blur-md shadow-soft !important;
+  }
+
+  .header-scrolled .logo-link {
+    @apply text-evolea-purple hover:text-evolea-purple-dark !important;
+  }
+
+  .header-scrolled .nav-link {
+    @apply text-evolea-text hover:text-evolea-purple !important;
+  }
+
+  .header-scrolled .mobile-menu-btn {
+    @apply text-evolea-purple hover:bg-evolea-purple/10 !important;
+  }
+
+  /* Nav link underline animation */
+  .nav-link {
+    position: relative;
+  }
+
+  .nav-link-underline {
+    position: absolute;
+    bottom: -4px;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, #FF8C42, #FFD93D);
+    border-radius: 2px;
+    transform: scaleX(0);
+    transition: transform 0.3s ease;
+    transform-origin: left;
+  }
+
+  .nav-link:hover .nav-link-underline,
+  .nav-link:focus .nav-link-underline {
+    transform: scaleX(1);
+  }
+
+  /* Mobile menu open state */
+  .mobile-menu.open {
+    transform: translateX(0);
+  }
+
+  .mobile-menu.open .mobile-nav-link {
+    animation: slideIn 0.4s ease forwards;
+    opacity: 0;
+  }
+
+  @keyframes slideIn {
+    from {
+      opacity: 0;
+      transform: translateX(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateX(0);
+    }
+  }
+
+  /* Menu icon toggle */
+  .mobile-menu-btn.open .menu-icon {
+    display: none;
+  }
+
+  .mobile-menu-btn.open .close-icon {
+    display: block;
+  }
+</style>
+
 <script>
+  const header = document.getElementById('main-header');
   const menuButton = document.getElementById('mobile-menu-button');
   const mobileMenu = document.getElementById('mobile-menu');
+  const isTransparent = header?.dataset.transparent === 'true';
 
+  // Handle scroll for transparent headers
+  if (isTransparent && header) {
+    const handleScroll = () => {
+      if (window.scrollY > 50) {
+        header.classList.add('header-scrolled');
+      } else {
+        header.classList.remove('header-scrolled');
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    handleScroll(); // Check initial state
+  }
+
+  // Mobile menu toggle
   menuButton?.addEventListener('click', () => {
-    const isExpanded = menuButton.getAttribute('aria-expanded') === 'true';
-    menuButton.setAttribute('aria-expanded', (!isExpanded).toString());
-    mobileMenu?.classList.toggle('hidden');
+    const isOpen = menuButton.classList.toggle('open');
+    mobileMenu?.classList.toggle('open');
+    mobileMenu?.setAttribute('aria-hidden', (!isOpen).toString());
+    menuButton.setAttribute('aria-expanded', isOpen.toString());
+
+    // Prevent body scroll when menu is open
+    document.body.style.overflow = isOpen ? 'hidden' : '';
   });
 
-  // Close menu when clicking outside
-  document.addEventListener('click', (event) => {
-    const target = event.target as HTMLElement;
-    if (!menuButton?.contains(target) && !mobileMenu?.contains(target)) {
+  // Close menu on link click
+  mobileMenu?.querySelectorAll('a').forEach(link => {
+    link.addEventListener('click', () => {
+      menuButton?.classList.remove('open');
+      mobileMenu?.classList.remove('open');
+      mobileMenu?.setAttribute('aria-hidden', 'true');
       menuButton?.setAttribute('aria-expanded', 'false');
-      mobileMenu?.classList.add('hidden');
+      document.body.style.overflow = '';
+    });
+  });
+
+  // Close menu on escape key
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && mobileMenu?.classList.contains('open')) {
+      menuButton?.classList.remove('open');
+      mobileMenu?.classList.remove('open');
+      mobileMenu?.setAttribute('aria-hidden', 'true');
+      menuButton?.setAttribute('aria-expanded', 'false');
+      document.body.style.overflow = '';
     }
   });
 </script>

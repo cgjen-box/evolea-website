@@ -1,0 +1,107 @@
+---
+interface Props {
+  title: string;
+  description: string;
+  icon: string;
+  color?: 'purple' | 'orange' | 'green' | 'sky' | 'coral' | 'yellow';
+}
+
+const { title, description, icon, color = 'purple' } = Astro.props;
+
+const colorClasses = {
+  purple: 'bg-evolea-purple/10 text-evolea-purple',
+  orange: 'bg-evolea-orange/15 text-evolea-orange',
+  green: 'bg-evolea-green/15 text-evolea-green',
+  sky: 'bg-evolea-sky/15 text-evolea-sky',
+  coral: 'bg-evolea-coral/15 text-evolea-coral',
+  yellow: 'bg-evolea-yellow/20 text-evolea-yellow',
+};
+---
+
+<article class="value-pillar reveal">
+  <div class:list={['value-pillar-icon', colorClasses[color]]}>
+    <span aria-hidden="true">{icon}</span>
+  </div>
+  <h3 class="value-pillar-title">{title}</h3>
+  <p class="value-pillar-description">{description}</p>
+
+  <!-- Decorative bottom line -->
+  <div class="mt-6 mx-auto w-12 h-1 rounded-full bg-gradient-spectrum opacity-60"></div>
+</article>
+
+<style>
+  .value-pillar {
+    position: relative;
+    padding: 2rem;
+    border-radius: 24px;
+    background: white;
+    text-align: center;
+    transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    box-shadow: 0 4px 20px rgba(107, 76, 138, 0.08);
+  }
+
+  .value-pillar:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 20px 40px rgba(107, 76, 138, 0.15);
+  }
+
+  .value-pillar-icon {
+    width: 4.5rem;
+    height: 4.5rem;
+    margin: 0 auto 1.25rem;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2rem;
+    transition: transform 0.3s ease;
+  }
+
+  .value-pillar:hover .value-pillar-icon {
+    transform: scale(1.1) rotate(5deg);
+  }
+
+  .value-pillar-title {
+    font-family: 'Fredoka', 'Poppins', sans-serif;
+    font-weight: 600;
+    font-size: 1.25rem;
+    color: #6B4C8A;
+    margin-bottom: 0.75rem;
+  }
+
+  .value-pillar-description {
+    color: #5C5762;
+    font-size: 0.9375rem;
+    line-height: 1.6;
+  }
+
+  /* Subtle shine effect on hover */
+  .value-pillar::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: 24px;
+    background: linear-gradient(
+      135deg,
+      transparent 40%,
+      rgba(255, 255, 255, 0.4) 50%,
+      transparent 60%
+    );
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+
+  .value-pillar:hover::before {
+    opacity: 1;
+    animation: shine 0.6s ease forwards;
+  }
+
+  @keyframes shine {
+    0% {
+      background-position: -100% 0;
+    }
+    100% {
+      background-position: 200% 0;
+    }
+  }
+</style>

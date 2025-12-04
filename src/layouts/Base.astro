@@ -1,23 +1,35 @@
 ---
-import { getLangFromUrl, useTranslations, getLanguageAlternates } from '@i18n/utils';
+import { getLangFromUrl, getLanguageAlternates } from '@i18n/utils';
 import Header from '@components/Header.astro';
 import Footer from '@components/Footer.astro';
+
+// Import fonts
 import '@fontsource/poppins/400.css';
 import '@fontsource/poppins/500.css';
 import '@fontsource/poppins/600.css';
 import '@fontsource/poppins/700.css';
+import '@fontsource/fredoka/400.css';
+import '@fontsource/fredoka/500.css';
+import '@fontsource/fredoka/600.css';
+import '@fontsource/fredoka/700.css';
+
 import '../styles/global.css';
 
 interface Props {
   title: string;
   description?: string;
   image?: string;
+  transparentHeader?: boolean;
 }
 
-const { title, description = 'EVOLEA Verein - Bildungsangebote für Kinder im Autismus Spektrum oder mit ADHS in Zürich.', image = '/images/og-default.jpg' } = Astro.props;
+const {
+  title,
+  description = 'EVOLEA Verein - Bildungsangebote für Kinder im Autismus Spektrum oder mit ADHS in Zürich.',
+  image = '/images/og-default.jpg',
+  transparentHeader = false,
+} = Astro.props;
 
 const lang = getLangFromUrl(Astro.url);
-const t = useTranslations(lang);
 const alternates = getLanguageAlternates(Astro.url);
 const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 ---
@@ -28,19 +40,22 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="generator" content={Astro.generator} />
-    
+
     <!-- Primary Meta Tags -->
     <title>{title} | EVOLEA</title>
     <meta name="title" content={`${title} | EVOLEA`} />
     <meta name="description" content={description} />
-    
+
+    <!-- Theme color for mobile browsers -->
+    <meta name="theme-color" content="#6B4C8A" />
+
     <!-- Canonical & Language Alternates -->
     <link rel="canonical" href={canonicalURL} />
     {alternates.map(({ lang, href }) => (
       <link rel="alternate" hreflang={lang} href={new URL(href, Astro.site)} />
     ))}
     <link rel="alternate" hreflang="x-default" href={Astro.site} />
-    
+
     <!-- Open Graph -->
     <meta property="og:type" content="website" />
     <meta property="og:url" content={Astro.url} />
@@ -48,33 +63,67 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
     <meta property="og:description" content={description} />
     <meta property="og:image" content={new URL(image, Astro.site)} />
     <meta property="og:locale" content={lang === 'de' ? 'de_CH' : 'en'} />
-    
+
     <!-- Twitter -->
     <meta property="twitter:card" content="summary_large_image" />
     <meta property="twitter:url" content={Astro.url} />
     <meta property="twitter:title" content={`${title} | EVOLEA`} />
     <meta property="twitter:description" content={description} />
     <meta property="twitter:image" content={new URL(image, Astro.site)} />
-    
+
     <!-- Favicon -->
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
-    
-    <!-- Preconnect to external resources -->
+
+    <!-- Preload critical assets -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+
+    <!-- Preload hero video for homepage -->
+    {transparentHeader && (
+      <link rel="preload" as="video" href="/videos/hero.mp4" />
+    )}
   </head>
   <body class="bg-evolea-cream text-evolea-text min-h-screen flex flex-col antialiased font-sans">
-    <a href="#main-content" class="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-50 focus:bg-evolea-purple focus:text-white focus:px-4 focus:py-2 focus:rounded-evolea-sm">
+    <!-- Skip link for accessibility -->
+    <a
+      href="#main-content"
+      class="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-[200] focus:bg-evolea-purple focus:text-white focus:px-6 focus:py-3 focus:rounded-full focus:shadow-lg focus:font-semibold"
+    >
       {lang === 'de' ? 'Zum Hauptinhalt springen' : 'Skip to main content'}
     </a>
-    
-    <Header />
-    
-    <main id="main-content" class="flex-1">
+
+    <Header transparent={transparentHeader} />
+
+    <main id="main-content" class:list={['flex-1', { 'pt-0': transparentHeader, 'pt-[72px]': !transparentHeader }]}>
       <slot />
     </main>
-    
+
     <Footer />
+
+    <!-- Scroll reveal script -->
+    <script>
+      // Intersection Observer for scroll reveal animations
+      const observerOptions = {
+        root: null,
+        rootMargin: '0px 0px -100px 0px',
+        threshold: 0.1,
+      };
+
+      const revealOnScroll = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('active');
+            // Optional: unobserve after reveal for performance
+            // revealOnScroll.unobserve(entry.target);
+          }
+        });
+      }, observerOptions);
+
+      // Observe all elements with reveal classes
+      document.querySelectorAll('.reveal, .reveal-scale, .reveal-left, .reveal-right').forEach((el) => {
+        revealOnScroll.observe(el);
+      });
+    </script>
   </body>
 </html>

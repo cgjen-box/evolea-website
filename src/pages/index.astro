@@ -1,6 +1,10 @@
 ---
 import Base from '@layouts/Base.astro';
-import ProgramCard from '@components/ProgramCard.astro';
+import VideoHero from '@components/VideoHero.astro';
+import ProgramCardEnhanced from '@components/ProgramCardEnhanced.astro';
+import ValuePillar from '@components/ValuePillar.astro';
+import GradientCTA from '@components/GradientCTA.astro';
+import FloatingShapes from '@components/FloatingShapes.astro';
 import { getLangFromUrl, useTranslations, useTranslatedPath } from '@i18n/utils';
 
 const lang = getLangFromUrl(Astro.url);
@@ -8,96 +12,203 @@ const t = useTranslations(lang);
 const translatePath = useTranslatedPath(lang);
 ---
 
-<Base title="Startseite" description="EVOLEA Verein - Bildungsangebote für Kinder im Autismus Spektrum oder mit ADHS in Zürich. Mini Garten, Mini Projekte, Mini Turnen und Schulberatung.">
-  <!-- Hero Section -->
-  <section class="py-20 px-4 bg-gradient-to-b from-evolea-purple/5 to-evolea-cream">
-    <div class="container mx-auto max-w-4xl text-center">
-      <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold text-evolea-purple leading-tight mb-6">
-        {t('hero.title')}
-      </h1>
-      <p class="text-xl text-evolea-text-light max-w-2xl mx-auto mb-8">
-        {t('hero.subtitle')}
-      </p>
-      <div class="flex flex-col sm:flex-row gap-4 justify-center">
-        <a
-          href={translatePath('/angebote/')}
-          class="inline-block bg-evolea-purple text-white font-semibold px-8 py-4 rounded-evolea hover:bg-evolea-purple-dark transition-colors"
-        >
-          {t('common.learnMore')}
-        </a>
-        <a
-          href={translatePath('/kontakt/')}
-          class="inline-block bg-white text-evolea-purple font-semibold px-8 py-4 rounded-evolea border-2 border-evolea-purple hover:bg-evolea-purple/5 transition-colors"
-        >
-          {t('common.contact')}
-        </a>
-      </div>
-    </div>
-  </section>
+<Base
+  title="Startseite"
+  description="EVOLEA Verein - Bildungsangebote für Kinder im Autismus Spektrum oder mit ADHS in Zürich. Mini Garten, Mini Projekte, Mini Turnen und Schulberatung."
+  transparentHeader={true}
+>
+  <!-- Hero Section with Video Background -->
+  <VideoHero
+    title={t('hero.title')}
+    subtitle={t('hero.subtitle')}
+    videoSrc="/videos/hero.mp4"
+    posterSrc="/images/hero-poster.jpg"
+    primaryButtonText={t('hero.cta.primary')}
+    primaryButtonHref={translatePath('/angebote/')}
+    secondaryButtonText={t('hero.cta.secondary')}
+    secondaryButtonHref={translatePath('/kontakt/')}
+  />
 
-  <!-- About Section -->
-  <section class="py-20 px-4">
-    <div class="container mx-auto max-w-4xl">
-      <h2 class="text-3xl md:text-4xl font-bold text-evolea-purple mb-6 text-center">
-        {t('about.title')}
-      </h2>
-      <p class="text-lg text-evolea-text-light text-center max-w-2xl mx-auto leading-relaxed">
-        {t('about.description')}
-      </p>
+  <!-- About / Mission Section -->
+  <section class="section-padding relative overflow-hidden">
+    <FloatingShapes variant="section" />
+
+    <div class="container mx-auto max-w-6xl relative z-10">
+      <div class="grid lg:grid-cols-2 gap-12 items-center">
+        <!-- Text content -->
+        <div class="reveal">
+          <span class="section-label">{t('about.title')}</span>
+          <h2 class="text-3xl md:text-4xl lg:text-5xl font-display font-bold text-evolea-purple mb-6 leading-tight">
+            <span class="doodle-underline">{t('about.subtitle')}</span>
+          </h2>
+          <p class="text-lg text-evolea-text-light leading-relaxed mb-8">
+            {t('about.description')}
+          </p>
+          <a href={translatePath('/ueber-uns/')} class="btn-primary">
+            {t('about.cta')}
+            <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+            </svg>
+          </a>
+        </div>
+
+        <!-- Visual element / Stats -->
+        <div class="reveal reveal-delay-2">
+          <div class="grid grid-cols-2 gap-4">
+            <div class="bg-white rounded-evolea-lg p-6 shadow-soft text-center">
+              <div class="text-4xl font-display font-bold text-evolea-orange mb-2">4+</div>
+              <div class="text-sm text-evolea-text-light">Programme</div>
+            </div>
+            <div class="bg-white rounded-evolea-lg p-6 shadow-soft text-center">
+              <div class="text-4xl font-display font-bold text-evolea-green mb-2">3-8</div>
+              <div class="text-sm text-evolea-text-light">Jahre</div>
+            </div>
+            <div class="bg-white rounded-evolea-lg p-6 shadow-soft text-center">
+              <div class="text-4xl font-display font-bold text-evolea-sky mb-2">ZH</div>
+              <div class="text-sm text-evolea-text-light">Zürich</div>
+            </div>
+            <div class="bg-gradient-hero rounded-evolea-lg p-6 text-center text-white">
+              <div class="text-4xl font-display font-bold mb-2">100%</div>
+              <div class="text-sm text-white/80">Individuell</div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   </section>
 
   <!-- Programs Section -->
-  <section class="py-20 px-4 bg-white">
+  <section class="section-padding bg-white relative">
     <div class="container mx-auto max-w-6xl">
-      <h2 class="text-3xl md:text-4xl font-bold text-evolea-purple mb-12 text-center">
-        {t('nav.programs')}
-      </h2>
-      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-        <ProgramCard
-          title={t('programs.miniGarten')}
-          description={t('programs.miniGarten.desc')}
-          href={translatePath('/angebote/mini-garten/')}
-          icon="🌱"
-        />
-        <ProgramCard
-          title={t('programs.miniProjekte')}
-          description={t('programs.miniProjekte.desc')}
-          href={translatePath('/angebote/mini-projekte/')}
-          icon="🎨"
-        />
-        <ProgramCard
-          title={t('programs.miniTurnen')}
-          description={t('programs.miniTurnen.desc')}
-          href={translatePath('/angebote/mini-turnen/')}
-          icon="⚽"
-        />
-        <ProgramCard
-          title={t('programs.schulberatung')}
-          description={t('programs.schulberatung.desc')}
-          href={translatePath('/angebote/schulberatung/')}
-          icon="🏫"
-          variant="featured"
-        />
+      <div class="section-header reveal">
+        <span class="section-label">{t('nav.programs')}</span>
+        <h2>{t('programs.title')}</h2>
+        <p>{t('programs.subtitle')}</p>
+      </div>
+
+      <!-- Bento Grid -->
+      <div class="bento-grid">
+        <div class="reveal reveal-delay-1">
+          <ProgramCardEnhanced
+            title={t('programs.miniGarten')}
+            description={t('programs.miniGarten.desc')}
+            href={translatePath('/angebote/mini-garten/')}
+            icon="🌱"
+            imageSrc="/images/programs/garden.jpg"
+            imageAlt="Kinder im Garten beim spielerischen Lernen"
+            colorAccent="green"
+          />
+        </div>
+        <div class="reveal reveal-delay-2 bento-item-large">
+          <ProgramCardEnhanced
+            title={t('programs.miniProjekte')}
+            description={t('programs.miniProjekte.desc')}
+            href={translatePath('/angebote/mini-projekte/')}
+            icon="🎨"
+            imageSrc="/images/programs/projects.jpg"
+            imageAlt="Kinder bei kreativen Projekten"
+            colorAccent="orange"
+            size="large"
+          />
+        </div>
+        <div class="reveal reveal-delay-3">
+          <ProgramCardEnhanced
+            title={t('programs.miniTurnen')}
+            description={t('programs.miniTurnen.desc')}
+            href={translatePath('/angebote/mini-turnen/')}
+            icon="⚽"
+            imageSrc="/images/programs/sports.png"
+            imageAlt="Kinder beim Sport und Turnen"
+            colorAccent="sky"
+          />
+        </div>
+        <div class="reveal reveal-delay-4 bento-item-wide">
+          <ProgramCardEnhanced
+            title={t('programs.schulberatung')}
+            description={t('programs.schulberatung.desc')}
+            href={translatePath('/angebote/schulberatung/')}
+            icon="🏫"
+            imageSrc="/images/programs/school.jpg"
+            imageAlt="Schulberatung und Unterstützung"
+            colorAccent="coral"
+            size="wide"
+          />
+        </div>
       </div>
     </div>
   </section>
 
-  <!-- Team Preview Section -->
-  <section class="py-20 px-4">
-    <div class="container mx-auto max-w-4xl text-center">
-      <h2 class="text-3xl md:text-4xl font-bold text-evolea-purple mb-6">
-        {t('team.title')}
-      </h2>
-      <p class="text-lg text-evolea-text-light mb-8 max-w-2xl mx-auto">
-        {t('team.description')}
-      </p>
-      <a
-        href={translatePath('/team/')}
-        class="inline-block bg-evolea-purple text-white font-semibold px-8 py-4 rounded-evolea hover:bg-evolea-purple-dark transition-colors"
-      >
-        {t('common.learnMore')}
-      </a>
+  <!-- Values Section -->
+  <section class="section-padding relative overflow-hidden">
+    <FloatingShapes variant="minimal" />
+
+    <div class="container mx-auto max-w-6xl relative z-10">
+      <div class="section-header reveal">
+        <span class="section-label">{t('values.title')}</span>
+        <h2>{t('values.title')}</h2>
+      </div>
+
+      <div class="grid md:grid-cols-3 gap-6">
+        <div class="reveal reveal-delay-1">
+          <ValuePillar
+            title={t('values.safety.title')}
+            description={t('values.safety.desc')}
+            icon="🛡️"
+            color="purple"
+          />
+        </div>
+        <div class="reveal reveal-delay-2">
+          <ValuePillar
+            title={t('values.empower.title')}
+            description={t('values.empower.desc')}
+            icon="💪"
+            color="orange"
+          />
+        </div>
+        <div class="reveal reveal-delay-3">
+          <ValuePillar
+            title={t('values.potential.title')}
+            description={t('values.potential.desc')}
+            icon="✨"
+            color="green"
+          />
+        </div>
+      </div>
+    </div>
+
+    <!-- Spectrum line decoration -->
+    <div class="container mx-auto max-w-4xl mt-16">
+      <div class="spectrum-line reveal"></div>
     </div>
   </section>
+
+  <!-- Team Preview Section -->
+  <section class="section-padding bg-white relative">
+    <div class="container mx-auto max-w-4xl text-center">
+      <div class="reveal">
+        <span class="section-label">{t('nav.team')}</span>
+        <h2 class="text-3xl md:text-4xl lg:text-5xl font-display font-bold text-evolea-purple mb-6">
+          {t('team.title')}
+        </h2>
+        <p class="text-lg text-evolea-text-light mb-8 max-w-2xl mx-auto">
+          {t('team.description')}
+        </p>
+        <a href={translatePath('/team/')} class="btn-secondary">
+          {t('team.cta')}
+          <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+          </svg>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA Section -->
+  <GradientCTA
+    title={t('contact.title')}
+    description={t('contact.subtitle')}
+    buttonText={t('contact.cta')}
+    buttonHref={translatePath('/kontakt/')}
+    variant="hero"
+  />
 </Base>

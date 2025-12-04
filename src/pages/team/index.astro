@@ -1,5 +1,7 @@
 ---
 import Base from '@layouts/Base.astro';
+import FloatingShapes from '@components/FloatingShapes.astro';
+import GradientCTA from '@components/GradientCTA.astro';
 import { getLangFromUrl, useTranslations, useTranslatedPath } from '@i18n/utils';
 
 const lang = getLangFromUrl(Astro.url);
@@ -8,41 +10,137 @@ const translatePath = useTranslatedPath(lang);
 
 const team = [
   {
-    name: 'Team EVOLEA',
-    role: 'Pädagogisches Team',
-    bio: 'Unser interdisziplinäres Team besteht aus erfahrenen Fachpersonen aus den Bereichen Heilpädagogik, Psychologie und Pädagogik.',
+    name: 'Gianna Spiess',
+    credentials: 'M.Sc., BCBA',
+    role: 'Mitgründerin, Psychologin',
+    image: '/images/team/gianna-spiess.png',
+    description: 'Board Certified Behavior Analyst mit Schwerpunkt auf kindliche Entwicklung und evidenzbasierte Interventionen.',
+  },
+  {
+    name: 'Annemarie Elias',
+    credentials: 'M.Sc., BCBA',
+    role: 'Mitgründerin, Psychologin',
+    image: '/images/team/annemarie-elias.png',
+    description: 'Board Certified Behavior Analyst mit Expertise in sozialen Kompetenzen und Verhaltensanalyse.',
+  },
+  {
+    name: 'Christoph Jenny',
+    credentials: '',
+    role: 'Mitgründer',
+    image: '/images/team/christoph-jenny.png',
+    description: 'Treibende Kraft hinter der Vision von EVOLEA und verantwortlich für Organisation und Entwicklung.',
+  },
+  {
+    name: 'Alexandra Aleksic',
+    credentials: 'B.Sc.',
+    role: 'Mitgründerin, Psychologie-Studentin',
+    image: '/images/team/alexandra-aleksic.jpg',
+    description: 'Angehende Psychologin mit Leidenschaft für die Arbeit mit Kindern im Spektrum.',
   },
 ];
 ---
 
-<Base title="Team" description="Lernen Sie das Team von EVOLEA kennen - erfahrene Fachpersonen aus Heilpädagogik, Psychologie und Pädagogik.">
-  <section class="py-20 px-4">
-    <div class="container mx-auto max-w-4xl">
-      <h1 class="text-4xl md:text-5xl font-bold text-evolea-purple mb-6 text-center">
-        {t('team.title')}
-      </h1>
-      <p class="text-xl text-evolea-text-light text-center max-w-2xl mx-auto mb-16">
-        {t('team.description')}
-      </p>
-      
-      <div class="bg-white rounded-evolea-lg p-8 shadow-sm">
-        <h2 class="text-2xl font-semibold text-evolea-purple mb-4">Unser Team</h2>
-        <p class="text-evolea-text-light mb-6">
-          Bei EVOLEA arbeiten erfahrene Fachpersonen aus verschiedenen Bereichen zusammen. Unser Team vereint Expertise aus Heilpädagogik, Psychologie, Pädagogik und Sozialarbeit.
+<Base title="Team" description="Lernen Sie das interdisziplinäre Team von EVOLEA kennen - erfahrene Fachpersonen aus Psychologie, Verhaltensanalyse und Pädagogik.">
+  <!-- Hero Section -->
+  <section class="relative py-20 md:py-28 bg-gradient-to-br from-evolea-purple/10 to-evolea-cream overflow-hidden">
+    <FloatingShapes variant="minimal" />
+    <div class="container mx-auto max-w-6xl px-4 relative z-10">
+      <div class="text-center max-w-3xl mx-auto">
+        <span class="inline-block bg-evolea-purple/10 text-evolea-purple px-4 py-2 rounded-full text-sm font-medium mb-6">
+          Das EVOLEA Team
+        </span>
+        <h1 class="text-4xl md:text-5xl lg:text-6xl font-display font-bold text-evolea-purple mb-6 leading-tight">
+          {t('team.title')}
+        </h1>
+        <p class="text-xl text-evolea-text-light leading-relaxed">
+          {t('team.description')}
         </p>
-        <p class="text-evolea-text-light mb-6">
-          Was uns verbindet: Die Überzeugung, dass jedes Kind einzigartig ist und das Recht hat, sich in seinem eigenen Tempo zu entwickeln. Wir begegnen Kindern und Familien mit Empathie, Offenheit und Respekt.
-        </p>
-        <p class="text-evolea-text-light">
-          Alle Mitarbeitenden bilden sich regelmässig weiter und arbeiten nach aktuellen wissenschaftlichen Standards.
-        </p>
-      </div>
-      
-      <div class="mt-12 text-center">
-        <a href={translatePath('/kontakt/')} class="btn-primary">
-          {t('common.contact')}
-        </a>
       </div>
     </div>
   </section>
+
+  <!-- Team Philosophy -->
+  <section class="py-16 bg-white">
+    <div class="container mx-auto max-w-4xl px-4">
+      <div class="bg-evolea-cream/50 rounded-evolea-lg p-8 md:p-12 text-center">
+        <blockquote class="text-xl md:text-2xl text-evolea-purple font-display font-medium leading-relaxed mb-6">
+          "Unser Team ist interdisziplinär und erfahren. Wir handeln mit Empathie, Offenheit und Inklusion. Professionelle Qualität und kontinuierliche Weiterbildung leiten uns. Wir teilen Wissen und wachsen gemeinsam mit den Familien."
+        </blockquote>
+        <div class="w-16 h-1 bg-gradient-spectrum mx-auto rounded-full"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Team Grid -->
+  <section class="py-16 md:py-24">
+    <div class="container mx-auto max-w-6xl px-4">
+      <div class="grid md:grid-cols-2 gap-8">
+        {team.map((member) => (
+          <div class="group bg-white rounded-evolea-lg overflow-hidden shadow-soft hover:shadow-elevated transition-all duration-300">
+            <div class="aspect-square overflow-hidden bg-evolea-cream">
+              <img
+                src={member.image}
+                alt={member.name}
+                class="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-500"
+                loading="lazy"
+              />
+            </div>
+            <div class="p-6">
+              <div class="flex items-baseline gap-2 mb-1">
+                <h3 class="font-display font-bold text-evolea-purple text-xl">
+                  {member.name}
+                </h3>
+                {member.credentials && (
+                  <span class="text-evolea-text-light text-sm">{member.credentials}</span>
+                )}
+              </div>
+              <p class="text-evolea-orange font-medium mb-3">{member.role}</p>
+              <p class="text-evolea-text-light text-sm leading-relaxed">{member.description}</p>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Values Section -->
+  <section class="py-16 bg-evolea-cream/50">
+    <div class="container mx-auto max-w-4xl px-4">
+      <h2 class="text-3xl font-display font-bold text-evolea-purple text-center mb-12">
+        Was uns verbindet
+      </h2>
+      <div class="grid md:grid-cols-3 gap-6">
+        <div class="bg-white rounded-evolea-lg p-6 text-center">
+          <div class="text-3xl mb-4">💜</div>
+          <h3 class="font-display font-bold text-evolea-purple mb-2">Empathie</h3>
+          <p class="text-evolea-text-light text-sm">Wir begegnen jedem Kind und jeder Familie mit Verständnis und Mitgefühl.</p>
+        </div>
+        <div class="bg-white rounded-evolea-lg p-6 text-center">
+          <div class="text-3xl mb-4">📚</div>
+          <h3 class="font-display font-bold text-evolea-purple mb-2">Evidenzbasiert</h3>
+          <p class="text-evolea-text-light text-sm">Unsere Arbeit basiert auf aktuellen wissenschaftlichen Erkenntnissen.</p>
+        </div>
+        <div class="bg-white rounded-evolea-lg p-6 text-center">
+          <div class="text-3xl mb-4">🌱</div>
+          <h3 class="font-display font-bold text-evolea-purple mb-2">Wachstum</h3>
+          <p class="text-evolea-text-light text-sm">Wir lernen ständig dazu und entwickeln uns mit den Familien weiter.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA Section -->
+  <GradientCTA
+    title="Lernen Sie uns kennen"
+    description="Wir freuen uns auf den Austausch mit Ihnen."
+    buttonText="Kontakt aufnehmen"
+    buttonHref={translatePath('/kontakt/')}
+    variant="hero"
+  />
 </Base>
+
+<style>
+  .bg-gradient-spectrum {
+    background: linear-gradient(90deg, #FF6B6B 0%, #FFD93D 25%, #5DD99B 50%, #6BCFFF 75%, #9B7BC0 100%);
+  }
+</style>

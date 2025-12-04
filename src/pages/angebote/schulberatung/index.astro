@@ -1,5 +1,7 @@
 ---
 import Base from '@layouts/Base.astro';
+import FloatingShapes from '@components/FloatingShapes.astro';
+import GradientCTA from '@components/GradientCTA.astro';
 import { getLangFromUrl, useTranslations, useTranslatedPath } from '@i18n/utils';
 
 const lang = getLangFromUrl(Astro.url);
@@ -7,47 +9,200 @@ const t = useTranslations(lang);
 const translatePath = useTranslatedPath(lang);
 ---
 
-<Base title="B+U Schulberatung" description="Beratung und Unterstützung für Lehrpersonen und Schulen im Umgang mit Kindern im Autismus Spektrum.">
-  <section class="py-20 px-4">
-    <div class="container mx-auto max-w-4xl">
+<Base title="B+U Schulberatung" description="Beratung und Unterstützung für Lehrpersonen und Schulen im Umgang mit Kindern im Autismus Spektrum oder mit ADHS.">
+  <!-- Hero Section -->
+  <section class="relative py-20 md:py-28 bg-gradient-to-br from-evolea-coral/10 to-evolea-cream overflow-hidden">
+    <FloatingShapes variant="minimal" />
+    <div class="container mx-auto max-w-6xl px-4 relative z-10">
       <nav class="mb-8 text-sm text-evolea-text-light">
-        <a href={translatePath('/')} class="hover:text-evolea-purple">Startseite</a>
+        <a href={translatePath('/')} class="hover:text-evolea-purple transition-colors">Startseite</a>
         <span class="mx-2">/</span>
-        <a href={translatePath('/angebote/')} class="hover:text-evolea-purple">Angebote</a>
+        <a href={translatePath('/angebote/')} class="hover:text-evolea-purple transition-colors">Angebote</a>
         <span class="mx-2">/</span>
-        <span class="text-evolea-purple">B+U Schulberatung</span>
+        <span class="text-evolea-purple font-medium">B+U Schulberatung</span>
       </nav>
-      
-      <div class="text-6xl mb-6">🏫</div>
-      <h1 class="text-4xl md:text-5xl font-bold text-evolea-purple mb-6">
-        B+U für Schulen
-      </h1>
-      <p class="text-xl text-evolea-text-light mb-8">
-        Beratung und Unterstützung für Lehrpersonen
-      </p>
-      
-      <div class="prose prose-lg max-w-none">
-        <h2 class="text-2xl font-semibold text-evolea-purple mt-12 mb-4">Für wen?</h2>
-        <p class="text-evolea-text-light mb-6">
-          Unser Beratungsangebot richtet sich an Lehrpersonen, Schulteams und Schulleitungen, die Kinder im Autismus Spektrum oder mit ADHS unterrichten.
-        </p>
-        
-        <h2 class="text-2xl font-semibold text-evolea-purple mt-12 mb-4">Was bieten wir?</h2>
-        <p class="text-evolea-text-light mb-6">
-          Wir unterstützen bei konkreten Fragestellungen im Schulalltag, bei der Anpassung von Unterrichtsmethoden und bei der Schaffung eines inklusiven Klassenklimas. Wir bieten Einzelberatungen, Teamweiterbildungen und Begleitung vor Ort.
-        </p>
-        
-        <h2 class="text-2xl font-semibold text-evolea-purple mt-12 mb-4">Unser Ansatz</h2>
-        <p class="text-evolea-text-light mb-6">
-          Wir arbeiten lösungsorientiert und praxisnah. Unsere Empfehlungen basieren auf aktuellen wissenschaftlichen Erkenntnissen und unserer langjährigen Erfahrung in der Arbeit mit neurodiversen Kindern.
-        </p>
-      </div>
-      
-      <div class="mt-12">
-        <a href={translatePath('/kontakt/')} class="btn-primary">
-          {t('common.contact')}
-        </a>
+
+      <div class="grid lg:grid-cols-2 gap-12 items-center">
+        <div>
+          <div class="inline-flex items-center gap-2 bg-evolea-coral/20 text-evolea-coral px-4 py-2 rounded-full text-sm font-medium mb-6">
+            <span class="text-2xl">🏫</span>
+            <span>Für Schulen & Kitas</span>
+          </div>
+          <h1 class="text-4xl md:text-5xl lg:text-6xl font-display font-bold text-evolea-purple mb-6 leading-tight">
+            B+U für Schulen
+          </h1>
+          <p class="text-xl md:text-2xl text-evolea-text-light mb-4 leading-relaxed">
+            Beratung und Unterstützung für Lehrpersonen
+          </p>
+          <p class="text-lg text-evolea-text-light mb-8">
+            Wir beraten und unterstützen Lehrpersonen praxisnah zu individueller Förderung und Inklusion. Wir begleiten Klassen im Unterricht.
+          </p>
+          <div class="flex flex-wrap gap-4">
+            <a href={translatePath('/kontakt/')} class="btn-primary">
+              Beratung anfragen
+              <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+              </svg>
+            </a>
+            <a href="#angebote" class="btn-secondary">
+              Unsere Leistungen
+            </a>
+          </div>
+        </div>
+        <div class="relative">
+          <img
+            src="/images/programs/school.jpg"
+            alt="Schulberatung und Unterstützung"
+            class="rounded-evolea-lg shadow-elevated w-full object-cover aspect-4/3"
+          />
+          <div class="absolute -bottom-4 -right-4 bg-white rounded-evolea p-4 shadow-card">
+            <div class="text-2xl font-display font-bold text-evolea-coral">B+U</div>
+            <div class="text-sm text-evolea-text-light">Beratung</div>
+          </div>
+        </div>
       </div>
     </div>
   </section>
+
+  <!-- Key Info Cards -->
+  <section class="py-16 bg-white">
+    <div class="container mx-auto max-w-6xl px-4">
+      <div class="grid md:grid-cols-3 gap-6">
+        <div class="bg-evolea-cream rounded-evolea-lg p-6 text-center">
+          <div class="text-3xl mb-3">👩‍🏫</div>
+          <div class="font-display font-bold text-evolea-purple text-lg">Für wen</div>
+          <div class="text-evolea-text-light">Lehrpersonen & Schulteams</div>
+        </div>
+        <div class="bg-evolea-cream rounded-evolea-lg p-6 text-center">
+          <div class="text-3xl mb-3">🎯</div>
+          <div class="font-display font-bold text-evolea-purple text-lg">Fokus</div>
+          <div class="text-evolea-text-light">Inklusion & Förderung</div>
+        </div>
+        <div class="bg-evolea-cream rounded-evolea-lg p-6 text-center">
+          <div class="text-3xl mb-3">🤝</div>
+          <div class="font-display font-bold text-evolea-purple text-lg">Ansatz</div>
+          <div class="text-evolea-text-light">Praxisnah & lösungsorientiert</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Main Content -->
+  <section class="py-16 md:py-24">
+    <div class="container mx-auto max-w-4xl px-4">
+      <div class="prose prose-lg max-w-none">
+
+        <h2 class="text-3xl font-display font-bold text-evolea-purple mb-6 flex items-center gap-3">
+          <span class="text-evolea-coral">●</span>
+          Für wen ist dieses Angebot?
+        </h2>
+        <p class="text-evolea-text-light mb-8 text-lg leading-relaxed">
+          Unser Beratungsangebot richtet sich an <strong>Lehrpersonen, Schulteams, Schulleitungen und Kitas</strong>, die Kinder im Autismus Spektrum oder mit ADHS unterrichten und begleiten. Wir unterstützen Sie dabei, ein inklusives Lernumfeld zu schaffen.
+        </p>
+
+        <h2 class="text-3xl font-display font-bold text-evolea-purple mb-6 flex items-center gap-3" id="angebote">
+          <span class="text-evolea-orange">●</span>
+          Unsere Leistungen
+        </h2>
+
+        <div class="space-y-6 mb-12">
+          <div class="bg-white border border-evolea-purple/10 rounded-evolea-lg p-6">
+            <div class="flex items-start gap-4">
+              <div class="text-3xl">💬</div>
+              <div>
+                <h3 class="font-display font-bold text-evolea-purple text-xl mb-2">Einzelberatung</h3>
+                <p class="text-evolea-text-light mb-0">
+                  Individuelle Beratung für Lehrpersonen zu konkreten Fragestellungen: Wie gehe ich mit herausforderndem Verhalten um? Wie gestalte ich Übergänge? Wie kommuniziere ich effektiv?
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <div class="bg-white border border-evolea-purple/10 rounded-evolea-lg p-6">
+            <div class="flex items-start gap-4">
+              <div class="text-3xl">👥</div>
+              <div>
+                <h3 class="font-display font-bold text-evolea-purple text-xl mb-2">Teamweiterbildung</h3>
+                <p class="text-evolea-text-light mb-0">
+                  Schulungen für ganze Teams zu Themen wie Autismus-Spektrum-Störungen, ADHS, Verhaltensanalyse, visuelle Unterstützung und inklusive Pädagogik.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <div class="bg-white border border-evolea-purple/10 rounded-evolea-lg p-6">
+            <div class="flex items-start gap-4">
+              <div class="text-3xl">🏫</div>
+              <div>
+                <h3 class="font-display font-bold text-evolea-purple text-xl mb-2">Unterrichtsbegleitung</h3>
+                <p class="text-evolea-text-light mb-0">
+                  Wir begleiten Klassen direkt im Unterricht, beobachten, geben Feedback und unterstützen bei der Umsetzung inklusiver Strategien.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <div class="bg-white border border-evolea-purple/10 rounded-evolea-lg p-6">
+            <div class="flex items-start gap-4">
+              <div class="text-3xl">📋</div>
+              <div>
+                <h3 class="font-display font-bold text-evolea-purple text-xl mb-2">Förderplanung</h3>
+                <p class="text-evolea-text-light mb-0">
+                  Gemeinsame Entwicklung individueller Förderpläne und Anpassung von Unterrichtsmethoden für einzelne Kinder.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <h2 class="text-3xl font-display font-bold text-evolea-purple mb-6 flex items-center gap-3">
+          <span class="text-evolea-green">●</span>
+          Unser Ansatz
+        </h2>
+        <p class="text-evolea-text-light mb-6 text-lg leading-relaxed">
+          Wir arbeiten <strong>lösungsorientiert und praxisnah</strong>. Unsere Empfehlungen basieren auf aktuellen wissenschaftlichen Erkenntnissen und unserer langjährigen Erfahrung in der Arbeit mit neurodiversen Kindern.
+        </p>
+
+        <div class="grid md:grid-cols-2 gap-4 mb-12">
+          <div class="flex items-start gap-3 text-evolea-text-light">
+            <span class="text-evolea-green mt-1">✓</span>
+            <span><strong>Evidenzbasiert</strong> – Methoden, die wissenschaftlich belegt sind</span>
+          </div>
+          <div class="flex items-start gap-3 text-evolea-text-light">
+            <span class="text-evolea-green mt-1">✓</span>
+            <span><strong>Individuell</strong> – Auf Ihre Situation zugeschnitten</span>
+          </div>
+          <div class="flex items-start gap-3 text-evolea-text-light">
+            <span class="text-evolea-green mt-1">✓</span>
+            <span><strong>Praktisch</strong> – Direkt im Alltag umsetzbar</span>
+          </div>
+          <div class="flex items-start gap-3 text-evolea-text-light">
+            <span class="text-evolea-green mt-1">✓</span>
+            <span><strong>Nachhaltig</strong> – Langfristige Verbesserungen</span>
+          </div>
+        </div>
+
+        <div class="bg-evolea-purple/5 rounded-evolea-lg p-8 mb-12">
+          <h3 class="font-display font-bold text-evolea-purple text-xl mb-4">Kontakt aufnehmen</h3>
+          <p class="text-evolea-text-light mb-4">
+            Haben Sie Fragen oder möchten Sie ein unverbindliches Erstgespräch vereinbaren? Kontaktieren Sie uns:
+          </p>
+          <div class="flex items-center gap-3">
+            <span class="text-evolea-purple">✉️</span>
+            <a href="mailto:hello@evolea.ch" class="text-evolea-purple font-medium hover:underline">hello@evolea.ch</a>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA Section -->
+  <GradientCTA
+    title="Inklusion beginnt mit Wissen"
+    description="Lassen Sie uns gemeinsam Lösungen finden."
+    buttonText="Beratung anfragen"
+    buttonHref={translatePath('/kontakt/')}
+    variant="hero"
+  />
 </Base>

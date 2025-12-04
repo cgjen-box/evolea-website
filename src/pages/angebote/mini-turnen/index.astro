@@ -1,5 +1,7 @@
 ---
 import Base from '@layouts/Base.astro';
+import FloatingShapes from '@components/FloatingShapes.astro';
+import GradientCTA from '@components/GradientCTA.astro';
 import { getLangFromUrl, useTranslations, useTranslatedPath } from '@i18n/utils';
 
 const lang = getLangFromUrl(Astro.url);
@@ -7,47 +9,237 @@ const t = useTranslations(lang);
 const translatePath = useTranslatedPath(lang);
 ---
 
-<Base title="Mini Turnen" description="Turngruppe für Kinder im Autismus Spektrum oder mit ADHS (5-8 Jahre).">
-  <section class="py-20 px-4">
-    <div class="container mx-auto max-w-4xl">
+<Base title="Mini Turnen" description="Inklusives Sportangebot für Kinder im Autismus Spektrum oder mit ADHS (5-8 Jahre). Spiel und Spass in strukturiertem Rahmen.">
+  <!-- Hero Section -->
+  <section class="relative py-20 md:py-28 bg-gradient-to-br from-evolea-sky/10 to-evolea-cream overflow-hidden">
+    <FloatingShapes variant="minimal" />
+    <div class="container mx-auto max-w-6xl px-4 relative z-10">
       <nav class="mb-8 text-sm text-evolea-text-light">
-        <a href={translatePath('/')} class="hover:text-evolea-purple">Startseite</a>
+        <a href={translatePath('/')} class="hover:text-evolea-purple transition-colors">Startseite</a>
         <span class="mx-2">/</span>
-        <a href={translatePath('/angebote/')} class="hover:text-evolea-purple">Angebote</a>
+        <a href={translatePath('/angebote/')} class="hover:text-evolea-purple transition-colors">Angebote</a>
         <span class="mx-2">/</span>
-        <span class="text-evolea-purple">Mini Turnen</span>
+        <span class="text-evolea-purple font-medium">Mini Turnen</span>
       </nav>
-      
-      <div class="text-6xl mb-6">⚽</div>
-      <h1 class="text-4xl md:text-5xl font-bold text-evolea-purple mb-6">
-        Mini Turnen
-      </h1>
-      <p class="text-xl text-evolea-text-light mb-8">
-        Turngruppe für Kinder im Spektrum oder mit ADHS
-      </p>
-      
-      <div class="prose prose-lg max-w-none">
-        <h2 class="text-2xl font-semibold text-evolea-purple mt-12 mb-4">Für wen?</h2>
-        <p class="text-evolea-text-light mb-6">
-          Das Angebot richtet sich an Kinder im Autismus Spektrum oder mit ADHS im Alter von 5-8 Jahren, die Freude an Bewegung haben.
-        </p>
-        
-        <h2 class="text-2xl font-semibold text-evolea-purple mt-12 mb-4">Was machen wir?</h2>
-        <p class="text-evolea-text-light mb-6">
-          In unserer Turngruppe verbinden wir Bewegung mit sozialer Interaktion. Wir turnen, spielen Gruppenspiele und fördern motorische Fähigkeiten in einem sicheren Rahmen.
-        </p>
-        
-        <h2 class="text-2xl font-semibold text-evolea-purple mt-12 mb-4">Unser Ansatz</h2>
-        <p class="text-evolea-text-light mb-6">
-          Die Stunden sind klar strukturiert und vorhersehbar. Wir arbeiten mit visuellen Hilfsmitteln und kleinen Gruppen. Jedes Kind kann in seinem Tempo teilnehmen.
-        </p>
-      </div>
-      
-      <div class="mt-12">
-        <a href={translatePath('/kontakt/')} class="btn-primary">
-          {t('common.contact')}
-        </a>
+
+      <div class="grid lg:grid-cols-2 gap-12 items-center">
+        <div>
+          <div class="inline-flex items-center gap-2 bg-evolea-sky/20 text-evolea-sky px-4 py-2 rounded-full text-sm font-medium mb-6">
+            <span class="text-2xl">⚽</span>
+            <span>Inklusives Sportangebot</span>
+          </div>
+          <h1 class="text-4xl md:text-5xl lg:text-6xl font-display font-bold text-evolea-purple mb-6 leading-tight">
+            Mini Turnen
+          </h1>
+          <p class="text-xl md:text-2xl text-evolea-text-light mb-4 leading-relaxed">
+            Spiel und Spass stehen im Fokus
+          </p>
+          <p class="text-lg text-evolea-text-light mb-8">
+            Ein sicherer, klar strukturierter Rahmen für Kinder, die in regulären Freizeitangeboten oft überfordert sind. Polysportiv und bewegungsfreudig.
+          </p>
+          <div class="flex flex-wrap gap-4">
+            <a href="#anmeldung" class="btn-primary">
+              Jetzt anmelden
+              <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+              </svg>
+            </a>
+            <a href={translatePath('/kontakt/')} class="btn-secondary">
+              Kostenlose Beratung
+            </a>
+          </div>
+        </div>
+        <div class="relative">
+          <img
+            src="/images/programs/sports.png"
+            alt="Kinder beim Sport und Turnen"
+            class="rounded-evolea-lg shadow-elevated w-full object-cover aspect-4/3"
+          />
+          <div class="absolute -bottom-4 -left-4 bg-white rounded-evolea p-4 shadow-card">
+            <div class="text-3xl font-display font-bold text-evolea-sky">5-8</div>
+            <div class="text-sm text-evolea-text-light">Jahre</div>
+          </div>
+        </div>
       </div>
     </div>
   </section>
+
+  <!-- Key Info Cards -->
+  <section class="py-16 bg-white">
+    <div class="container mx-auto max-w-6xl px-4">
+      <div class="grid md:grid-cols-4 gap-6">
+        <div class="bg-evolea-cream rounded-evolea-lg p-6 text-center">
+          <div class="text-3xl mb-3">👧</div>
+          <div class="font-display font-bold text-evolea-purple text-lg">Alter</div>
+          <div class="text-evolea-text-light">5-8 Jahre</div>
+        </div>
+        <div class="bg-evolea-cream rounded-evolea-lg p-6 text-center">
+          <div class="text-3xl mb-3">📅</div>
+          <div class="font-display font-bold text-evolea-purple text-lg">Wann</div>
+          <div class="text-evolea-text-light">Mittwoch 18:00-19:30</div>
+        </div>
+        <div class="bg-evolea-cream rounded-evolea-lg p-6 text-center">
+          <div class="text-3xl mb-3">🗓️</div>
+          <div class="font-display font-bold text-evolea-purple text-lg">Start</div>
+          <div class="text-evolea-text-light">7. Januar 2026</div>
+        </div>
+        <div class="bg-evolea-cream rounded-evolea-lg p-6 text-center">
+          <div class="text-3xl mb-3">📍</div>
+          <div class="font-display font-bold text-evolea-purple text-lg">Wo</div>
+          <div class="text-evolea-text-light">Wallisellen</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Main Content -->
+  <section class="py-16 md:py-24">
+    <div class="container mx-auto max-w-4xl px-4">
+      <div class="prose prose-lg max-w-none">
+
+        <h2 class="text-3xl font-display font-bold text-evolea-purple mb-6 flex items-center gap-3">
+          <span class="text-evolea-sky">●</span>
+          Für wen ist Mini Turnen?
+        </h2>
+        <p class="text-evolea-text-light mb-8 text-lg leading-relaxed">
+          Mini Turnen richtet sich an Kinder im Autismus Spektrum oder mit ADHS im Alter von <strong>5-8 Jahren</strong>. Das Angebot ist ideal für Kinder, die Freude an Bewegung haben, aber in regulären Sportvereinen oft überfordert sind.
+        </p>
+
+        <div class="bg-evolea-sky/10 border-l-4 border-evolea-sky rounded-r-evolea p-6 mb-12">
+          <h3 class="font-display font-bold text-evolea-purple text-xl mb-2">Voraussetzungen für die Teilnahme</h3>
+          <ul class="text-evolea-text-light mb-0 space-y-2">
+            <li>✓ Funktionelle Kommunikation</li>
+            <li>✓ Interesse an sozialem Kontakt und Sport</li>
+            <li>✓ Kann Anweisungen und Regeln folgen</li>
+            <li>✓ Altersgerechte Selbstständigkeit</li>
+            <li>✓ Keine selbst- oder fremdverletzenden Verhaltensweisen</li>
+          </ul>
+        </div>
+
+        <h2 class="text-3xl font-display font-bold text-evolea-purple mb-6 flex items-center gap-3">
+          <span class="text-evolea-green">●</span>
+          Was trainieren wir?
+        </h2>
+        <p class="text-evolea-text-light mb-6 text-lg leading-relaxed">
+          Die Lektionen sind polysportiv gestaltet – wir bieten vielfältige Bewegungserfahrungen in einem strukturierten, sicheren Rahmen.
+        </p>
+
+        <div class="grid md:grid-cols-3 gap-4 mb-12">
+          <div class="bg-white border border-evolea-purple/10 rounded-evolea-lg p-6 text-center">
+            <div class="text-3xl mb-3">🏃</div>
+            <h3 class="font-display font-bold text-evolea-purple text-lg mb-2">Laufen & Rennen</h3>
+            <p class="text-evolea-text-light text-sm mb-0">Koordination und Ausdauer</p>
+          </div>
+          <div class="bg-white border border-evolea-purple/10 rounded-evolea-lg p-6 text-center">
+            <div class="text-3xl mb-3">🧗</div>
+            <h3 class="font-display font-bold text-evolea-purple text-lg mb-2">Klettern</h3>
+            <p class="text-evolea-text-light text-sm mb-0">Kraft und Mut</p>
+          </div>
+          <div class="bg-white border border-evolea-purple/10 rounded-evolea-lg p-6 text-center">
+            <div class="text-3xl mb-3">⚖️</div>
+            <h3 class="font-display font-bold text-evolea-purple text-lg mb-2">Balance</h3>
+            <p class="text-evolea-text-light text-sm mb-0">Gleichgewicht und Körpergefühl</p>
+          </div>
+          <div class="bg-white border border-evolea-purple/10 rounded-evolea-lg p-6 text-center">
+            <div class="text-3xl mb-3">⚽</div>
+            <h3 class="font-display font-bold text-evolea-purple text-lg mb-2">Ballspiele</h3>
+            <p class="text-evolea-text-light text-sm mb-0">Teamwork und Reaktion</p>
+          </div>
+          <div class="bg-white border border-evolea-purple/10 rounded-evolea-lg p-6 text-center">
+            <div class="text-3xl mb-3">🤸</div>
+            <h3 class="font-display font-bold text-evolea-purple text-lg mb-2">Turnen</h3>
+            <p class="text-evolea-text-light text-sm mb-0">Beweglichkeit und Stärke</p>
+          </div>
+          <div class="bg-white border border-evolea-purple/10 rounded-evolea-lg p-6 text-center">
+            <div class="text-3xl mb-3">✋</div>
+            <h3 class="font-display font-bold text-evolea-purple text-lg mb-2">Feinmotorik</h3>
+            <p class="text-evolea-text-light text-sm mb-0">Geschicklichkeit</p>
+          </div>
+        </div>
+
+        <h2 class="text-3xl font-display font-bold text-evolea-purple mb-6 flex items-center gap-3">
+          <span class="text-evolea-orange">●</span>
+          Warum Mini Turnen?
+        </h2>
+        <div class="space-y-4 mb-12">
+          <div class="flex items-start gap-4 p-4 bg-evolea-cream/50 rounded-evolea">
+            <div class="text-2xl">🏅</div>
+            <div>
+              <h4 class="font-display font-bold text-evolea-purple">Selbstvertrauen aufbauen</h4>
+              <p class="text-evolea-text-light mb-0">Durch Bewegungserfolge wächst das Selbstbewusstsein.</p>
+            </div>
+          </div>
+          <div class="flex items-start gap-4 p-4 bg-evolea-cream/50 rounded-evolea">
+            <div class="text-2xl">🔄</div>
+            <div>
+              <h4 class="font-display font-bold text-evolea-purple">Klare Strukturen</h4>
+              <p class="text-evolea-text-light mb-0">Vorhersehbare Abläufe und Routinen geben Sicherheit.</p>
+            </div>
+          </div>
+          <div class="flex items-start gap-4 p-4 bg-evolea-cream/50 rounded-evolea">
+            <div class="text-2xl">😊</div>
+            <div>
+              <h4 class="font-display font-bold text-evolea-purple">Freude an Bewegung</h4>
+              <p class="text-evolea-text-light mb-0">Positive Erfahrungen mit Sport und Gemeinschaft.</p>
+            </div>
+          </div>
+          <div class="flex items-start gap-4 p-4 bg-evolea-cream/50 rounded-evolea">
+            <div class="text-2xl">👥</div>
+            <div>
+              <h4 class="font-display font-bold text-evolea-purple">Zugehörigkeit erleben</h4>
+              <p class="text-evolea-text-light mb-0">Teil einer Gruppe sein und gemeinsam Spass haben.</p>
+            </div>
+          </div>
+        </div>
+
+        <h2 class="text-3xl font-display font-bold text-evolea-purple mb-6 flex items-center gap-3" id="anmeldung">
+          <span class="text-evolea-coral">●</span>
+          Praktische Informationen
+        </h2>
+
+        <div class="bg-evolea-purple/5 rounded-evolea-lg p-8 mb-12">
+          <div class="space-y-4">
+            <div class="flex items-start gap-3">
+              <span class="text-evolea-purple">📅</span>
+              <div>
+                <strong class="text-evolea-purple">Zeiten</strong>
+                <p class="text-evolea-text-light mb-0">Jeden Mittwoch während der Schulzeit, 18:00–19:30 Uhr (Treffpunkt 15 Min. vorher)</p>
+              </div>
+            </div>
+            <div class="flex items-start gap-3">
+              <span class="text-evolea-purple">🗓️</span>
+              <div>
+                <strong class="text-evolea-purple">Startdatum</strong>
+                <p class="text-evolea-text-light mb-0">7. Januar 2026</p>
+              </div>
+            </div>
+            <div class="flex items-start gap-3">
+              <span class="text-evolea-purple">📍</span>
+              <div>
+                <strong class="text-evolea-purple">Standort</strong>
+                <p class="text-evolea-text-light mb-0">Turnhalle Unten, Schulhaus Mösli, Im Mösli 2, 8304 Wallisellen</p>
+              </div>
+            </div>
+            <div class="flex items-start gap-3">
+              <span class="text-evolea-purple">✉️</span>
+              <div>
+                <strong class="text-evolea-purple">Kontakt</strong>
+                <p class="text-evolea-text-light mb-0">hello@evolea.ch – Kostenlose Erstberatung möglich</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA Section -->
+  <GradientCTA
+    title="Bewegung macht Freude!"
+    description="Kontaktieren Sie uns für ein unverbindliches Gespräch."
+    buttonText="Jetzt Kontakt aufnehmen"
+    buttonHref={translatePath('/kontakt/')}
+    variant="calm"
+  />
 </Base>

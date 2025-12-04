@@ -1,0 +1,162 @@
+---
+import { getLangFromUrl } from '@i18n/utils';
+import FloatingShapes from './FloatingShapes.astro';
+
+interface Props {
+  title: string;
+  subtitle: string;
+  videoSrc?: string;
+  posterSrc?: string;
+  primaryButtonText?: string;
+  primaryButtonHref?: string;
+  secondaryButtonText?: string;
+  secondaryButtonHref?: string;
+  showScrollIndicator?: boolean;
+}
+
+const {
+  title,
+  subtitle,
+  videoSrc = '/videos/hero.mp4',
+  posterSrc = '/images/hero-poster.jpg',
+  primaryButtonText,
+  primaryButtonHref,
+  secondaryButtonText,
+  secondaryButtonHref,
+  showScrollIndicator = true,
+} = Astro.props;
+
+const lang = getLangFromUrl(Astro.url);
+---
+
+<section class="hero-video" aria-label={lang === 'de' ? 'Hauptbereich' : 'Hero section'}>
+  <!-- Video Background -->
+  <video
+    autoplay
+    muted
+    loop
+    playsinline
+    poster={posterSrc}
+    class="absolute inset-0 w-full h-full object-cover"
+    aria-hidden="true"
+  >
+    <source src={videoSrc.replace('.mp4', '.webm')} type="video/webm" />
+    <source src={videoSrc} type="video/mp4" />
+  </video>
+
+  <!-- Poster fallback for reduced motion -->
+  <img
+    src={posterSrc}
+    alt=""
+    class="poster-fallback absolute inset-0 w-full h-full object-cover hidden"
+    aria-hidden="true"
+  />
+
+  <!-- Overlay gradient -->
+  <div class="hero-video-overlay" aria-hidden="true"></div>
+
+  <!-- Floating decorative shapes -->
+  <FloatingShapes variant="hero" />
+
+  <!-- Content -->
+  <div class="hero-video-content">
+    <h1 class="animate-fade-slide-down" style="animation-delay: 0.2s;">
+      {title}
+    </h1>
+    <p class="animate-fade-slide-up" style="animation-delay: 0.4s;">
+      {subtitle}
+    </p>
+
+    {(primaryButtonText || secondaryButtonText) && (
+      <div class="hero-buttons animate-fade-slide-up" style="animation-delay: 0.6s;">
+        {primaryButtonText && primaryButtonHref && (
+          <a href={primaryButtonHref} class="btn-white btn-mobile-full">
+            {primaryButtonText}
+          </a>
+        )}
+        {secondaryButtonText && secondaryButtonHref && (
+          <a href={secondaryButtonHref} class="btn-secondary border-white text-white hover:bg-white hover:text-evolea-purple btn-mobile-full">
+            {secondaryButtonText}
+          </a>
+        )}
+      </div>
+    )}
+  </div>
+
+  <!-- Scroll indicator -->
+  {showScrollIndicator && (
+    <div class="scroll-indicator" aria-hidden="true">
+      <span class="text-sm font-medium">{lang === 'de' ? 'Entdecken' : 'Explore'}</span>
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
+      </svg>
+    </div>
+  )}
+</section>
+
+<style>
+  .hero-video {
+    min-height: 100vh;
+    min-height: 100dvh; /* Dynamic viewport height for mobile */
+  }
+
+  /* Ensure content stays above video */
+  .hero-video-content {
+    position: relative;
+    z-index: 10;
+  }
+
+  /* Animation keyframes for content */
+  @keyframes fadeSlideDown {
+    0% {
+      opacity: 0;
+      transform: translateY(-30px);
+    }
+    100% {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes fadeSlideUp {
+    0% {
+      opacity: 0;
+      transform: translateY(30px);
+    }
+    100% {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .animate-fade-slide-down {
+    opacity: 0;
+    animation: fadeSlideDown 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  }
+
+  .animate-fade-slide-up {
+    opacity: 0;
+    animation: fadeSlideUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  }
+
+  /* Reduced motion: show poster, hide video */
+  @media (prefers-reduced-motion: reduce) {
+    .hero-video video {
+      display: none;
+    }
+
+    .hero-video .poster-fallback {
+      display: block !important;
+    }
+
+    .animate-fade-slide-down,
+    .animate-fade-slide-up {
+      opacity: 1;
+      animation: none;
+    }
+
+    .scroll-indicator {
+      animation: none;
+    }
+  }
+</style>

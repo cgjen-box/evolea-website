@@ -1,0 +1,207 @@
+---
+interface Props {
+  title: string;
+  description: string;
+  href: string;
+  icon?: string;
+  imageSrc?: string;
+  imageAlt?: string;
+  colorAccent?: 'green' | 'orange' | 'sky' | 'coral' | 'purple';
+  size?: 'default' | 'large' | 'wide';
+}
+
+const {
+  title,
+  description,
+  href,
+  icon,
+  imageSrc,
+  imageAlt = '',
+  colorAccent = 'purple',
+  size = 'default',
+} = Astro.props;
+
+// Map color accents to CSS classes
+const colorClasses = {
+  green: 'program-card-green',
+  orange: 'program-card-orange',
+  sky: 'program-card-sky',
+  coral: 'program-card-coral',
+  purple: '',
+};
+
+// Map sizes to grid classes
+const sizeClasses = {
+  default: '',
+  large: 'bento-item-large',
+  wide: 'bento-item-wide',
+};
+
+// Default placeholder images based on program type
+const defaultImages: Record<string, string> = {
+  green: '/images/programs/garden.jpg',
+  orange: '/images/programs/projects.jpg',
+  sky: '/images/programs/sports.jpg',
+  coral: '/images/programs/school.jpg',
+  purple: '/images/programs/default.jpg',
+};
+
+const backgroundImage = imageSrc || defaultImages[colorAccent] || defaultImages.purple;
+---
+
+<a
+  href={href}
+  class:list={[
+    'program-card group',
+    colorClasses[colorAccent],
+    sizeClasses[size],
+    'block focus-visible:ring-2 focus-visible:ring-evolea-orange focus-visible:ring-offset-2',
+  ]}
+>
+  <!-- Background Image -->
+  <div class="absolute inset-0 bg-evolea-purple-dark">
+    {imageSrc ? (
+      <img
+        src={backgroundImage}
+        alt={imageAlt}
+        class="program-card-image"
+        loading="lazy"
+      />
+    ) : (
+      <!-- Gradient fallback if no image -->
+      <div class="absolute inset-0 bg-gradient-to-br from-evolea-purple to-evolea-purple-dark"></div>
+    )}
+  </div>
+
+  <!-- Overlay -->
+  <div class="program-card-overlay">
+    {icon && (
+      <span class="program-card-icon" aria-hidden="true">{icon}</span>
+    )}
+    <h3 class="program-card-title">{title}</h3>
+    <p class="program-card-description">{description}</p>
+
+    <!-- Hover indicator -->
+    <div class="mt-4 flex items-center gap-2 text-white/80 group-hover:text-white transition-colors">
+      <span class="text-sm font-medium">Mehr erfahren</span>
+      <svg class="w-4 h-4 transform group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+      </svg>
+    </div>
+  </div>
+</a>
+
+<style>
+  /* Enhanced hover effects */
+  .program-card {
+    position: relative;
+    display: block;
+    overflow: hidden;
+    border-radius: 24px;
+    transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+    aspect-ratio: 4/3;
+  }
+
+  .program-card:hover {
+    transform: translateY(-8px) scale(1.02);
+  }
+
+  .program-card-image {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .program-card:hover .program-card-image {
+    transform: scale(1.1);
+  }
+
+  .program-card-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      to top,
+      rgba(74, 52, 96, 0.95) 0%,
+      rgba(107, 76, 138, 0.6) 50%,
+      transparent 100%
+    );
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding: 1.5rem;
+    transition: all 0.3s ease;
+  }
+
+  .program-card:hover .program-card-overlay {
+    background: rgba(107, 76, 138, 0.92);
+  }
+
+  .program-card-icon {
+    font-size: 2.5rem;
+    margin-bottom: 0.75rem;
+    transition: transform 0.3s ease;
+  }
+
+  .program-card:hover .program-card-icon {
+    transform: scale(1.2) rotate(5deg);
+  }
+
+  .program-card-title {
+    font-family: 'Fredoka', 'Poppins', sans-serif;
+    font-weight: 700;
+    font-size: 1.25rem;
+    color: white;
+    margin-bottom: 0.5rem;
+  }
+
+  @media (min-width: 768px) {
+    .program-card-title {
+      font-size: 1.5rem;
+    }
+  }
+
+  .program-card-description {
+    color: rgba(255, 255, 255, 0.85);
+    font-size: 0.875rem;
+    line-height: 1.5;
+  }
+
+  /* Color accent borders */
+  .program-card-green {
+    border-bottom: 4px solid #5DD99B;
+  }
+
+  .program-card-orange {
+    border-bottom: 4px solid #FF8C42;
+  }
+
+  .program-card-sky {
+    border-bottom: 4px solid #6BCFFF;
+  }
+
+  .program-card-coral {
+    border-bottom: 4px solid #FF6B6B;
+  }
+
+  /* Size variants */
+  .bento-item-large {
+    grid-column: span 2;
+    grid-row: span 2;
+    aspect-ratio: auto;
+  }
+
+  .bento-item-wide {
+    grid-column: span 2;
+  }
+
+  @media (max-width: 767px) {
+    .bento-item-large,
+    .bento-item-wide {
+      grid-column: span 1;
+      grid-row: span 1;
+    }
+  }
+</style>
