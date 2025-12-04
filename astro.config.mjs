@@ -4,7 +4,8 @@ import tailwind from '@astrojs/tailwind';
 
 // https://astro.build/config
 export default defineConfig({
-  site: 'https://evolea.ch',
+  site: 'https://cgjen-box.github.io',
+  base: '/evolea-website',
   integrations: [sitemap(), tailwind()],
   i18n: {
     locales: ['de', 'en'],
