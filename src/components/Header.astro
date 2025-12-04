@@ -1,0 +1,97 @@
+---
+import { getLangFromUrl, useTranslations, useTranslatedPath, getAlternatePath } from '@i18n/utils';
+import { languages } from '@i18n/ui';
+import LanguagePicker from './LanguagePicker.astro';
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+const translatePath = useTranslatedPath(lang);
+
+const navItems = [
+  { key: 'nav.programs', href: '/angebote/' },
+  { key: 'nav.about', href: '/ueber-uns/' },
+  { key: 'nav.team', href: '/team/' },
+  { key: 'nav.blog', href: '/blog/' },
+  { key: 'nav.contact', href: '/kontakt/' },
+] as const;
+---
+
+<header class="sticky top-0 z-50 bg-evolea-cream/95 backdrop-blur-sm border-b border-evolea-purple/10">
+  <nav class="container mx-auto px-4 py-4 flex items-center justify-between" aria-label={lang === 'de' ? 'Hauptnavigation' : 'Main navigation'}>
+    <!-- Logo -->
+    <a href={translatePath('/')} class="flex items-center gap-2 text-evolea-purple font-semibold text-xl hover:text-evolea-purple-dark transition-colors">
+      <svg class="w-8 h-8" viewBox="0 0 32 32" fill="currentColor" aria-hidden="true">
+        <circle cx="16" cy="16" r="14" fill="currentColor" opacity="0.1"/>
+        <text x="16" y="21" font-size="14" font-weight="600" text-anchor="middle" fill="currentColor">E</text>
+      </svg>
+      <span>EVOLEA</span>
+    </a>
+
+    <!-- Desktop Navigation -->
+    <div class="hidden md:flex items-center gap-6">
+      {navItems.map(({ key, href }) => (
+        <a
+          href={translatePath(href)}
+          class="text-evolea-text hover:text-evolea-purple transition-colors font-medium"
+        >
+          {t(key)}
+        </a>
+      ))}
+      <LanguagePicker />
+    </div>
+
+    <!-- Mobile Menu Button -->
+    <button
+      type="button"
+      class="md:hidden p-2 text-evolea-purple hover:bg-evolea-purple/10 rounded-evolea-sm transition-colors"
+      aria-expanded="false"
+      aria-controls="mobile-menu"
+      aria-label={lang === 'de' ? 'Menü öffnen' : 'Open menu'}
+      id="mobile-menu-button"
+    >
+      <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+      </svg>
+    </button>
+  </nav>
+
+  <!-- Mobile Navigation -->
+  <div
+    id="mobile-menu"
+    class="hidden md:hidden absolute top-full left-0 right-0 bg-evolea-cream border-b border-evolea-purple/10 shadow-lg"
+  >
+    <div class="container mx-auto px-4 py-4 flex flex-col gap-4">
+      {navItems.map(({ key, href }) => (
+        <a
+          href={translatePath(href)}
+          class="text-evolea-text hover:text-evolea-purple transition-colors font-medium py-2"
+        >
+          {t(key)}
+        </a>
+      ))}
+      <div class="pt-2 border-t border-evolea-purple/10">
+        <LanguagePicker />
+      </div>
+    </div>
+  </div>
+</header>
+
+<script>
+  const menuButton = document.getElementById('mobile-menu-button');
+  const mobileMenu = document.getElementById('mobile-menu');
+
+  menuButton?.addEventListener('click', () => {
+    const isExpanded = menuButton.getAttribute('aria-expanded') === 'true';
+    menuButton.setAttribute('aria-expanded', (!isExpanded).toString());
+    mobileMenu?.classList.toggle('hidden');
+  });
+
+  // Close menu when clicking outside
+  document.addEventListener('click', (event) => {
+    const target = event.target as HTMLElement;
+    if (!menuButton?.contains(target) && !mobileMenu?.contains(target)) {
+      menuButton?.setAttribute('aria-expanded', 'false');
+      mobileMenu?.classList.add('hidden');
+    }
+  });
+</script>

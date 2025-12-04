@@ -1,0 +1,19 @@
+---
+import { getLangFromUrl, getAlternatePath, getAlternateLang } from '@i18n/utils';
+import { languages } from '@i18n/ui';
+
+const lang = getLangFromUrl(Astro.url);
+const alternateLang = getAlternateLang(lang);
+const alternatePath = getAlternatePath(Astro.url);
+---
+
+<a
+  href={alternatePath}
+  class="inline-flex items-center gap-2 px-3 py-1.5 text-sm font-medium text-evolea-purple hover:bg-evolea-purple/10 rounded-evolea-sm transition-colors"
+  aria-label={lang === 'de' ? 'Switch to English' : 'Auf Deutsch wechseln'}
+>
+  <span class="sr-only">{lang === 'de' ? 'Current language:' : 'Aktuelle Sprache:'}</span>
+  <span class="uppercase text-xs font-semibold bg-evolea-purple/10 px-2 py-0.5 rounded">
+    {languages[alternateLang]}
+  </span>
+</a>

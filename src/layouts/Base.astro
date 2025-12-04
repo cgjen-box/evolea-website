@@ -1,0 +1,135 @@
+---
+import { getLangFromUrl, useTranslations, getLanguageAlternates } from '@i18n/utils';
+import Header from '@components/Header.astro';
+import Footer from '@components/Footer.astro';
+import '@fontsource/poppins/400.css';
+import '@fontsource/poppins/500.css';
+import '@fontsource/poppins/600.css';
+import '@fontsource/poppins/700.css';
+
+interface Props {
+  title: string;
+  description?: string;
+  image?: string;
+}
+
+const { title, description = 'EVOLEA Verein - Bildungsangebote für Kinder im Autismus Spektrum oder mit ADHS in Zürich.', image = '/images/og-default.jpg' } = Astro.props;
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+const alternates = getLanguageAlternates(Astro.url);
+const canonicalURL = new URL(Astro.url.pathname, Astro.site);
+---
+
+<!doctype html>
+<html lang={lang} class="scroll-smooth">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="generator" content={Astro.generator} />
+    
+    <!-- Primary Meta Tags -->
+    <title>{title} | EVOLEA</title>
+    <meta name="title" content={`${title} | EVOLEA`} />
+    <meta name="description" content={description} />
+    
+    <!-- Canonical & Language Alternates -->
+    <link rel="canonical" href={canonicalURL} />
+    {alternates.map(({ lang, href }) => (
+      <link rel="alternate" hreflang={lang} href={new URL(href, Astro.site)} />
+    ))}
+    <link rel="alternate" hreflang="x-default" href={Astro.site} />
+    
+    <!-- Open Graph -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={Astro.url} />
+    <meta property="og:title" content={`${title} | EVOLEA`} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content={new URL(image, Astro.site)} />
+    <meta property="og:locale" content={lang === 'de' ? 'de_CH' : 'en'} />
+    
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image" />
+    <meta property="twitter:url" content={Astro.url} />
+    <meta property="twitter:title" content={`${title} | EVOLEA`} />
+    <meta property="twitter:description" content={description} />
+    <meta property="twitter:image" content={new URL(image, Astro.site)} />
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    
+    <!-- Preconnect to external resources -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  </head>
+  <body class="bg-evolea-cream text-evolea-text min-h-screen flex flex-col antialiased">
+    <a href="#main-content" class="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-50 focus:bg-evolea-purple focus:text-white focus:px-4 focus:py-2 focus:rounded-evolea-sm">
+      {lang === 'de' ? 'Zum Hauptinhalt springen' : 'Skip to main content'}
+    </a>
+    
+    <Header />
+    
+    <main id="main-content" class="flex-1">
+      <slot />
+    </main>
+    
+    <Footer />
+  </body>
+</html>
+
+<style is:global>
+  :root {
+    --color-evolea-purple: #6B4C8A;
+    --color-evolea-purple-light: #8B6CAA;
+    --color-evolea-purple-dark: #4A3460;
+    --color-evolea-cream: #FDF8F3;
+    --color-evolea-green: #7CB97C;
+    --color-evolea-orange: #E8A858;
+    --color-evolea-text: #2D2A32;
+    --color-evolea-text-light: #5C5762;
+  }
+
+  * {
+    box-sizing: border-box;
+  }
+
+  html {
+    font-family: 'Poppins', system-ui, sans-serif;
+  }
+
+  /* Respect reduced motion preferences */
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+
+  /* Focus styles for accessibility */
+  :focus-visible {
+    outline: 2px solid var(--color-evolea-purple);
+    outline-offset: 2px;
+  }
+
+  /* Utility classes */
+  .bg-evolea-cream { background-color: var(--color-evolea-cream); }
+  .bg-evolea-purple { background-color: var(--color-evolea-purple); }
+  .bg-evolea-purple-light { background-color: var(--color-evolea-purple-light); }
+  .bg-evolea-purple-dark { background-color: var(--color-evolea-purple-dark); }
+  .bg-evolea-green { background-color: var(--color-evolea-green); }
+  .bg-evolea-orange { background-color: var(--color-evolea-orange); }
+
+  .text-evolea-purple { color: var(--color-evolea-purple); }
+  .text-evolea-purple-dark { color: var(--color-evolea-purple-dark); }
+  .text-evolea-text { color: var(--color-evolea-text); }
+  .text-evolea-text-light { color: var(--color-evolea-text-light); }
+
+  .rounded-evolea-sm { border-radius: 12px; }
+  .rounded-evolea { border-radius: 16px; }
+  .rounded-evolea-lg { border-radius: 24px; }
+</style>

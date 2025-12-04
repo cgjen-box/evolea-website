@@ -1,0 +1,103 @@
+---
+import Base from '@layouts/Base.astro';
+import ProgramCard from '@components/ProgramCard.astro';
+import { getLangFromUrl, useTranslations, useTranslatedPath } from '@i18n/utils';
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+const translatePath = useTranslatedPath(lang);
+---
+
+<Base title="Home" description="EVOLEA Verein - Educational programs for children on the autism spectrum or with ADHD in Zürich. Mini Garden, Mini Projects, Mini Sports and School Consultation.">
+  <!-- Hero Section -->
+  <section class="py-20 px-4 bg-gradient-to-b from-evolea-purple/5 to-evolea-cream">
+    <div class="container mx-auto max-w-4xl text-center">
+      <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold text-evolea-purple leading-tight mb-6">
+        {t('hero.title')}
+      </h1>
+      <p class="text-xl text-evolea-text-light max-w-2xl mx-auto mb-8">
+        {t('hero.subtitle')}
+      </p>
+      <div class="flex flex-col sm:flex-row gap-4 justify-center">
+        <a
+          href={translatePath('/angebote/')}
+          class="inline-block bg-evolea-purple text-white font-semibold px-8 py-4 rounded-evolea hover:bg-evolea-purple-dark transition-colors"
+        >
+          {t('common.learnMore')}
+        </a>
+        <a
+          href={translatePath('/kontakt/')}
+          class="inline-block bg-white text-evolea-purple font-semibold px-8 py-4 rounded-evolea border-2 border-evolea-purple hover:bg-evolea-purple/5 transition-colors"
+        >
+          {t('common.contact')}
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- About Section -->
+  <section class="py-20 px-4">
+    <div class="container mx-auto max-w-4xl">
+      <h2 class="text-3xl md:text-4xl font-bold text-evolea-purple mb-6 text-center">
+        {t('about.title')}
+      </h2>
+      <p class="text-lg text-evolea-text-light text-center max-w-2xl mx-auto leading-relaxed">
+        {t('about.description')}
+      </p>
+    </div>
+  </section>
+
+  <!-- Programs Section -->
+  <section class="py-20 px-4 bg-white">
+    <div class="container mx-auto max-w-6xl">
+      <h2 class="text-3xl md:text-4xl font-bold text-evolea-purple mb-12 text-center">
+        {t('nav.programs')}
+      </h2>
+      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <ProgramCard
+          title={t('programs.miniGarten')}
+          description={t('programs.miniGarten.desc')}
+          href={translatePath('/angebote/mini-garten/')}
+          icon="🌱"
+        />
+        <ProgramCard
+          title={t('programs.miniProjekte')}
+          description={t('programs.miniProjekte.desc')}
+          href={translatePath('/angebote/mini-projekte/')}
+          icon="🎨"
+        />
+        <ProgramCard
+          title={t('programs.miniTurnen')}
+          description={t('programs.miniTurnen.desc')}
+          href={translatePath('/angebote/mini-turnen/')}
+          icon="⚽"
+        />
+        <ProgramCard
+          title={t('programs.schulberatung')}
+          description={t('programs.schulberatung.desc')}
+          href={translatePath('/angebote/schulberatung/')}
+          icon="🏫"
+          variant="featured"
+        />
+      </div>
+    </div>
+  </section>
+
+  <!-- Team Preview Section -->
+  <section class="py-20 px-4">
+    <div class="container mx-auto max-w-4xl text-center">
+      <h2 class="text-3xl md:text-4xl font-bold text-evolea-purple mb-6">
+        {t('team.title')}
+      </h2>
+      <p class="text-lg text-evolea-text-light mb-8 max-w-2xl mx-auto">
+        {t('team.description')}
+      </p>
+      <a
+        href={translatePath('/team/')}
+        class="inline-block bg-evolea-purple text-white font-semibold px-8 py-4 rounded-evolea hover:bg-evolea-purple-dark transition-colors"
+      >
+        {t('common.learnMore')}
+      </a>
+    </div>
+  </section>
+</Base>

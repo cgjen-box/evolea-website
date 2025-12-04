@@ -1,0 +1,46 @@
+---
+interface Props {
+  title: string;
+  description: string;
+  href: string;
+  icon?: string;
+  variant?: 'default' | 'featured';
+}
+
+const { title, description, href, icon, variant = 'default' } = Astro.props;
+---
+
+<a
+  href={href}
+  class:list={[
+    'group block p-6 rounded-evolea-lg transition-all duration-200',
+    'hover:shadow-lg hover:-translate-y-1',
+    'focus-visible:ring-2 focus-visible:ring-evolea-purple focus-visible:ring-offset-2',
+    {
+      'bg-white border border-evolea-purple/10': variant === 'default',
+      'bg-evolea-purple text-white': variant === 'featured',
+    },
+  ]}
+>
+  {icon && (
+    <div class="text-4xl mb-4" aria-hidden="true">{icon}</div>
+  )}
+  <h3 class:list={[
+    'text-xl font-semibold mb-2 group-hover:underline',
+    {
+      'text-evolea-purple': variant === 'default',
+      'text-white': variant === 'featured',
+    },
+  ]}>
+    {title}
+  </h3>
+  <p class:list={[
+    'text-sm leading-relaxed',
+    {
+      'text-evolea-text-light': variant === 'default',
+      'text-white/80': variant === 'featured',
+    },
+  ]}>
+    {description}
+  </p>
+</a>

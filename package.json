@@ -1,0 +1,22 @@
+{
+  "name": "evolea-website",
+  "type": "module",
+  "version": "1.0.0",
+  "description": "EVOLEA Verein - Bildungsangebote für Kinder im Spektrum",
+  "scripts": {
+    "dev": "astro dev",
+    "start": "astro dev",
+    "build": "astro check && astro build",
+    "preview": "astro preview",
+    "astro": "astro"
+  },
+  "dependencies": {
+    "astro": "^5.1.1",
+    "@astrojs/check": "^0.9.4",
+    "typescript": "^5.7.2"
+  },
+  "devDependencies": {
+    "@astrojs/sitemap": "^3.2.1",
+    "@fontsource/poppins": "^5.1.0"
+  }
+}
