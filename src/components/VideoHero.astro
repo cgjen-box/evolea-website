@@ -32,7 +32,7 @@ const lang = getLangFromUrl(Astro.url);
 ---
 
 <section class="hero-video" aria-label={lang === 'de' ? 'Hauptbereich' : 'Hero section'}>
-  <!-- Video Background - optimized for fast loading -->
+  <!-- Video Background - optimized for iOS Safari autoplay -->
   <video
     autoplay
     muted
@@ -164,3 +164,64 @@ const lang = getLangFromUrl(Astro.url);
     }
   }
 </style>
+
+<script>
+  // Force video playback on iOS Safari
+  function initHeroVideo() {
+    const video = document.getElementById('hero-video') as HTMLVideoElement;
+    if (!video) return;
+
+    // Function to attempt playing the video
+    const playVideo = async () => {
+      try {
+        // Ensure video is muted (required for autoplay on iOS)
+        video.muted = true;
+        await video.play();
+      } catch (error) {
+        // Autoplay was prevented, show poster instead
+        console.log('Video autoplay prevented:', error);
+        const poster = video.parentElement?.querySelector('.poster-fallback') as HTMLElement;
+        if (poster) {
+          poster.style.display = 'block';
+        }
+      }
+    };
+
+    // Try to play immediately
+    playVideo();
+
+    // Also try on canplay event
+    video.addEventListener('canplay', playVideo, { once: true });
+
+    // iOS sometimes needs user interaction - play on first touch/scroll
+    const playOnInteraction = () => {
+      playVideo();
+      document.removeEventListener('touchstart', playOnInteraction);
+      document.removeEventListener('scroll', playOnInteraction);
+    };
+
+    document.addEventListener('touchstart', playOnInteraction, { once: true, passive: true });
+    document.addEventListener('scroll', playOnInteraction, { once: true, passive: true });
+
+    // Use Intersection Observer to pause when not visible (saves battery on mobile)
+    if ('IntersectionObserver' in window) {
+      const observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              playVideo();
+            } else {
+              video.pause();
+            }
+          });
+        },
+        { threshold: 0.25 }
+      );
+      observer.observe(video);
+    }
+  }
+
+  // Initialize
+  document.addEventListener('DOMContentLoaded', initHeroVideo);
+  document.addEventListener('astro:page-load', initHeroVideo);
+</script>
