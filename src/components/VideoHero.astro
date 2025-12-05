@@ -32,28 +32,24 @@ const lang = getLangFromUrl(Astro.url);
 ---
 
 <section class="hero-video" aria-label={lang === 'de' ? 'Hauptbereich' : 'Hero section'}>
-  <!-- Video Background - optimized for iOS Safari autoplay -->
+  <!-- Video Background - iOS Safari compatible (matches planted-website) -->
   <video
+    class="hero-video-element"
     autoplay
     muted
     loop
     playsinline
-    preload="auto"
-    poster={posterSrc}
-    class="absolute inset-0 w-full h-full object-cover"
-    aria-hidden="true"
     id="hero-video"
   >
     <source src={videoSrc} type="video/mp4" />
   </video>
 
-  <!-- Poster fallback for reduced motion -->
+  <!-- Poster fallback for reduced motion or if video fails -->
   <img
     src={posterSrc}
     alt=""
-    class="poster-fallback absolute inset-0 w-full h-full object-cover hidden"
+    class="poster-fallback"
     aria-hidden="true"
-    fetchpriority="high"
   />
 
   <!-- Overlay gradient -->
@@ -104,6 +100,25 @@ const lang = getLangFromUrl(Astro.url);
     min-height: 100dvh; /* Dynamic viewport height for mobile */
   }
 
+  /* Video element - matches planted-website approach */
+  .hero-video-element {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  /* Poster fallback - hidden by default, shown if video fails or reduced motion */
+  .poster-fallback {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: none;
+  }
+
   /* Ensure content stays above video */
   .hero-video-content {
     position: relative;
@@ -145,11 +160,11 @@ const lang = getLangFromUrl(Astro.url);
 
   /* Reduced motion: show poster, hide video */
   @media (prefers-reduced-motion: reduce) {
-    .hero-video video {
-      display: none;
+    .hero-video-element {
+      display: none !important;
     }
 
-    .hero-video .poster-fallback {
+    .poster-fallback {
       display: block !important;
     }
 
@@ -166,62 +181,34 @@ const lang = getLangFromUrl(Astro.url);
 </style>
 
 <script>
-  // Force video playback on iOS Safari
+  // Simple video initialization - matches planted-website approach
   function initHeroVideo() {
     const video = document.getElementById('hero-video') as HTMLVideoElement;
+    const poster = document.querySelector('.poster-fallback') as HTMLElement;
+
     if (!video) return;
 
-    // Function to attempt playing the video
-    const playVideo = async () => {
-      try {
-        // Ensure video is muted (required for autoplay on iOS)
-        video.muted = true;
-        await video.play();
-      } catch (error) {
-        // Autoplay was prevented, show poster instead
-        console.log('Video autoplay prevented:', error);
-        const poster = video.parentElement?.querySelector('.poster-fallback') as HTMLElement;
-        if (poster) {
-          poster.style.display = 'block';
-        }
-      }
-    };
+    // Ensure muted (required for iOS autoplay)
+    video.muted = true;
 
-    // Try to play immediately
-    playVideo();
+    // Try to play
+    const playPromise = video.play();
 
-    // Also try on canplay event
-    video.addEventListener('canplay', playVideo, { once: true });
-
-    // iOS sometimes needs user interaction - play on first touch/scroll
-    const playOnInteraction = () => {
-      playVideo();
-      document.removeEventListener('touchstart', playOnInteraction);
-      document.removeEventListener('scroll', playOnInteraction);
-    };
-
-    document.addEventListener('touchstart', playOnInteraction, { once: true, passive: true });
-    document.addEventListener('scroll', playOnInteraction, { once: true, passive: true });
-
-    // Use Intersection Observer to pause when not visible (saves battery on mobile)
-    if ('IntersectionObserver' in window) {
-      const observer = new IntersectionObserver(
-        (entries) => {
-          entries.forEach((entry) => {
-            if (entry.isIntersecting) {
-              playVideo();
-            } else {
-              video.pause();
-            }
-          });
-        },
-        { threshold: 0.25 }
-      );
-      observer.observe(video);
+    if (playPromise !== undefined) {
+      playPromise.catch(() => {
+        // Autoplay blocked - show poster
+        if (poster) poster.style.display = 'block';
+      });
     }
   }
 
-  // Initialize
-  document.addEventListener('DOMContentLoaded', initHeroVideo);
+  // Initialize on load
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initHeroVideo);
+  } else {
+    initHeroVideo();
+  }
+
+  // Also handle Astro page transitions
   document.addEventListener('astro:page-load', initHeroVideo);
 </script>
