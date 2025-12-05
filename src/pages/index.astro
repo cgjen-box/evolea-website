@@ -38,7 +38,7 @@ const translatePath = useTranslatedPath(lang);
         <!-- Text content -->
         <div class="reveal">
           <span class="section-label">{t('about.title')}</span>
-          <h2 class="text-3xl md:text-4xl lg:text-5xl font-display font-bold text-evolea-purple mb-6 leading-tight">
+          <h2 class="text-3xl md:text-4xl lg:text-5xl font-display font-bold text-evolea-magenta mb-6 leading-tight">
             <span class="doodle-underline">{t('about.subtitle')}</span>
           </h2>
           <p class="text-lg text-evolea-text-light leading-relaxed mb-8">
@@ -52,24 +52,24 @@ const translatePath = useTranslatedPath(lang);
           </a>
         </div>
 
-        <!-- Visual element / Stats -->
+        <!-- Visual element / Stats - TRUE evolea.ch spectrum -->
         <div class="reveal reveal-delay-2">
           <div class="grid grid-cols-2 gap-4">
             <div class="bg-white rounded-evolea-lg p-6 shadow-soft text-center">
-              <div class="text-4xl font-display font-bold text-evolea-orange mb-2">4+</div>
+              <div class="text-4xl font-display font-bold text-evolea-coral mb-2">4+</div>
               <div class="text-sm text-evolea-text-light">Programme</div>
             </div>
             <div class="bg-white rounded-evolea-lg p-6 shadow-soft text-center">
-              <div class="text-4xl font-display font-bold text-evolea-green mb-2">3-8</div>
+              <div class="text-4xl font-display font-bold text-evolea-mint mb-2">3-8</div>
               <div class="text-sm text-evolea-text-light">Jahre</div>
             </div>
             <div class="bg-white rounded-evolea-lg p-6 shadow-soft text-center">
-              <div class="text-4xl font-display font-bold text-evolea-sky mb-2">ZH</div>
+              <div class="text-4xl font-display font-bold text-evolea-purple-light mb-2">ZH</div>
               <div class="text-sm text-evolea-text-light">Zürich</div>
             </div>
-            <div class="bg-gradient-hero rounded-evolea-lg p-6 text-center text-white">
+            <div class="rounded-evolea-lg p-6 text-center text-evolea-purple" style="background: var(--gradient-prism);">
               <div class="text-4xl font-display font-bold mb-2">100%</div>
-              <div class="text-sm text-white/80">Individuell</div>
+              <div class="text-sm text-evolea-purple/80">Individuell</div>
             </div>
           </div>
         </div>
@@ -86,7 +86,7 @@ const translatePath = useTranslatedPath(lang);
         <p>{t('programs.subtitle')}</p>
       </div>
 
-      <!-- Bento Grid -->
+      <!-- Bento Grid - TRUE evolea.ch spectrum colors -->
       <div class="bento-grid">
         <div class="reveal reveal-delay-1">
           <ProgramCardEnhanced
@@ -96,7 +96,7 @@ const translatePath = useTranslatedPath(lang);
             icon="🌱"
             imageSrc="/images/programs/garden.jpg"
             imageAlt="Kinder im Garten beim spielerischen Lernen"
-            colorAccent="green"
+            colorAccent="mint"
           />
         </div>
         <div class="reveal reveal-delay-2 bento-item-large">
@@ -107,7 +107,7 @@ const translatePath = useTranslatedPath(lang);
             icon="🎨"
             imageSrc="/images/programs/projects.jpg"
             imageAlt="Kinder bei kreativen Projekten"
-            colorAccent="orange"
+            colorAccent="coral"
             size="large"
           />
         </div>
@@ -130,7 +130,7 @@ const translatePath = useTranslatedPath(lang);
             icon="🏫"
             imageSrc="/images/programs/school.jpg"
             imageAlt="Schulberatung und Unterstützung"
-            colorAccent="coral"
+            colorAccent="magenta"
             size="wide"
           />
         </div>
@@ -154,7 +154,7 @@ const translatePath = useTranslatedPath(lang);
             title={t('values.safety.title')}
             description={t('values.safety.desc')}
             icon="🛡️"
-            color="purple"
+            color="magenta"
           />
         </div>
         <div class="reveal reveal-delay-2">
@@ -162,7 +162,7 @@ const translatePath = useTranslatedPath(lang);
             title={t('values.empower.title')}
             description={t('values.empower.desc')}
             icon="💪"
-            color="orange"
+            color="coral"
           />
         </div>
         <div class="reveal reveal-delay-3">
@@ -170,7 +170,7 @@ const translatePath = useTranslatedPath(lang);
             title={t('values.potential.title')}
             description={t('values.potential.desc')}
             icon="✨"
-            color="green"
+            color="mint"
           />
         </div>
       </div>
@@ -187,7 +187,7 @@ const translatePath = useTranslatedPath(lang);
     <div class="container mx-auto max-w-4xl text-center">
       <div class="reveal">
         <span class="section-label">{t('nav.team')}</span>
-        <h2 class="text-3xl md:text-4xl lg:text-5xl font-display font-bold text-evolea-purple mb-6">
+        <h2 class="text-3xl md:text-4xl lg:text-5xl font-display font-bold text-evolea-magenta mb-6">
           {t('team.title')}
         </h2>
         <p class="text-lg text-evolea-text-light mb-8 max-w-2xl mx-auto">

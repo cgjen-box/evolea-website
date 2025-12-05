@@ -3,18 +3,22 @@ interface Props {
   title: string;
   description: string;
   icon: string;
-  color?: 'purple' | 'orange' | 'green' | 'sky' | 'coral' | 'yellow';
+  color?: 'magenta' | 'purple' | 'mint' | 'coral' | 'pink' | 'yellow' | 'sky' | 'teal' | 'gold';
 }
 
-const { title, description, icon, color = 'purple' } = Astro.props;
+const { title, description, icon, color = 'magenta' } = Astro.props;
 
+// TRUE evolea.ch spectrum colors
 const colorClasses = {
-  purple: 'bg-evolea-purple/10 text-evolea-purple',
-  orange: 'bg-evolea-orange/15 text-evolea-orange',
-  green: 'bg-evolea-green/15 text-evolea-green',
-  sky: 'bg-evolea-sky/15 text-evolea-sky',
+  magenta: 'bg-evolea-magenta/15 text-evolea-magenta',
+  purple: 'bg-evolea-purple-light/15 text-evolea-purple',
+  mint: 'bg-evolea-mint/20 text-evolea-teal',
   coral: 'bg-evolea-coral/15 text-evolea-coral',
-  yellow: 'bg-evolea-yellow/20 text-evolea-yellow',
+  pink: 'bg-evolea-pink/15 text-evolea-pink',
+  yellow: 'bg-evolea-yellow/25 text-evolea-coral-dark',
+  sky: 'bg-evolea-sky/15 text-evolea-sky',
+  teal: 'bg-evolea-teal/15 text-evolea-teal',
+  gold: 'bg-evolea-gold/25 text-evolea-coral-dark',
 };
 ---
 
@@ -25,8 +29,8 @@ const colorClasses = {
   <h3 class="value-pillar-title">{title}</h3>
   <p class="value-pillar-description">{description}</p>
 
-  <!-- Decorative bottom line -->
-  <div class="mt-6 mx-auto w-12 h-1 rounded-full bg-gradient-spectrum opacity-60"></div>
+  <!-- Decorative bottom line - TRUE evolea.ch prism -->
+  <div class="mt-6 mx-auto w-12 h-1 rounded-full opacity-80" style="background: var(--gradient-prism);"></div>
 </article>
 
 <style>
@@ -37,12 +41,12 @@ const colorClasses = {
     background: white;
     text-align: center;
     transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-    box-shadow: 0 4px 20px rgba(107, 76, 138, 0.08);
+    box-shadow: 0 4px 20px rgba(186, 83, 173, 0.1);
   }
 
   .value-pillar:hover {
     transform: translateY(-8px);
-    box-shadow: 0 20px 40px rgba(107, 76, 138, 0.15);
+    box-shadow: 0 20px 40px rgba(186, 83, 173, 0.18);
   }
 
   .value-pillar-icon {
@@ -65,7 +69,7 @@ const colorClasses = {
     font-family: 'Fredoka', 'Poppins', sans-serif;
     font-weight: 600;
     font-size: 1.25rem;
-    color: #6B4C8A;
+    color: #DD48E0; /* TRUE evolea.ch magenta */
     margin-bottom: 0.75rem;
   }
 

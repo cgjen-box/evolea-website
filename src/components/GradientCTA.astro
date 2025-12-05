@@ -17,10 +17,11 @@ const {
   variant = 'hero',
 } = Astro.props;
 
+// TRUE evolea.ch prism gradients
 const gradientClasses = {
-  hero: 'bg-gradient-hero',
+  hero: 'bg-gradient-prism',
   sunset: 'bg-gradient-sunset',
-  calm: 'bg-gradient-calm',
+  calm: 'bg-gradient-ocean',
 };
 ---
 
@@ -76,9 +77,10 @@ const gradientClasses = {
     font-family: 'Fredoka', 'Poppins', sans-serif;
     font-weight: 700;
     font-size: 2rem;
-    color: white;
+    color: #BA53AD; /* TRUE evolea.ch purple for contrast on prism bg */
     margin-bottom: 1.5rem;
     line-height: 1.2;
+    text-shadow: 0 2px 10px rgba(255, 255, 255, 0.5);
   }
 
   @media (min-width: 768px) {
@@ -94,7 +96,7 @@ const gradientClasses = {
   }
 
   .gradient-cta p {
-    color: rgba(255, 255, 255, 0.9);
+    color: rgba(138, 61, 158, 0.9); /* TRUE evolea.ch purple */
     font-size: 1.125rem;
     margin-bottom: 2rem;
     max-width: 36rem;
@@ -102,21 +104,21 @@ const gradientClasses = {
     margin-right: auto;
   }
 
-  /* Animated gradient background */
-  .gradient-cta.bg-gradient-hero {
-    background: linear-gradient(135deg, #6B4C8A 0%, #9B7BC0 50%, #FF8C42 100%);
+  /* TRUE evolea.ch PRISM gradient backgrounds */
+  .gradient-cta.bg-gradient-prism {
+    background: linear-gradient(118deg, #7BEDD5 0%, #FFE066 21%, #FFFFFF 48%, #E97BF1 81%, #CD87F8 100%);
     background-size: 200% 200%;
     animation: gradientFlow 8s ease infinite;
   }
 
   .gradient-cta.bg-gradient-sunset {
-    background: linear-gradient(135deg, #FF6B6B 0%, #FF8C42 50%, #FFD93D 100%);
+    background: linear-gradient(135deg, #FF7E5D 0%, #EF8EAE 50%, #E97BF1 100%);
     background-size: 200% 200%;
     animation: gradientFlow 8s ease infinite;
   }
 
-  .gradient-cta.bg-gradient-calm {
-    background: linear-gradient(180deg, #6BCFFF 0%, #5DD99B 100%);
+  .gradient-cta.bg-gradient-ocean {
+    background: linear-gradient(135deg, #7BEDD5 0%, #5DADE2 50%, #CD87F8 100%);
     background-size: 200% 200%;
     animation: gradientFlow 8s ease infinite;
   }

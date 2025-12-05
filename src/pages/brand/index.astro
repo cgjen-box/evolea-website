@@ -1,0 +1,392 @@
+---
+import Base from '@layouts/Base.astro';
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+
+// EVOLEA True Color Palette - extracted from evolea.ch
+const colors = {
+  primary: [
+    { name: 'Magenta', hex: '#DD48E0', usage: 'Primary accent, CTAs, highlights' },
+    { name: 'Hot Pink', hex: '#EF5EDB', usage: 'Secondary accent, hover states' },
+    { name: 'Fuchsia', hex: '#E97BF1', usage: 'Gradients, overlays' },
+  ],
+  spectrum: [
+    { name: 'Mint Teal', hex: '#7BEDD5', usage: 'Fresh accents, success states' },
+    { name: 'Coral', hex: '#FF7E5D', usage: 'Warm highlights, alerts' },
+    { name: 'Soft Coral', hex: '#C96861', usage: 'Muted accents, backgrounds' },
+    { name: 'Gold', hex: '#DCD49F', usage: 'Luxury accents, highlights' },
+    { name: 'Lavender', hex: '#CD87F8', usage: 'Soft purple accents' },
+    { name: 'Deep Purple', hex: '#BA53AD', usage: 'Deep accents, text on light' },
+  ],
+  neutrals: [
+    { name: 'Pure White', hex: '#FFFFFF', usage: 'Backgrounds, text on dark' },
+    { name: 'Soft Pink', hex: '#FFDEDE', usage: 'Light backgrounds, cards' },
+    { name: 'Blush', hex: '#EF8EAE', usage: 'Soft accents, borders' },
+    { name: 'Cream', hex: '#FFFBF7', usage: 'Page background' },
+    { name: 'Dark', hex: '#1A1B1F', usage: 'Text, dark backgrounds' },
+  ],
+};
+
+const gradients = [
+  {
+    name: 'Spectrum Prism',
+    css: 'linear-gradient(118deg, #7BEDD5 0%, #FFE066 21%, #FFFFFF 48%, #E97BF1 81%, #CD87F8 100%)',
+    description: 'The signature EVOLEA gradient - like light through a prism',
+  },
+  {
+    name: 'Sunset Magic',
+    css: 'linear-gradient(135deg, #DCD49F 0%, #EF8EAE 46%, #BA53AD 100%)',
+    description: 'Gold to pink to purple - warm and magical',
+  },
+  {
+    name: 'Electric Pink',
+    css: 'linear-gradient(135deg, #DD48E0 0%, #EF5EDB 50%, #E97BF1 100%)',
+    description: 'Bold magenta gradient for CTAs',
+  },
+  {
+    name: 'Ocean Mint',
+    css: 'linear-gradient(135deg, #7BEDD5 0%, #CD87F8 100%)',
+    description: 'Teal to lavender - calm but vibrant',
+  },
+  {
+    name: 'Coral Sunrise',
+    css: 'linear-gradient(135deg, #FF7E5D 0%, #EF8EAE 50%, #FFDEDE 100%)',
+    description: 'Warm coral fading to soft pink',
+  },
+];
+---
+
+<Base title="Brand Guide" description="EVOLEA Brand Guidelines - Internal Use Only">
+  <!-- Hero -->
+  <section class="relative min-h-[60vh] flex items-center justify-center overflow-hidden" style="background: linear-gradient(118deg, #7BEDD5 0%, #FFE066 21%, #FFFFFF 48%, #E97BF1 81%, #CD87F8 100%);">
+    <div class="absolute inset-0 bg-white/20"></div>
+    <div class="relative z-10 text-center px-4 py-20">
+      <p class="text-sm font-semibold uppercase tracking-widest text-white/80 mb-4">Internal Brand Guide</p>
+      <h1 class="text-5xl md:text-7xl font-display font-bold text-white mb-6 drop-shadow-lg">
+        EVOLEA
+      </h1>
+      <p class="text-xl md:text-2xl text-white/90 max-w-2xl mx-auto">
+        A spectrum of possibilities. Bold, vibrant, full of energy.
+      </p>
+    </div>
+  </section>
+
+  <!-- Brand Philosophy -->
+  <section class="py-20 px-4 bg-white">
+    <div class="container mx-auto max-w-4xl">
+      <h2 class="text-3xl md:text-4xl font-display font-bold mb-8" style="color: #BA53AD;">Brand Philosophy</h2>
+      <div class="prose prose-lg max-w-none">
+        <p class="text-lg text-gray-700 leading-relaxed mb-6">
+          EVOLEA's visual identity celebrates the <strong>spectrum</strong> - not just the autism spectrum, but the full spectrum of light, possibility, and human potential. Our colors aren't primary or childish - they're <strong>sophisticated, vibrant, and energetic</strong>.
+        </p>
+        <p class="text-lg text-gray-700 leading-relaxed mb-6">
+          Think of light passing through a prism: <span style="color: #7BEDD5;">mint teal</span>, <span style="color: #DCD49F; background: #333; padding: 2px 6px; border-radius: 4px;">gold</span>, <span style="color: #EF8EAE;">soft pink</span>, <span style="color: #DD48E0;">electric magenta</span>, <span style="color: #CD87F8;">lavender</span>. These colors flow and blend, creating something beautiful and unique.
+        </p>
+        <div class="bg-gray-50 p-6 rounded-2xl border-l-4" style="border-color: #DD48E0;">
+          <p class="text-gray-700 italic m-0">
+            "Not a children's book aesthetic - but someone full of energy on the spectrum who loves big, bold gradient colors."
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Color Palette -->
+  <section class="py-20 px-4" style="background: linear-gradient(180deg, #FFFBF7 0%, #FFDEDE 100%);">
+    <div class="container mx-auto max-w-6xl">
+      <h2 class="text-3xl md:text-4xl font-display font-bold mb-4" style="color: #BA53AD;">Color Palette</h2>
+      <p class="text-lg text-gray-600 mb-12">Our true spectrum - extracted from evolea.ch</p>
+
+      <!-- Primary Colors -->
+      <div class="mb-16">
+        <h3 class="text-xl font-display font-bold mb-6" style="color: #DD48E0;">Primary - The Magentas</h3>
+        <div class="grid md:grid-cols-3 gap-6">
+          {colors.primary.map((color) => (
+            <div class="bg-white rounded-2xl overflow-hidden shadow-lg">
+              <div class="h-32" style={`background: ${color.hex};`}></div>
+              <div class="p-4">
+                <div class="flex justify-between items-center mb-2">
+                  <span class="font-bold">{color.name}</span>
+                  <code class="text-sm bg-gray-100 px-2 py-1 rounded">{color.hex}</code>
+                </div>
+                <p class="text-sm text-gray-500">{color.usage}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      <!-- Spectrum Colors -->
+      <div class="mb-16">
+        <h3 class="text-xl font-display font-bold mb-6" style="color: #7BEDD5;">Spectrum Colors</h3>
+        <div class="grid md:grid-cols-3 lg:grid-cols-6 gap-4">
+          {colors.spectrum.map((color) => (
+            <div class="bg-white rounded-xl overflow-hidden shadow-md">
+              <div class="h-24" style={`background: ${color.hex};`}></div>
+              <div class="p-3">
+                <span class="font-semibold text-sm block">{color.name}</span>
+                <code class="text-xs text-gray-500">{color.hex}</code>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      <!-- Neutrals -->
+      <div>
+        <h3 class="text-xl font-display font-bold mb-6 text-gray-700">Neutrals</h3>
+        <div class="grid md:grid-cols-5 gap-4">
+          {colors.neutrals.map((color) => (
+            <div class="bg-white rounded-xl overflow-hidden shadow-md border">
+              <div class="h-20" style={`background: ${color.hex}; ${color.hex === '#FFFFFF' ? 'border: 1px solid #eee;' : ''}`}></div>
+              <div class="p-3">
+                <span class="font-semibold text-sm block">{color.name}</span>
+                <code class="text-xs text-gray-500">{color.hex}</code>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Gradients -->
+  <section class="py-20 px-4 bg-white">
+    <div class="container mx-auto max-w-6xl">
+      <h2 class="text-3xl md:text-4xl font-display font-bold mb-4" style="color: #BA53AD;">Gradients</h2>
+      <p class="text-lg text-gray-600 mb-12">The soul of EVOLEA - light through a prism</p>
+
+      <div class="space-y-8">
+        {gradients.map((gradient) => (
+          <div class="bg-gray-50 rounded-2xl overflow-hidden">
+            <div class="h-40 md:h-56" style={`background: ${gradient.css};`}></div>
+            <div class="p-6">
+              <h4 class="font-display font-bold text-xl mb-2">{gradient.name}</h4>
+              <p class="text-gray-600 mb-4">{gradient.description}</p>
+              <div class="bg-gray-900 text-green-400 p-4 rounded-lg overflow-x-auto">
+                <code class="text-sm">{gradient.css}</code>
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Logo -->
+  <section class="py-20 px-4" style="background: linear-gradient(135deg, #1A1B1F 0%, #2D2A32 100%);">
+    <div class="container mx-auto max-w-6xl">
+      <h2 class="text-3xl md:text-4xl font-display font-bold mb-4 text-white">Logo</h2>
+      <p class="text-lg text-white/70 mb-12">The EVOLEA mark - refined and energetic</p>
+
+      <div class="grid md:grid-cols-2 gap-8">
+        <!-- Primary Logo -->
+        <div class="bg-white rounded-2xl p-12 flex flex-col items-center justify-center">
+          <div class="mb-8">
+            <svg class="w-48 h-16" viewBox="0 0 200 60" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <!-- Logo mark - spectrum circle -->
+              <defs>
+                <linearGradient id="logoGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                  <stop offset="0%" stop-color="#7BEDD5"/>
+                  <stop offset="25%" stop-color="#DCD49F"/>
+                  <stop offset="50%" stop-color="#EF8EAE"/>
+                  <stop offset="75%" stop-color="#DD48E0"/>
+                  <stop offset="100%" stop-color="#CD87F8"/>
+                </linearGradient>
+              </defs>
+              <circle cx="30" cy="30" r="26" fill="url(#logoGradient)"/>
+              <text x="30" y="38" font-family="Fredoka, sans-serif" font-size="28" font-weight="700" fill="white" text-anchor="middle">E</text>
+              <!-- Wordmark -->
+              <text x="70" y="40" font-family="Fredoka, sans-serif" font-size="32" font-weight="700" fill="#1A1B1F">EVOLEA</text>
+            </svg>
+          </div>
+          <p class="text-sm text-gray-500">Primary - On Light</p>
+        </div>
+
+        <!-- Inverted Logo -->
+        <div class="rounded-2xl p-12 flex flex-col items-center justify-center" style="background: #1A1B1F;">
+          <div class="mb-8">
+            <svg class="w-48 h-16" viewBox="0 0 200 60" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <defs>
+                <linearGradient id="logoGradient2" x1="0%" y1="0%" x2="100%" y2="100%">
+                  <stop offset="0%" stop-color="#7BEDD5"/>
+                  <stop offset="25%" stop-color="#DCD49F"/>
+                  <stop offset="50%" stop-color="#EF8EAE"/>
+                  <stop offset="75%" stop-color="#DD48E0"/>
+                  <stop offset="100%" stop-color="#CD87F8"/>
+                </linearGradient>
+              </defs>
+              <circle cx="30" cy="30" r="26" fill="url(#logoGradient2)"/>
+              <text x="30" y="38" font-family="Fredoka, sans-serif" font-size="28" font-weight="700" fill="white" text-anchor="middle">E</text>
+              <text x="70" y="40" font-family="Fredoka, sans-serif" font-size="32" font-weight="700" fill="white">EVOLEA</text>
+            </svg>
+          </div>
+          <p class="text-sm text-white/50">Primary - On Dark</p>
+        </div>
+
+        <!-- Gradient Logo -->
+        <div class="bg-white rounded-2xl p-12 flex flex-col items-center justify-center">
+          <div class="mb-8">
+            <svg class="w-48 h-16" viewBox="0 0 200 60" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <defs>
+                <linearGradient id="logoGradient3" x1="0%" y1="0%" x2="100%" y2="100%">
+                  <stop offset="0%" stop-color="#DD48E0"/>
+                  <stop offset="100%" stop-color="#CD87F8"/>
+                </linearGradient>
+                <linearGradient id="textGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+                  <stop offset="0%" stop-color="#DD48E0"/>
+                  <stop offset="50%" stop-color="#BA53AD"/>
+                  <stop offset="100%" stop-color="#CD87F8"/>
+                </linearGradient>
+              </defs>
+              <circle cx="30" cy="30" r="26" fill="url(#logoGradient3)"/>
+              <text x="30" y="38" font-family="Fredoka, sans-serif" font-size="28" font-weight="700" fill="white" text-anchor="middle">E</text>
+              <text x="70" y="40" font-family="Fredoka, sans-serif" font-size="32" font-weight="700" fill="url(#textGradient)">EVOLEA</text>
+            </svg>
+          </div>
+          <p class="text-sm text-gray-500">Gradient Variant</p>
+        </div>
+
+        <!-- Icon Only -->
+        <div class="rounded-2xl p-12 flex flex-col items-center justify-center" style="background: linear-gradient(135deg, #DD48E0 0%, #CD87F8 100%);">
+          <div class="mb-8">
+            <svg class="w-24 h-24" viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <circle cx="30" cy="30" r="28" fill="white"/>
+              <defs>
+                <linearGradient id="innerGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                  <stop offset="0%" stop-color="#7BEDD5"/>
+                  <stop offset="25%" stop-color="#DCD49F"/>
+                  <stop offset="50%" stop-color="#EF8EAE"/>
+                  <stop offset="75%" stop-color="#DD48E0"/>
+                  <stop offset="100%" stop-color="#CD87F8"/>
+                </linearGradient>
+              </defs>
+              <circle cx="30" cy="30" r="24" fill="url(#innerGradient)"/>
+              <text x="30" y="39" font-family="Fredoka, sans-serif" font-size="28" font-weight="700" fill="white" text-anchor="middle">E</text>
+            </svg>
+          </div>
+          <p class="text-sm text-white/70">Icon Mark</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Typography -->
+  <section class="py-20 px-4 bg-white">
+    <div class="container mx-auto max-w-6xl">
+      <h2 class="text-3xl md:text-4xl font-display font-bold mb-12" style="color: #BA53AD;">Typography</h2>
+
+      <div class="grid md:grid-cols-2 gap-12">
+        <div>
+          <h3 class="text-lg font-semibold text-gray-500 mb-4">Display Font - Fredoka</h3>
+          <p class="font-display text-6xl font-bold mb-4" style="color: #DD48E0;">Fredoka Bold</p>
+          <p class="font-display text-4xl font-semibold mb-4" style="color: #BA53AD;">Fredoka Semi</p>
+          <p class="font-display text-2xl mb-4" style="color: #CD87F8;">Fredoka Regular</p>
+          <p class="text-gray-500 text-sm">Used for headlines, buttons, and accent text. Friendly but not childish.</p>
+        </div>
+        <div>
+          <h3 class="text-lg font-semibold text-gray-500 mb-4">Body Font - Poppins</h3>
+          <p class="text-2xl font-bold mb-4 text-gray-800">Poppins Bold</p>
+          <p class="text-xl font-semibold mb-4 text-gray-700">Poppins Semibold</p>
+          <p class="text-lg mb-4 text-gray-600">Poppins Regular - Used for body text and UI elements.</p>
+          <p class="text-gray-500 text-sm">Clean, modern, highly readable at all sizes.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Button Examples -->
+  <section class="py-20 px-4" style="background: #FFFBF7;">
+    <div class="container mx-auto max-w-6xl">
+      <h2 class="text-3xl md:text-4xl font-display font-bold mb-12" style="color: #BA53AD;">Components</h2>
+
+      <div class="space-y-12">
+        <!-- Buttons -->
+        <div>
+          <h3 class="text-xl font-display font-bold mb-6 text-gray-700">Buttons</h3>
+          <div class="flex flex-wrap gap-4">
+            <button class="px-8 py-4 rounded-full font-semibold text-white transition-all hover:scale-105 hover:shadow-lg" style="background: linear-gradient(135deg, #DD48E0 0%, #BA53AD 100%);">
+              Primary Button
+            </button>
+            <button class="px-8 py-4 rounded-full font-semibold text-white transition-all hover:scale-105 hover:shadow-lg" style="background: linear-gradient(135deg, #7BEDD5 0%, #CD87F8 100%);">
+              Spectrum Button
+            </button>
+            <button class="px-8 py-4 rounded-full font-semibold border-2 transition-all hover:scale-105" style="color: #DD48E0; border-color: #DD48E0;">
+              Outline Button
+            </button>
+            <button class="px-8 py-4 rounded-full font-semibold text-white transition-all hover:scale-105 hover:shadow-lg" style="background: linear-gradient(135deg, #FF7E5D 0%, #EF8EAE 100%);">
+              Coral Button
+            </button>
+          </div>
+        </div>
+
+        <!-- Cards -->
+        <div>
+          <h3 class="text-xl font-display font-bold mb-6 text-gray-700">Cards</h3>
+          <div class="grid md:grid-cols-3 gap-6">
+            <div class="bg-white rounded-2xl p-6 shadow-lg border-t-4" style="border-color: #DD48E0;">
+              <div class="w-12 h-12 rounded-xl mb-4 flex items-center justify-center text-2xl" style="background: linear-gradient(135deg, #DD48E0 0%, #CD87F8 100%);">
+                <span class="text-white">✨</span>
+              </div>
+              <h4 class="font-display font-bold text-xl mb-2">Feature Card</h4>
+              <p class="text-gray-600">With magenta accent and gradient icon background.</p>
+            </div>
+            <div class="rounded-2xl p-6 text-white" style="background: linear-gradient(135deg, #7BEDD5 0%, #CD87F8 100%);">
+              <div class="w-12 h-12 rounded-xl mb-4 flex items-center justify-center text-2xl bg-white/20">
+                <span>🌈</span>
+              </div>
+              <h4 class="font-display font-bold text-xl mb-2">Gradient Card</h4>
+              <p class="text-white/90">Full gradient background for high impact.</p>
+            </div>
+            <div class="bg-white rounded-2xl p-6 shadow-lg overflow-hidden relative">
+              <div class="absolute top-0 right-0 w-32 h-32 opacity-20" style="background: radial-gradient(circle, #DD48E0 0%, transparent 70%);"></div>
+              <div class="relative">
+                <div class="w-12 h-12 rounded-xl mb-4 flex items-center justify-center text-2xl" style="background: #FFDEDE;">
+                  <span>💜</span>
+                </div>
+                <h4 class="font-display font-bold text-xl mb-2">Subtle Glow</h4>
+                <p class="text-gray-600">White card with gradient glow accent.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Do's and Don'ts -->
+  <section class="py-20 px-4 bg-white">
+    <div class="container mx-auto max-w-6xl">
+      <h2 class="text-3xl md:text-4xl font-display font-bold mb-12" style="color: #BA53AD;">Do's & Don'ts</h2>
+
+      <div class="grid md:grid-cols-2 gap-8">
+        <div class="bg-green-50 rounded-2xl p-8 border-2 border-green-200">
+          <h3 class="text-xl font-display font-bold text-green-700 mb-4">✓ Do</h3>
+          <ul class="space-y-3 text-green-800">
+            <li>• Use bold, vibrant gradient backgrounds</li>
+            <li>• Let colors flow like light through a prism</li>
+            <li>• Embrace the full spectrum - mint, gold, pink, magenta, lavender</li>
+            <li>• Create energy and movement with gradients</li>
+            <li>• Keep the aesthetic sophisticated, not childish</li>
+            <li>• Use high contrast for accessibility</li>
+          </ul>
+        </div>
+        <div class="bg-red-50 rounded-2xl p-8 border-2 border-red-200">
+          <h3 class="text-xl font-display font-bold text-red-700 mb-4">✗ Don't</h3>
+          <ul class="space-y-3 text-red-800">
+            <li>• Use flat, muted, or corporate colors</li>
+            <li>• Make it look like a children's book</li>
+            <li>• Use primary colors (red, blue, yellow)</li>
+            <li>• Be afraid of bold color combinations</li>
+            <li>• Use too much white space without color</li>
+            <li>• Dim the colors - let them pop!</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="py-12 px-4 text-center" style="background: linear-gradient(118deg, #7BEDD5 0%, #FFE066 21%, #FFFFFF 48%, #E97BF1 81%, #CD87F8 100%);">
+    <p class="text-white font-semibold drop-shadow">EVOLEA Brand Guide • Internal Use Only</p>
+  </footer>
+</Base>

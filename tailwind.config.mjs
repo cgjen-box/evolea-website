@@ -5,29 +5,36 @@ export default {
     extend: {
       colors: {
         evolea: {
-          // Core Purple Family - More vibrant
-          purple: '#7B5BA0',
-          'purple-light': '#A78BCA',
-          'purple-dark': '#5A3D7A',
-          'purple-vivid': '#9B4DCA',
+          // TRUE evolea.ch Colors - BOLD SPECTRUM
+          // Primary Magenta/Fuchsia Family
+          magenta: '#DD48E0',
+          'magenta-light': '#EF5EDB',
+          'magenta-vivid': '#E97BF1',
+
+          // Lavender/Purple Family
+          purple: '#BA53AD',
+          'purple-light': '#CD87F8',
+          'purple-dark': '#8A3D9E',
 
           // Base
           cream: '#FFFBF7',
+          white: '#FFFFFF',
 
-          // Spectrum Colors - BOLD & VIBRANT
+          // Spectrum Colors - EXACT evolea.ch
+          mint: '#7BEDD5',
+          'mint-light': '#A3F4E6',
+          coral: '#FF7E5D',
+          'coral-light': '#FF9B82',
+          'coral-dark': '#C96861',
+          gold: '#DCD49F',
+          yellow: '#FFE066',
+          'yellow-vivid': '#FFD23F',
+          pink: '#EF8EAE',
+          'pink-light': '#FFDEDE',
+          sky: '#5DADE2',
+          'sky-vivid': '#3A86FF',
+          teal: '#2EC4B6',
           orange: '#FF6B35',
-          'orange-light': '#FF9F1C',
-          green: '#2EC4B6',
-          'green-light': '#7DCEA0',
-          coral: '#FF4D6D',
-          'coral-light': '#FF758F',
-          yellow: '#FFD23F',
-          'yellow-light': '#FFE066',
-          sky: '#3A86FF',
-          'sky-light': '#5DADE2',
-          mint: '#00F5D4',
-          pink: '#FF69B4',
-          lime: '#ADFF2F',
 
           // Text
           text: '#2D2A32',
@@ -53,37 +60,52 @@ export default {
         'evolea-2xl': '48px',
       },
       boxShadow: {
-        'soft': '0 4px 20px rgba(123, 91, 160, 0.12)',
-        'card': '0 8px 30px rgba(123, 91, 160, 0.15)',
-        'elevated': '0 20px 50px rgba(123, 91, 160, 0.2)',
-        'glow-purple': '0 0 60px rgba(155, 77, 202, 0.4)',
-        'glow-orange': '0 0 60px rgba(255, 107, 53, 0.4)',
-        'glow-green': '0 0 60px rgba(46, 196, 182, 0.4)',
-        'glow-coral': '0 0 60px rgba(255, 77, 109, 0.4)',
-        'glow-sky': '0 0 60px rgba(58, 134, 255, 0.4)',
-        'glow-yellow': '0 0 60px rgba(255, 210, 63, 0.5)',
-        'spectrum': '0 0 80px rgba(155, 77, 202, 0.3), 0 0 120px rgba(255, 107, 53, 0.2)',
+        'soft': '0 4px 20px rgba(186, 83, 173, 0.15)',
+        'card': '0 8px 30px rgba(186, 83, 173, 0.2)',
+        'elevated': '0 20px 50px rgba(186, 83, 173, 0.25)',
+        'glow-magenta': '0 0 60px rgba(221, 72, 224, 0.5)',
+        'glow-purple': '0 0 60px rgba(205, 135, 248, 0.5)',
+        'glow-mint': '0 0 60px rgba(123, 237, 213, 0.5)',
+        'glow-coral': '0 0 60px rgba(255, 126, 93, 0.5)',
+        'glow-pink': '0 0 60px rgba(239, 142, 174, 0.5)',
+        'glow-gold': '0 0 60px rgba(220, 212, 159, 0.6)',
+        'spectrum': '0 0 80px rgba(221, 72, 224, 0.4), 0 0 120px rgba(123, 237, 213, 0.3)',
+        'prism': '0 0 100px rgba(233, 123, 241, 0.4), 0 0 150px rgba(123, 237, 213, 0.3)',
       },
       backgroundImage: {
-        // POWERFUL Gradients - Multi-color spectrum
-        'gradient-hero': 'linear-gradient(135deg, #7B5BA0 0%, #9B4DCA 25%, #FF6B35 50%, #FFD23F 75%, #2EC4B6 100%)',
-        'gradient-spectrum': 'linear-gradient(90deg, #FF4D6D 0%, #FF6B35 15%, #FFD23F 30%, #2EC4B6 50%, #3A86FF 70%, #9B4DCA 85%, #FF4D6D 100%)',
-        'gradient-sunset': 'linear-gradient(135deg, #FF4D6D 0%, #FF6B35 40%, #FFD23F 100%)',
-        'gradient-ocean': 'linear-gradient(135deg, #3A86FF 0%, #2EC4B6 50%, #00F5D4 100%)',
-        'gradient-purple': 'linear-gradient(135deg, #5A3D7A 0%, #7B5BA0 50%, #9B4DCA 100%)',
-        'gradient-rainbow': 'linear-gradient(90deg, #FF4D6D, #FF6B35, #FFD23F, #2EC4B6, #3A86FF, #9B4DCA)',
-        'gradient-joy': 'linear-gradient(120deg, #FFD23F 0%, #FF6B35 50%, #FF4D6D 100%)',
-        'gradient-calm': 'linear-gradient(180deg, #3A86FF 0%, #2EC4B6 100%)',
-        'gradient-energy': 'linear-gradient(135deg, #FF6B35 0%, #FFD23F 50%, #2EC4B6 100%)',
-        'gradient-magic': 'linear-gradient(135deg, #9B4DCA 0%, #FF69B4 50%, #FF4D6D 100%)',
+        // THE evolea.ch SIGNATURE PRISM GRADIENT
+        'gradient-prism': 'linear-gradient(118deg, #7BEDD5 0%, #FFE066 21%, #FFFFFF 48%, #E97BF1 81%, #CD87F8 100%)',
+        'gradient-prism-vivid': 'linear-gradient(118deg, #7BEDD5 0%, #FFE066 15%, #FFDEDE 35%, #E97BF1 65%, #CD87F8 85%, #DD48E0 100%)',
 
-        // Mesh gradients for vibrant backgrounds
-        'mesh-spectrum': 'radial-gradient(at 0% 0%, rgba(255, 77, 109, 0.4) 0px, transparent 50%), radial-gradient(at 80% 20%, rgba(255, 210, 63, 0.3) 0px, transparent 50%), radial-gradient(at 100% 60%, rgba(46, 196, 182, 0.4) 0px, transparent 50%), radial-gradient(at 20% 100%, rgba(58, 134, 255, 0.3) 0px, transparent 50%), radial-gradient(at 60% 80%, rgba(155, 77, 202, 0.4) 0px, transparent 50%)',
+        // Hero gradient - full spectrum
+        'gradient-hero': 'linear-gradient(135deg, #7BEDD5 0%, #FFE066 25%, #E97BF1 50%, #CD87F8 75%, #DD48E0 100%)',
+
+        // Spectrum - cycling through all colors
+        'gradient-spectrum': 'linear-gradient(90deg, #7BEDD5 0%, #FFE066 16%, #FF7E5D 32%, #EF8EAE 48%, #E97BF1 64%, #CD87F8 80%, #7BEDD5 100%)',
+
+        // Warm gradients
+        'gradient-sunset': 'linear-gradient(135deg, #FF7E5D 0%, #EF8EAE 50%, #E97BF1 100%)',
+        'gradient-warmth': 'linear-gradient(135deg, #FFE066 0%, #FF7E5D 50%, #C96861 100%)',
+
+        // Cool gradients
+        'gradient-ocean': 'linear-gradient(135deg, #7BEDD5 0%, #5DADE2 50%, #CD87F8 100%)',
+        'gradient-dream': 'linear-gradient(135deg, #EF8EAE 0%, #CD87F8 50%, #7BEDD5 100%)',
+
+        // Magenta family
+        'gradient-magenta': 'linear-gradient(135deg, #BA53AD 0%, #DD48E0 50%, #E97BF1 100%)',
+        'gradient-lavender': 'linear-gradient(135deg, #CD87F8 0%, #E97BF1 50%, #EF8EAE 100%)',
+
+        // Mint family
+        'gradient-mint': 'linear-gradient(135deg, #7BEDD5 0%, #A3F4E6 50%, #DCD49F 100%)',
+
+        // Mesh gradients - TRUE evolea.ch style
+        'mesh-spectrum': 'radial-gradient(at 0% 0%, rgba(123, 237, 213, 0.5) 0px, transparent 50%), radial-gradient(at 80% 20%, rgba(255, 224, 102, 0.4) 0px, transparent 50%), radial-gradient(at 100% 60%, rgba(233, 123, 241, 0.5) 0px, transparent 50%), radial-gradient(at 20% 100%, rgba(205, 135, 248, 0.4) 0px, transparent 50%), radial-gradient(at 60% 80%, rgba(221, 72, 224, 0.4) 0px, transparent 50%)',
+        'mesh-prism': 'radial-gradient(at 0% 50%, rgba(123, 237, 213, 0.6) 0px, transparent 50%), radial-gradient(at 100% 50%, rgba(233, 123, 241, 0.6) 0px, transparent 50%), radial-gradient(at 50% 0%, rgba(255, 224, 102, 0.5) 0px, transparent 50%), radial-gradient(at 50% 100%, rgba(205, 135, 248, 0.5) 0px, transparent 50%)',
 
         // Hero overlays
-        'hero-overlay': 'linear-gradient(to bottom, rgba(45, 42, 50, 0.3) 0%, rgba(123, 91, 160, 0.6) 100%)',
-        'hero-overlay-spectrum': 'linear-gradient(135deg, rgba(155, 77, 202, 0.5) 0%, rgba(255, 107, 53, 0.3) 50%, rgba(46, 196, 182, 0.4) 100%)',
-        'card-overlay': 'linear-gradient(to top, rgba(123, 91, 160, 0.95) 0%, rgba(155, 77, 202, 0.6) 50%, transparent 100%)',
+        'hero-overlay': 'linear-gradient(to bottom, rgba(45, 42, 50, 0.2) 0%, rgba(186, 83, 173, 0.5) 100%)',
+        'hero-overlay-spectrum': 'linear-gradient(135deg, rgba(123, 237, 213, 0.3) 0%, rgba(255, 224, 102, 0.2) 25%, rgba(233, 123, 241, 0.4) 75%, rgba(186, 83, 173, 0.5) 100%)',
+        'card-overlay': 'linear-gradient(to top, rgba(186, 83, 173, 0.95) 0%, rgba(221, 72, 224, 0.7) 50%, transparent 100%)',
       },
       animation: {
         'fade-in': 'fadeIn 0.8s ease forwards',

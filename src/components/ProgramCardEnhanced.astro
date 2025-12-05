@@ -6,7 +6,7 @@ interface Props {
   icon?: string;
   imageSrc?: string;
   imageAlt?: string;
-  colorAccent?: 'green' | 'orange' | 'sky' | 'coral' | 'purple';
+  colorAccent?: 'magenta' | 'mint' | 'coral' | 'pink' | 'yellow' | 'sky' | 'purple' | 'teal' | 'gold';
   size?: 'default' | 'large' | 'wide';
 }
 
@@ -17,17 +17,21 @@ const {
   icon,
   imageSrc,
   imageAlt = '',
-  colorAccent = 'purple',
+  colorAccent = 'magenta',
   size = 'default',
 } = Astro.props;
 
-// Map color accents to CSS classes
+// Map color accents to CSS classes - TRUE evolea.ch spectrum
 const colorClasses = {
-  green: 'program-card-green',
-  orange: 'program-card-orange',
-  sky: 'program-card-sky',
+  magenta: 'program-card-magenta',
+  mint: 'program-card-mint',
   coral: 'program-card-coral',
-  purple: '',
+  pink: 'program-card-pink',
+  yellow: 'program-card-yellow',
+  sky: 'program-card-sky',
+  purple: 'program-card-purple',
+  teal: 'program-card-teal',
+  gold: 'program-card-gold',
 };
 
 // Map sizes to grid classes
@@ -39,14 +43,18 @@ const sizeClasses = {
 
 // Default placeholder images based on program type
 const defaultImages: Record<string, string> = {
-  green: '/images/programs/garden.jpg',
-  orange: '/images/programs/projects.jpg',
+  mint: '/images/programs/garden.jpg',
+  coral: '/images/programs/projects.jpg',
   sky: '/images/programs/sports.jpg',
-  coral: '/images/programs/school.jpg',
+  magenta: '/images/programs/school.jpg',
   purple: '/images/programs/default.jpg',
+  pink: '/images/programs/default.jpg',
+  yellow: '/images/programs/default.jpg',
+  teal: '/images/programs/default.jpg',
+  gold: '/images/programs/default.jpg',
 };
 
-const backgroundImage = imageSrc || defaultImages[colorAccent] || defaultImages.purple;
+const backgroundImage = imageSrc || defaultImages[colorAccent] || defaultImages.magenta;
 ---
 
 <a
@@ -55,11 +63,11 @@ const backgroundImage = imageSrc || defaultImages[colorAccent] || defaultImages.
     'program-card group',
     colorClasses[colorAccent],
     sizeClasses[size],
-    'block focus-visible:ring-2 focus-visible:ring-evolea-orange focus-visible:ring-offset-2',
+    'block focus-visible:ring-2 focus-visible:ring-evolea-mint focus-visible:ring-offset-2',
   ]}
 >
-  <!-- Background Image -->
-  <div class="absolute inset-0 bg-evolea-purple-dark">
+  <!-- Background Image - TRUE evolea.ch magenta -->
+  <div class="absolute inset-0 bg-evolea-magenta">
     {imageSrc ? (
       <img
         src={backgroundImage}
@@ -68,8 +76,8 @@ const backgroundImage = imageSrc || defaultImages[colorAccent] || defaultImages.
         loading="lazy"
       />
     ) : (
-      <!-- Gradient fallback if no image -->
-      <div class="absolute inset-0 bg-gradient-to-br from-evolea-purple to-evolea-purple-dark"></div>
+      <!-- Gradient fallback if no image - prism gradient -->
+      <div class="absolute inset-0" style="background: var(--gradient-magenta);"></div>
     )}
   </div>
 
@@ -124,8 +132,8 @@ const backgroundImage = imageSrc || defaultImages[colorAccent] || defaultImages.
     inset: 0;
     background: linear-gradient(
       to top,
-      rgba(74, 52, 96, 0.95) 0%,
-      rgba(107, 76, 138, 0.6) 50%,
+      rgba(186, 83, 173, 0.95) 0%,
+      rgba(221, 72, 224, 0.6) 50%,
       transparent 100%
     );
     display: flex;
@@ -136,7 +144,7 @@ const backgroundImage = imageSrc || defaultImages[colorAccent] || defaultImages.
   }
 
   .program-card:hover .program-card-overlay {
-    background: rgba(107, 76, 138, 0.92);
+    background: rgba(186, 83, 173, 0.92);
   }
 
   .program-card-icon {
@@ -169,21 +177,41 @@ const backgroundImage = imageSrc || defaultImages[colorAccent] || defaultImages.
     line-height: 1.5;
   }
 
-  /* Color accent borders */
-  .program-card-green {
-    border-bottom: 4px solid #5DD99B;
+  /* Color accent borders - TRUE evolea.ch spectrum */
+  .program-card-magenta {
+    border-bottom: 4px solid #DD48E0;
   }
 
-  .program-card-orange {
-    border-bottom: 4px solid #FF8C42;
-  }
-
-  .program-card-sky {
-    border-bottom: 4px solid #6BCFFF;
+  .program-card-mint {
+    border-bottom: 4px solid #7BEDD5;
   }
 
   .program-card-coral {
-    border-bottom: 4px solid #FF6B6B;
+    border-bottom: 4px solid #FF7E5D;
+  }
+
+  .program-card-pink {
+    border-bottom: 4px solid #EF8EAE;
+  }
+
+  .program-card-yellow {
+    border-bottom: 4px solid #FFE066;
+  }
+
+  .program-card-sky {
+    border-bottom: 4px solid #5DADE2;
+  }
+
+  .program-card-purple {
+    border-bottom: 4px solid #CD87F8;
+  }
+
+  .program-card-teal {
+    border-bottom: 4px solid #2EC4B6;
+  }
+
+  .program-card-gold {
+    border-bottom: 4px solid #DCD49F;
   }
 
   /* Size variants */
