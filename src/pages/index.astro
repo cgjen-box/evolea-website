@@ -1,7 +1,7 @@
 ---
 import Base from '@layouts/Base.astro';
 import VideoHero from '@components/VideoHero.astro';
-import ProgramCardEnhanced from '@components/ProgramCardEnhanced.astro';
+import AngeboteSection from '@components/AngeboteSection.astro';
 import GradientCTA from '@components/GradientCTA.astro';
 import FloatingShapes from '@components/FloatingShapes.astro';
 import Icon from '@components/Icon.astro';
@@ -60,6 +60,46 @@ const colorClasses: Record<string, string> = {
   mint: 'bg-evolea-mint/10 border-evolea-mint',
   purple: 'bg-evolea-purple-light/10 border-evolea-purple-light',
 };
+
+// Programs data for AngeboteSection
+const programs = [
+  {
+    title: t('programs.miniGarten'),
+    description: t('programs.miniGarten.desc'),
+    href: translatePath('/angebote/mini-garten/'),
+    iconName: 'sprout' as const,
+    imageSrc: base + '/images/programs/garden.jpg',
+    imageAlt: 'Kinder im Garten beim spielerischen Lernen',
+    colorAccent: 'mint' as const,
+  },
+  {
+    title: t('programs.miniProjekte'),
+    description: t('programs.miniProjekte.desc'),
+    href: translatePath('/angebote/mini-projekte/'),
+    iconName: 'palette' as const,
+    imageSrc: base + '/images/programs/projects.jpg',
+    imageAlt: 'Kinder bei kreativen Projekten',
+    colorAccent: 'coral' as const,
+  },
+  {
+    title: t('programs.miniTurnen'),
+    description: t('programs.miniTurnen.desc'),
+    href: translatePath('/angebote/mini-turnen/'),
+    iconName: 'ball' as const,
+    imageSrc: base + '/images/programs/sports.png',
+    imageAlt: 'Kinder beim Sport und Turnen',
+    colorAccent: 'sky' as const,
+  },
+  {
+    title: t('programs.schulberatung'),
+    description: t('programs.schulberatung.desc'),
+    href: translatePath('/angebote/schulberatung/'),
+    iconName: 'school' as const,
+    imageSrc: base + '/images/programs/school.jpg',
+    imageAlt: 'Schulberatung und Unterstützung',
+    colorAccent: 'magenta' as const,
+  },
+];
 ---
 
 <Base
@@ -127,66 +167,14 @@ const colorClasses: Record<string, string> = {
     </div>
   </section>
 
-  <!-- Programs Section -->
-  <section class="section-padding bg-white relative">
-    <div class="container mx-auto max-w-6xl">
-      <div class="section-header reveal">
-        <span class="section-label">{t('nav.programs')}</span>
-        <h2>{t('programs.title')}</h2>
-        <p>{t('programs.subtitle')}</p>
-      </div>
-
-      <!-- Bento Grid - TRUE evolea.ch spectrum colors -->
-      <div class="bento-grid">
-        <div class="reveal reveal-delay-1">
-          <ProgramCardEnhanced
-            title={t('programs.miniGarten')}
-            description={t('programs.miniGarten.desc')}
-            href={translatePath('/angebote/mini-garten/')}
-            iconName="sprout"
-            imageSrc="/images/programs/garden.jpg"
-            imageAlt="Kinder im Garten beim spielerischen Lernen"
-            colorAccent="mint"
-          />
-        </div>
-        <div class="reveal reveal-delay-2 bento-item-large">
-          <ProgramCardEnhanced
-            title={t('programs.miniProjekte')}
-            description={t('programs.miniProjekte.desc')}
-            href={translatePath('/angebote/mini-projekte/')}
-            iconName="palette"
-            imageSrc="/images/programs/projects.jpg"
-            imageAlt="Kinder bei kreativen Projekten"
-            colorAccent="coral"
-            size="large"
-          />
-        </div>
-        <div class="reveal reveal-delay-3">
-          <ProgramCardEnhanced
-            title={t('programs.miniTurnen')}
-            description={t('programs.miniTurnen.desc')}
-            href={translatePath('/angebote/mini-turnen/')}
-            iconName="ball"
-            imageSrc="/images/programs/sports.png"
-            imageAlt="Kinder beim Sport und Turnen"
-            colorAccent="sky"
-          />
-        </div>
-        <div class="reveal reveal-delay-4 bento-item-wide">
-          <ProgramCardEnhanced
-            title={t('programs.schulberatung')}
-            description={t('programs.schulberatung.desc')}
-            href={translatePath('/angebote/schulberatung/')}
-            iconName="school"
-            imageSrc="/images/programs/school.jpg"
-            imageAlt="Schulberatung und Unterstützung"
-            colorAccent="magenta"
-            size="wide"
-          />
-        </div>
-      </div>
-    </div>
-  </section>
+  <!-- Programs Section - Premium Redesigned -->
+  <AngeboteSection
+    sectionLabel={t('nav.programs')}
+    title={t('programs.title')}
+    subtitle={t('programs.subtitle')}
+    programs={programs}
+    learnMoreText="Mehr erfahren"
+  />
 
   <!-- Pedagogical Principles Section -->
   <section class="section-padding relative overflow-hidden">

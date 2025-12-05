@@ -1,0 +1,756 @@
+---
+/**
+ * AngeboteSection - Premium "Unsere Angebote" section with Apple-quality animations
+ *
+ * Features:
+ * - Responsive grid: 1 col mobile, 2 cols tablet/desktop, 4 cols on 1920px+
+ * - Equal-height cards with background images and gradient overlays
+ * - Scroll-triggered entrance animations with stagger
+ * - Animated spectrum line decoration
+ * - Apple-style hover effects (lift, glow, arrow animation)
+ * - Full 4K support with proportional scaling
+ */
+import Icon from '@components/Icon.astro';
+
+interface Program {
+  title: string;
+  description: string;
+  href: string;
+  iconName: 'sprout' | 'palette' | 'ball' | 'school';
+  imageSrc: string;
+  imageAlt: string;
+  colorAccent: 'mint' | 'coral' | 'sky' | 'magenta';
+}
+
+interface Props {
+  sectionLabel: string;
+  title: string;
+  subtitle: string;
+  programs: Program[];
+  learnMoreText?: string;
+}
+
+const {
+  sectionLabel,
+  title,
+  subtitle,
+  programs,
+  learnMoreText = 'Mehr erfahren'
+} = Astro.props;
+
+// Color accent to border/glow color mapping
+const accentColors: Record<string, string> = {
+  mint: '#7BEDD5',
+  coral: '#FF7E5D',
+  sky: '#5DADE2',
+  magenta: '#DD48E0',
+};
+---
+
+<section class="angebote-section" id="angebote">
+  <div class="angebote-container">
+    <!-- Section Header -->
+    <div class="angebote-header" data-animate="header">
+      <span class="angebote-label">{sectionLabel}</span>
+      <h2 class="angebote-title">{title}</h2>
+      <p class="angebote-subtitle">{subtitle}</p>
+      <div class="spectrum-line-container">
+        <div class="angebote-spectrum-line" data-animate="line"></div>
+      </div>
+    </div>
+
+    <!-- Cards Grid -->
+    <div class="angebote-grid">
+      {programs.map((program, index) => (
+        <a
+          href={program.href}
+          class="angebot-card"
+          data-animate="card"
+          data-delay={index}
+          style={`--accent-color: ${accentColors[program.colorAccent]}`}
+        >
+          <!-- Background Image -->
+          <div class="card-bg">
+            <img
+              src={program.imageSrc}
+              alt={program.imageAlt}
+              loading="lazy"
+              decoding="async"
+            />
+          </div>
+
+          <!-- Gradient Overlay -->
+          <div class="card-overlay"></div>
+
+          <!-- Card Content -->
+          <div class="card-content">
+            <div class="card-icon">
+              <Icon name={program.iconName} size="2xl" gradient={false} />
+            </div>
+            <h3 class="card-title">{program.title}</h3>
+            <p class="card-description">{program.description}</p>
+            <span class="card-link">
+              {learnMoreText}
+              <svg class="card-arrow" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M4 10H16M16 10L10 4M16 10L10 16" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </span>
+          </div>
+
+          <!-- Color accent bottom border -->
+          <div class="card-accent-border"></div>
+        </a>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  /* ========================================
+     ANGEBOTE SECTION - Apple-Quality Design
+     ======================================== */
+
+  .angebote-section {
+    padding: 6rem 0;
+    background: var(--evolea-cream, #FFFBF7);
+    overflow: hidden;
+  }
+
+  .angebote-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 1.5rem;
+  }
+
+  /* ===== SECTION HEADER ===== */
+  .angebote-header {
+    text-align: center;
+    margin-bottom: 4rem;
+    opacity: 0;
+    transform: translateY(40px);
+  }
+
+  .angebote-header.animate {
+    animation: fadeSlideUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  }
+
+  .angebote-label {
+    display: inline-block;
+    padding: 0.5rem 1.5rem;
+    background: linear-gradient(135deg, rgba(123, 237, 213, 0.2) 0%, rgba(233, 123, 241, 0.2) 100%);
+    color: var(--evolea-magenta, #DD48E0);
+    border-radius: 100px;
+    font-family: 'Fredoka', sans-serif;
+    font-size: 0.875rem;
+    font-weight: 500;
+    margin-bottom: 1.5rem;
+    letter-spacing: 0.02em;
+  }
+
+  .angebote-title {
+    font-family: 'Fredoka', sans-serif;
+    font-size: 3rem;
+    font-weight: 700;
+    color: var(--evolea-magenta, #DD48E0);
+    margin-bottom: 1rem;
+    line-height: 1.1;
+  }
+
+  .angebote-subtitle {
+    font-family: 'Poppins', sans-serif;
+    font-size: 1.125rem;
+    color: var(--evolea-text-light, #5C5762);
+    max-width: 600px;
+    margin: 0 auto 2rem;
+    line-height: 1.6;
+  }
+
+  /* ===== SPECTRUM LINE ===== */
+  .spectrum-line-container {
+    display: flex;
+    justify-content: center;
+  }
+
+  .angebote-spectrum-line {
+    width: 200px;
+    height: 4px;
+    border-radius: 2px;
+    background: linear-gradient(90deg, #7BEDD5 0%, #FFE066 25%, #E97BF1 50%, #DD48E0 75%, #CD87F8 100%);
+    background-size: 200% 100%;
+    transform: scaleX(0);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .angebote-spectrum-line.animate {
+    animation: drawLine 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  }
+
+  .angebote-spectrum-line::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      90deg,
+      transparent 0%,
+      rgba(255, 255, 255, 0.5) 50%,
+      transparent 100%
+    );
+    animation: shimmer 3s ease-in-out infinite;
+    animation-play-state: paused;
+  }
+
+  .angebote-spectrum-line.animate::after {
+    animation-play-state: running;
+  }
+
+  /* ===== CARDS GRID ===== */
+  .angebote-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+
+  /* ===== CARD STYLES ===== */
+  .angebot-card {
+    position: relative;
+    min-height: 350px;
+    border-radius: 24px;
+    overflow: hidden;
+    text-decoration: none;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    opacity: 0;
+    transform: translateY(40px);
+    transition:
+      transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1),
+      box-shadow 0.4s ease;
+    will-change: transform;
+  }
+
+  .angebot-card.animate {
+    animation: fadeSlideUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  }
+
+  .angebot-card:hover {
+    transform: translateY(-12px);
+    box-shadow:
+      0 25px 50px rgba(186, 83, 173, 0.25),
+      0 0 80px rgba(221, 72, 224, 0.15);
+  }
+
+  .angebot-card:focus-visible {
+    outline: 3px solid var(--evolea-mint, #7BEDD5);
+    outline-offset: 4px;
+  }
+
+  /* Card Background Image */
+  .card-bg {
+    position: absolute;
+    inset: 0;
+    background: var(--evolea-magenta, #DD48E0);
+  }
+
+  .card-bg img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .angebot-card:hover .card-bg img {
+    transform: scale(1.08);
+  }
+
+  /* Card Overlay - lighter for better image visibility */
+  .card-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      180deg,
+      rgba(186, 83, 173, 0.3) 0%,
+      rgba(221, 72, 224, 0.6) 100%
+    );
+    transition: background 0.4s ease;
+  }
+
+  /* Hover - slightly darker for contrast */
+  .angebot-card:hover .card-overlay {
+    background: linear-gradient(
+      180deg,
+      rgba(186, 83, 173, 0.4) 0%,
+      rgba(221, 72, 224, 0.7) 100%
+    );
+  }
+
+  /* Card Content */
+  .card-content {
+    position: relative;
+    z-index: 1;
+    padding: 1.5rem;
+    color: white;
+  }
+
+  .card-icon {
+    width: 48px;
+    height: 48px;
+    margin-bottom: 1rem;
+    color: white;
+    transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+
+  .card-icon :global(svg) {
+    width: 100%;
+    height: 100%;
+  }
+
+  .angebot-card:hover .card-icon {
+    transform: scale(1.15) rotate(5deg);
+  }
+
+  .card-title {
+    font-family: 'Fredoka', sans-serif;
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+    line-height: 1.2;
+  }
+
+  .card-description {
+    font-family: 'Poppins', sans-serif;
+    font-size: 0.9375rem;
+    opacity: 0.9;
+    line-height: 1.5;
+    margin-bottom: 1rem;
+  }
+
+  .card-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 500;
+    font-size: 0.9375rem;
+    color: white;
+    opacity: 0.9;
+    transition: opacity 0.3s ease;
+  }
+
+  .angebot-card:hover .card-link {
+    opacity: 1;
+  }
+
+  .card-arrow {
+    width: 20px;
+    height: 20px;
+    transition: transform 0.3s ease;
+  }
+
+  .angebot-card:hover .card-arrow {
+    transform: translateX(6px);
+  }
+
+  /* Color accent bottom border */
+  .card-accent-border {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: var(--accent-color);
+    z-index: 2;
+  }
+
+  /* ===== ANIMATIONS ===== */
+  @keyframes fadeSlideUp {
+    from {
+      opacity: 0;
+      transform: translateY(40px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes drawLine {
+    from {
+      transform: scaleX(0);
+    }
+    to {
+      transform: scaleX(1);
+    }
+  }
+
+  @keyframes shimmer {
+    0%, 100% {
+      transform: translateX(-100%);
+    }
+    50% {
+      transform: translateX(100%);
+    }
+  }
+
+  /* ========================================
+     RESPONSIVE BREAKPOINTS
+     ======================================== */
+
+  /* Tablet (768px+) */
+  @media (min-width: 768px) {
+    .angebote-grid {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 2rem;
+    }
+
+    .angebot-card {
+      min-height: 400px;
+    }
+
+    .angebote-title {
+      font-size: 3.5rem;
+    }
+
+    .card-content {
+      padding: 2rem;
+    }
+
+    .card-icon {
+      width: 56px;
+      height: 56px;
+    }
+
+    .card-title {
+      font-size: 1.75rem;
+    }
+  }
+
+  /* Desktop (1024px+) */
+  @media (min-width: 1024px) {
+    .angebote-section {
+      padding: 8rem 0;
+    }
+
+    .angebote-container {
+      padding: 0 2rem;
+    }
+
+    .angebote-header {
+      margin-bottom: 5rem;
+    }
+  }
+
+  /* Large Desktop (1440px+) */
+  @media (min-width: 1440px) {
+    .angebote-container {
+      max-width: 1400px;
+    }
+
+    .angebote-title {
+      font-size: 4rem;
+    }
+
+    .angebote-subtitle {
+      font-size: 1.25rem;
+    }
+
+    .angebot-card {
+      min-height: 450px;
+    }
+
+    .card-title {
+      font-size: 2rem;
+    }
+  }
+
+  /* Full HD+ (1920px+) - Switch to 4 columns */
+  @media (min-width: 1920px) {
+    .angebote-container {
+      max-width: 1800px;
+    }
+
+    .angebote-grid {
+      grid-template-columns: repeat(4, 1fr);
+      gap: 2.5rem;
+    }
+
+    .angebote-title {
+      font-size: 4.5rem;
+    }
+
+    .angebot-card {
+      min-height: 500px;
+    }
+
+    .card-content {
+      padding: 2.5rem;
+    }
+
+    .card-icon {
+      width: 64px;
+      height: 64px;
+      margin-bottom: 1.5rem;
+    }
+  }
+
+  /* 2K/QHD+ (2560px+) */
+  @media (min-width: 2560px) {
+    .angebote-section {
+      padding: 10rem 0;
+    }
+
+    .angebote-container {
+      max-width: 2400px;
+      padding: 0 4rem;
+    }
+
+    .angebote-header {
+      margin-bottom: 6rem;
+    }
+
+    .angebote-label {
+      font-size: 1rem;
+      padding: 0.625rem 2rem;
+    }
+
+    .angebote-title {
+      font-size: 5.5rem;
+    }
+
+    .angebote-subtitle {
+      font-size: 1.5rem;
+      max-width: 800px;
+    }
+
+    .angebote-spectrum-line {
+      width: 300px;
+      height: 5px;
+    }
+
+    .angebote-grid {
+      gap: 3rem;
+    }
+
+    .angebot-card {
+      min-height: 550px;
+      border-radius: 32px;
+    }
+
+    .card-content {
+      padding: 3rem;
+    }
+
+    .card-icon {
+      width: 72px;
+      height: 72px;
+      margin-bottom: 2rem;
+    }
+
+    .card-title {
+      font-size: 2.25rem;
+      margin-bottom: 0.75rem;
+    }
+
+    .card-description {
+      font-size: 1.125rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .card-link {
+      font-size: 1rem;
+    }
+
+    .card-arrow {
+      width: 24px;
+      height: 24px;
+    }
+
+    .card-accent-border {
+      height: 5px;
+    }
+  }
+
+  /* 4K (3840px+) */
+  @media (min-width: 3840px) {
+    .angebote-section {
+      padding: 14rem 0;
+    }
+
+    .angebote-container {
+      max-width: 3200px;
+      padding: 0 6rem;
+    }
+
+    .angebote-header {
+      margin-bottom: 8rem;
+    }
+
+    .angebote-label {
+      font-size: 1.25rem;
+      padding: 0.875rem 2.5rem;
+      margin-bottom: 2rem;
+    }
+
+    .angebote-title {
+      font-size: 7rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .angebote-subtitle {
+      font-size: 2rem;
+      max-width: 1200px;
+      margin-bottom: 3rem;
+    }
+
+    .angebote-spectrum-line {
+      width: 400px;
+      height: 6px;
+    }
+
+    .angebote-grid {
+      gap: 4rem;
+    }
+
+    .angebot-card {
+      min-height: 700px;
+      border-radius: 40px;
+    }
+
+    .card-content {
+      padding: 4rem;
+    }
+
+    .card-icon {
+      width: 96px;
+      height: 96px;
+      margin-bottom: 2.5rem;
+    }
+
+    .card-title {
+      font-size: 3rem;
+      margin-bottom: 1rem;
+    }
+
+    .card-description {
+      font-size: 1.5rem;
+      line-height: 1.7;
+      margin-bottom: 2rem;
+    }
+
+    .card-link {
+      font-size: 1.25rem;
+    }
+
+    .card-arrow {
+      width: 32px;
+      height: 32px;
+    }
+
+    .card-accent-border {
+      height: 6px;
+    }
+  }
+
+  /* ===== REDUCED MOTION ===== */
+  @media (prefers-reduced-motion: reduce) {
+    .angebote-header,
+    .angebot-card {
+      opacity: 1;
+      transform: none;
+    }
+
+    .angebote-spectrum-line {
+      transform: scaleX(1);
+    }
+
+    .angebote-spectrum-line::after {
+      animation: none;
+    }
+
+    .angebot-card,
+    .angebot-card:hover,
+    .card-bg img,
+    .card-overlay,
+    .card-icon,
+    .card-arrow {
+      transition: none;
+    }
+
+    .angebot-card:hover {
+      transform: none;
+    }
+
+    .angebot-card:hover .card-bg img {
+      transform: none;
+    }
+
+    .angebot-card:hover .card-icon {
+      transform: none;
+    }
+
+    .angebot-card:hover .card-arrow {
+      transform: none;
+    }
+  }
+</style>
+
+<script>
+  // Intersection Observer for scroll animations
+  function initAngeboteAnimations() {
+    const section = document.querySelector('.angebote-section');
+    if (!section) return;
+
+    // Check for reduced motion preference
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (prefersReducedMotion) {
+      // Show all elements immediately without animation
+      section.querySelectorAll('[data-animate]').forEach(el => {
+        el.classList.add('animate');
+      });
+      return;
+    }
+
+    const observerOptions: IntersectionObserverInit = {
+      threshold: 0.15,
+      rootMargin: '0px 0px -50px 0px'
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          // Animate header first
+          const header = entry.target.querySelector('[data-animate="header"]');
+          if (header) {
+            header.classList.add('animate');
+          }
+
+          // Animate spectrum line with delay
+          const line = entry.target.querySelector('[data-animate="line"]');
+          if (line) {
+            setTimeout(() => {
+              line.classList.add('animate');
+            }, 300);
+          }
+
+          // Animate cards with staggered delay
+          const cards = entry.target.querySelectorAll('[data-animate="card"]');
+          cards.forEach((card) => {
+            const delay = parseInt((card as HTMLElement).dataset.delay || '0');
+            setTimeout(() => {
+              card.classList.add('animate');
+            }, 450 + (delay * 150));
+          });
+
+          // Stop observing after animation triggered
+          observer.unobserve(entry.target);
+        }
+      });
+    }, observerOptions);
+
+    observer.observe(section);
+  }
+
+  // Run on DOM ready and after Astro page transitions
+  document.addEventListener('DOMContentLoaded', initAngeboteAnimations);
+  document.addEventListener('astro:page-load', initAngeboteAnimations);
+</script>
