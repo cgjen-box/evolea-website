@@ -2,7 +2,7 @@
 import Base from '@layouts/Base.astro';
 import VideoHero from '@components/VideoHero.astro';
 import AngeboteSection from '@components/AngeboteSection.astro';
-import GradientCTA from '@components/GradientCTA.astro';
+import PageCloser from '@components/PageCloser.astro';
 import FloatingShapes from '@components/FloatingShapes.astro';
 import Icon from '@components/Icon.astro';
 import { getLangFromUrl, useTranslations, useTranslatedPath } from '@i18n/utils';
@@ -219,12 +219,12 @@ const programs = [
     </div>
   </section>
 
-  <!-- CTA Section -->
-  <GradientCTA
-    title={t('contact.title')}
-    description={t('contact.subtitle')}
-    buttonText={t('contact.cta')}
-    buttonHref={translatePath('/kontakt/')}
-    variant="hero"
+  <!-- Page Closer - Prism Gradient with Floating Elements -->
+  <PageCloser
+    showCTA={true}
+    ctaTitle={t('contact.title')}
+    ctaDescription={t('contact.subtitle')}
+    ctaButtonText={t('contact.cta')}
+    ctaButtonHref={translatePath('/kontakt/')}
   />
 </Base>

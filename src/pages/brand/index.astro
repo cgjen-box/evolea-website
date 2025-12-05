@@ -1,5 +1,7 @@
 ---
 import Base from '@layouts/Base.astro';
+import PageCloser from '@components/PageCloser.astro';
+import Butterfly from '@components/Butterfly.astro';
 
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 
@@ -32,16 +34,24 @@ const colors = {
 
 const gradients = [
   {
+    name: 'Prism Bold (NEW)',
+    css: 'linear-gradient(135deg, #4ECDC4 0%, #FFE066 18%, #FF9ECC 36%, #E97BF1 54%, #CD87F8 72%, #9B3D9B 100%)',
+    cssVar: '--gradient-prism-bold',
+    description: 'BOLD prism - richer colors, no white. Use for page closers and premium sections.',
+    isNew: true,
+  },
+  {
     name: 'Prism (Signature)',
     css: 'linear-gradient(118deg, #7BEDD5 0%, #FFE066 21%, #FFFFFF 48%, #E97BF1 81%, #CD87F8 100%)',
     cssVar: '--gradient-prism',
     description: 'THE signature EVOLEA gradient - light through a prism. Use for hero sections, CTAs, and key moments.',
   },
   {
-    name: 'Prism Vivid',
-    css: 'linear-gradient(118deg, #7BEDD5 0%, #FFE066 15%, #FFDEDE 35%, #E97BF1 65%, #CD87F8 85%, #DD48E0 100%)',
-    cssVar: '--gradient-prism-vivid',
-    description: 'More saturated prism for smaller elements and buttons.',
+    name: 'Ultra Bold',
+    css: 'linear-gradient(135deg, #4ECDC4 0%, #FFE066 20%, #FF6B9D 40%, #C44FE0 60%, #9B59B6 80%, #6B3FA0 100%)',
+    cssVar: '--gradient-ultra-bold',
+    description: 'Maximum impact - bold teal to deep violet. For premium hero sections.',
+    isNew: true,
   },
   {
     name: 'Spectrum Flow',
@@ -51,21 +61,21 @@ const gradients = [
   },
   {
     name: 'Magenta Burst',
-    css: 'linear-gradient(135deg, #BA53AD 0%, #DD48E0 50%, #E97BF1 100%)',
+    css: 'linear-gradient(135deg, #9B3D9B 0%, #C44FE0 50%, #E97BF1 100%)',
     cssVar: '--gradient-magenta',
-    description: 'Bold magenta gradient for primary buttons and strong CTAs.',
+    description: 'Bold magenta gradient for primary buttons and strong CTAs. Richer purples.',
   },
   {
     name: 'Ocean Dream',
-    css: 'linear-gradient(135deg, #7BEDD5 0%, #5DADE2 50%, #CD87F8 100%)',
+    css: 'linear-gradient(135deg, #4ECDC4 0%, #5DADE2 50%, #B56FE8 100%)',
     cssVar: '--gradient-ocean',
-    description: 'Cool, calming gradient - mint to sky to lavender.',
+    description: 'Cool, calming gradient - deeper mint to sky to purple.',
   },
   {
     name: 'Sunset Warmth',
-    css: 'linear-gradient(135deg, #FFE066 0%, #FF7E5D 50%, #E97BF1 100%)',
+    css: 'linear-gradient(135deg, #FFD84D 0%, #FF6B4A 50%, #C44FE0 100%)',
     cssVar: '--gradient-sunset',
-    description: 'Warm, energetic gradient - yellow to coral to magenta.',
+    description: 'Warm, energetic gradient - richer gold to vibrant coral to magenta.',
   },
 ];
 
@@ -130,34 +140,37 @@ colors: {
 ---
 
 <Base title="EVOLEA Brand Guide" description="Comprehensive EVOLEA Brand Guidelines - Colors, Typography, Logo, Butterfly, Components">
-  <!-- Hero with Prism Gradient -->
-  <section class="relative min-h-[80vh] flex items-center justify-center overflow-hidden" style="background: linear-gradient(118deg, #7BEDD5 0%, #FFE066 21%, #FFFFFF 48%, #E97BF1 81%, #CD87F8 100%);">
+  <!-- Hero with Bold Prism Gradient -->
+  <section class="brand-hero relative min-h-[80vh] flex items-center justify-center overflow-hidden">
+    <!-- Bold Animated Gradient Background -->
+    <div class="absolute inset-0 brand-hero-bg"></div>
+
+    <!-- Floating Orbs -->
+    <div class="absolute inset-0 overflow-hidden pointer-events-none">
+      <div class="absolute w-96 h-96 rounded-full opacity-50 blur-3xl" style="background: radial-gradient(circle, #4ECDC4 0%, #3DB8AC 100%); top: -10%; left: -5%;"></div>
+      <div class="absolute w-80 h-80 rounded-full opacity-40 blur-3xl" style="background: radial-gradient(circle, #FFE066 0%, #FFC83D 100%); top: 20%; right: 10%;"></div>
+      <div class="absolute w-72 h-72 rounded-full opacity-50 blur-3xl" style="background: radial-gradient(circle, #FF6B9D 0%, #E84C82 100%); bottom: 10%; left: 20%;"></div>
+    </div>
+
     <!-- Floating butterflies -->
     <div class="absolute inset-0 overflow-hidden pointer-events-none">
-      <svg class="absolute top-20 left-[10%] w-16 h-16 animate-float opacity-60" viewBox="0 0 100 100">
-        <defs>
-          <linearGradient id="butterfly-hero-1" x1="0%" y1="0%" x2="100%" y2="0%">
-            <stop offset="0%" stop-color="#5DADE2"/>
-            <stop offset="50%" stop-color="#CD87F8"/>
-            <stop offset="100%" stop-color="#DD48E0"/>
-          </linearGradient>
-        </defs>
-        <path d="M50 50 C30 30, 10 35, 15 55 C10 75, 30 80, 50 60 C70 80, 90 75, 85 55 C90 35, 70 30, 50 50" fill="url(#butterfly-hero-1)"/>
-      </svg>
-      <svg class="absolute top-40 right-[15%] w-12 h-12 animate-float-delayed opacity-50" viewBox="0 0 100 100">
-        <path d="M50 50 C30 30, 10 35, 15 55 C10 75, 30 80, 50 60 C70 80, 90 75, 85 55 C90 35, 70 30, 50 50" fill="#E97BF1"/>
-      </svg>
-      <svg class="absolute bottom-32 left-[20%] w-10 h-10 animate-float-slow opacity-40" viewBox="0 0 100 100">
-        <path d="M50 50 C30 30, 10 35, 15 55 C10 75, 30 80, 50 60 C70 80, 90 75, 85 55 C90 35, 70 30, 50 50" fill="#7BEDD5"/>
-      </svg>
+      <div class="absolute top-20 left-[10%] opacity-50 animate-float">
+        <Butterfly size="lg" variant="spectrum" />
+      </div>
+      <div class="absolute top-40 right-[15%] opacity-40 animate-float-delayed">
+        <Butterfly size="md" variant="white" />
+      </div>
+      <div class="absolute bottom-32 left-[20%] opacity-30 animate-float-slow">
+        <Butterfly size="sm" variant="spectrum" />
+      </div>
     </div>
 
     <div class="relative z-10 text-center px-4 py-20">
-      <p class="text-sm font-semibold uppercase tracking-widest text-white/80 mb-4 drop-shadow">Internal Brand Guide v2.0</p>
+      <p class="brand-hero-label">Internal Brand Guide v2.1</p>
 
       <!-- Logo with Butterfly -->
       <div class="flex items-center justify-center gap-4 mb-8">
-        <h1 class="text-6xl md:text-8xl font-display font-bold drop-shadow-lg" style="background: linear-gradient(90deg, #7BEDD5 0%, #FFE066 15%, #EF8EAE 35%, #E97BF1 55%, #CD87F8 75%, #5DADE2 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;">
+        <h1 class="brand-hero-title">
           EVOLEA
         </h1>
         <!-- Butterfly Icon -->
@@ -837,31 +850,55 @@ colors: {
     </div>
   </section>
 
-  <!-- Footer -->
-  <footer class="py-16 px-4 relative overflow-hidden" style="background: linear-gradient(118deg, #7BEDD5 0%, #FFE066 21%, #FFFFFF 48%, #E97BF1 81%, #CD87F8 100%);">
-    <!-- Decorative butterflies -->
-    <svg class="absolute top-8 left-[10%] w-12 h-12 opacity-40" viewBox="0 0 100 100">
-      <path d="M48 50 C35 25, 5 20, 10 45 C5 70, 35 75, 48 55 Z M52 50 C65 25, 95 20, 90 45 C95 70, 65 75, 52 55 Z" fill="white"/>
-    </svg>
-    <svg class="absolute bottom-8 right-[15%] w-16 h-16 opacity-30" viewBox="0 0 100 100">
-      <path d="M48 50 C35 25, 5 20, 10 45 C5 70, 35 75, 48 55 Z M52 50 C65 25, 95 20, 90 45 C95 70, 65 75, 52 55 Z" fill="white"/>
-    </svg>
-
-    <div class="relative z-10 text-center">
-      <div class="flex items-center justify-center gap-2 mb-4">
-        <span class="text-3xl font-display font-bold text-white drop-shadow-lg">EVOLEA</span>
-        <svg class="w-8 h-8 -ml-1 -mt-2" viewBox="0 0 100 100">
-          <path d="M48 50 C35 25, 5 20, 10 45 C5 70, 35 75, 48 55 Z M52 50 C65 25, 95 20, 90 45 C95 70, 65 75, 52 55 Z" fill="white" opacity="0.9"/>
-          <ellipse cx="50" cy="52" rx="2" ry="8" fill="white"/>
-        </svg>
-      </div>
-      <p class="text-white/80 font-medium">Brand Guide v2.0 • Internal Use Only</p>
-      <p class="text-white/60 text-sm mt-2">Where children on the spectrum flourish</p>
-    </div>
-  </footer>
+  <!-- Page Closer with Premium Prism Gradient -->
+  <PageCloser />
 </Base>
 
 <style>
+  /* ===== BRAND HERO STYLES ===== */
+  .brand-hero-bg {
+    background: linear-gradient(
+      135deg,
+      #4ECDC4 0%,
+      #FFE066 18%,
+      #FF9ECC 36%,
+      #E97BF1 54%,
+      #CD87F8 72%,
+      #9B3D9B 100%
+    );
+    background-size: 400% 400%;
+    animation: heroGradient 20s ease infinite;
+  }
+
+  @keyframes heroGradient {
+    0%, 100% { background-position: 0% 50%; }
+    25% { background-position: 50% 100%; }
+    50% { background-position: 100% 50%; }
+    75% { background-position: 50% 0%; }
+  }
+
+  .brand-hero-label {
+    font-size: 0.875rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    color: #FFFFFF;
+    margin-bottom: 1rem;
+    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+  }
+
+  .brand-hero-title {
+    font-family: 'Fredoka', sans-serif;
+    font-size: clamp(3.5rem, 10vw, 6rem);
+    font-weight: 700;
+    background: linear-gradient(90deg, #FFFFFF 0%, #F0F0F0 50%, #FFFFFF 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    text-shadow: none;
+    filter: drop-shadow(0 4px 20px rgba(0, 0, 0, 0.15));
+  }
+
   @keyframes spectrumFlow {
     0% { background-position: 0% 0%; }
     100% { background-position: 200% 0%; }
@@ -892,5 +929,17 @@ colors: {
 
   .animate-float-slow {
     animation: float-slow 8s ease-in-out infinite;
+  }
+
+  /* Reduced motion */
+  @media (prefers-reduced-motion: reduce) {
+    .brand-hero-bg {
+      animation: none;
+    }
+    .animate-float,
+    .animate-float-delayed,
+    .animate-float-slow {
+      animation: none;
+    }
   }
 </style>

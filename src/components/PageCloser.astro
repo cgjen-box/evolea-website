@@ -1,0 +1,361 @@
+---
+/**
+ * PageCloser - Premium prism gradient section before footer
+ *
+ * Features:
+ * - Bold animated prism gradient background
+ * - Large floating blurred orbs (mint, gold, pink, purple)
+ * - Subtle floating butterflies
+ * - Smooth gradient transition to footer
+ * - Optional CTA content
+ */
+import Butterfly from './Butterfly.astro';
+
+interface Props {
+  showCTA?: boolean;
+  ctaTitle?: string;
+  ctaDescription?: string;
+  ctaButtonText?: string;
+  ctaButtonHref?: string;
+}
+
+const {
+  showCTA = false,
+  ctaTitle,
+  ctaDescription,
+  ctaButtonText,
+  ctaButtonHref,
+} = Astro.props;
+---
+
+<section class="page-closer" aria-hidden={!showCTA}>
+  <!-- Bold Animated Prism Gradient Background -->
+  <div class="page-closer-bg"></div>
+
+  <!-- Large Floating Orbs with Radial Gradients -->
+  <div class="floating-orbs" aria-hidden="true">
+    <div class="orb orb-mint"></div>
+    <div class="orb orb-gold"></div>
+    <div class="orb orb-pink"></div>
+    <div class="orb orb-purple"></div>
+    <div class="orb orb-teal"></div>
+  </div>
+
+  <!-- Floating Butterflies -->
+  <div class="floating-butterflies" aria-hidden="true">
+    <div class="butterfly-float butterfly-1">
+      <Butterfly size="md" variant="spectrum" />
+    </div>
+    <div class="butterfly-float butterfly-2">
+      <Butterfly size="sm" variant="white" />
+    </div>
+    <div class="butterfly-float butterfly-3">
+      <Butterfly size="lg" variant="spectrum" />
+    </div>
+    <div class="butterfly-float butterfly-4">
+      <Butterfly size="sm" variant="white" />
+    </div>
+  </div>
+
+  <!-- Optional CTA Content -->
+  {showCTA && ctaTitle && (
+    <div class="page-closer-content">
+      <h2 class="page-closer-title">{ctaTitle}</h2>
+      {ctaDescription && (
+        <p class="page-closer-description">{ctaDescription}</p>
+      )}
+      {ctaButtonText && ctaButtonHref && (
+        <a href={ctaButtonHref} class="page-closer-btn">
+          {ctaButtonText}
+          <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+          </svg>
+        </a>
+      )}
+    </div>
+  )}
+
+  <!-- Smooth Wave Transition to Footer -->
+  <div class="wave-to-footer"></div>
+</section>
+
+<style>
+  .page-closer {
+    position: relative;
+    min-height: 350px;
+    overflow: hidden;
+  }
+
+  /* ===== BOLD ANIMATED PRISM GRADIENT ===== */
+  .page-closer-bg {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      135deg,
+      #4ECDC4 0%,      /* Bold teal */
+      #FFE066 18%,     /* Sunshine */
+      #FF9ECC 36%,     /* Soft pink */
+      #E97BF1 54%,     /* Magenta */
+      #CD87F8 72%,     /* Lavender */
+      #9B3D9B 100%     /* Deep purple */
+    );
+    background-size: 400% 400%;
+    animation: prismShift 20s ease infinite;
+  }
+
+  @keyframes prismShift {
+    0%, 100% {
+      background-position: 0% 50%;
+    }
+    25% {
+      background-position: 50% 100%;
+    }
+    50% {
+      background-position: 100% 50%;
+    }
+    75% {
+      background-position: 50% 0%;
+    }
+  }
+
+  /* ===== FLOATING ORBS ===== */
+  .floating-orbs {
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+    pointer-events: none;
+  }
+
+  .orb {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(80px);
+    opacity: 0.7;
+    animation: orbFloat 20s ease-in-out infinite;
+  }
+
+  .orb-mint {
+    width: 400px;
+    height: 400px;
+    background: radial-gradient(circle, #4ECDC4 0%, #3DB8AC 100%);
+    top: -10%;
+    left: -5%;
+    animation-delay: 0s;
+  }
+
+  .orb-gold {
+    width: 350px;
+    height: 350px;
+    background: radial-gradient(circle, #FFE066 0%, #FFC83D 100%);
+    top: 20%;
+    left: 25%;
+    animation-delay: -5s;
+  }
+
+  .orb-pink {
+    width: 450px;
+    height: 450px;
+    background: radial-gradient(circle, #FF6B9D 0%, #E84C82 100%);
+    top: -15%;
+    right: -10%;
+    animation-delay: -10s;
+  }
+
+  .orb-purple {
+    width: 380px;
+    height: 380px;
+    background: radial-gradient(circle, #CD87F8 0%, #B56FE8 100%);
+    bottom: -20%;
+    right: 20%;
+    animation-delay: -15s;
+  }
+
+  .orb-teal {
+    width: 300px;
+    height: 300px;
+    background: radial-gradient(circle, #5DADE2 0%, #3498DB 100%);
+    bottom: 10%;
+    left: 15%;
+    animation-delay: -8s;
+  }
+
+  @keyframes orbFloat {
+    0%, 100% {
+      transform: translate(0, 0) scale(1);
+    }
+    25% {
+      transform: translate(40px, -40px) scale(1.08);
+    }
+    50% {
+      transform: translate(-30px, 30px) scale(0.92);
+    }
+    75% {
+      transform: translate(25px, 15px) scale(1.04);
+    }
+  }
+
+  /* ===== FLOATING BUTTERFLIES ===== */
+  .floating-butterflies {
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+    pointer-events: none;
+  }
+
+  .butterfly-float {
+    position: absolute;
+    animation: butterflyDrift 25s ease-in-out infinite;
+  }
+
+  .butterfly-1 {
+    top: 15%;
+    left: 8%;
+    opacity: 0.5;
+    animation-delay: 0s;
+  }
+
+  .butterfly-2 {
+    top: 55%;
+    right: 12%;
+    opacity: 0.3;
+    animation-delay: -8s;
+  }
+
+  .butterfly-3 {
+    bottom: 25%;
+    left: 35%;
+    opacity: 0.4;
+    animation-delay: -16s;
+  }
+
+  .butterfly-4 {
+    top: 30%;
+    right: 30%;
+    opacity: 0.25;
+    animation-delay: -12s;
+  }
+
+  @keyframes butterflyDrift {
+    0%, 100% {
+      transform: translate(0, 0) rotate(0deg);
+    }
+    25% {
+      transform: translate(60px, -50px) rotate(12deg);
+    }
+    50% {
+      transform: translate(25px, 40px) rotate(-8deg);
+    }
+    75% {
+      transform: translate(-40px, -25px) rotate(10deg);
+    }
+  }
+
+  /* ===== CTA CONTENT ===== */
+  .page-closer-content {
+    position: relative;
+    z-index: 10;
+    text-align: center;
+    padding: 6rem 2rem;
+    max-width: 800px;
+    margin: 0 auto;
+  }
+
+  .page-closer-title {
+    font-family: 'Fredoka', sans-serif;
+    font-size: clamp(2rem, 5vw, 3.5rem);
+    font-weight: 700;
+    color: #FFFFFF;
+    margin-bottom: 1rem;
+    text-shadow:
+      0 2px 4px rgba(0, 0, 0, 0.1),
+      0 8px 30px rgba(138, 61, 158, 0.4),
+      0 0 60px rgba(186, 83, 173, 0.3);
+  }
+
+  .page-closer-description {
+    font-family: 'Poppins', sans-serif;
+    font-size: 1.25rem;
+    color: rgba(255, 255, 255, 0.95);
+    margin-bottom: 2rem;
+    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.15);
+  }
+
+  .page-closer-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: #FFFFFF;
+    color: #9B3D9B;
+    font-family: 'Fredoka', sans-serif;
+    font-weight: 600;
+    font-size: 1.125rem;
+    padding: 1.25rem 2.5rem;
+    border-radius: 100px;
+    text-decoration: none;
+    box-shadow:
+      0 4px 20px rgba(0, 0, 0, 0.15),
+      0 0 40px rgba(255, 255, 255, 0.3);
+    transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+
+  .page-closer-btn:hover {
+    transform: translateY(-4px) scale(1.02);
+    box-shadow:
+      0 8px 30px rgba(0, 0, 0, 0.2),
+      0 0 60px rgba(255, 255, 255, 0.4);
+  }
+
+  /* ===== WAVE TO FOOTER ===== */
+  .wave-to-footer {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 120px;
+    background: linear-gradient(
+      180deg,
+      transparent 0%,
+      rgba(138, 61, 126, 0.5) 50%,
+      #8A3D7E 100%
+    );
+  }
+
+  /* ===== RESPONSIVE ===== */
+  @media (min-width: 1024px) {
+    .page-closer {
+      min-height: 450px;
+    }
+  }
+
+  @media (min-width: 1920px) {
+    .page-closer {
+      min-height: 550px;
+    }
+
+    .orb-mint { width: 500px; height: 500px; }
+    .orb-gold { width: 450px; height: 450px; }
+    .orb-pink { width: 550px; height: 550px; }
+    .orb-purple { width: 480px; height: 480px; }
+    .orb-teal { width: 400px; height: 400px; }
+  }
+
+  /* ===== REDUCED MOTION ===== */
+  @media (prefers-reduced-motion: reduce) {
+    .page-closer-bg {
+      animation: none;
+      background-position: 50% 50%;
+    }
+
+    .orb {
+      animation: none;
+    }
+
+    .butterfly-float {
+      animation: none;
+    }
+
+    .page-closer-btn {
+      transition: none;
+    }
+  }
+</style>
