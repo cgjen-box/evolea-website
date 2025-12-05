@@ -7,34 +7,35 @@ import { getLangFromUrl, useTranslations, useTranslatedPath } from '@i18n/utils'
 const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
 const translatePath = useTranslatedPath(lang);
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 
 const team = [
   {
     name: 'Gianna Spiess',
     credentials: 'M.Sc., BCBA',
     role: 'Mitgründerin, Psychologin',
-    image: '/images/team/gianna-spiess.png',
+    image: base + '/images/team/gianna-spiess.png',
     description: 'Board Certified Behavior Analyst mit Schwerpunkt auf kindliche Entwicklung und evidenzbasierte Interventionen.',
   },
   {
     name: 'Annemarie Elias',
     credentials: 'M.Sc., BCBA',
     role: 'Mitgründerin, Psychologin',
-    image: '/images/team/annemarie-elias.png',
+    image: base + '/images/team/annemarie-elias.png',
     description: 'Board Certified Behavior Analyst mit Expertise in sozialen Kompetenzen und Verhaltensanalyse.',
   },
   {
     name: 'Christoph Jenny',
     credentials: '',
     role: 'Mitgründer',
-    image: '/images/team/christoph-jenny.png',
+    image: base + '/images/team/christoph-jenny.png',
     description: 'Treibende Kraft hinter der Vision von EVOLEA und verantwortlich für Organisation und Entwicklung.',
   },
   {
     name: 'Alexandra Aleksic',
     credentials: 'B.Sc.',
     role: 'Mitgründerin, Psychologie-Studentin',
-    image: '/images/team/alexandra-aleksic.jpg',
+    image: base + '/images/team/alexandra-aleksic.jpg',
     description: 'Angehende Psychologin mit Leidenschaft für die Arbeit mit Kindern im Spektrum.',
   },
 ];

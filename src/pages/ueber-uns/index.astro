@@ -8,6 +8,7 @@ import { getLangFromUrl, useTranslations, useTranslatedPath } from '@i18n/utils'
 const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
 const translatePath = useTranslatedPath(lang);
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 
 // 9 Pedagogical Principles - the foundation of EVOLEA
 const principles = [
@@ -138,7 +139,7 @@ const colorClasses: Record<string, string> = {
           <div class="relative">
             <div class="aspect-square rounded-evolea-lg overflow-hidden shadow-elevated">
               <img
-                src="/images/about/children-playing-1.jpg"
+                src={base + "/images/about/children-playing-1.jpg"}
                 alt="Kinder beim gemeinsamen Spielen"
                 class="w-full h-full object-cover"
                 loading="lazy"

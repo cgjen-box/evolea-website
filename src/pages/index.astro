@@ -10,6 +10,7 @@ import { getLangFromUrl, useTranslations, useTranslatedPath } from '@i18n/utils'
 const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
 const translatePath = useTranslatedPath(lang);
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 ---
 
 <Base
@@ -21,8 +22,8 @@ const translatePath = useTranslatedPath(lang);
   <VideoHero
     title={t('hero.title')}
     subtitle={t('hero.subtitle')}
-    videoSrc="/videos/hero.mp4"
-    posterSrc="/images/hero-poster.jpg"
+    videoSrc={base + "/videos/hero.mp4"}
+    posterSrc={base + "/images/hero-poster.jpg"}
     primaryButtonText={t('hero.cta.primary')}
     primaryButtonHref={translatePath('/angebote/')}
     secondaryButtonText={t('hero.cta.secondary')}
@@ -231,28 +232,28 @@ const translatePath = useTranslatedPath(lang);
       <div class="grid grid-cols-2 md:grid-cols-4 gap-6 mb-10">
         <div class="reveal reveal-delay-1 text-center group">
           <div class="aspect-square rounded-full overflow-hidden mb-4 shadow-soft group-hover:shadow-elevated transition-shadow mx-auto w-32 md:w-40">
-            <img src="/images/team/gianna-spiess.png" alt="Gianna Spiess" class="w-full h-full object-cover object-top" loading="lazy" />
+            <img src={base + "/images/team/gianna-spiess.png"} alt="Gianna Spiess" class="w-full h-full object-cover object-top" loading="lazy" />
           </div>
           <h4 class="font-display font-bold text-evolea-purple">Gianna Spiess</h4>
           <p class="text-sm text-evolea-text-light">M.Sc., BCBA</p>
         </div>
         <div class="reveal reveal-delay-2 text-center group">
           <div class="aspect-square rounded-full overflow-hidden mb-4 shadow-soft group-hover:shadow-elevated transition-shadow mx-auto w-32 md:w-40">
-            <img src="/images/team/annemarie-elias.png" alt="Annemarie Elias" class="w-full h-full object-cover object-top" loading="lazy" />
+            <img src={base + "/images/team/annemarie-elias.png"} alt="Annemarie Elias" class="w-full h-full object-cover object-top" loading="lazy" />
           </div>
           <h4 class="font-display font-bold text-evolea-purple">Annemarie Elias</h4>
           <p class="text-sm text-evolea-text-light">M.Sc., BCBA</p>
         </div>
         <div class="reveal reveal-delay-3 text-center group">
           <div class="aspect-square rounded-full overflow-hidden mb-4 shadow-soft group-hover:shadow-elevated transition-shadow mx-auto w-32 md:w-40">
-            <img src="/images/team/christoph-jenny.png" alt="Christoph Jenny" class="w-full h-full object-cover object-top" loading="lazy" />
+            <img src={base + "/images/team/christoph-jenny.png"} alt="Christoph Jenny" class="w-full h-full object-cover object-top" loading="lazy" />
           </div>
           <h4 class="font-display font-bold text-evolea-purple">Christoph Jenny</h4>
           <p class="text-sm text-evolea-text-light">Mitgründer</p>
         </div>
         <div class="reveal reveal-delay-4 text-center group">
           <div class="aspect-square rounded-full overflow-hidden mb-4 shadow-soft group-hover:shadow-elevated transition-shadow mx-auto w-32 md:w-40">
-            <img src="/images/team/alexandra-aleksic.jpg" alt="Alexandra Aleksic" class="w-full h-full object-cover object-top" loading="lazy" />
+            <img src={base + "/images/team/alexandra-aleksic.jpg"} alt="Alexandra Aleksic" class="w-full h-full object-cover object-top" loading="lazy" />
           </div>
           <h4 class="font-display font-bold text-evolea-purple">Alexandra Aleksic</h4>
           <p class="text-sm text-evolea-text-light">B.Sc.</p>
