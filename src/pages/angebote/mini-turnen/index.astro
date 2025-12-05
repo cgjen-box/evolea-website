@@ -2,6 +2,7 @@
 import Base from '@layouts/Base.astro';
 import FloatingShapes from '@components/FloatingShapes.astro';
 import GradientCTA from '@components/GradientCTA.astro';
+import Icon from '@components/Icon.astro';
 import { getLangFromUrl, useTranslations, useTranslatedPath } from '@i18n/utils';
 
 const lang = getLangFromUrl(Astro.url);
@@ -26,7 +27,7 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
       <div class="grid lg:grid-cols-2 gap-12 items-center">
         <div>
           <div class="inline-flex items-center gap-2 bg-evolea-sky/20 text-evolea-sky px-4 py-2 rounded-full text-sm font-medium mb-6">
-            <span class="text-2xl">⚽</span>
+            <Icon name="ball" size="sm" />
             <span>Inklusives Sportangebot</span>
           </div>
           <h1 class="text-4xl md:text-5xl lg:text-6xl font-display font-bold text-evolea-purple mb-6 leading-tight">
@@ -70,22 +71,22 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
     <div class="container mx-auto max-w-6xl px-4">
       <div class="grid md:grid-cols-4 gap-6">
         <div class="bg-evolea-cream rounded-evolea-lg p-6 text-center">
-          <div class="text-3xl mb-3">👧</div>
+          <div class="flex justify-center mb-3"><Icon name="sparkle" size="lg" /></div>
           <div class="font-display font-bold text-evolea-purple text-lg">Alter</div>
           <div class="text-evolea-text-light">5-8 Jahre</div>
         </div>
         <div class="bg-evolea-cream rounded-evolea-lg p-6 text-center">
-          <div class="text-3xl mb-3">📅</div>
+          <div class="flex justify-center mb-3"><Icon name="clipboard" size="lg" /></div>
           <div class="font-display font-bold text-evolea-purple text-lg">Wann</div>
           <div class="text-evolea-text-light">Mittwoch 18:00-19:30</div>
         </div>
         <div class="bg-evolea-cream rounded-evolea-lg p-6 text-center">
-          <div class="text-3xl mb-3">🗓️</div>
+          <div class="flex justify-center mb-3"><Icon name="chart" size="lg" /></div>
           <div class="font-display font-bold text-evolea-purple text-lg">Start</div>
           <div class="text-evolea-text-light">7. Januar 2026</div>
         </div>
         <div class="bg-evolea-cream rounded-evolea-lg p-6 text-center">
-          <div class="text-3xl mb-3">📍</div>
+          <div class="flex justify-center mb-3"><Icon name="target" size="lg" /></div>
           <div class="font-display font-bold text-evolea-purple text-lg">Wo</div>
           <div class="text-evolea-text-light">Wallisellen</div>
         </div>
@@ -127,32 +128,32 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 
         <div class="grid md:grid-cols-3 gap-4 mb-12">
           <div class="bg-white border border-evolea-purple/10 rounded-evolea-lg p-6 text-center">
-            <div class="text-3xl mb-3">🏃</div>
+            <div class="flex justify-center mb-3"><Icon name="running" size="lg" /></div>
             <h3 class="font-display font-bold text-evolea-purple text-lg mb-2">Laufen & Rennen</h3>
             <p class="text-evolea-text-light text-sm mb-0">Koordination und Ausdauer</p>
           </div>
           <div class="bg-white border border-evolea-purple/10 rounded-evolea-lg p-6 text-center">
-            <div class="text-3xl mb-3">🧗</div>
+            <div class="flex justify-center mb-3"><Icon name="leaf" size="lg" /></div>
             <h3 class="font-display font-bold text-evolea-purple text-lg mb-2">Klettern</h3>
             <p class="text-evolea-text-light text-sm mb-0">Kraft und Mut</p>
           </div>
           <div class="bg-white border border-evolea-purple/10 rounded-evolea-lg p-6 text-center">
-            <div class="text-3xl mb-3">⚖️</div>
+            <div class="flex justify-center mb-3"><Icon name="target" size="lg" /></div>
             <h3 class="font-display font-bold text-evolea-purple text-lg mb-2">Balance</h3>
             <p class="text-evolea-text-light text-sm mb-0">Gleichgewicht und Körpergefühl</p>
           </div>
           <div class="bg-white border border-evolea-purple/10 rounded-evolea-lg p-6 text-center">
-            <div class="text-3xl mb-3">⚽</div>
+            <div class="flex justify-center mb-3"><Icon name="ball" size="lg" /></div>
             <h3 class="font-display font-bold text-evolea-purple text-lg mb-2">Ballspiele</h3>
             <p class="text-evolea-text-light text-sm mb-0">Teamwork und Reaktion</p>
           </div>
           <div class="bg-white border border-evolea-purple/10 rounded-evolea-lg p-6 text-center">
-            <div class="text-3xl mb-3">🤸</div>
+            <div class="flex justify-center mb-3"><Icon name="gymnast" size="lg" /></div>
             <h3 class="font-display font-bold text-evolea-purple text-lg mb-2">Turnen</h3>
             <p class="text-evolea-text-light text-sm mb-0">Beweglichkeit und Stärke</p>
           </div>
           <div class="bg-white border border-evolea-purple/10 rounded-evolea-lg p-6 text-center">
-            <div class="text-3xl mb-3">✋</div>
+            <div class="flex justify-center mb-3"><Icon name="handshake" size="lg" /></div>
             <h3 class="font-display font-bold text-evolea-purple text-lg mb-2">Feinmotorik</h3>
             <p class="text-evolea-text-light text-sm mb-0">Geschicklichkeit</p>
           </div>

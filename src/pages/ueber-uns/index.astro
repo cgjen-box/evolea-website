@@ -3,6 +3,7 @@ import Base from '@layouts/Base.astro';
 import FloatingShapes from '@components/FloatingShapes.astro';
 import GradientCTA from '@components/GradientCTA.astro';
 import Butterfly from '@components/Butterfly.astro';
+import Icon from '@components/Icon.astro';
 import { getLangFromUrl, useTranslations, useTranslatedPath } from '@i18n/utils';
 
 const lang = getLangFromUrl(Astro.url);
@@ -13,55 +14,55 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 // 9 Pedagogical Principles - the foundation of EVOLEA
 const principles = [
   {
-    icon: '📊',
+    iconName: 'chart' as const,
     title: 'Evidenzbasiert',
     description: 'Unsere Arbeit basiert auf wissenschaftlichen Erkenntnissen und bewährten Methoden der angewandten Verhaltensanalyse.',
     color: 'magenta',
   },
   {
-    icon: '🎯',
+    iconName: 'target' as const,
     title: 'Individuell',
     description: 'Jedes Kind wird dort abgeholt, wo es steht. Wir passen unsere Angebote an die individuellen Bedürfnisse an.',
     color: 'coral',
   },
   {
-    icon: '🎮',
+    iconName: 'gamepad' as const,
     title: 'Spielerisch',
     description: 'Lernen geschieht durch Spiel und positive Erfahrungen - natürlich, motivierend und freudvoll.',
     color: 'yellow',
   },
   {
-    icon: '📋',
+    iconName: 'clipboard' as const,
     title: 'Strukturiert',
     description: 'Klare Abläufe und vorhersehbare Strukturen geben Sicherheit und ermöglichen erfolgreiches Lernen.',
     color: 'sky',
   },
   {
-    icon: '🤝',
+    iconName: 'handshake' as const,
     title: 'Partizipativ',
     description: 'Kinder werden aktiv in Entscheidungen einbezogen und ihre Stimme wird gehört und respektiert.',
     color: 'mint',
   },
   {
-    icon: '💎',
+    iconName: 'diamond' as const,
     title: 'Ressourcenorientiert',
     description: 'Wir fokussieren auf Stärken und Potenziale, nicht auf Defizite. Jedes Kind hat einzigartige Fähigkeiten.',
     color: 'purple',
   },
   {
-    icon: '🔗',
+    iconName: 'people' as const,
     title: 'Interdisziplinär',
     description: 'Unser Team vereint Expertise aus Psychologie, Pädagogik, Therapie und Verhaltensanalyse.',
     color: 'pink',
   },
   {
-    icon: '👨‍👩‍👧',
+    iconName: 'family' as const,
     title: 'Familienzentriert',
     description: 'Familien sind Partner in der Förderung. Wir arbeiten eng mit Eltern zusammen und unterstützen das ganze System.',
     color: 'gold',
   },
   {
-    icon: '🌈',
+    iconName: 'rainbow' as const,
     title: 'Inklusiv',
     description: 'Wir feiern Vielfalt und schaffen Räume, in denen sich alle Kinder willkommen und wertgeschätzt fühlen.',
     color: 'teal',
@@ -188,7 +189,7 @@ const colorClasses: Record<string, string> = {
       <div class="grid md:grid-cols-3 gap-8">
         <div class="reveal reveal-delay-1 bg-white rounded-evolea-lg p-8 shadow-soft">
           <div class="w-16 h-16 bg-evolea-magenta/10 rounded-full flex items-center justify-center mb-6">
-            <span class="text-3xl">👧</span>
+            <Icon name="sparkle" size="lg" />
           </div>
           <h3 class="font-display font-bold text-evolea-purple text-xl mb-4">Kinder im Autismus Spektrum</h3>
           <p class="text-evolea-text-light">
@@ -198,7 +199,7 @@ const colorClasses: Record<string, string> = {
 
         <div class="reveal reveal-delay-2 bg-white rounded-evolea-lg p-8 shadow-soft">
           <div class="w-16 h-16 bg-evolea-coral/10 rounded-full flex items-center justify-center mb-6">
-            <span class="text-3xl">🧠</span>
+            <Icon name="brain" size="lg" />
           </div>
           <h3 class="font-display font-bold text-evolea-purple text-xl mb-4">Kinder mit ADHS</h3>
           <p class="text-evolea-text-light">
@@ -208,7 +209,7 @@ const colorClasses: Record<string, string> = {
 
         <div class="reveal reveal-delay-3 bg-white rounded-evolea-lg p-8 shadow-soft">
           <div class="w-16 h-16 bg-evolea-mint/10 rounded-full flex items-center justify-center mb-6">
-            <span class="text-3xl">👨‍👩‍👧‍👦</span>
+            <Icon name="family" size="lg" />
           </div>
           <h3 class="font-display font-bold text-evolea-purple text-xl mb-4">Familien</h3>
           <p class="text-evolea-text-light">
@@ -247,7 +248,9 @@ const colorClasses: Record<string, string> = {
             style={`animation-delay: ${index * 0.1}s`}
           >
             <div class="flex items-start gap-4">
-              <span class="text-3xl flex-shrink-0">{principle.icon}</span>
+              <div class="flex-shrink-0">
+                <Icon name={principle.iconName} size="lg" />
+              </div>
               <div>
                 <h3 class="font-display font-bold text-evolea-purple text-lg mb-2">
                   {principle.title}

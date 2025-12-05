@@ -193,6 +193,18 @@
     background-size: 200% 200%;
   }
 
+  /* Outline button for hero sections - visible on video backgrounds */
+  .btn-outline-hero {
+    @apply inline-flex items-center justify-center gap-2
+           bg-transparent text-white font-semibold
+           px-8 py-4 rounded-full text-lg
+           border-2 border-white
+           transition-all duration-300 ease-smooth-out
+           hover:bg-white hover:text-evolea-purple hover:-translate-y-1
+           focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-evolea-purple
+           active:scale-95;
+  }
+
   @keyframes gradientShift {
     0%, 100% { background-position: 0% 50%; }
     50% { background-position: 100% 50%; }

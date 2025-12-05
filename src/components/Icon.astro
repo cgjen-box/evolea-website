@@ -1,0 +1,371 @@
+---
+interface Props {
+  name: 'sprout' | 'palette' | 'ball' | 'school' | 'chart' | 'target' | 'gamepad' | 'clipboard' |
+        'diamond' | 'family' | 'rainbow' | 'lightning' | 'heart' | 'book' | 'brain' | 'handshake' |
+        'teacher' | 'running' | 'gymnast' | 'sparkle' | 'leaf' | 'people';
+  size?: 'xs' | 'sm' | 'md' | 'lg' | 'xl' | '2xl';
+  class?: string;
+  gradient?: boolean;
+}
+
+const { name, size = 'md', class: className = '', gradient = true } = Astro.props;
+
+const sizeClasses = {
+  xs: 'w-4 h-4',
+  sm: 'w-6 h-6',
+  md: 'w-8 h-8',
+  lg: 'w-12 h-12',
+  xl: 'w-16 h-16',
+  '2xl': 'w-20 h-20',
+};
+
+const uniqueId = Math.random().toString(36).substring(7);
+---
+
+<svg
+  class:list={[sizeClasses[size], 'icon', className]}
+  viewBox="0 0 24 24"
+  fill="none"
+  xmlns="http://www.w3.org/2000/svg"
+  aria-hidden="true"
+>
+  {gradient && (
+    <defs>
+      <linearGradient id={`icon-gradient-${uniqueId}`} x1="0%" y1="0%" x2="100%" y2="100%">
+        <stop offset="0%" stop-color="#7BEDD5"/>
+        <stop offset="50%" stop-color="#E97BF1"/>
+        <stop offset="100%" stop-color="#DD48E0"/>
+      </linearGradient>
+    </defs>
+  )}
+
+  {/* Sprout - for Mini Garten */}
+  {name === 'sprout' && (
+    <path
+      d="M12 22V12M12 12C12 9 9 6 5 6C5 10 8 12 12 12ZM12 12C12 9 15 6 19 6C19 10 16 12 12 12ZM12 22C12 19 14 16 17 15M12 22C12 19 10 16 7 15"
+      stroke={gradient ? `url(#icon-gradient-${uniqueId})` : 'currentColor'}
+      stroke-width="2"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+    />
+  )}
+
+  {/* Palette - for Mini Projekte */}
+  {name === 'palette' && (
+    <>
+      <path
+        d="M12 2C6.5 2 2 6.5 2 12C2 17.5 6.5 22 12 22C17.5 22 22 17.5 22 12C22 6.5 17.5 2 12 2Z"
+        stroke={gradient ? `url(#icon-gradient-${uniqueId})` : 'currentColor'}
+        stroke-width="2"
+      />
+      <circle cx="8" cy="9" r="1.5" fill={gradient ? `url(#icon-gradient-${uniqueId})` : 'currentColor'}/>
+      <circle cx="12" cy="7" r="1.5" fill={gradient ? `url(#icon-gradient-${uniqueId})` : 'currentColor'}/>
+      <circle cx="16" cy="9" r="1.5" fill={gradient ? `url(#icon-gradient-${uniqueId})` : 'currentColor'}/>
+      <circle cx="8" cy="14" r="1.5" fill={gradient ? `url(#icon-gradient-${uniqueId})` : 'currentColor'}/>
+      <path
+        d="M15 13C15 15 16.5 17 18.5 17C20 17 21 15.5 21 14C21 12.5 20 11 18.5 11C17 11 15 11 15 13Z"
+        fill={gradient ? `url(#icon-gradient-${uniqueId})` : 'currentColor'}
+      />
+    </>
+  )}
+
+  {/* Ball - for Mini Turnen */}
+  {name === 'ball' && (
+    <>
+      <circle
+        cx="12" cy="12" r="10"
+        stroke={gradient ? `url(#icon-gradient-${uniqueId})` : 'currentColor'}
+        stroke-width="2"
+      />
+      <path
+        d="M12 2C12 2 14 6 14 12C14 18 12 22 12 22M12 2C12 2 10 6 10 12C10 18 12 22 12 22M2 12H22M4 7H20M4 17H20"
+        stroke={gradient ? `url(#icon-gradient-${uniqueId})` : 'currentColor'}
+        stroke-width="1.5"
+        stroke-linecap="round"
+      />
+    </>
+  )}
+
+  {/* School - for Schulberatung */}
+  {name === 'school' && (
+    <path
+      d="M22 10L12 5L2 10L12 15L22 10ZM6 12V17L12 20L18 17V12M4 11V17"
+      stroke={gradient ? `url(#icon-gradient-${uniqueId})` : 'currentColor'}
+      stroke-width="2"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+    />
+  )}
+
+  {/* Chart - for Evidenzbasiert */}
+  {name === 'chart' && (
+    <path
+      d="M18 20V10M12 20V4M6 20V14"
+      stroke={gradient ? `url(#icon-gradient-${uniqueId})` : 'currentColor'}
+      stroke-width="2.5"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+    />
+  )}
+
+  {/* Target - for Individuell */}
+  {name === 'target' && (
+    <>
+      <circle
+        cx="12" cy="12" r="10"
+        stroke={gradient ? `url(#icon-gradient-${uniqueId})` : 'currentColor'}
+        stroke-width="2"
+      />
+      <circle
+        cx="12" cy="12" r="6"
+        stroke={gradient ? `url(#icon-gradient-${uniqueId})` : 'currentColor'}
+        stroke-width="2"
+      />
+      <circle
+        cx="12" cy="12" r="2"
+        fill={gradient ? `url(#icon-gradient-${uniqueId})` : 'currentColor'}
+      />
+    </>
+  )}
+
+  {/* Gamepad - for Spielerisch */}
+  {name === 'gamepad' && (
+    <>
+      <rect
+        x="2" y="6" width="20" height="12" rx="3"
+        stroke={gradient ? `url(#icon-gradient-${uniqueId})` : 'currentColor'}
+        stroke-width="2"
+      />
+      <circle cx="8" cy="12" r="1.5" fill={gradient ? `url(#icon-gradient-${uniqueId})` : 'currentColor'}/>
+      <circle cx="16" cy="10" r="1" fill={gradient ? `url(#icon-gradient-${uniqueId})` : 'currentColor'}/>
+      <circle cx="16" cy="14" r="1" fill={gradient ? `url(#icon-gradient-${uniqueId})` : 'currentColor'}/>
+      <circle cx="14" cy="12" r="1" fill={gradient ? `url(#icon-gradient-${uniqueId})` : 'currentColor'}/>
+      <circle cx="18" cy="12" r="1" fill={gradient ? `url(#icon-gradient-${uniqueId})` : 'currentColor'}/>
+    </>
+  )}
+
+  {/* Clipboard - for Strukturiert */}
+  {name === 'clipboard' && (
+    <>
+      <path
+        d="M16 4H18C19.1 4 20 4.9 20 6V20C20 21.1 19.1 22 18 22H6C4.9 22 4 21.1 4 20V6C4 4.9 4.9 4 6 4H8"
+        stroke={gradient ? `url(#icon-gradient-${uniqueId})` : 'currentColor'}
+        stroke-width="2"
+      />
+      <rect
+        x="8" y="2" width="8" height="4" rx="1"
+        stroke={gradient ? `url(#icon-gradient-${uniqueId})` : 'currentColor'}
+        stroke-width="2"
+      />
+      <path
+        d="M8 10H16M8 14H16M8 18H12"
+        stroke={gradient ? `url(#icon-gradient-${uniqueId})` : 'currentColor'}
+        stroke-width="2"
+        stroke-linecap="round"
+      />
+    </>
+  )}
+
+  {/* Diamond - for Ressourcenorientiert */}
+  {name === 'diamond' && (
+    <path
+      d="M6 3L1 9L12 21L23 9L18 3H6ZM6 9H18M12 3V21M1 9L6 3M23 9L18 3"
+      stroke={gradient ? `url(#icon-gradient-${uniqueId})` : 'currentColor'}
+      stroke-width="2"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+    />
+  )}
+
+  {/* Family - for Familienzentriert */}
+  {name === 'family' && (
+    <>
+      <circle cx="9" cy="6" r="2.5" stroke={gradient ? `url(#icon-gradient-${uniqueId})` : 'currentColor'} stroke-width="2"/>
+      <circle cx="17" cy="6" r="2" stroke={gradient ? `url(#icon-gradient-${uniqueId})` : 'currentColor'} stroke-width="2"/>
+      <circle cx="13" cy="11" r="1.5" stroke={gradient ? `url(#icon-gradient-${uniqueId})` : 'currentColor'} stroke-width="2"/>
+      <path
+        d="M3 21V18C3 16 5 14 9 14C11 14 12 14.5 13 15M21 21V18C21 16 19 14 17 14C16 14 15.5 14.3 15 14.7M13 21V19C13 17.5 13.5 17 13 17"
+        stroke={gradient ? `url(#icon-gradient-${uniqueId})` : 'currentColor'}
+        stroke-width="2"
+        stroke-linecap="round"
+      />
+    </>
+  )}
+
+  {/* Rainbow - for Spectrum */}
+  {name === 'rainbow' && (
+    <>
+      <path d="M4 18C4 13.6 7.6 10 12 10C16.4 10 20 13.6 20 18" stroke="#7BEDD5" stroke-width="2" stroke-linecap="round"/>
+      <path d="M6 18C6 14.7 8.7 12 12 12C15.3 12 18 14.7 18 18" stroke="#FFE066" stroke-width="2" stroke-linecap="round"/>
+      <path d="M8 18C8 15.8 9.8 14 12 14C14.2 14 16 15.8 16 18" stroke="#E97BF1" stroke-width="2" stroke-linecap="round"/>
+      <path d="M10 18C10 16.9 10.9 16 12 16C13.1 16 14 16.9 14 18" stroke="#DD48E0" stroke-width="2" stroke-linecap="round"/>
+    </>
+  )}
+
+  {/* Lightning - for Energy */}
+  {name === 'lightning' && (
+    <path
+      d="M13 2L3 14H12L11 22L21 10H12L13 2Z"
+      stroke={gradient ? `url(#icon-gradient-${uniqueId})` : 'currentColor'}
+      stroke-width="2"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+      fill={gradient ? `url(#icon-gradient-${uniqueId})` : 'currentColor'}
+      fill-opacity="0.2"
+    />
+  )}
+
+  {/* Heart - for Empathie */}
+  {name === 'heart' && (
+    <path
+      d="M20.84 4.61C20.3292 4.09924 19.7228 3.69395 19.0554 3.41723C18.3879 3.14051 17.6725 2.99797 16.95 2.99797C16.2275 2.99797 15.5121 3.14051 14.8446 3.41723C14.1772 3.69395 13.5708 4.09924 13.06 4.61L12 5.67L10.94 4.61C9.90831 3.57831 8.50903 2.99872 7.05 2.99872C5.59097 2.99872 4.19169 3.57831 3.16 4.61C2.12831 5.64169 1.54872 7.04097 1.54872 8.5C1.54872 9.95903 2.12831 11.3583 3.16 12.39L4.22 13.45L12 21.23L19.78 13.45L20.84 12.39C21.3508 11.8792 21.7561 11.2728 22.0328 10.6054C22.3095 9.93789 22.452 9.22248 22.452 8.5C22.452 7.77752 22.3095 7.06211 22.0328 6.39464C21.7561 5.72718 21.3508 5.12076 20.84 4.61Z"
+      stroke={gradient ? `url(#icon-gradient-${uniqueId})` : 'currentColor'}
+      stroke-width="2"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+      fill={gradient ? `url(#icon-gradient-${uniqueId})` : 'currentColor'}
+      fill-opacity="0.2"
+    />
+  )}
+
+  {/* Book - for Evidenzbasiert */}
+  {name === 'book' && (
+    <path
+      d="M2 3H8C9.06087 3 10.0783 3.42143 10.8284 4.17157C11.5786 4.92172 12 5.93913 12 7V21C12 20.2044 11.6839 19.4413 11.1213 18.8787C10.5587 18.3161 9.79565 18 9 18H2V3ZM22 3H16C14.9391 3 13.9217 3.42143 13.1716 4.17157C12.4214 4.92172 12 5.93913 12 7V21C12 20.2044 12.3161 19.4413 12.8787 18.8787C13.4413 18.3161 14.2044 18 15 18H22V3Z"
+      stroke={gradient ? `url(#icon-gradient-${uniqueId})` : 'currentColor'}
+      stroke-width="2"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+    />
+  )}
+
+  {/* Brain - for Wissen */}
+  {name === 'brain' && (
+    <>
+      <path
+        d="M12 5C12 3.34 10.66 2 9 2C7.34 2 6 3.34 6 5C4.34 5 3 6.34 3 8C3 9.31 3.84 10.42 5 10.83V13.17C3.84 13.58 3 14.69 3 16C3 17.66 4.34 19 6 19C6 20.66 7.34 22 9 22C10.66 22 12 20.66 12 19"
+        stroke={gradient ? `url(#icon-gradient-${uniqueId})` : 'currentColor'}
+        stroke-width="2"
+        stroke-linecap="round"
+      />
+      <path
+        d="M12 5C12 3.34 13.34 2 15 2C16.66 2 18 3.34 18 5C19.66 5 21 6.34 21 8C21 9.31 20.16 10.42 19 10.83V13.17C20.16 13.58 21 14.69 21 16C21 17.66 19.66 19 18 19C18 20.66 16.66 22 15 22C13.34 22 12 20.66 12 19"
+        stroke={gradient ? `url(#icon-gradient-${uniqueId})` : 'currentColor'}
+        stroke-width="2"
+        stroke-linecap="round"
+      />
+      <path d="M12 5V19" stroke={gradient ? `url(#icon-gradient-${uniqueId})` : 'currentColor'} stroke-width="2"/>
+    </>
+  )}
+
+  {/* Handshake - for Zusammenarbeit */}
+  {name === 'handshake' && (
+    <>
+      <path
+        d="M11 17L7 21L3 17V5L7 2L11 5M11 17V5M11 17L15 21L19 17V5L15 2L11 5"
+        stroke={gradient ? `url(#icon-gradient-${uniqueId})` : 'currentColor'}
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      />
+      <path
+        d="M7 12H11M11 12H15"
+        stroke={gradient ? `url(#icon-gradient-${uniqueId})` : 'currentColor'}
+        stroke-width="2"
+        stroke-linecap="round"
+      />
+    </>
+  )}
+
+  {/* Teacher - for Beratung */}
+  {name === 'teacher' && (
+    <>
+      <circle cx="12" cy="6" r="3" stroke={gradient ? `url(#icon-gradient-${uniqueId})` : 'currentColor'} stroke-width="2"/>
+      <path
+        d="M5 21V18C5 15.8 6.8 14 9 14H15C17.2 14 19 15.8 19 18V21"
+        stroke={gradient ? `url(#icon-gradient-${uniqueId})` : 'currentColor'}
+        stroke-width="2"
+        stroke-linecap="round"
+      />
+      <path d="M18 8L21 11L18 14" stroke={gradient ? `url(#icon-gradient-${uniqueId})` : 'currentColor'} stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+    </>
+  )}
+
+  {/* Running - for Sport */}
+  {name === 'running' && (
+    <>
+      <circle cx="14" cy="4" r="2" stroke={gradient ? `url(#icon-gradient-${uniqueId})` : 'currentColor'} stroke-width="2"/>
+      <path
+        d="M4 17L9 12L11 14L16 9L18 11M9 20L12 14L16 16L19 22"
+        stroke={gradient ? `url(#icon-gradient-${uniqueId})` : 'currentColor'}
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      />
+    </>
+  )}
+
+  {/* Gymnast - for Turnen */}
+  {name === 'gymnast' && (
+    <>
+      <circle cx="12" cy="4" r="2" stroke={gradient ? `url(#icon-gradient-${uniqueId})` : 'currentColor'} stroke-width="2"/>
+      <path
+        d="M12 8V12M8 10L12 12L16 10M6 22L12 15L18 22M12 12V15"
+        stroke={gradient ? `url(#icon-gradient-${uniqueId})` : 'currentColor'}
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      />
+    </>
+  )}
+
+  {/* Sparkle - for Magic */}
+  {name === 'sparkle' && (
+    <>
+      <path
+        d="M12 2L13.5 8.5L20 10L13.5 11.5L12 18L10.5 11.5L4 10L10.5 8.5L12 2Z"
+        stroke={gradient ? `url(#icon-gradient-${uniqueId})` : 'currentColor'}
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        fill={gradient ? `url(#icon-gradient-${uniqueId})` : 'currentColor'}
+        fill-opacity="0.2"
+      />
+      <circle cx="18" cy="4" r="1" fill={gradient ? `url(#icon-gradient-${uniqueId})` : 'currentColor'}/>
+      <circle cx="5" cy="18" r="1" fill={gradient ? `url(#icon-gradient-${uniqueId})` : 'currentColor'}/>
+      <circle cx="20" cy="18" r="1.5" fill={gradient ? `url(#icon-gradient-${uniqueId})` : 'currentColor'}/>
+    </>
+  )}
+
+  {/* Leaf - for Growth */}
+  {name === 'leaf' && (
+    <path
+      d="M6 21C6 15 8 9 15 3C15 10 13 16 6 21ZM6 21C9 18 13 16 15 15M15 3C19 6 21 11 21 15C18 15 15 13 15 9"
+      stroke={gradient ? `url(#icon-gradient-${uniqueId})` : 'currentColor'}
+      stroke-width="2"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+    />
+  )}
+
+  {/* People - for Team/Group */}
+  {name === 'people' && (
+    <>
+      <circle cx="9" cy="7" r="3" stroke={gradient ? `url(#icon-gradient-${uniqueId})` : 'currentColor'} stroke-width="2"/>
+      <circle cx="17" cy="7" r="2" stroke={gradient ? `url(#icon-gradient-${uniqueId})` : 'currentColor'} stroke-width="2"/>
+      <path
+        d="M2 21V18C2 15.8 3.8 14 6 14H12C14.2 14 16 15.8 16 18V21M17 14C19.2 14 21 15.8 21 18V21"
+        stroke={gradient ? `url(#icon-gradient-${uniqueId})` : 'currentColor'}
+        stroke-width="2"
+        stroke-linecap="round"
+      />
+    </>
+  )}
+</svg>
+
+<style>
+  .icon {
+    display: inline-block;
+    flex-shrink: 0;
+  }
+</style>

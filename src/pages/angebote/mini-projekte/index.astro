@@ -2,6 +2,7 @@
 import Base from '@layouts/Base.astro';
 import FloatingShapes from '@components/FloatingShapes.astro';
 import GradientCTA from '@components/GradientCTA.astro';
+import Icon from '@components/Icon.astro';
 import { getLangFromUrl, useTranslations, useTranslatedPath } from '@i18n/utils';
 
 const lang = getLangFromUrl(Astro.url);
@@ -26,7 +27,7 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
       <div class="grid lg:grid-cols-2 gap-12 items-center">
         <div>
           <div class="inline-flex items-center gap-2 bg-evolea-orange/20 text-evolea-orange px-4 py-2 rounded-full text-sm font-medium mb-6">
-            <span class="text-2xl">🎨</span>
+            <Icon name="palette" size="sm" />
             <span>Social Skills Gruppe</span>
           </div>
           <h1 class="text-4xl md:text-5xl lg:text-6xl font-display font-bold text-evolea-purple mb-6 leading-tight">
@@ -70,22 +71,22 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
     <div class="container mx-auto max-w-6xl px-4">
       <div class="grid md:grid-cols-4 gap-6">
         <div class="bg-evolea-cream rounded-evolea-lg p-6 text-center">
-          <div class="text-3xl mb-3">👧</div>
+          <div class="flex justify-center mb-3"><Icon name="sparkle" size="lg" /></div>
           <div class="font-display font-bold text-evolea-purple text-lg">Alter</div>
           <div class="text-evolea-text-light">5-8 Jahre</div>
         </div>
         <div class="bg-evolea-cream rounded-evolea-lg p-6 text-center">
-          <div class="text-3xl mb-3">📅</div>
+          <div class="flex justify-center mb-3"><Icon name="clipboard" size="lg" /></div>
           <div class="font-display font-bold text-evolea-purple text-lg">Wann</div>
           <div class="text-evolea-text-light">Samstag, alle 2 Wochen</div>
         </div>
         <div class="bg-evolea-cream rounded-evolea-lg p-6 text-center">
-          <div class="text-3xl mb-3">⏱️</div>
+          <div class="flex justify-center mb-3"><Icon name="chart" size="lg" /></div>
           <div class="font-display font-bold text-evolea-purple text-lg">Dauer</div>
           <div class="text-evolea-text-light">3 Stunden / Halbtag</div>
         </div>
         <div class="bg-evolea-cream rounded-evolea-lg p-6 text-center">
-          <div class="text-3xl mb-3">💰</div>
+          <div class="flex justify-center mb-3"><Icon name="diamond" size="lg" /></div>
           <div class="font-display font-bold text-evolea-purple text-lg">Kosten</div>
           <div class="text-evolea-text-light">CHF 125 / Halbtag</div>
         </div>
@@ -123,22 +124,22 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
         </h2>
         <div class="grid md:grid-cols-2 gap-6 mb-12">
           <div class="bg-white border border-evolea-purple/10 rounded-evolea-lg p-6">
-            <div class="text-3xl mb-3">🎯</div>
+            <div class="flex justify-center mb-3"><Icon name="target" size="lg" /></div>
             <h3 class="font-display font-bold text-evolea-purple text-lg mb-2">Sichtbare Erfolge</h3>
             <p class="text-evolea-text-light mb-0">Jedes Quartal schliesst mit einer Präsentation ab – Erfolge werden für alle sichtbar gemacht.</p>
           </div>
           <div class="bg-white border border-evolea-purple/10 rounded-evolea-lg p-6">
-            <div class="text-3xl mb-3">👨‍👩‍👧</div>
+            <div class="flex justify-center mb-3"><Icon name="family" size="lg" /></div>
             <h3 class="font-display font-bold text-evolea-purple text-lg mb-2">Entlastung für Eltern</h3>
             <p class="text-evolea-text-light mb-0">Während die Kinder betreut werden, haben Eltern Zeit für sich oder können sich mit anderen Familien vernetzen.</p>
           </div>
           <div class="bg-white border border-evolea-purple/10 rounded-evolea-lg p-6">
-            <div class="text-3xl mb-3">🤝</div>
+            <div class="flex justify-center mb-3"><Icon name="handshake" size="lg" /></div>
             <h3 class="font-display font-bold text-evolea-purple text-lg mb-2">Soziales Lernen</h3>
             <p class="text-evolea-text-light mb-0">Teamarbeit, Kommunikation und Kooperation werden spielerisch in echten Projekten geübt.</p>
           </div>
           <div class="bg-white border border-evolea-purple/10 rounded-evolea-lg p-6">
-            <div class="text-3xl mb-3">🏆</div>
+            <div class="flex justify-center mb-3"><Icon name="sparkle" size="lg" /></div>
             <h3 class="font-display font-bold text-evolea-purple text-lg mb-2">Abschlussfeier</h3>
             <p class="text-evolea-text-light mb-0">Der letzte Halbtag jedes Quartals ist eine Feier – kostenlos von EVOLEA organisiert.</p>
           </div>

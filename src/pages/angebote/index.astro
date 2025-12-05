@@ -3,6 +3,7 @@ import Base from '@layouts/Base.astro';
 import FloatingShapes from '@components/FloatingShapes.astro';
 import ProgramCard from '@components/ProgramCard.astro';
 import GradientCTA from '@components/GradientCTA.astro';
+import Icon from '@components/Icon.astro';
 import { getLangFromUrl, useTranslations, useTranslatedPath } from '@i18n/utils';
 
 const lang = getLangFromUrl(Astro.url);
@@ -13,7 +14,7 @@ const programs = [
   {
     title: t('programs.miniGarten'),
     desc: t('programs.miniGarten.desc'),
-    icon: '🌱',
+    iconName: 'sprout' as const,
     color: 'green',
     ages: '3-6',
     href: '/angebote/mini-garten/',
@@ -21,7 +22,7 @@ const programs = [
   {
     title: t('programs.miniProjekte'),
     desc: t('programs.miniProjekte.desc'),
-    icon: '🎨',
+    iconName: 'palette' as const,
     color: 'orange',
     ages: '5-8',
     href: '/angebote/mini-projekte/',
@@ -29,7 +30,7 @@ const programs = [
   {
     title: t('programs.miniTurnen'),
     desc: t('programs.miniTurnen.desc'),
-    icon: '⚽',
+    iconName: 'ball' as const,
     color: 'sky',
     ages: '5-8',
     href: '/angebote/mini-turnen/',
@@ -37,7 +38,7 @@ const programs = [
   {
     title: t('programs.schulberatung'),
     desc: t('programs.schulberatung.desc'),
-    icon: '🏫',
+    iconName: 'school' as const,
     color: 'coral',
     ages: 'alle',
     href: '/angebote/schulberatung/',
@@ -45,7 +46,7 @@ const programs = [
   {
     title: t('programs.tagesschule'),
     desc: t('programs.tagesschule.desc'),
-    icon: '📚',
+    iconName: 'book' as const,
     color: 'purple',
     ages: '6-12',
     href: '/angebote/tagesschule/',
@@ -120,7 +121,7 @@ const programs = [
           >
             <div class="p-6">
               <div class="flex items-center justify-between mb-4">
-                <span class="text-3xl">{program.icon}</span>
+                <Icon name={program.iconName} size="lg" gradient={!program.featured} />
                 <span class:list={[
                   'text-sm font-medium px-3 py-1 rounded-full',
                   program.featured ? 'bg-white/20' : 'bg-evolea-purple/10 text-evolea-purple',

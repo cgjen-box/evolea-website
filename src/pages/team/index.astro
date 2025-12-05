@@ -2,6 +2,7 @@
 import Base from '@layouts/Base.astro';
 import FloatingShapes from '@components/FloatingShapes.astro';
 import GradientCTA from '@components/GradientCTA.astro';
+import Icon from '@components/Icon.astro';
 import { getLangFromUrl, useTranslations, useTranslatedPath } from '@i18n/utils';
 
 const lang = getLangFromUrl(Astro.url);
@@ -112,17 +113,17 @@ const team = [
       </h2>
       <div class="grid md:grid-cols-3 gap-6">
         <div class="bg-white rounded-evolea-lg p-6 text-center">
-          <div class="text-3xl mb-4">💜</div>
+          <div class="flex justify-center mb-4"><Icon name="heart" size="lg" /></div>
           <h3 class="font-display font-bold text-evolea-purple mb-2">Empathie</h3>
           <p class="text-evolea-text-light text-sm">Wir begegnen jedem Kind und jeder Familie mit Verständnis und Mitgefühl.</p>
         </div>
         <div class="bg-white rounded-evolea-lg p-6 text-center">
-          <div class="text-3xl mb-4">📚</div>
+          <div class="flex justify-center mb-4"><Icon name="book" size="lg" /></div>
           <h3 class="font-display font-bold text-evolea-purple mb-2">Evidenzbasiert</h3>
           <p class="text-evolea-text-light text-sm">Unsere Arbeit basiert auf aktuellen wissenschaftlichen Erkenntnissen.</p>
         </div>
         <div class="bg-white rounded-evolea-lg p-6 text-center">
-          <div class="text-3xl mb-4">🌱</div>
+          <div class="flex justify-center mb-4"><Icon name="sprout" size="lg" /></div>
           <h3 class="font-display font-bold text-evolea-purple mb-2">Wachstum</h3>
           <p class="text-evolea-text-light text-sm">Wir lernen ständig dazu und entwickeln uns mit den Familien weiter.</p>
         </div>
