@@ -1,68 +1,335 @@
 ---
 import Base from '@layouts/Base.astro';
+import FloatingShapes from '@components/FloatingShapes.astro';
+import GradientCTA from '@components/GradientCTA.astro';
+import Butterfly from '@components/Butterfly.astro';
 import { getLangFromUrl, useTranslations, useTranslatedPath } from '@i18n/utils';
 
 const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
 const translatePath = useTranslatedPath(lang);
+
+// 9 Pedagogical Principles - the foundation of EVOLEA
+const principles = [
+  {
+    icon: '📊',
+    title: 'Evidenzbasiert',
+    description: 'Unsere Arbeit basiert auf wissenschaftlichen Erkenntnissen und bewährten Methoden der angewandten Verhaltensanalyse.',
+    color: 'magenta',
+  },
+  {
+    icon: '🎯',
+    title: 'Individuell',
+    description: 'Jedes Kind wird dort abgeholt, wo es steht. Wir passen unsere Angebote an die individuellen Bedürfnisse an.',
+    color: 'coral',
+  },
+  {
+    icon: '🎮',
+    title: 'Spielerisch',
+    description: 'Lernen geschieht durch Spiel und positive Erfahrungen - natürlich, motivierend und freudvoll.',
+    color: 'yellow',
+  },
+  {
+    icon: '📋',
+    title: 'Strukturiert',
+    description: 'Klare Abläufe und vorhersehbare Strukturen geben Sicherheit und ermöglichen erfolgreiches Lernen.',
+    color: 'sky',
+  },
+  {
+    icon: '🤝',
+    title: 'Partizipativ',
+    description: 'Kinder werden aktiv in Entscheidungen einbezogen und ihre Stimme wird gehört und respektiert.',
+    color: 'mint',
+  },
+  {
+    icon: '💎',
+    title: 'Ressourcenorientiert',
+    description: 'Wir fokussieren auf Stärken und Potenziale, nicht auf Defizite. Jedes Kind hat einzigartige Fähigkeiten.',
+    color: 'purple',
+  },
+  {
+    icon: '🔗',
+    title: 'Interdisziplinär',
+    description: 'Unser Team vereint Expertise aus Psychologie, Pädagogik, Therapie und Verhaltensanalyse.',
+    color: 'pink',
+  },
+  {
+    icon: '👨‍👩‍👧',
+    title: 'Familienzentriert',
+    description: 'Familien sind Partner in der Förderung. Wir arbeiten eng mit Eltern zusammen und unterstützen das ganze System.',
+    color: 'gold',
+  },
+  {
+    icon: '🌈',
+    title: 'Inklusiv',
+    description: 'Wir feiern Vielfalt und schaffen Räume, in denen sich alle Kinder willkommen und wertgeschätzt fühlen.',
+    color: 'teal',
+  },
+];
+
+const colorClasses: Record<string, string> = {
+  magenta: 'bg-evolea-magenta/10 border-evolea-magenta',
+  coral: 'bg-evolea-coral/10 border-evolea-coral',
+  yellow: 'bg-evolea-yellow/10 border-evolea-yellow',
+  sky: 'bg-evolea-sky/10 border-evolea-sky',
+  mint: 'bg-evolea-mint/10 border-evolea-mint',
+  purple: 'bg-evolea-purple-light/10 border-evolea-purple-light',
+  pink: 'bg-evolea-pink/10 border-evolea-pink',
+  gold: 'bg-evolea-gold/10 border-evolea-gold',
+  teal: 'bg-evolea-mint/10 border-evolea-mint',
+};
 ---
 
-<Base title="Über uns" description="EVOLEA ist ein gemeinnütziger Verein mit Sitz in Zürich. Wir bieten Bildungsangebote für Kinder im Autismus Spektrum oder mit ADHS.">
-  <section class="py-20 px-4">
-    <div class="container mx-auto max-w-4xl">
-      <h1 class="text-4xl md:text-5xl font-bold text-evolea-purple mb-6 text-center">
-        {t('about.title')}
-      </h1>
-      <p class="text-xl text-evolea-text-light text-center max-w-2xl mx-auto mb-16">
-        {t('about.description')}
-      </p>
-      
-      <div class="space-y-12">
-        <div class="bg-white rounded-evolea-lg p-8 shadow-sm">
-          <h2 class="text-2xl font-semibold text-evolea-purple mb-4">Unsere Mission</h2>
-          <p class="text-evolea-text-light">
-            EVOLEA schafft Räume, damit sich Kinder im Spektrum entfalten und ihren Weg glücklich und selbstbestimmt gehen können. Wir ergänzen die Regelschule mit spezialisierten Förderangeboten.
-          </p>
-        </div>
-        
-        <div class="bg-white rounded-evolea-lg p-8 shadow-sm">
-          <h2 class="text-2xl font-semibold text-evolea-purple mb-4">Unsere Werte</h2>
-          <ul class="space-y-4 text-evolea-text-light">
-            <li class="flex items-start gap-3">
-              <span class="text-evolea-green text-xl">✓</span>
-              <span><strong>Evidenzbasiert:</strong> Unsere Arbeit basiert auf wissenschaftlichen Erkenntnissen.</span>
-            </li>
-            <li class="flex items-start gap-3">
-              <span class="text-evolea-green text-xl">✓</span>
-              <span><strong>Individuell:</strong> Jedes Kind wird dort abgeholt, wo es steht.</span>
-            </li>
-            <li class="flex items-start gap-3">
-              <span class="text-evolea-green text-xl">✓</span>
-              <span><strong>Inklusiv:</strong> Wir sehen Stärken, nicht Defizite.</span>
-            </li>
-            <li class="flex items-start gap-3">
-              <span class="text-evolea-green text-xl">✓</span>
-              <span><strong>Empathisch:</strong> Wir begegnen Kindern und Familien mit Respekt und Offenheit.</span>
-            </li>
-          </ul>
-        </div>
-        
-        <div class="bg-white rounded-evolea-lg p-8 shadow-sm">
-          <h2 class="text-2xl font-semibold text-evolea-purple mb-4">Der Verein</h2>
-          <p class="text-evolea-text-light">
-            EVOLEA ist ein gemeinnütziger Verein mit Sitz in Zürich. Wir sind politisch und konfessionell unabhängig. Der Verein wurde gegründet, um Familien mit Kindern im Autismus Spektrum oder mit ADHS zu unterstützen.
-          </p>
-        </div>
+<Base title="Uber uns" description="EVOLEA ist ein gemeinnütziger Verein in Zürich. Erfahren Sie mehr über unsere Mission, Werte und pädagogischen Grundsätze für Kinder im Autismus Spektrum.">
+  <!-- Hero Section -->
+  <section class="relative py-20 md:py-32 overflow-hidden" style="background: var(--gradient-prism);">
+    <FloatingShapes variant="hero" />
+    <div class="container mx-auto max-w-6xl px-4 relative z-10">
+      <div class="text-center max-w-3xl mx-auto">
+        <span class="inline-flex items-center gap-2 bg-white/20 backdrop-blur-sm text-white px-4 py-2 rounded-full text-sm font-medium mb-6">
+          <Butterfly size="xs" variant="white" />
+          <span>Uber EVOLEA</span>
+        </span>
+        <h1 class="text-4xl md:text-5xl lg:text-6xl font-display font-bold text-white mb-6 leading-tight drop-shadow-lg">
+          Wo Kinder im Spektrum aufblühen
+        </h1>
+        <p class="text-xl md:text-2xl text-white/90 leading-relaxed drop-shadow">
+          EVOLEA schafft Räume, damit sich Kinder im Spektrum entfalten und ihren Weg glücklich und selbstbestimmt gehen können.
+        </p>
       </div>
-      
-      <div class="mt-12 text-center">
-        <a href={translatePath('/team/')} class="btn-secondary mr-4">
-          Zum Team
-        </a>
-        <a href={translatePath('/kontakt/')} class="btn-primary">
-          {t('common.contact')}
-        </a>
+    </div>
+
+    <!-- Decorative wave -->
+    <div class="absolute bottom-0 left-0 right-0 w-full overflow-hidden leading-none">
+      <svg class="relative block w-full h-16 md:h-24" viewBox="0 0 1200 120" preserveAspectRatio="none">
+        <path d="M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V120H0V27.35A600.21,600.21,0,0,0,321.39,56.44Z" fill="#FFFBF7"></path>
+      </svg>
+    </div>
+  </section>
+
+  <!-- Mission Section -->
+  <section class="py-16 md:py-24 bg-evolea-cream">
+    <div class="container mx-auto max-w-6xl px-4">
+      <div class="grid lg:grid-cols-2 gap-12 items-center">
+        <div class="reveal">
+          <span class="section-label">Unsere Mission</span>
+          <h2 class="text-3xl md:text-4xl font-display font-bold text-evolea-purple mb-6">
+            Jedes Kind verdient die Chance, sein volles Potenzial zu entfalten
+          </h2>
+          <p class="text-lg text-evolea-text-light leading-relaxed mb-6">
+            EVOLEA entstand aus der Überzeugung, dass Kinder im Autismus Spektrum oder mit ADHS spezielle Unterstützung verdienen - aber keine, die sie ausgrenzt. Unsere Programme ergänzen die Regelschule und schaffen geschützte Räume zum Wachsen.
+          </p>
+          <p class="text-lg text-evolea-text-light leading-relaxed mb-8">
+            Wir glauben an die Stärken jedes Kindes. Nicht Defizite stehen im Vordergrund, sondern die einzigartigen Fähigkeiten und Potenziale, die jedes Kind mitbringt.
+          </p>
+          <div class="flex flex-wrap gap-4">
+            <a href={translatePath('/angebote/')} class="btn-primary">
+              Unsere Angebote
+              <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+              </svg>
+            </a>
+            <a href={translatePath('/team/')} class="btn-secondary">
+              Team kennenlernen
+            </a>
+          </div>
+        </div>
+        <div class="reveal reveal-delay-2">
+          <div class="relative">
+            <div class="aspect-square rounded-evolea-lg overflow-hidden shadow-elevated">
+              <img
+                src="/images/about/children-playing-1.jpg"
+                alt="Kinder beim gemeinsamen Spielen"
+                class="w-full h-full object-cover"
+                loading="lazy"
+              />
+            </div>
+            <!-- Floating accent card -->
+            <div class="absolute -bottom-6 -right-6 bg-white rounded-evolea p-6 shadow-card max-w-xs">
+              <div class="flex items-center gap-3 mb-2">
+                <Butterfly size="sm" variant="spectrum" />
+                <span class="font-display font-bold text-evolea-purple">Transformation</span>
+              </div>
+              <p class="text-sm text-evolea-text-light">
+                Wie ein Schmetterling entfaltet jedes Kind seine einzigartige Schönheit.
+              </p>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </section>
+
+  <!-- Vision Section -->
+  <section class="py-16 md:py-24 bg-white">
+    <div class="container mx-auto max-w-4xl px-4 text-center">
+      <div class="reveal">
+        <span class="section-label">Unsere Vision</span>
+        <h2 class="text-3xl md:text-4xl font-display font-bold text-evolea-purple mb-8">
+          Eine Gesellschaft, die Vielfalt feiert
+        </h2>
+        <blockquote class="text-xl md:text-2xl text-evolea-text-light leading-relaxed italic mb-8">
+          "Wir träumen von einer Welt, in der neurotypische Entwicklung nicht die einzige Norm ist - in der jedes Kind, unabhängig von seiner Art zu denken und zu lernen, die gleichen Chancen hat."
+        </blockquote>
+        <div class="w-24 h-1 bg-gradient-spectrum mx-auto rounded-full"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- For Whom Section -->
+  <section class="py-16 md:py-24 bg-evolea-cream/50">
+    <div class="container mx-auto max-w-6xl px-4">
+      <div class="section-header reveal">
+        <span class="section-label">Für wen sind wir da?</span>
+        <h2>Kinder im Spektrum und ihre Familien</h2>
+      </div>
+
+      <div class="grid md:grid-cols-3 gap-8">
+        <div class="reveal reveal-delay-1 bg-white rounded-evolea-lg p-8 shadow-soft">
+          <div class="w-16 h-16 bg-evolea-magenta/10 rounded-full flex items-center justify-center mb-6">
+            <span class="text-3xl">👧</span>
+          </div>
+          <h3 class="font-display font-bold text-evolea-purple text-xl mb-4">Kinder im Autismus Spektrum</h3>
+          <p class="text-evolea-text-light">
+            Kinder mit Autismus-Spektrum-Störung (ASS) finden bei uns einen Ort, an dem ihre Art zu sein verstanden und wertgeschätzt wird.
+          </p>
+        </div>
+
+        <div class="reveal reveal-delay-2 bg-white rounded-evolea-lg p-8 shadow-soft">
+          <div class="w-16 h-16 bg-evolea-coral/10 rounded-full flex items-center justify-center mb-6">
+            <span class="text-3xl">🧠</span>
+          </div>
+          <h3 class="font-display font-bold text-evolea-purple text-xl mb-4">Kinder mit ADHS</h3>
+          <p class="text-evolea-text-light">
+            Kinder mit ADHS profitieren von unseren strukturierten Angeboten, die Bewegung, Kreativität und soziales Lernen verbinden.
+          </p>
+        </div>
+
+        <div class="reveal reveal-delay-3 bg-white rounded-evolea-lg p-8 shadow-soft">
+          <div class="w-16 h-16 bg-evolea-mint/10 rounded-full flex items-center justify-center mb-6">
+            <span class="text-3xl">👨‍👩‍👧‍👦</span>
+          </div>
+          <h3 class="font-display font-bold text-evolea-purple text-xl mb-4">Familien</h3>
+          <p class="text-evolea-text-light">
+            Wir unterstützen nicht nur Kinder, sondern auch Eltern und Familien mit Beratung, Austausch und praktischer Hilfe.
+          </p>
+        </div>
+      </div>
+
+      <div class="mt-12 text-center reveal">
+        <div class="inline-flex items-center gap-2 bg-evolea-purple/5 border border-evolea-purple/20 rounded-evolea px-6 py-4">
+          <svg class="w-6 h-6 text-evolea-purple" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+          </svg>
+          <span class="text-evolea-text-light">Wir verwenden den Begriff <strong class="text-evolea-purple">"Kinder im Spektrum"</strong> respektvoll und identitätsbejahend.</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Pedagogical Principles -->
+  <section class="py-16 md:py-24 bg-white">
+    <div class="container mx-auto max-w-6xl px-4">
+      <div class="section-header reveal">
+        <span class="section-label">Pädagogisches Konzept</span>
+        <h2>9 Grundsätze unserer Arbeit</h2>
+        <p>Diese Prinzipien leiten alles, was wir tun</p>
+      </div>
+
+      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {principles.map((principle, index) => (
+          <div
+            class:list={[
+              'reveal p-6 rounded-evolea-lg border-l-4 transition-all hover:shadow-soft',
+              colorClasses[principle.color],
+            ]}
+            style={`animation-delay: ${index * 0.1}s`}
+          >
+            <div class="flex items-start gap-4">
+              <span class="text-3xl flex-shrink-0">{principle.icon}</span>
+              <div>
+                <h3 class="font-display font-bold text-evolea-purple text-lg mb-2">
+                  {principle.title}
+                </h3>
+                <p class="text-evolea-text-light text-sm leading-relaxed">
+                  {principle.description}
+                </p>
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- The Association -->
+  <section class="py-16 md:py-24 bg-evolea-cream/50">
+    <div class="container mx-auto max-w-6xl px-4">
+      <div class="grid lg:grid-cols-2 gap-12 items-center">
+        <div class="reveal order-2 lg:order-1">
+          <div class="bg-white rounded-evolea-lg p-8 shadow-soft">
+            <h3 class="font-display font-bold text-evolea-purple text-2xl mb-6">Der Verein</h3>
+            <div class="space-y-4 text-evolea-text-light">
+              <p>
+                <strong class="text-evolea-purple">EVOLEA Verein</strong> ist ein gemeinnütziger Verein mit Sitz in Zürich. Wir sind politisch und konfessionell unabhängig.
+              </p>
+              <p>
+                Der Name EVOLEA verbindet <em>Evolution</em> (Entwicklung) mit <em>LEA</em> (Lernen, Erleben, Aufblühen) - ein Sinnbild für die transformative Reise, die jedes Kind bei uns erleben kann.
+              </p>
+              <p>
+                Unser Schmetterlings-Symbol steht für diese Transformation: Wie eine Raupe zum Schmetterling wird, so entfaltet jedes Kind bei uns seine einzigartigen Flügel.
+              </p>
+            </div>
+
+            <div class="mt-8 pt-6 border-t border-evolea-purple/10">
+              <div class="grid grid-cols-2 gap-6">
+                <div>
+                  <div class="text-2xl font-display font-bold text-evolea-magenta">2024</div>
+                  <div class="text-sm text-evolea-text-light">Gegründet</div>
+                </div>
+                <div>
+                  <div class="text-2xl font-display font-bold text-evolea-mint">Zürich</div>
+                  <div class="text-sm text-evolea-text-light">Standort</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="reveal order-1 lg:order-2">
+          <span class="section-label">Über den Verein</span>
+          <h2 class="text-3xl md:text-4xl font-display font-bold text-evolea-purple mb-6">
+            Gemeinnützig und unabhängig
+          </h2>
+          <p class="text-lg text-evolea-text-light leading-relaxed mb-6">
+            EVOLEA wurde von einem Team aus Fachpersonen und betroffenen Eltern gegründet, die eine Lücke im Angebot für Kinder im Spektrum sahen.
+          </p>
+          <p class="text-lg text-evolea-text-light leading-relaxed mb-8">
+            Als Verein sind wir nicht gewinnorientiert. Alle Einnahmen fliessen direkt in die Qualität unserer Programme und die Weiterbildung unseres Teams.
+          </p>
+          <a href={translatePath('/team/')} class="btn-primary">
+            Unser Team kennenlernen
+            <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+            </svg>
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA Section -->
+  <GradientCTA
+    title="Bereit für den nächsten Schritt?"
+    description="Wir freuen uns darauf, Sie und Ihr Kind kennenzulernen."
+    buttonText="Kontakt aufnehmen"
+    buttonHref={translatePath('/kontakt/')}
+    variant="hero"
+  />
 </Base>
+
+<style>
+  .bg-gradient-spectrum {
+    background: linear-gradient(90deg, #7BEDD5 0%, #FFE066 16%, #FF7E5D 32%, #EF8EAE 48%, #E97BF1 64%, #CD87F8 80%, #7BEDD5 100%);
+  }
+</style>

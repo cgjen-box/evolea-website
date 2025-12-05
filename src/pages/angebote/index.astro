@@ -1,50 +1,196 @@
 ---
 import Base from '@layouts/Base.astro';
+import FloatingShapes from '@components/FloatingShapes.astro';
 import ProgramCard from '@components/ProgramCard.astro';
+import GradientCTA from '@components/GradientCTA.astro';
 import { getLangFromUrl, useTranslations, useTranslatedPath } from '@i18n/utils';
 
 const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
 const translatePath = useTranslatedPath(lang);
+
+const programs = [
+  {
+    title: t('programs.miniGarten'),
+    desc: t('programs.miniGarten.desc'),
+    icon: '🌱',
+    color: 'green',
+    ages: '3-6',
+    href: '/angebote/mini-garten/',
+  },
+  {
+    title: t('programs.miniProjekte'),
+    desc: t('programs.miniProjekte.desc'),
+    icon: '🎨',
+    color: 'orange',
+    ages: '5-8',
+    href: '/angebote/mini-projekte/',
+  },
+  {
+    title: t('programs.miniTurnen'),
+    desc: t('programs.miniTurnen.desc'),
+    icon: '⚽',
+    color: 'sky',
+    ages: '5-8',
+    href: '/angebote/mini-turnen/',
+  },
+  {
+    title: t('programs.schulberatung'),
+    desc: t('programs.schulberatung.desc'),
+    icon: '🏫',
+    color: 'coral',
+    ages: 'alle',
+    href: '/angebote/schulberatung/',
+  },
+  {
+    title: t('programs.tagesschule'),
+    desc: t('programs.tagesschule.desc'),
+    icon: '📚',
+    color: 'purple',
+    ages: '6-12',
+    href: '/angebote/tagesschule/',
+    featured: true,
+  },
+];
 ---
 
-<Base title="Angebote" description="EVOLEA bietet verschiedene Förderprogramme für Kinder im Autismus Spektrum oder mit ADHS an: Mini Garten, Mini Projekte, Mini Turnen und Schulberatung.">
-  <section class="py-20 px-4">
-    <div class="container mx-auto max-w-6xl">
-      <h1 class="text-4xl md:text-5xl font-bold text-evolea-purple mb-6 text-center">
-        {t('nav.programs')}
-      </h1>
-      <p class="text-xl text-evolea-text-light text-center max-w-2xl mx-auto mb-16">
-        Unsere Angebote sind speziell für Kinder im Spektrum und mit ADHS konzipiert. Alle Programme basieren auf wissenschaftlichen Erkenntnissen.
-      </p>
-      
-      <div class="grid md:grid-cols-2 gap-8">
-        <ProgramCard
-          title={t('programs.miniGarten')}
-          description={t('programs.miniGarten.desc')}
-          href={translatePath('/angebote/mini-garten/')}
-          icon="🌱"
-        />
-        <ProgramCard
-          title={t('programs.miniProjekte')}
-          description={t('programs.miniProjekte.desc')}
-          href={translatePath('/angebote/mini-projekte/')}
-          icon="🎨"
-        />
-        <ProgramCard
-          title={t('programs.miniTurnen')}
-          description={t('programs.miniTurnen.desc')}
-          href={translatePath('/angebote/mini-turnen/')}
-          icon="⚽"
-        />
-        <ProgramCard
-          title={t('programs.schulberatung')}
-          description={t('programs.schulberatung.desc')}
-          href={translatePath('/angebote/schulberatung/')}
-          icon="🏫"
-          variant="featured"
-        />
+<Base title="Angebote" description="EVOLEA bietet verschiedene Foerderprogramme fuer Kinder im Autismus Spektrum oder mit ADHS an: Mini Garten, Mini Projekte, Mini Turnen, Tagesschule und Schulberatung.">
+  <!-- Hero Section -->
+  <section class="relative py-20 md:py-28 bg-gradient-to-br from-evolea-purple/10 to-evolea-cream overflow-hidden">
+    <FloatingShapes variant="minimal" />
+    <div class="container mx-auto max-w-6xl px-4 relative z-10">
+      <nav class="mb-8 text-sm text-evolea-text-light">
+        <a href={translatePath('/')} class="hover:text-evolea-purple transition-colors">Startseite</a>
+        <span class="mx-2">/</span>
+        <span class="text-evolea-purple font-medium">Angebote</span>
+      </nav>
+
+      <div class="text-center max-w-3xl mx-auto">
+        <h1 class="text-4xl md:text-5xl lg:text-6xl font-display font-bold text-evolea-purple mb-6">
+          {t('nav.programs')}
+        </h1>
+        <p class="text-xl md:text-2xl text-evolea-text-light leading-relaxed">
+          Evidenzbasierte Programme, die jedes Kind dort abholen, wo es steht. Entwickelt fuer Kinder im Spektrum und mit ADHS.
+        </p>
       </div>
     </div>
   </section>
+
+  <!-- Age Groups Quick Reference -->
+  <section class="py-8 bg-white border-b border-evolea-purple/10">
+    <div class="container mx-auto max-w-6xl px-4">
+      <div class="flex flex-wrap justify-center gap-6 md:gap-12">
+        <div class="text-center">
+          <span class="text-2xl font-display font-bold text-evolea-green">3-6</span>
+          <span class="text-sm text-evolea-text-light ml-2">Jahre: Kindergartenvorbereitung</span>
+        </div>
+        <div class="text-center">
+          <span class="text-2xl font-display font-bold text-evolea-orange">5-8</span>
+          <span class="text-sm text-evolea-text-light ml-2">Jahre: Soziale Kompetenzen</span>
+        </div>
+        <div class="text-center">
+          <span class="text-2xl font-display font-bold text-evolea-purple">6-12</span>
+          <span class="text-sm text-evolea-text-light ml-2">Jahre: Tagesstruktur</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Introduction -->
+  <section class="py-12 bg-evolea-cream/30">
+    <div class="container mx-auto max-w-4xl px-4 text-center">
+      <h2 class="text-2xl font-display font-bold text-evolea-purple mb-4">Unser Ansatz</h2>
+      <p class="text-lg text-evolea-text-light leading-relaxed">
+        Alle unsere Programme basieren auf <strong class="text-evolea-purple">Applied Behavior Analysis (ABA)</strong> und <strong class="text-evolea-purple">Verbal Behavior (VB)</strong> - wissenschaftlich fundierte Methoden, die nachweislich wirksam sind. In kleinen Gruppen mit hohem Betreuungsschluessel schaffen wir einen geschuetzten Rahmen fuer individuelle Entwicklung.
+      </p>
+    </div>
+  </section>
+
+  <!-- Programs Grid -->
+  <section class="py-16 md:py-24">
+    <div class="container mx-auto max-w-6xl px-4">
+      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {programs.map((program) => (
+          <a
+            href={translatePath(program.href)}
+            class:list={[
+              'group block rounded-evolea-lg overflow-hidden transition-all hover:shadow-card',
+              program.featured ? 'bg-evolea-purple text-white' : 'bg-white',
+            ]}
+          >
+            <div class="p-6">
+              <div class="flex items-center justify-between mb-4">
+                <span class="text-3xl">{program.icon}</span>
+                <span class:list={[
+                  'text-sm font-medium px-3 py-1 rounded-full',
+                  program.featured ? 'bg-white/20' : 'bg-evolea-purple/10 text-evolea-purple',
+                ]}>
+                  {program.ages} Jahre
+                </span>
+              </div>
+              <h3 class:list={[
+                'text-xl font-display font-bold mb-2 group-hover:underline',
+                program.featured ? 'text-white' : 'text-evolea-purple',
+              ]}>
+                {program.title}
+              </h3>
+              <p class:list={[
+                'text-sm mb-4',
+                program.featured ? 'text-white/80' : 'text-evolea-text-light',
+              ]}>
+                {program.desc}
+              </p>
+              <div class:list={[
+                'flex items-center gap-2 text-sm font-medium',
+                program.featured ? 'text-white' : 'text-evolea-purple',
+              ]}>
+                Mehr erfahren
+                <svg class="w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                </svg>
+              </div>
+            </div>
+            {program.featured && (
+              <div class="px-6 py-3 bg-white/10 border-t border-white/20">
+                <span class="text-sm text-white/90">Neues Angebot - Interesse anmelden</span>
+              </div>
+            )}
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Not Sure Section -->
+  <section class="py-16 bg-evolea-cream/50">
+    <div class="container mx-auto max-w-4xl px-4 text-center">
+      <h2 class="text-2xl font-display font-bold text-evolea-purple mb-4">Nicht sicher, welches Programm passt?</h2>
+      <p class="text-lg text-evolea-text-light mb-8">
+        Wir beraten Sie gerne und finden gemeinsam das passende Angebot fuer Ihr Kind. Jedes Kind ist einzigartig - und so ist auch unsere Beratung.
+      </p>
+      <div class="flex flex-wrap justify-center gap-4">
+        <a href={translatePath('/kontakt/')} class="btn-primary">
+          Beratungsgespraech vereinbaren
+          <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+          </svg>
+        </a>
+        <a href="https://wa.me/41789591974" target="_blank" rel="noopener noreferrer" class="btn-secondary inline-flex items-center gap-2">
+          <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+            <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+          </svg>
+          WhatsApp
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA Section -->
+  <GradientCTA
+    title="Bereit fuer den naechsten Schritt?"
+    description="Kontaktieren Sie uns fuer ein unverbindliches Kennenlerngespraech."
+    buttonText="Jetzt Kontakt aufnehmen"
+    buttonHref={translatePath('/kontakt/')}
+    variant="calm"
+  />
 </Base>

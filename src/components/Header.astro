@@ -1,6 +1,7 @@
 ---
 import { getLangFromUrl, useTranslations, useTranslatedPath } from '@i18n/utils';
 import LanguagePicker from './LanguagePicker.astro';
+import Butterfly from './Butterfly.astro';
 
 interface Props {
   transparent?: boolean;
@@ -16,6 +17,7 @@ const navItems = [
   { key: 'nav.programs', href: '/angebote/' },
   { key: 'nav.about', href: '/ueber-uns/' },
   { key: 'nav.team', href: '/team/' },
+  { key: 'nav.blog', href: '/blog/' },
   { key: 'nav.contact', href: '/kontakt/' },
 ] as const;
 ---
@@ -32,17 +34,18 @@ const navItems = [
     class="container mx-auto px-4 py-4 flex items-center justify-between"
     aria-label={lang === 'de' ? 'Hauptnavigation' : 'Main navigation'}
   >
-    <!-- Logo -->
+    <!-- Logo with Butterfly -->
     <a
       href={translatePath('/')}
-      class="flex items-center gap-2 font-display font-bold text-xl transition-colors logo-link"
+      class="flex items-center gap-1 font-display font-bold text-xl transition-colors logo-link group"
     >
-      <svg class="w-10 h-10" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-        <circle cx="20" cy="20" r="18" class="fill-current opacity-20"/>
-        <circle cx="20" cy="20" r="14" class="fill-current opacity-30"/>
-        <text x="20" y="26" font-size="16" font-weight="700" text-anchor="middle" class="fill-current">E</text>
-      </svg>
-      <span>EVOLEA</span>
+      <span class="logo-text">EVOLE</span>
+      <span class="logo-a-container relative">
+        <span class="logo-text">A</span>
+        <span class="logo-butterfly absolute -top-1 -right-2 opacity-90 group-hover:opacity-100 transition-opacity">
+          <Butterfly size="sm" variant="spectrum" class="header-butterfly" />
+        </span>
+      </span>
     </a>
 
     <!-- Desktop Navigation -->
@@ -141,6 +144,51 @@ const navItems = [
 
   .header-solid .mobile-menu-btn {
     @apply text-evolea-purple hover:bg-evolea-purple/10;
+  }
+
+  /* Logo text with spectrum gradient */
+  .logo-text {
+    background: linear-gradient(90deg, #7BEDD5 0%, #FFE066 25%, #FF7E5D 50%, #E97BF1 75%, #CD87F8 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .header-transparent .logo-text {
+    background: linear-gradient(90deg, #ffffff 0%, #ffffff 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .header-scrolled .logo-text {
+    background: linear-gradient(90deg, #7BEDD5 0%, #FFE066 25%, #FF7E5D 50%, #E97BF1 75%, #CD87F8 100%) !important;
+    -webkit-background-clip: text !important;
+    -webkit-text-fill-color: transparent !important;
+    background-clip: text !important;
+  }
+
+  .logo-a-container {
+    display: inline-flex;
+    align-items: center;
+  }
+
+  .logo-butterfly {
+    transform: rotate(-15deg);
+    transition: transform 0.3s ease;
+  }
+
+  .logo-link:hover .logo-butterfly {
+    transform: rotate(-10deg) scale(1.1);
+  }
+
+  /* Hide butterfly colors when header is transparent (white logo) */
+  .header-transparent .header-butterfly {
+    filter: brightness(10);
+  }
+
+  .header-scrolled .header-butterfly {
+    filter: none !important;
   }
 
   /* Scrolled state (added via JS) */

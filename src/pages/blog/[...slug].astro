@@ -1,0 +1,159 @@
+---
+import Base from '@layouts/Base.astro';
+import FloatingShapes from '@components/FloatingShapes.astro';
+import GradientCTA from '@components/GradientCTA.astro';
+import { getCollection, type CollectionEntry } from 'astro:content';
+import { getLangFromUrl, useTranslatedPath } from '@i18n/utils';
+
+export async function getStaticPaths() {
+  const posts = await getCollection('blog');
+  return posts.map((post) => ({
+    params: { slug: post.slug },
+    props: post,
+  }));
+}
+
+type Props = CollectionEntry<'blog'>;
+
+const post = Astro.props;
+const { Content } = await post.render();
+
+const lang = getLangFromUrl(Astro.url);
+const translatePath = useTranslatedPath(lang);
+
+function formatDate(date: Date): string {
+  return date.toLocaleDateString('de-CH', {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric'
+  });
+}
+
+// Get related posts (same tags, excluding current)
+const allPosts = await getCollection('blog');
+const relatedPosts = allPosts
+  .filter(p => p.slug !== post.slug)
+  .filter(p => p.data.tags.some(tag => post.data.tags.includes(tag)))
+  .slice(0, 2);
+---
+
+<Base title={post.data.title} description={post.data.description}>
+  <!-- Hero Section -->
+  <section class="relative py-16 md:py-24 bg-gradient-to-br from-evolea-purple/10 to-evolea-cream overflow-hidden">
+    <FloatingShapes variant="minimal" />
+    <div class="container mx-auto max-w-4xl px-4 relative z-10">
+      <nav class="mb-8 text-sm text-evolea-text-light">
+        <a href={translatePath('/')} class="hover:text-evolea-purple transition-colors">Startseite</a>
+        <span class="mx-2">/</span>
+        <a href={translatePath('/blog/')} class="hover:text-evolea-purple transition-colors">Blog</a>
+        <span class="mx-2">/</span>
+        <span class="text-evolea-purple font-medium line-clamp-1">{post.data.title}</span>
+      </nav>
+
+      <div class="flex flex-wrap gap-2 mb-6">
+        {post.data.tags.map((tag) => (
+          <span class="text-sm bg-evolea-purple/10 text-evolea-purple px-3 py-1 rounded-full">{tag}</span>
+        ))}
+      </div>
+
+      <h1 class="text-3xl md:text-4xl lg:text-5xl font-display font-bold text-evolea-purple mb-6 leading-tight">
+        {post.data.title}
+      </h1>
+
+      <div class="flex items-center gap-4 text-evolea-text-light">
+        <span class="font-medium">{post.data.author}</span>
+        <span>|</span>
+        <time datetime={post.data.pubDate.toISOString()}>
+          {formatDate(post.data.pubDate)}
+        </time>
+      </div>
+    </div>
+  </section>
+
+  <!-- Article Content -->
+  <article class="py-12 md:py-16">
+    <div class="container mx-auto max-w-3xl px-4">
+      <div class="prose prose-lg prose-evolea max-w-none">
+        <Content />
+      </div>
+    </div>
+  </article>
+
+  <!-- Share Section -->
+  <section class="py-8 border-t border-evolea-purple/10">
+    <div class="container mx-auto max-w-3xl px-4">
+      <div class="flex items-center justify-between">
+        <a href={translatePath('/blog/')} class="text-evolea-purple hover:text-evolea-purple-light transition-colors flex items-center gap-2">
+          <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16l-4-4m0 0l4-4m-4 4h18" />
+          </svg>
+          Zurueck zum Blog
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Related Posts -->
+  {relatedPosts.length > 0 && (
+    <section class="py-12 bg-evolea-cream/30">
+      <div class="container mx-auto max-w-4xl px-4">
+        <h2 class="text-2xl font-display font-bold text-evolea-purple mb-8">Weitere Artikel</h2>
+        <div class="grid md:grid-cols-2 gap-6">
+          {relatedPosts.map((relatedPost) => (
+            <a href={`/blog/${relatedPost.slug}/`} class="group block bg-white rounded-evolea-lg overflow-hidden hover:shadow-card transition-shadow">
+              <div class="p-6">
+                <div class="flex flex-wrap gap-2 mb-3">
+                  {relatedPost.data.tags.slice(0, 2).map((tag) => (
+                    <span class="text-xs bg-evolea-purple/10 text-evolea-purple px-2 py-1 rounded-full">{tag}</span>
+                  ))}
+                </div>
+                <h3 class="text-lg font-display font-bold text-evolea-purple mb-2 group-hover:text-evolea-purple-light transition-colors">
+                  {relatedPost.data.title}
+                </h3>
+                <p class="text-sm text-evolea-text-light line-clamp-2">
+                  {relatedPost.data.description}
+                </p>
+              </div>
+            </a>
+          ))}
+        </div>
+      </div>
+    </section>
+  )}
+
+  <!-- CTA Section -->
+  <GradientCTA
+    title="Haben Sie Fragen?"
+    description="Wir freuen uns auf Ihre Nachricht und beraten Sie gerne."
+    buttonText="Kontakt aufnehmen"
+    buttonHref={translatePath('/kontakt/')}
+    variant="calm"
+  />
+</Base>
+
+<style>
+  .prose-evolea h2 {
+    @apply text-2xl font-display font-bold text-evolea-purple mt-12 mb-4;
+  }
+  .prose-evolea h3 {
+    @apply text-xl font-display font-bold text-evolea-purple mt-8 mb-3;
+  }
+  .prose-evolea p {
+    @apply text-evolea-text-light leading-relaxed mb-6;
+  }
+  .prose-evolea ul, .prose-evolea ol {
+    @apply text-evolea-text-light mb-6 pl-6;
+  }
+  .prose-evolea li {
+    @apply mb-2;
+  }
+  .prose-evolea strong {
+    @apply text-evolea-purple font-semibold;
+  }
+  .prose-evolea a {
+    @apply text-evolea-purple underline hover:text-evolea-purple-light transition-colors;
+  }
+  .prose-evolea blockquote {
+    @apply border-l-4 border-evolea-purple pl-6 italic text-evolea-text-light;
+  }
+</style>

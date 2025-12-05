@@ -35,6 +35,8 @@ export const ui = {
     'programs.miniTurnen.desc': 'Bewegung, Spass und motorische Förderung für Kinder im Spektrum.',
     'programs.schulberatung': 'Schulberatung',
     'programs.schulberatung.desc': 'Beratung und Unterstützung für Schulen und Lehrpersonen.',
+    'programs.tagesschule': 'Tagesschule',
+    'programs.tagesschule.desc': 'Strukturiertes Tagesschulprogramm mit individueller Förderung für Kinder im Spektrum.',
 
     // About / Mission
     'about.title': 'Was wir tun',
@@ -107,6 +109,8 @@ export const ui = {
     'programs.miniTurnen.desc': 'Movement, fun, and motor skills development for children on the spectrum.',
     'programs.schulberatung': 'School Consultation',
     'programs.schulberatung.desc': 'Support and consultation for schools and teachers.',
+    'programs.tagesschule': 'Day School',
+    'programs.tagesschule.desc': 'Structured day school program with individualized support for children on the spectrum.',
 
     // About / Mission
     'about.title': 'What We Do',

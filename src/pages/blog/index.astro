@@ -1,0 +1,128 @@
+---
+import Base from '@layouts/Base.astro';
+import FloatingShapes from '@components/FloatingShapes.astro';
+import { getCollection } from 'astro:content';
+import { getLangFromUrl, useTranslations, useTranslatedPath } from '@i18n/utils';
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+const translatePath = useTranslatedPath(lang);
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+
+const posts = (await getCollection('blog')).sort(
+  (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
+);
+
+const featuredPosts = posts.filter(post => post.data.featured);
+const regularPosts = posts.filter(post => !post.data.featured);
+
+function formatDate(date: Date): string {
+  return date.toLocaleDateString('de-CH', {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric'
+  });
+}
+---
+
+<Base title="Blog" description="Neuigkeiten, Tipps und Einblicke rund um EVOLEA und die Foerderung von Kindern im Spektrum.">
+  <!-- Hero Section -->
+  <section class="relative py-16 md:py-24 bg-gradient-to-br from-evolea-purple/10 to-evolea-cream overflow-hidden">
+    <FloatingShapes variant="minimal" />
+    <div class="container mx-auto max-w-6xl px-4 relative z-10">
+      <nav class="mb-8 text-sm text-evolea-text-light">
+        <a href={translatePath('/')} class="hover:text-evolea-purple transition-colors">Startseite</a>
+        <span class="mx-2">/</span>
+        <span class="text-evolea-purple font-medium">Blog</span>
+      </nav>
+
+      <div class="text-center max-w-3xl mx-auto">
+        <h1 class="text-4xl md:text-5xl lg:text-6xl font-display font-bold text-evolea-purple mb-6">
+          {t('nav.blog')}
+        </h1>
+        <p class="text-xl text-evolea-text-light">
+          Neuigkeiten, Tipps und Einblicke rund um EVOLEA und die Foerderung von Kindern im Spektrum.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Featured Posts -->
+  {featuredPosts.length > 0 && (
+    <section class="py-16 bg-white">
+      <div class="container mx-auto max-w-6xl px-4">
+        <h2 class="text-2xl font-display font-bold text-evolea-purple mb-8">Empfohlene Artikel</h2>
+        <div class="grid md:grid-cols-2 gap-8">
+          {featuredPosts.map((post) => (
+            <a href={`/blog/${post.slug}/`} class="group block bg-evolea-cream rounded-evolea-lg overflow-hidden hover:shadow-card transition-shadow">
+              <div class="p-6">
+                <div class="flex flex-wrap gap-2 mb-4">
+                  {post.data.tags.slice(0, 2).map((tag) => (
+                    <span class="text-xs bg-evolea-purple/10 text-evolea-purple px-2 py-1 rounded-full">{tag}</span>
+                  ))}
+                </div>
+                <h3 class="text-xl font-display font-bold text-evolea-purple mb-3 group-hover:text-evolea-purple-light transition-colors">
+                  {post.data.title}
+                </h3>
+                <p class="text-evolea-text-light mb-4 line-clamp-2">
+                  {post.data.description}
+                </p>
+                <div class="flex items-center justify-between text-sm text-evolea-text-light">
+                  <span>{post.data.author}</span>
+                  <time datetime={post.data.pubDate.toISOString()}>
+                    {formatDate(post.data.pubDate)}
+                  </time>
+                </div>
+              </div>
+            </a>
+          ))}
+        </div>
+      </div>
+    </section>
+  )}
+
+  <!-- All Posts -->
+  <section class="py-16 bg-evolea-cream/30">
+    <div class="container mx-auto max-w-6xl px-4">
+      <h2 class="text-2xl font-display font-bold text-evolea-purple mb-8">Alle Artikel</h2>
+      <div class="grid md:grid-cols-3 gap-6">
+        {posts.map((post) => (
+          <a href={`/blog/${post.slug}/`} class="group block bg-white rounded-evolea-lg overflow-hidden hover:shadow-card transition-shadow">
+            <div class="p-6">
+              <div class="flex flex-wrap gap-2 mb-3">
+                {post.data.tags.slice(0, 2).map((tag) => (
+                  <span class="text-xs bg-evolea-purple/10 text-evolea-purple px-2 py-1 rounded-full">{tag}</span>
+                ))}
+              </div>
+              <h3 class="text-lg font-display font-bold text-evolea-purple mb-2 group-hover:text-evolea-purple-light transition-colors line-clamp-2">
+                {post.data.title}
+              </h3>
+              <p class="text-sm text-evolea-text-light mb-4 line-clamp-2">
+                {post.data.description}
+              </p>
+              <time class="text-xs text-evolea-text-light" datetime={post.data.pubDate.toISOString()}>
+                {formatDate(post.data.pubDate)}
+              </time>
+            </div>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Newsletter CTA -->
+  <section class="py-16 bg-white">
+    <div class="container mx-auto max-w-3xl px-4 text-center">
+      <h2 class="text-2xl font-display font-bold text-evolea-purple mb-4">Bleiben Sie informiert</h2>
+      <p class="text-evolea-text-light mb-6">
+        Haben Sie Fragen oder moechten Sie mehr erfahren? Kontaktieren Sie uns jederzeit.
+      </p>
+      <a href={translatePath('/kontakt/')} class="btn-primary inline-flex">
+        Kontakt aufnehmen
+        <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+        </svg>
+      </a>
+    </div>
+  </section>
+</Base>

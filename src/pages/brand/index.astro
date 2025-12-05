@@ -1,72 +1,201 @@
 ---
 import Base from '@layouts/Base.astro';
-const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 
 // EVOLEA True Color Palette - extracted from evolea.ch
 const colors = {
   primary: [
-    { name: 'Magenta', hex: '#DD48E0', usage: 'Primary accent, CTAs, highlights' },
-    { name: 'Hot Pink', hex: '#EF5EDB', usage: 'Secondary accent, hover states' },
-    { name: 'Fuchsia', hex: '#E97BF1', usage: 'Gradients, overlays' },
+    { name: 'Magenta', hex: '#DD48E0', rgb: '221, 72, 224', usage: 'Primary accent, CTAs, highlights' },
+    { name: 'Hot Pink', hex: '#EF5EDB', rgb: '239, 94, 219', usage: 'Secondary accent, hover states' },
+    { name: 'Fuchsia Glow', hex: '#E97BF1', rgb: '233, 123, 241', usage: 'Gradients, overlays, glows' },
   ],
   spectrum: [
-    { name: 'Mint Teal', hex: '#7BEDD5', usage: 'Fresh accents, success states' },
-    { name: 'Coral', hex: '#FF7E5D', usage: 'Warm highlights, alerts' },
-    { name: 'Soft Coral', hex: '#C96861', usage: 'Muted accents, backgrounds' },
-    { name: 'Gold', hex: '#DCD49F', usage: 'Luxury accents, highlights' },
-    { name: 'Lavender', hex: '#CD87F8', usage: 'Soft purple accents' },
-    { name: 'Deep Purple', hex: '#BA53AD', usage: 'Deep accents, text on light' },
+    { name: 'Mint Teal', hex: '#7BEDD5', rgb: '123, 237, 213', usage: 'Fresh accents, success, nature' },
+    { name: 'Sunshine', hex: '#FFE066', rgb: '255, 224, 102', usage: 'Joy, warmth, highlights' },
+    { name: 'Coral', hex: '#FF7E5D', rgb: '255, 126, 93', usage: 'Warm highlights, energy' },
+    { name: 'Soft Coral', hex: '#C96861', rgb: '201, 104, 97', usage: 'Muted accents, earthy warmth' },
+    { name: 'Gold', hex: '#DCD49F', rgb: '220, 212, 159', usage: 'Luxury accents, sophistication' },
+    { name: 'Lavender', hex: '#CD87F8', rgb: '205, 135, 248', usage: 'Soft purple, calm energy' },
+    { name: 'Deep Purple', hex: '#BA53AD', rgb: '186, 83, 173', usage: 'Text on light, deep accents' },
+    { name: 'Sky Blue', hex: '#5DADE2', rgb: '93, 173, 226', usage: 'Cool accents, trust, clarity' },
   ],
   neutrals: [
-    { name: 'Pure White', hex: '#FFFFFF', usage: 'Backgrounds, text on dark' },
-    { name: 'Soft Pink', hex: '#FFDEDE', usage: 'Light backgrounds, cards' },
-    { name: 'Blush', hex: '#EF8EAE', usage: 'Soft accents, borders' },
-    { name: 'Cream', hex: '#FFFBF7', usage: 'Page background' },
-    { name: 'Dark', hex: '#1A1B1F', usage: 'Text, dark backgrounds' },
+    { name: 'Pure White', hex: '#FFFFFF', rgb: '255, 255, 255', usage: 'Backgrounds, text on dark' },
+    { name: 'Soft Pink', hex: '#FFDEDE', rgb: '255, 222, 222', usage: 'Light backgrounds, cards' },
+    { name: 'Blush', hex: '#EF8EAE', rgb: '239, 142, 174', usage: 'Soft accents, borders' },
+    { name: 'Cream', hex: '#FFFBF7', rgb: '255, 251, 247', usage: 'Page background' },
+    { name: 'Dark Text', hex: '#2D2A32', rgb: '45, 42, 50', usage: 'Primary text' },
+    { name: 'Light Text', hex: '#5C5762', rgb: '92, 87, 98', usage: 'Secondary text' },
   ],
 };
 
 const gradients = [
   {
-    name: 'Spectrum Prism',
+    name: 'Prism (Signature)',
     css: 'linear-gradient(118deg, #7BEDD5 0%, #FFE066 21%, #FFFFFF 48%, #E97BF1 81%, #CD87F8 100%)',
-    description: 'The signature EVOLEA gradient - like light through a prism',
+    cssVar: '--gradient-prism',
+    description: 'THE signature EVOLEA gradient - light through a prism. Use for hero sections, CTAs, and key moments.',
   },
   {
-    name: 'Sunset Magic',
-    css: 'linear-gradient(135deg, #DCD49F 0%, #EF8EAE 46%, #BA53AD 100%)',
-    description: 'Gold to pink to purple - warm and magical',
+    name: 'Prism Vivid',
+    css: 'linear-gradient(118deg, #7BEDD5 0%, #FFE066 15%, #FFDEDE 35%, #E97BF1 65%, #CD87F8 85%, #DD48E0 100%)',
+    cssVar: '--gradient-prism-vivid',
+    description: 'More saturated prism for smaller elements and buttons.',
   },
   {
-    name: 'Electric Pink',
-    css: 'linear-gradient(135deg, #DD48E0 0%, #EF5EDB 50%, #E97BF1 100%)',
-    description: 'Bold magenta gradient for CTAs',
+    name: 'Spectrum Flow',
+    css: 'linear-gradient(90deg, #7BEDD5 0%, #FFE066 16%, #FF7E5D 32%, #EF8EAE 48%, #E97BF1 64%, #CD87F8 80%, #7BEDD5 100%)',
+    cssVar: '--gradient-spectrum',
+    description: 'Full spectrum loop - great for animated backgrounds and decorative lines.',
   },
   {
-    name: 'Ocean Mint',
-    css: 'linear-gradient(135deg, #7BEDD5 0%, #CD87F8 100%)',
-    description: 'Teal to lavender - calm but vibrant',
+    name: 'Magenta Burst',
+    css: 'linear-gradient(135deg, #BA53AD 0%, #DD48E0 50%, #E97BF1 100%)',
+    cssVar: '--gradient-magenta',
+    description: 'Bold magenta gradient for primary buttons and strong CTAs.',
   },
   {
-    name: 'Coral Sunrise',
-    css: 'linear-gradient(135deg, #FF7E5D 0%, #EF8EAE 50%, #FFDEDE 100%)',
-    description: 'Warm coral fading to soft pink',
+    name: 'Ocean Dream',
+    css: 'linear-gradient(135deg, #7BEDD5 0%, #5DADE2 50%, #CD87F8 100%)',
+    cssVar: '--gradient-ocean',
+    description: 'Cool, calming gradient - mint to sky to lavender.',
+  },
+  {
+    name: 'Sunset Warmth',
+    css: 'linear-gradient(135deg, #FFE066 0%, #FF7E5D 50%, #E97BF1 100%)',
+    cssVar: '--gradient-sunset',
+    description: 'Warm, energetic gradient - yellow to coral to magenta.',
   },
 ];
+
+const cssVariables = `
+:root {
+  /* Primary Colors */
+  --evolea-magenta: #DD48E0;
+  --evolea-magenta-light: #EF5EDB;
+  --evolea-magenta-vivid: #E97BF1;
+
+  /* Purple Family */
+  --evolea-purple: #BA53AD;
+  --evolea-purple-light: #CD87F8;
+  --evolea-purple-dark: #8A3D9E;
+
+  /* Spectrum Colors */
+  --evolea-mint: #7BEDD5;
+  --evolea-yellow: #FFE066;
+  --evolea-coral: #FF7E5D;
+  --evolea-gold: #DCD49F;
+  --evolea-pink: #EF8EAE;
+  --evolea-sky: #5DADE2;
+
+  /* Neutrals */
+  --evolea-cream: #FFFBF7;
+  --evolea-text: #2D2A32;
+  --evolea-text-light: #5C5762;
+
+  /* Gradients */
+  --gradient-prism: linear-gradient(118deg, #7BEDD5 0%, #FFE066 21%, #FFFFFF 48%, #E97BF1 81%, #CD87F8 100%);
+  --gradient-prism-vivid: linear-gradient(118deg, #7BEDD5 0%, #FFE066 15%, #FFDEDE 35%, #E97BF1 65%, #CD87F8 85%, #DD48E0 100%);
+  --gradient-spectrum: linear-gradient(90deg, #7BEDD5 0%, #FFE066 16%, #FF7E5D 32%, #EF8EAE 48%, #E97BF1 64%, #CD87F8 80%, #7BEDD5 100%);
+  --gradient-magenta: linear-gradient(135deg, #BA53AD 0%, #DD48E0 50%, #E97BF1 100%);
+
+  /* Shadows */
+  --shadow-soft: 0 4px 20px rgba(186, 83, 173, 0.15);
+  --shadow-card: 0 8px 30px rgba(186, 83, 173, 0.2);
+  --shadow-glow-magenta: 0 0 60px rgba(221, 72, 224, 0.5);
+  --shadow-glow-mint: 0 0 60px rgba(123, 237, 213, 0.5);
+}`;
+
+const tailwindConfig = `
+// tailwind.config.mjs
+colors: {
+  evolea: {
+    magenta: '#DD48E0',
+    'magenta-light': '#EF5EDB',
+    'magenta-vivid': '#E97BF1',
+    purple: '#BA53AD',
+    'purple-light': '#CD87F8',
+    mint: '#7BEDD5',
+    yellow: '#FFE066',
+    coral: '#FF7E5D',
+    gold: '#DCD49F',
+    pink: '#EF8EAE',
+    sky: '#5DADE2',
+    cream: '#FFFBF7',
+    text: '#2D2A32',
+    'text-light': '#5C5762',
+  }
+}`;
 ---
 
-<Base title="Brand Guide" description="EVOLEA Brand Guidelines - Internal Use Only">
-  <!-- Hero -->
-  <section class="relative min-h-[60vh] flex items-center justify-center overflow-hidden" style="background: linear-gradient(118deg, #7BEDD5 0%, #FFE066 21%, #FFFFFF 48%, #E97BF1 81%, #CD87F8 100%);">
-    <div class="absolute inset-0 bg-white/20"></div>
+<Base title="EVOLEA Brand Guide" description="Comprehensive EVOLEA Brand Guidelines - Colors, Typography, Logo, Butterfly, Components">
+  <!-- Hero with Prism Gradient -->
+  <section class="relative min-h-[80vh] flex items-center justify-center overflow-hidden" style="background: linear-gradient(118deg, #7BEDD5 0%, #FFE066 21%, #FFFFFF 48%, #E97BF1 81%, #CD87F8 100%);">
+    <!-- Floating butterflies -->
+    <div class="absolute inset-0 overflow-hidden pointer-events-none">
+      <svg class="absolute top-20 left-[10%] w-16 h-16 animate-float opacity-60" viewBox="0 0 100 100">
+        <defs>
+          <linearGradient id="butterfly-hero-1" x1="0%" y1="0%" x2="100%" y2="0%">
+            <stop offset="0%" stop-color="#5DADE2"/>
+            <stop offset="50%" stop-color="#CD87F8"/>
+            <stop offset="100%" stop-color="#DD48E0"/>
+          </linearGradient>
+        </defs>
+        <path d="M50 50 C30 30, 10 35, 15 55 C10 75, 30 80, 50 60 C70 80, 90 75, 85 55 C90 35, 70 30, 50 50" fill="url(#butterfly-hero-1)"/>
+      </svg>
+      <svg class="absolute top-40 right-[15%] w-12 h-12 animate-float-delayed opacity-50" viewBox="0 0 100 100">
+        <path d="M50 50 C30 30, 10 35, 15 55 C10 75, 30 80, 50 60 C70 80, 90 75, 85 55 C90 35, 70 30, 50 50" fill="#E97BF1"/>
+      </svg>
+      <svg class="absolute bottom-32 left-[20%] w-10 h-10 animate-float-slow opacity-40" viewBox="0 0 100 100">
+        <path d="M50 50 C30 30, 10 35, 15 55 C10 75, 30 80, 50 60 C70 80, 90 75, 85 55 C90 35, 70 30, 50 50" fill="#7BEDD5"/>
+      </svg>
+    </div>
+
     <div class="relative z-10 text-center px-4 py-20">
-      <p class="text-sm font-semibold uppercase tracking-widest text-white/80 mb-4">Internal Brand Guide</p>
-      <h1 class="text-5xl md:text-7xl font-display font-bold text-white mb-6 drop-shadow-lg">
-        EVOLEA
-      </h1>
-      <p class="text-xl md:text-2xl text-white/90 max-w-2xl mx-auto">
-        A spectrum of possibilities. Bold, vibrant, full of energy.
+      <p class="text-sm font-semibold uppercase tracking-widest text-white/80 mb-4 drop-shadow">Internal Brand Guide v2.0</p>
+
+      <!-- Logo with Butterfly -->
+      <div class="flex items-center justify-center gap-4 mb-8">
+        <h1 class="text-6xl md:text-8xl font-display font-bold drop-shadow-lg" style="background: linear-gradient(90deg, #7BEDD5 0%, #FFE066 15%, #EF8EAE 35%, #E97BF1 55%, #CD87F8 75%, #5DADE2 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;">
+          EVOLEA
+        </h1>
+        <!-- Butterfly Icon -->
+        <svg class="w-16 h-16 md:w-24 md:h-24 -ml-4 -mt-8" viewBox="0 0 100 100">
+          <defs>
+            <linearGradient id="butterfly-main-left" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stop-color="#5DADE2"/>
+              <stop offset="100%" stop-color="#CD87F8"/>
+            </linearGradient>
+            <linearGradient id="butterfly-main-right" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stop-color="#EF8EAE"/>
+              <stop offset="100%" stop-color="#DD48E0"/>
+            </linearGradient>
+          </defs>
+          <!-- Left wings -->
+          <path d="M48 50 C35 25, 5 20, 10 45 C5 70, 35 75, 48 55 Z" fill="url(#butterfly-main-left)"/>
+          <path d="M48 55 C35 60, 15 85, 30 90 C45 85, 48 65, 48 55 Z" fill="url(#butterfly-main-left)" opacity="0.8"/>
+          <!-- Right wings -->
+          <path d="M52 50 C65 25, 95 20, 90 45 C95 70, 65 75, 52 55 Z" fill="url(#butterfly-main-right)"/>
+          <path d="M52 55 C65 60, 85 85, 70 90 C55 85, 52 65, 52 55 Z" fill="url(#butterfly-main-right)" opacity="0.8"/>
+          <!-- Body -->
+          <ellipse cx="50" cy="55" rx="3" ry="15" fill="#2D2A32"/>
+          <!-- Antennae -->
+          <path d="M48 42 Q45 35, 40 30" stroke="#2D2A32" stroke-width="1.5" fill="none"/>
+          <path d="M52 42 Q55 35, 60 30" stroke="#2D2A32" stroke-width="1.5" fill="none"/>
+          <circle cx="40" cy="30" r="2" fill="#DD48E0"/>
+          <circle cx="60" cy="30" r="2" fill="#7BEDD5"/>
+        </svg>
+      </div>
+
+      <p class="text-xl md:text-2xl text-white/90 max-w-2xl mx-auto drop-shadow">
+        A spectrum of possibilities. Bold, vibrant, full of transformation.
       </p>
+
+      <div class="mt-8 flex flex-wrap justify-center gap-4">
+        <a href="#colors" class="px-6 py-3 bg-white/20 backdrop-blur-sm rounded-full text-white font-semibold hover:bg-white/30 transition-all">Colors</a>
+        <a href="#butterfly" class="px-6 py-3 bg-white/20 backdrop-blur-sm rounded-full text-white font-semibold hover:bg-white/30 transition-all">Butterfly</a>
+        <a href="#logo" class="px-6 py-3 bg-white/20 backdrop-blur-sm rounded-full text-white font-semibold hover:bg-white/30 transition-all">Logo</a>
+        <a href="#implementation" class="px-6 py-3 bg-white/20 backdrop-blur-sm rounded-full text-white font-semibold hover:bg-white/30 transition-all">Implementation</a>
+      </div>
     </div>
   </section>
 
@@ -79,8 +208,25 @@ const gradients = [
           EVOLEA's visual identity celebrates the <strong>spectrum</strong> - not just the autism spectrum, but the full spectrum of light, possibility, and human potential. Our colors aren't primary or childish - they're <strong>sophisticated, vibrant, and energetic</strong>.
         </p>
         <p class="text-lg text-gray-700 leading-relaxed mb-6">
-          Think of light passing through a prism: <span style="color: #7BEDD5;">mint teal</span>, <span style="color: #DCD49F; background: #333; padding: 2px 6px; border-radius: 4px;">gold</span>, <span style="color: #EF8EAE;">soft pink</span>, <span style="color: #DD48E0;">electric magenta</span>, <span style="color: #CD87F8;">lavender</span>. These colors flow and blend, creating something beautiful and unique.
+          The <strong>butterfly</strong> is our symbol of transformation. Just as a butterfly emerges in brilliant colors, EVOLEA helps children discover and express their unique brilliance. The butterfly's wings reflect our prism gradient - blue/purple on one side, pink/coral on the other - representing the full spectrum of possibilities.
         </p>
+        <div class="grid md:grid-cols-3 gap-6 my-8">
+          <div class="p-6 rounded-2xl text-center" style="background: linear-gradient(135deg, #7BEDD5 0%, #CD87F8 100%);">
+            <span class="text-4xl">🌈</span>
+            <h4 class="font-display font-bold text-white mt-2">Spectrum</h4>
+            <p class="text-white/80 text-sm">Light through a prism</p>
+          </div>
+          <div class="p-6 rounded-2xl text-center" style="background: linear-gradient(135deg, #DD48E0 0%, #E97BF1 100%);">
+            <span class="text-4xl">🦋</span>
+            <h4 class="font-display font-bold text-white mt-2">Transformation</h4>
+            <p class="text-white/80 text-sm">Evolution & growth</p>
+          </div>
+          <div class="p-6 rounded-2xl text-center" style="background: linear-gradient(135deg, #FFE066 0%, #FF7E5D 100%);">
+            <span class="text-4xl">⚡</span>
+            <h4 class="font-display font-bold text-white mt-2">Energy</h4>
+            <p class="text-white/80 text-sm">Bold & vibrant</p>
+          </div>
+        </div>
         <div class="bg-gray-50 p-6 rounded-2xl border-l-4" style="border-color: #DD48E0;">
           <p class="text-gray-700 italic m-0">
             "Not a children's book aesthetic - but someone full of energy on the spectrum who loves big, bold gradient colors."
@@ -90,8 +236,138 @@ const gradients = [
     </div>
   </section>
 
+  <!-- Butterfly Section -->
+  <section id="butterfly" class="py-20 px-4" style="background: linear-gradient(180deg, #FFFBF7 0%, #FFDEDE 50%, #FFFBF7 100%);">
+    <div class="container mx-auto max-w-6xl">
+      <h2 class="text-3xl md:text-4xl font-display font-bold mb-4" style="color: #DD48E0;">The EVOLEA Butterfly</h2>
+      <p class="text-lg text-gray-600 mb-12">Our symbol of transformation - use it throughout the design</p>
+
+      <!-- Butterfly Showcase -->
+      <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8 mb-16">
+        <!-- Full Color -->
+        <div class="bg-white rounded-2xl p-8 shadow-lg text-center">
+          <svg class="w-32 h-32 mx-auto mb-4" viewBox="0 0 100 100">
+            <defs>
+              <linearGradient id="bf-full-left" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stop-color="#5DADE2"/>
+                <stop offset="100%" stop-color="#CD87F8"/>
+              </linearGradient>
+              <linearGradient id="bf-full-right" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stop-color="#EF8EAE"/>
+                <stop offset="100%" stop-color="#DD48E0"/>
+              </linearGradient>
+            </defs>
+            <path d="M48 50 C35 25, 5 20, 10 45 C5 70, 35 75, 48 55 Z" fill="url(#bf-full-left)"/>
+            <path d="M48 55 C35 60, 15 85, 30 90 C45 85, 48 65, 48 55 Z" fill="url(#bf-full-left)" opacity="0.8"/>
+            <path d="M52 50 C65 25, 95 20, 90 45 C95 70, 65 75, 52 55 Z" fill="url(#bf-full-right)"/>
+            <path d="M52 55 C65 60, 85 85, 70 90 C55 85, 52 65, 52 55 Z" fill="url(#bf-full-right)" opacity="0.8"/>
+            <ellipse cx="50" cy="55" rx="3" ry="15" fill="#2D2A32"/>
+            <path d="M48 42 Q45 35, 40 30" stroke="#2D2A32" stroke-width="1.5" fill="none"/>
+            <path d="M52 42 Q55 35, 60 30" stroke="#2D2A32" stroke-width="1.5" fill="none"/>
+            <circle cx="40" cy="30" r="2" fill="#DD48E0"/>
+            <circle cx="60" cy="30" r="2" fill="#7BEDD5"/>
+          </svg>
+          <h4 class="font-display font-bold">Full Spectrum</h4>
+          <p class="text-sm text-gray-500">Primary usage</p>
+        </div>
+
+        <!-- Magenta -->
+        <div class="bg-white rounded-2xl p-8 shadow-lg text-center">
+          <svg class="w-32 h-32 mx-auto mb-4" viewBox="0 0 100 100">
+            <defs>
+              <linearGradient id="bf-mag" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stop-color="#BA53AD"/>
+                <stop offset="100%" stop-color="#DD48E0"/>
+              </linearGradient>
+            </defs>
+            <path d="M48 50 C35 25, 5 20, 10 45 C5 70, 35 75, 48 55 Z" fill="url(#bf-mag)"/>
+            <path d="M48 55 C35 60, 15 85, 30 90 C45 85, 48 65, 48 55 Z" fill="url(#bf-mag)" opacity="0.7"/>
+            <path d="M52 50 C65 25, 95 20, 90 45 C95 70, 65 75, 52 55 Z" fill="url(#bf-mag)"/>
+            <path d="M52 55 C65 60, 85 85, 70 90 C55 85, 52 65, 52 55 Z" fill="url(#bf-mag)" opacity="0.7"/>
+            <ellipse cx="50" cy="55" rx="3" ry="15" fill="#2D2A32"/>
+          </svg>
+          <h4 class="font-display font-bold">Magenta Mono</h4>
+          <p class="text-sm text-gray-500">Simplified</p>
+        </div>
+
+        <!-- Mint -->
+        <div class="bg-white rounded-2xl p-8 shadow-lg text-center">
+          <svg class="w-32 h-32 mx-auto mb-4" viewBox="0 0 100 100">
+            <defs>
+              <linearGradient id="bf-mint" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stop-color="#7BEDD5"/>
+                <stop offset="100%" stop-color="#5DADE2"/>
+              </linearGradient>
+            </defs>
+            <path d="M48 50 C35 25, 5 20, 10 45 C5 70, 35 75, 48 55 Z" fill="url(#bf-mint)"/>
+            <path d="M48 55 C35 60, 15 85, 30 90 C45 85, 48 65, 48 55 Z" fill="url(#bf-mint)" opacity="0.7"/>
+            <path d="M52 50 C65 25, 95 20, 90 45 C95 70, 65 75, 52 55 Z" fill="url(#bf-mint)"/>
+            <path d="M52 55 C65 60, 85 85, 70 90 C55 85, 52 65, 52 55 Z" fill="url(#bf-mint)" opacity="0.7"/>
+            <ellipse cx="50" cy="55" rx="3" ry="15" fill="#2D2A32"/>
+          </svg>
+          <h4 class="font-display font-bold">Mint Mono</h4>
+          <p class="text-sm text-gray-500">Cool variant</p>
+        </div>
+
+        <!-- White (for dark bg) -->
+        <div class="rounded-2xl p-8 shadow-lg text-center" style="background: linear-gradient(135deg, #BA53AD 0%, #DD48E0 100%);">
+          <svg class="w-32 h-32 mx-auto mb-4" viewBox="0 0 100 100">
+            <path d="M48 50 C35 25, 5 20, 10 45 C5 70, 35 75, 48 55 Z" fill="white" opacity="0.9"/>
+            <path d="M48 55 C35 60, 15 85, 30 90 C45 85, 48 65, 48 55 Z" fill="white" opacity="0.7"/>
+            <path d="M52 50 C65 25, 95 20, 90 45 C95 70, 65 75, 52 55 Z" fill="white" opacity="0.9"/>
+            <path d="M52 55 C65 60, 85 85, 70 90 C55 85, 52 65, 52 55 Z" fill="white" opacity="0.7"/>
+            <ellipse cx="50" cy="55" rx="3" ry="15" fill="white"/>
+          </svg>
+          <h4 class="font-display font-bold text-white">White</h4>
+          <p class="text-sm text-white/70">On dark backgrounds</p>
+        </div>
+      </div>
+
+      <!-- Butterfly SVG Code -->
+      <div class="bg-gray-900 rounded-2xl p-6 overflow-x-auto">
+        <h4 class="text-white font-bold mb-4">SVG Code - Full Spectrum Butterfly</h4>
+        <pre class="text-green-400 text-sm"><code>&lt;svg viewBox="0 0 100 100"&gt;
+  &lt;defs&gt;
+    &lt;linearGradient id="wing-left" x1="0%" y1="0%" x2="100%" y2="100%"&gt;
+      &lt;stop offset="0%" stop-color="#5DADE2"/&gt;
+      &lt;stop offset="100%" stop-color="#CD87F8"/&gt;
+    &lt;/linearGradient&gt;
+    &lt;linearGradient id="wing-right" x1="0%" y1="0%" x2="100%" y2="100%"&gt;
+      &lt;stop offset="0%" stop-color="#EF8EAE"/&gt;
+      &lt;stop offset="100%" stop-color="#DD48E0"/&gt;
+    &lt;/linearGradient&gt;
+  &lt;/defs&gt;
+  &lt;!-- Left wings --&gt;
+  &lt;path d="M48 50 C35 25, 5 20, 10 45 C5 70, 35 75, 48 55 Z" fill="url(#wing-left)"/&gt;
+  &lt;path d="M48 55 C35 60, 15 85, 30 90 C45 85, 48 65, 48 55 Z" fill="url(#wing-left)" opacity="0.8"/&gt;
+  &lt;!-- Right wings --&gt;
+  &lt;path d="M52 50 C65 25, 95 20, 90 45 C95 70, 65 75, 52 55 Z" fill="url(#wing-right)"/&gt;
+  &lt;path d="M52 55 C65 60, 85 85, 70 90 C55 85, 52 65, 52 55 Z" fill="url(#wing-right)" opacity="0.8"/&gt;
+  &lt;!-- Body --&gt;
+  &lt;ellipse cx="50" cy="55" rx="3" ry="15" fill="#2D2A32"/&gt;
+&lt;/svg&gt;</code></pre>
+      </div>
+
+      <!-- Butterfly Usage -->
+      <div class="mt-12 grid md:grid-cols-3 gap-6">
+        <div class="bg-white rounded-2xl p-6 shadow-md">
+          <h4 class="font-display font-bold mb-2" style="color: #DD48E0;">Decorative</h4>
+          <p class="text-gray-600 text-sm">Float butterflies in backgrounds with varying opacity (40-60%) and sizes</p>
+        </div>
+        <div class="bg-white rounded-2xl p-6 shadow-md">
+          <h4 class="font-display font-bold mb-2" style="color: #DD48E0;">Icons</h4>
+          <p class="text-gray-600 text-sm">Use as bullet points, section markers, or loading indicators</p>
+        </div>
+        <div class="bg-white rounded-2xl p-6 shadow-md">
+          <h4 class="font-display font-bold mb-2" style="color: #DD48E0;">Logo Companion</h4>
+          <p class="text-gray-600 text-sm">Always paired with the EVOLEA wordmark in the main logo</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <!-- Color Palette -->
-  <section class="py-20 px-4" style="background: linear-gradient(180deg, #FFFBF7 0%, #FFDEDE 100%);">
+  <section id="colors" class="py-20 px-4 bg-white">
     <div class="container mx-auto max-w-6xl">
       <h2 class="text-3xl md:text-4xl font-display font-bold mb-4" style="color: #BA53AD;">Color Palette</h2>
       <p class="text-lg text-gray-600 mb-12">Our true spectrum - extracted from evolea.ch</p>
@@ -101,13 +377,14 @@ const gradients = [
         <h3 class="text-xl font-display font-bold mb-6" style="color: #DD48E0;">Primary - The Magentas</h3>
         <div class="grid md:grid-cols-3 gap-6">
           {colors.primary.map((color) => (
-            <div class="bg-white rounded-2xl overflow-hidden shadow-lg">
+            <div class="bg-white rounded-2xl overflow-hidden shadow-lg border">
               <div class="h-32" style={`background: ${color.hex};`}></div>
               <div class="p-4">
                 <div class="flex justify-between items-center mb-2">
                   <span class="font-bold">{color.name}</span>
                   <code class="text-sm bg-gray-100 px-2 py-1 rounded">{color.hex}</code>
                 </div>
+                <p class="text-xs text-gray-400 mb-2">RGB: {color.rgb}</p>
                 <p class="text-sm text-gray-500">{color.usage}</p>
               </div>
             </div>
@@ -118,13 +395,14 @@ const gradients = [
       <!-- Spectrum Colors -->
       <div class="mb-16">
         <h3 class="text-xl font-display font-bold mb-6" style="color: #7BEDD5;">Spectrum Colors</h3>
-        <div class="grid md:grid-cols-3 lg:grid-cols-6 gap-4">
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
           {colors.spectrum.map((color) => (
-            <div class="bg-white rounded-xl overflow-hidden shadow-md">
+            <div class="bg-white rounded-xl overflow-hidden shadow-md border">
               <div class="h-24" style={`background: ${color.hex};`}></div>
               <div class="p-3">
                 <span class="font-semibold text-sm block">{color.name}</span>
                 <code class="text-xs text-gray-500">{color.hex}</code>
+                <p class="text-xs text-gray-400 mt-1">{color.usage}</p>
               </div>
             </div>
           ))}
@@ -134,12 +412,12 @@ const gradients = [
       <!-- Neutrals -->
       <div>
         <h3 class="text-xl font-display font-bold mb-6 text-gray-700">Neutrals</h3>
-        <div class="grid md:grid-cols-5 gap-4">
+        <div class="grid grid-cols-2 md:grid-cols-6 gap-4">
           {colors.neutrals.map((color) => (
             <div class="bg-white rounded-xl overflow-hidden shadow-md border">
-              <div class="h-20" style={`background: ${color.hex}; ${color.hex === '#FFFFFF' ? 'border: 1px solid #eee;' : ''}`}></div>
+              <div class="h-20" style={`background: ${color.hex}; ${color.hex === '#FFFFFF' || color.hex === '#FFFBF7' ? 'border: 1px solid #eee;' : ''}`}></div>
               <div class="p-3">
-                <span class="font-semibold text-sm block">{color.name}</span>
+                <span class="font-semibold text-xs block">{color.name}</span>
                 <code class="text-xs text-gray-500">{color.hex}</code>
               </div>
             </div>
@@ -150,20 +428,26 @@ const gradients = [
   </section>
 
   <!-- Gradients -->
-  <section class="py-20 px-4 bg-white">
+  <section class="py-20 px-4" style="background: #FFFBF7;">
     <div class="container mx-auto max-w-6xl">
       <h2 class="text-3xl md:text-4xl font-display font-bold mb-4" style="color: #BA53AD;">Gradients</h2>
       <p class="text-lg text-gray-600 mb-12">The soul of EVOLEA - light through a prism</p>
 
       <div class="space-y-8">
         {gradients.map((gradient) => (
-          <div class="bg-gray-50 rounded-2xl overflow-hidden">
-            <div class="h-40 md:h-56" style={`background: ${gradient.css};`}></div>
+          <div class="bg-white rounded-2xl overflow-hidden shadow-lg">
+            <div class="h-40 md:h-48 relative" style={`background: ${gradient.css};`}>
+              <span class="absolute bottom-4 left-4 bg-black/20 backdrop-blur-sm text-white px-3 py-1 rounded-full text-sm font-medium">
+                {gradient.name}
+              </span>
+            </div>
             <div class="p-6">
-              <h4 class="font-display font-bold text-xl mb-2">{gradient.name}</h4>
               <p class="text-gray-600 mb-4">{gradient.description}</p>
+              <div class="flex flex-wrap gap-2 mb-4">
+                <code class="text-xs bg-gray-100 px-2 py-1 rounded">{gradient.cssVar}</code>
+              </div>
               <div class="bg-gray-900 text-green-400 p-4 rounded-lg overflow-x-auto">
-                <code class="text-sm">{gradient.css}</code>
+                <code class="text-xs">{gradient.css}</code>
               </div>
             </div>
           </div>
@@ -172,99 +456,108 @@ const gradients = [
     </div>
   </section>
 
-  <!-- Logo -->
-  <section class="py-20 px-4" style="background: linear-gradient(135deg, #1A1B1F 0%, #2D2A32 100%);">
+  <!-- Logo Section -->
+  <section id="logo" class="py-20 px-4" style="background: linear-gradient(135deg, #1A1B1F 0%, #2D2A32 100%);">
     <div class="container mx-auto max-w-6xl">
       <h2 class="text-3xl md:text-4xl font-display font-bold mb-4 text-white">Logo</h2>
-      <p class="text-lg text-white/70 mb-12">The EVOLEA mark - refined and energetic</p>
+      <p class="text-lg text-white/70 mb-12">The EVOLEA mark with butterfly - refined and energetic</p>
+
+      <!-- Original Logo Display -->
+      <div class="bg-white rounded-2xl p-12 mb-8 text-center">
+        <img
+          src="/images/logo/evolea-logo-original.png"
+          alt="EVOLEA Logo with butterfly"
+          class="max-w-md mx-auto"
+        />
+        <p class="text-gray-500 mt-4">Original logo - gradient text with spectrum butterfly</p>
+      </div>
 
       <div class="grid md:grid-cols-2 gap-8">
-        <!-- Primary Logo -->
+        <!-- On White -->
         <div class="bg-white rounded-2xl p-12 flex flex-col items-center justify-center">
-          <div class="mb-8">
-            <svg class="w-48 h-16" viewBox="0 0 200 60" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <!-- Logo mark - spectrum circle -->
+          <div class="flex items-center gap-2 mb-8">
+            <span class="text-4xl font-display font-bold" style="background: linear-gradient(90deg, #7BEDD5 0%, #FFE066 15%, #EF8EAE 35%, #E97BF1 55%, #CD87F8 75%, #5DADE2 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">EVOLEA</span>
+            <svg class="w-10 h-10 -ml-1 -mt-4" viewBox="0 0 100 100">
               <defs>
-                <linearGradient id="logoGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-                  <stop offset="0%" stop-color="#7BEDD5"/>
-                  <stop offset="25%" stop-color="#DCD49F"/>
-                  <stop offset="50%" stop-color="#EF8EAE"/>
-                  <stop offset="75%" stop-color="#DD48E0"/>
+                <linearGradient id="logo-bf-l" x1="0%" y1="0%" x2="100%" y2="100%">
+                  <stop offset="0%" stop-color="#5DADE2"/>
                   <stop offset="100%" stop-color="#CD87F8"/>
                 </linearGradient>
+                <linearGradient id="logo-bf-r" x1="0%" y1="0%" x2="100%" y2="100%">
+                  <stop offset="0%" stop-color="#EF8EAE"/>
+                  <stop offset="100%" stop-color="#DD48E0"/>
+                </linearGradient>
               </defs>
-              <circle cx="30" cy="30" r="26" fill="url(#logoGradient)"/>
-              <text x="30" y="38" font-family="Fredoka, sans-serif" font-size="28" font-weight="700" fill="white" text-anchor="middle">E</text>
-              <!-- Wordmark -->
-              <text x="70" y="40" font-family="Fredoka, sans-serif" font-size="32" font-weight="700" fill="#1A1B1F">EVOLEA</text>
+              <path d="M48 50 C35 25, 5 20, 10 45 C5 70, 35 75, 48 55 Z" fill="url(#logo-bf-l)"/>
+              <path d="M48 55 C35 60, 15 85, 30 90 C45 85, 48 65, 48 55 Z" fill="url(#logo-bf-l)" opacity="0.8"/>
+              <path d="M52 50 C65 25, 95 20, 90 45 C95 70, 65 75, 52 55 Z" fill="url(#logo-bf-r)"/>
+              <path d="M52 55 C65 60, 85 85, 70 90 C55 85, 52 65, 52 55 Z" fill="url(#logo-bf-r)" opacity="0.8"/>
+              <ellipse cx="50" cy="55" rx="2" ry="10" fill="#2D2A32"/>
             </svg>
           </div>
-          <p class="text-sm text-gray-500">Primary - On Light</p>
+          <p class="text-sm text-gray-500">On Light Background</p>
         </div>
 
-        <!-- Inverted Logo -->
+        <!-- On Dark -->
         <div class="rounded-2xl p-12 flex flex-col items-center justify-center" style="background: #1A1B1F;">
-          <div class="mb-8">
-            <svg class="w-48 h-16" viewBox="0 0 200 60" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <div class="flex items-center gap-2 mb-8">
+            <span class="text-4xl font-display font-bold" style="background: linear-gradient(90deg, #7BEDD5 0%, #FFE066 15%, #EF8EAE 35%, #E97BF1 55%, #CD87F8 75%, #5DADE2 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">EVOLEA</span>
+            <svg class="w-10 h-10 -ml-1 -mt-4" viewBox="0 0 100 100">
               <defs>
-                <linearGradient id="logoGradient2" x1="0%" y1="0%" x2="100%" y2="100%">
-                  <stop offset="0%" stop-color="#7BEDD5"/>
-                  <stop offset="25%" stop-color="#DCD49F"/>
-                  <stop offset="50%" stop-color="#EF8EAE"/>
-                  <stop offset="75%" stop-color="#DD48E0"/>
+                <linearGradient id="logo-bf-l2" x1="0%" y1="0%" x2="100%" y2="100%">
+                  <stop offset="0%" stop-color="#5DADE2"/>
                   <stop offset="100%" stop-color="#CD87F8"/>
                 </linearGradient>
+                <linearGradient id="logo-bf-r2" x1="0%" y1="0%" x2="100%" y2="100%">
+                  <stop offset="0%" stop-color="#EF8EAE"/>
+                  <stop offset="100%" stop-color="#DD48E0"/>
+                </linearGradient>
               </defs>
-              <circle cx="30" cy="30" r="26" fill="url(#logoGradient2)"/>
-              <text x="30" y="38" font-family="Fredoka, sans-serif" font-size="28" font-weight="700" fill="white" text-anchor="middle">E</text>
-              <text x="70" y="40" font-family="Fredoka, sans-serif" font-size="32" font-weight="700" fill="white">EVOLEA</text>
+              <path d="M48 50 C35 25, 5 20, 10 45 C5 70, 35 75, 48 55 Z" fill="url(#logo-bf-l2)"/>
+              <path d="M48 55 C35 60, 15 85, 30 90 C45 85, 48 65, 48 55 Z" fill="url(#logo-bf-l2)" opacity="0.8"/>
+              <path d="M52 50 C65 25, 95 20, 90 45 C95 70, 65 75, 52 55 Z" fill="url(#logo-bf-r2)"/>
+              <path d="M52 55 C65 60, 85 85, 70 90 C55 85, 52 65, 52 55 Z" fill="url(#logo-bf-r2)" opacity="0.8"/>
+              <ellipse cx="50" cy="55" rx="2" ry="10" fill="white"/>
             </svg>
           </div>
-          <p class="text-sm text-white/50">Primary - On Dark</p>
+          <p class="text-sm text-white/50">On Dark Background</p>
         </div>
 
-        <!-- Gradient Logo -->
+        <!-- Butterfly Icon Only -->
         <div class="bg-white rounded-2xl p-12 flex flex-col items-center justify-center">
-          <div class="mb-8">
-            <svg class="w-48 h-16" viewBox="0 0 200 60" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <defs>
-                <linearGradient id="logoGradient3" x1="0%" y1="0%" x2="100%" y2="100%">
-                  <stop offset="0%" stop-color="#DD48E0"/>
-                  <stop offset="100%" stop-color="#CD87F8"/>
-                </linearGradient>
-                <linearGradient id="textGradient" x1="0%" y1="0%" x2="100%" y2="0%">
-                  <stop offset="0%" stop-color="#DD48E0"/>
-                  <stop offset="50%" stop-color="#BA53AD"/>
-                  <stop offset="100%" stop-color="#CD87F8"/>
-                </linearGradient>
-              </defs>
-              <circle cx="30" cy="30" r="26" fill="url(#logoGradient3)"/>
-              <text x="30" y="38" font-family="Fredoka, sans-serif" font-size="28" font-weight="700" fill="white" text-anchor="middle">E</text>
-              <text x="70" y="40" font-family="Fredoka, sans-serif" font-size="32" font-weight="700" fill="url(#textGradient)">EVOLEA</text>
-            </svg>
-          </div>
-          <p class="text-sm text-gray-500">Gradient Variant</p>
+          <svg class="w-24 h-24 mb-4" viewBox="0 0 100 100">
+            <defs>
+              <linearGradient id="icon-bf-l" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stop-color="#5DADE2"/>
+                <stop offset="100%" stop-color="#CD87F8"/>
+              </linearGradient>
+              <linearGradient id="icon-bf-r" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stop-color="#EF8EAE"/>
+                <stop offset="100%" stop-color="#DD48E0"/>
+              </linearGradient>
+            </defs>
+            <path d="M48 50 C35 25, 5 20, 10 45 C5 70, 35 75, 48 55 Z" fill="url(#icon-bf-l)"/>
+            <path d="M48 55 C35 60, 15 85, 30 90 C45 85, 48 65, 48 55 Z" fill="url(#icon-bf-l)" opacity="0.8"/>
+            <path d="M52 50 C65 25, 95 20, 90 45 C95 70, 65 75, 52 55 Z" fill="url(#icon-bf-r)"/>
+            <path d="M52 55 C65 60, 85 85, 70 90 C55 85, 52 65, 52 55 Z" fill="url(#icon-bf-r)" opacity="0.8"/>
+            <ellipse cx="50" cy="55" rx="3" ry="15" fill="#2D2A32"/>
+          </svg>
+          <p class="text-sm text-gray-500">Icon Only (Favicon, App Icon)</p>
         </div>
 
-        <!-- Icon Only -->
-        <div class="rounded-2xl p-12 flex flex-col items-center justify-center" style="background: linear-gradient(135deg, #DD48E0 0%, #CD87F8 100%);">
-          <div class="mb-8">
-            <svg class="w-24 h-24" viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <circle cx="30" cy="30" r="28" fill="white"/>
-              <defs>
-                <linearGradient id="innerGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-                  <stop offset="0%" stop-color="#7BEDD5"/>
-                  <stop offset="25%" stop-color="#DCD49F"/>
-                  <stop offset="50%" stop-color="#EF8EAE"/>
-                  <stop offset="75%" stop-color="#DD48E0"/>
-                  <stop offset="100%" stop-color="#CD87F8"/>
-                </linearGradient>
-              </defs>
-              <circle cx="30" cy="30" r="24" fill="url(#innerGradient)"/>
-              <text x="30" y="39" font-family="Fredoka, sans-serif" font-size="28" font-weight="700" fill="white" text-anchor="middle">E</text>
+        <!-- Gradient Background -->
+        <div class="rounded-2xl p-12 flex flex-col items-center justify-center" style="background: linear-gradient(118deg, #7BEDD5 0%, #FFE066 21%, #FFFFFF 48%, #E97BF1 81%, #CD87F8 100%);">
+          <div class="flex items-center gap-2 mb-8">
+            <span class="text-4xl font-display font-bold text-white drop-shadow-lg">EVOLEA</span>
+            <svg class="w-10 h-10 -ml-1 -mt-4 drop-shadow-lg" viewBox="0 0 100 100">
+              <path d="M48 50 C35 25, 5 20, 10 45 C5 70, 35 75, 48 55 Z" fill="white" opacity="0.95"/>
+              <path d="M48 55 C35 60, 15 85, 30 90 C45 85, 48 65, 48 55 Z" fill="white" opacity="0.7"/>
+              <path d="M52 50 C65 25, 95 20, 90 45 C95 70, 65 75, 52 55 Z" fill="white" opacity="0.95"/>
+              <path d="M52 55 C65 60, 85 85, 70 90 C55 85, 52 65, 52 55 Z" fill="white" opacity="0.7"/>
+              <ellipse cx="50" cy="55" rx="2" ry="10" fill="white"/>
             </svg>
           </div>
-          <p class="text-sm text-white/70">Icon Mark</p>
+          <p class="text-sm text-white/80">White on Prism Gradient</p>
         </div>
       </div>
     </div>
@@ -282,71 +575,188 @@ const gradients = [
           <p class="font-display text-4xl font-semibold mb-4" style="color: #BA53AD;">Fredoka Semi</p>
           <p class="font-display text-2xl mb-4" style="color: #CD87F8;">Fredoka Regular</p>
           <p class="text-gray-500 text-sm">Used for headlines, buttons, and accent text. Friendly but not childish.</p>
+          <div class="mt-4 bg-gray-100 p-4 rounded-lg">
+            <code class="text-sm text-gray-700">font-family: 'Fredoka', sans-serif;</code>
+          </div>
         </div>
         <div>
           <h3 class="text-lg font-semibold text-gray-500 mb-4">Body Font - Poppins</h3>
           <p class="text-2xl font-bold mb-4 text-gray-800">Poppins Bold</p>
           <p class="text-xl font-semibold mb-4 text-gray-700">Poppins Semibold</p>
-          <p class="text-lg mb-4 text-gray-600">Poppins Regular - Used for body text and UI elements.</p>
+          <p class="text-lg mb-4 text-gray-600">Poppins Regular - body text and UI elements.</p>
           <p class="text-gray-500 text-sm">Clean, modern, highly readable at all sizes.</p>
+          <div class="mt-4 bg-gray-100 p-4 rounded-lg">
+            <code class="text-sm text-gray-700">font-family: 'Poppins', sans-serif;</code>
+          </div>
+        </div>
+      </div>
+
+      <!-- Type Scale -->
+      <div class="mt-16">
+        <h3 class="text-xl font-display font-bold mb-6 text-gray-700">Type Scale</h3>
+        <div class="space-y-4">
+          <div class="flex items-baseline gap-4 border-b pb-4">
+            <span class="text-gray-400 text-sm w-24">Display XL</span>
+            <span class="font-display text-5xl font-bold" style="color: #DD48E0;">80px / 5rem</span>
+          </div>
+          <div class="flex items-baseline gap-4 border-b pb-4">
+            <span class="text-gray-400 text-sm w-24">Display LG</span>
+            <span class="font-display text-4xl font-bold" style="color: #BA53AD;">60px / 3.75rem</span>
+          </div>
+          <div class="flex items-baseline gap-4 border-b pb-4">
+            <span class="text-gray-400 text-sm w-24">Display MD</span>
+            <span class="font-display text-3xl font-bold" style="color: #CD87F8;">48px / 3rem</span>
+          </div>
+          <div class="flex items-baseline gap-4 border-b pb-4">
+            <span class="text-gray-400 text-sm w-24">Heading</span>
+            <span class="font-display text-2xl font-semibold text-gray-800">36px / 2.25rem</span>
+          </div>
+          <div class="flex items-baseline gap-4 border-b pb-4">
+            <span class="text-gray-400 text-sm w-24">Body LG</span>
+            <span class="text-lg text-gray-700">18px / 1.125rem</span>
+          </div>
+          <div class="flex items-baseline gap-4">
+            <span class="text-gray-400 text-sm w-24">Body</span>
+            <span class="text-base text-gray-600">16px / 1rem</span>
+          </div>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- Button Examples -->
+  <!-- Components -->
   <section class="py-20 px-4" style="background: #FFFBF7;">
     <div class="container mx-auto max-w-6xl">
       <h2 class="text-3xl md:text-4xl font-display font-bold mb-12" style="color: #BA53AD;">Components</h2>
 
-      <div class="space-y-12">
-        <!-- Buttons -->
-        <div>
-          <h3 class="text-xl font-display font-bold mb-6 text-gray-700">Buttons</h3>
-          <div class="flex flex-wrap gap-4">
-            <button class="px-8 py-4 rounded-full font-semibold text-white transition-all hover:scale-105 hover:shadow-lg" style="background: linear-gradient(135deg, #DD48E0 0%, #BA53AD 100%);">
-              Primary Button
-            </button>
-            <button class="px-8 py-4 rounded-full font-semibold text-white transition-all hover:scale-105 hover:shadow-lg" style="background: linear-gradient(135deg, #7BEDD5 0%, #CD87F8 100%);">
-              Spectrum Button
-            </button>
-            <button class="px-8 py-4 rounded-full font-semibold border-2 transition-all hover:scale-105" style="color: #DD48E0; border-color: #DD48E0;">
-              Outline Button
-            </button>
-            <button class="px-8 py-4 rounded-full font-semibold text-white transition-all hover:scale-105 hover:shadow-lg" style="background: linear-gradient(135deg, #FF7E5D 0%, #EF8EAE 100%);">
-              Coral Button
-            </button>
-          </div>
+      <!-- Buttons -->
+      <div class="mb-16">
+        <h3 class="text-xl font-display font-bold mb-6 text-gray-700">Buttons</h3>
+        <div class="flex flex-wrap gap-4 mb-6">
+          <button class="px-8 py-4 rounded-full font-semibold text-white transition-all hover:scale-105 hover:shadow-lg" style="background: linear-gradient(135deg, #DD48E0 0%, #BA53AD 100%);">
+            Primary Button
+          </button>
+          <button class="px-8 py-4 rounded-full font-semibold text-white transition-all hover:scale-105 hover:shadow-lg" style="background: linear-gradient(118deg, #7BEDD5 0%, #FFE066 21%, #E97BF1 81%, #CD87F8 100%);">
+            Prism Button
+          </button>
+          <button class="px-8 py-4 rounded-full font-semibold border-2 transition-all hover:scale-105" style="color: #DD48E0; border-color: #DD48E0;">
+            Outline Button
+          </button>
+          <button class="px-8 py-4 rounded-full font-semibold text-white transition-all hover:scale-105 hover:shadow-lg" style="background: linear-gradient(135deg, #7BEDD5 0%, #5DADE2 100%);">
+            Mint Button
+          </button>
         </div>
+        <div class="bg-gray-900 rounded-lg p-4 overflow-x-auto">
+          <code class="text-green-400 text-sm">.btn-primary &#123; background: var(--gradient-magenta); &#125;</code>
+        </div>
+      </div>
 
-        <!-- Cards -->
-        <div>
-          <h3 class="text-xl font-display font-bold mb-6 text-gray-700">Cards</h3>
-          <div class="grid md:grid-cols-3 gap-6">
-            <div class="bg-white rounded-2xl p-6 shadow-lg border-t-4" style="border-color: #DD48E0;">
+      <!-- Cards with Butterfly -->
+      <div class="mb-16">
+        <h3 class="text-xl font-display font-bold mb-6 text-gray-700">Cards with Butterfly Accent</h3>
+        <div class="grid md:grid-cols-3 gap-6">
+          <div class="bg-white rounded-2xl p-6 shadow-lg border-t-4 relative overflow-hidden" style="border-color: #DD48E0;">
+            <svg class="absolute -top-4 -right-4 w-16 h-16 opacity-20" viewBox="0 0 100 100">
+              <path d="M48 50 C35 25, 5 20, 10 45 C5 70, 35 75, 48 55 Z M52 50 C65 25, 95 20, 90 45 C95 70, 65 75, 52 55 Z" fill="#DD48E0"/>
+            </svg>
+            <div class="relative">
               <div class="w-12 h-12 rounded-xl mb-4 flex items-center justify-center text-2xl" style="background: linear-gradient(135deg, #DD48E0 0%, #CD87F8 100%);">
                 <span class="text-white">✨</span>
               </div>
               <h4 class="font-display font-bold text-xl mb-2">Feature Card</h4>
-              <p class="text-gray-600">With magenta accent and gradient icon background.</p>
+              <p class="text-gray-600 text-sm">With butterfly watermark and magenta accent.</p>
             </div>
-            <div class="rounded-2xl p-6 text-white" style="background: linear-gradient(135deg, #7BEDD5 0%, #CD87F8 100%);">
+          </div>
+          <div class="rounded-2xl p-6 text-white relative overflow-hidden" style="background: linear-gradient(135deg, #7BEDD5 0%, #CD87F8 100%);">
+            <svg class="absolute -bottom-4 -left-4 w-20 h-20 opacity-30" viewBox="0 0 100 100">
+              <path d="M48 50 C35 25, 5 20, 10 45 C5 70, 35 75, 48 55 Z M52 50 C65 25, 95 20, 90 45 C95 70, 65 75, 52 55 Z" fill="white"/>
+            </svg>
+            <div class="relative">
               <div class="w-12 h-12 rounded-xl mb-4 flex items-center justify-center text-2xl bg-white/20">
-                <span>🌈</span>
+                <span>🦋</span>
               </div>
               <h4 class="font-display font-bold text-xl mb-2">Gradient Card</h4>
-              <p class="text-white/90">Full gradient background for high impact.</p>
+              <p class="text-white/90 text-sm">Full gradient with butterfly decoration.</p>
             </div>
-            <div class="bg-white rounded-2xl p-6 shadow-lg overflow-hidden relative">
-              <div class="absolute top-0 right-0 w-32 h-32 opacity-20" style="background: radial-gradient(circle, #DD48E0 0%, transparent 70%);"></div>
-              <div class="relative">
-                <div class="w-12 h-12 rounded-xl mb-4 flex items-center justify-center text-2xl" style="background: #FFDEDE;">
-                  <span>💜</span>
-                </div>
-                <h4 class="font-display font-bold text-xl mb-2">Subtle Glow</h4>
-                <p class="text-gray-600">White card with gradient glow accent.</p>
-              </div>
+          </div>
+          <div class="bg-white rounded-2xl p-6 shadow-lg relative">
+            <div class="absolute top-0 right-0 w-32 h-32" style="background: radial-gradient(circle at top right, rgba(123, 237, 213, 0.3) 0%, transparent 70%);"></div>
+            <div class="relative">
+              <svg class="w-12 h-12 mb-4" viewBox="0 0 100 100">
+                <defs>
+                  <linearGradient id="card-bf" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" stop-color="#7BEDD5"/>
+                    <stop offset="100%" stop-color="#DD48E0"/>
+                  </linearGradient>
+                </defs>
+                <path d="M48 50 C35 25, 5 20, 10 45 C5 70, 35 75, 48 55 Z M52 50 C65 25, 95 20, 90 45 C95 70, 65 75, 52 55 Z" fill="url(#card-bf)"/>
+                <ellipse cx="50" cy="52" rx="2" ry="8" fill="#2D2A32"/>
+              </svg>
+              <h4 class="font-display font-bold text-xl mb-2">Butterfly Icon</h4>
+              <p class="text-gray-600 text-sm">Using butterfly as the primary icon.</p>
             </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Decorative Elements -->
+      <div>
+        <h3 class="text-xl font-display font-bold mb-6 text-gray-700">Decorative Elements</h3>
+        <div class="grid md:grid-cols-2 gap-6">
+          <!-- Spectrum Line -->
+          <div class="bg-white rounded-2xl p-6 shadow-md">
+            <h4 class="font-semibold mb-4">Spectrum Line</h4>
+            <div class="h-1 rounded-full mb-4" style="background: var(--gradient-spectrum); background-size: 200% 100%; animation: spectrumFlow 10s linear infinite;"></div>
+            <code class="text-xs text-gray-500">background: var(--gradient-spectrum);</code>
+          </div>
+          <!-- Floating Shapes -->
+          <div class="bg-white rounded-2xl p-6 shadow-md relative overflow-hidden h-48">
+            <h4 class="font-semibold mb-4 relative z-10">Floating Shapes</h4>
+            <div class="absolute w-32 h-32 rounded-full opacity-40 blur-2xl" style="background: #DD48E0; top: 20%; right: -10%;"></div>
+            <div class="absolute w-24 h-24 rounded-full opacity-40 blur-2xl" style="background: #7BEDD5; bottom: 10%; left: 10%;"></div>
+            <div class="absolute w-20 h-20 rounded-full opacity-30 blur-xl" style="background: #FFE066; top: 40%; left: 40%;"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Implementation -->
+  <section id="implementation" class="py-20 px-4 bg-white">
+    <div class="container mx-auto max-w-6xl">
+      <h2 class="text-3xl md:text-4xl font-display font-bold mb-12" style="color: #BA53AD;">Implementation</h2>
+
+      <!-- CSS Variables -->
+      <div class="mb-12">
+        <h3 class="text-xl font-display font-bold mb-4 text-gray-700">CSS Variables</h3>
+        <div class="bg-gray-900 rounded-2xl p-6 overflow-x-auto">
+          <pre class="text-green-400 text-sm"><code>{cssVariables}</code></pre>
+        </div>
+      </div>
+
+      <!-- Tailwind Config -->
+      <div class="mb-12">
+        <h3 class="text-xl font-display font-bold mb-4 text-gray-700">Tailwind Config</h3>
+        <div class="bg-gray-900 rounded-2xl p-6 overflow-x-auto">
+          <pre class="text-green-400 text-sm"><code>{tailwindConfig}</code></pre>
+        </div>
+      </div>
+
+      <!-- Usage Examples -->
+      <div>
+        <h3 class="text-xl font-display font-bold mb-4 text-gray-700">Usage Examples</h3>
+        <div class="grid md:grid-cols-2 gap-6">
+          <div class="bg-gray-50 rounded-xl p-6">
+            <h4 class="font-semibold mb-3">Tailwind Classes</h4>
+            <code class="text-sm text-gray-700 block mb-2">bg-evolea-magenta</code>
+            <code class="text-sm text-gray-700 block mb-2">text-evolea-purple</code>
+            <code class="text-sm text-gray-700 block mb-2">border-evolea-mint</code>
+          </div>
+          <div class="bg-gray-50 rounded-xl p-6">
+            <h4 class="font-semibold mb-3">CSS Variables</h4>
+            <code class="text-sm text-gray-700 block mb-2">color: var(--evolea-magenta);</code>
+            <code class="text-sm text-gray-700 block mb-2">background: var(--gradient-prism);</code>
+            <code class="text-sm text-gray-700 block mb-2">box-shadow: var(--shadow-glow-magenta);</code>
           </div>
         </div>
       </div>
@@ -354,31 +764,71 @@ const gradients = [
   </section>
 
   <!-- Do's and Don'ts -->
-  <section class="py-20 px-4 bg-white">
+  <section class="py-20 px-4" style="background: #FFFBF7;">
     <div class="container mx-auto max-w-6xl">
       <h2 class="text-3xl md:text-4xl font-display font-bold mb-12" style="color: #BA53AD;">Do's & Don'ts</h2>
 
       <div class="grid md:grid-cols-2 gap-8">
         <div class="bg-green-50 rounded-2xl p-8 border-2 border-green-200">
-          <h3 class="text-xl font-display font-bold text-green-700 mb-4">✓ Do</h3>
+          <h3 class="text-xl font-display font-bold text-green-700 mb-4 flex items-center gap-2">
+            <span class="text-2xl">✓</span> Do
+          </h3>
           <ul class="space-y-3 text-green-800">
-            <li>• Use bold, vibrant gradient backgrounds</li>
-            <li>• Let colors flow like light through a prism</li>
-            <li>• Embrace the full spectrum - mint, gold, pink, magenta, lavender</li>
-            <li>• Create energy and movement with gradients</li>
-            <li>• Keep the aesthetic sophisticated, not childish</li>
-            <li>• Use high contrast for accessibility</li>
+            <li class="flex items-start gap-2">
+              <svg class="w-5 h-5 text-green-500 mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg>
+              <span>Use bold, vibrant gradient backgrounds</span>
+            </li>
+            <li class="flex items-start gap-2">
+              <svg class="w-5 h-5 text-green-500 mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg>
+              <span>Use the butterfly as a recurring motif</span>
+            </li>
+            <li class="flex items-start gap-2">
+              <svg class="w-5 h-5 text-green-500 mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg>
+              <span>Let colors flow like light through a prism</span>
+            </li>
+            <li class="flex items-start gap-2">
+              <svg class="w-5 h-5 text-green-500 mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg>
+              <span>Embrace the full spectrum - mint, gold, pink, magenta, lavender</span>
+            </li>
+            <li class="flex items-start gap-2">
+              <svg class="w-5 h-5 text-green-500 mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg>
+              <span>Keep the aesthetic sophisticated, not childish</span>
+            </li>
+            <li class="flex items-start gap-2">
+              <svg class="w-5 h-5 text-green-500 mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg>
+              <span>Use high contrast for accessibility</span>
+            </li>
           </ul>
         </div>
         <div class="bg-red-50 rounded-2xl p-8 border-2 border-red-200">
-          <h3 class="text-xl font-display font-bold text-red-700 mb-4">✗ Don't</h3>
+          <h3 class="text-xl font-display font-bold text-red-700 mb-4 flex items-center gap-2">
+            <span class="text-2xl">✗</span> Don't
+          </h3>
           <ul class="space-y-3 text-red-800">
-            <li>• Use flat, muted, or corporate colors</li>
-            <li>• Make it look like a children's book</li>
-            <li>• Use primary colors (red, blue, yellow)</li>
-            <li>• Be afraid of bold color combinations</li>
-            <li>• Use too much white space without color</li>
-            <li>• Dim the colors - let them pop!</li>
+            <li class="flex items-start gap-2">
+              <svg class="w-5 h-5 text-red-500 mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd"/></svg>
+              <span>Use flat, muted, or corporate colors</span>
+            </li>
+            <li class="flex items-start gap-2">
+              <svg class="w-5 h-5 text-red-500 mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd"/></svg>
+              <span>Make it look like a children's book</span>
+            </li>
+            <li class="flex items-start gap-2">
+              <svg class="w-5 h-5 text-red-500 mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd"/></svg>
+              <span>Use basic primary colors (red, blue, yellow)</span>
+            </li>
+            <li class="flex items-start gap-2">
+              <svg class="w-5 h-5 text-red-500 mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd"/></svg>
+              <span>Distort or modify the butterfly shape</span>
+            </li>
+            <li class="flex items-start gap-2">
+              <svg class="w-5 h-5 text-red-500 mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd"/></svg>
+              <span>Use too much white space without color</span>
+            </li>
+            <li class="flex items-start gap-2">
+              <svg class="w-5 h-5 text-red-500 mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd"/></svg>
+              <span>Dim the colors - let them pop!</span>
+            </li>
           </ul>
         </div>
       </div>
@@ -386,7 +836,59 @@ const gradients = [
   </section>
 
   <!-- Footer -->
-  <footer class="py-12 px-4 text-center" style="background: linear-gradient(118deg, #7BEDD5 0%, #FFE066 21%, #FFFFFF 48%, #E97BF1 81%, #CD87F8 100%);">
-    <p class="text-white font-semibold drop-shadow">EVOLEA Brand Guide • Internal Use Only</p>
+  <footer class="py-16 px-4 relative overflow-hidden" style="background: linear-gradient(118deg, #7BEDD5 0%, #FFE066 21%, #FFFFFF 48%, #E97BF1 81%, #CD87F8 100%);">
+    <!-- Decorative butterflies -->
+    <svg class="absolute top-8 left-[10%] w-12 h-12 opacity-40" viewBox="0 0 100 100">
+      <path d="M48 50 C35 25, 5 20, 10 45 C5 70, 35 75, 48 55 Z M52 50 C65 25, 95 20, 90 45 C95 70, 65 75, 52 55 Z" fill="white"/>
+    </svg>
+    <svg class="absolute bottom-8 right-[15%] w-16 h-16 opacity-30" viewBox="0 0 100 100">
+      <path d="M48 50 C35 25, 5 20, 10 45 C5 70, 35 75, 48 55 Z M52 50 C65 25, 95 20, 90 45 C95 70, 65 75, 52 55 Z" fill="white"/>
+    </svg>
+
+    <div class="relative z-10 text-center">
+      <div class="flex items-center justify-center gap-2 mb-4">
+        <span class="text-3xl font-display font-bold text-white drop-shadow-lg">EVOLEA</span>
+        <svg class="w-8 h-8 -ml-1 -mt-2" viewBox="0 0 100 100">
+          <path d="M48 50 C35 25, 5 20, 10 45 C5 70, 35 75, 48 55 Z M52 50 C65 25, 95 20, 90 45 C95 70, 65 75, 52 55 Z" fill="white" opacity="0.9"/>
+          <ellipse cx="50" cy="52" rx="2" ry="8" fill="white"/>
+        </svg>
+      </div>
+      <p class="text-white/80 font-medium">Brand Guide v2.0 • Internal Use Only</p>
+      <p class="text-white/60 text-sm mt-2">Where children on the spectrum flourish</p>
+    </div>
   </footer>
 </Base>
+
+<style>
+  @keyframes spectrumFlow {
+    0% { background-position: 0% 0%; }
+    100% { background-position: 200% 0%; }
+  }
+
+  @keyframes float {
+    0%, 100% { transform: translateY(0) rotate(0deg); }
+    50% { transform: translateY(-20px) rotate(5deg); }
+  }
+
+  @keyframes float-delayed {
+    0%, 100% { transform: translateY(0) rotate(0deg); }
+    50% { transform: translateY(-15px) rotate(-5deg); }
+  }
+
+  @keyframes float-slow {
+    0%, 100% { transform: translateY(0) rotate(0deg); }
+    50% { transform: translateY(-10px) rotate(3deg); }
+  }
+
+  .animate-float {
+    animation: float 6s ease-in-out infinite;
+  }
+
+  .animate-float-delayed {
+    animation: float-delayed 7s ease-in-out 1s infinite;
+  }
+
+  .animate-float-slow {
+    animation: float-slow 8s ease-in-out infinite;
+  }
+</style>

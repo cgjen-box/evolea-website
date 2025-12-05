@@ -1,0 +1,205 @@
+---
+interface Props {
+  size?: 'xs' | 'sm' | 'md' | 'lg' | 'xl';
+  variant?: 'spectrum' | 'magenta' | 'mint' | 'white' | 'outline';
+  animated?: boolean;
+  class?: string;
+}
+
+const {
+  size = 'md',
+  variant = 'spectrum',
+  animated = false,
+  class: className = ''
+} = Astro.props;
+
+const sizeClasses = {
+  xs: 'w-4 h-4',
+  sm: 'w-6 h-6',
+  md: 'w-8 h-8',
+  lg: 'w-12 h-12',
+  xl: 'w-16 h-16',
+};
+
+// Unique ID for each butterfly instance to avoid gradient conflicts
+const uniqueId = Math.random().toString(36).substring(7);
+---
+
+<svg
+  class:list={[
+    'butterfly-icon',
+    sizeClasses[size],
+    { 'butterfly-animated': animated },
+    className
+  ]}
+  viewBox="0 0 100 100"
+  xmlns="http://www.w3.org/2000/svg"
+  aria-hidden="true"
+>
+  {variant === 'spectrum' && (
+    <>
+      <defs>
+        <linearGradient id={`wing-left-${uniqueId}`} x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" stop-color="#5DADE2"/>
+          <stop offset="100%" stop-color="#CD87F8"/>
+        </linearGradient>
+        <linearGradient id={`wing-right-${uniqueId}`} x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" stop-color="#EF8EAE"/>
+          <stop offset="100%" stop-color="#DD48E0"/>
+        </linearGradient>
+      </defs>
+      <!-- Upper left wing -->
+      <path d="M48 50 C35 25, 5 20, 10 45 C5 70, 35 75, 48 55 Z" fill={`url(#wing-left-${uniqueId})`} class="wing-left"/>
+      <!-- Lower left wing -->
+      <path d="M48 55 C35 60, 15 85, 30 90 C45 85, 48 65, 48 55 Z" fill={`url(#wing-left-${uniqueId})`} opacity="0.8" class="wing-left-lower"/>
+      <!-- Upper right wing -->
+      <path d="M52 50 C65 25, 95 20, 90 45 C95 70, 65 75, 52 55 Z" fill={`url(#wing-right-${uniqueId})`} class="wing-right"/>
+      <!-- Lower right wing -->
+      <path d="M52 55 C65 60, 85 85, 70 90 C55 85, 52 65, 52 55 Z" fill={`url(#wing-right-${uniqueId})`} opacity="0.8" class="wing-right-lower"/>
+      <!-- Body -->
+      <ellipse cx="50" cy="55" rx="3" ry="15" fill="#2D2A32"/>
+      <!-- Antennae -->
+      <path d="M48 42 Q45 35, 40 30" stroke="#2D2A32" stroke-width="1.5" fill="none"/>
+      <path d="M52 42 Q55 35, 60 30" stroke="#2D2A32" stroke-width="1.5" fill="none"/>
+      <!-- Antenna tips -->
+      <circle cx="40" cy="30" r="2" fill="#2D2A32"/>
+      <circle cx="60" cy="30" r="2" fill="#2D2A32"/>
+    </>
+  )}
+
+  {variant === 'magenta' && (
+    <>
+      <defs>
+        <linearGradient id={`wing-mono-${uniqueId}`} x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" stop-color="#EF5EDB"/>
+          <stop offset="100%" stop-color="#DD48E0"/>
+        </linearGradient>
+      </defs>
+      <path d="M48 50 C35 25, 5 20, 10 45 C5 70, 35 75, 48 55 Z" fill={`url(#wing-mono-${uniqueId})`}/>
+      <path d="M48 55 C35 60, 15 85, 30 90 C45 85, 48 65, 48 55 Z" fill={`url(#wing-mono-${uniqueId})`} opacity="0.7"/>
+      <path d="M52 50 C65 25, 95 20, 90 45 C95 70, 65 75, 52 55 Z" fill={`url(#wing-mono-${uniqueId})`}/>
+      <path d="M52 55 C65 60, 85 85, 70 90 C55 85, 52 65, 52 55 Z" fill={`url(#wing-mono-${uniqueId})`} opacity="0.7"/>
+      <ellipse cx="50" cy="55" rx="3" ry="15" fill="#BA53AD"/>
+      <path d="M48 42 Q45 35, 40 30" stroke="#BA53AD" stroke-width="1.5" fill="none"/>
+      <path d="M52 42 Q55 35, 60 30" stroke="#BA53AD" stroke-width="1.5" fill="none"/>
+      <circle cx="40" cy="30" r="2" fill="#BA53AD"/>
+      <circle cx="60" cy="30" r="2" fill="#BA53AD"/>
+    </>
+  )}
+
+  {variant === 'mint' && (
+    <>
+      <defs>
+        <linearGradient id={`wing-mint-${uniqueId}`} x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" stop-color="#7BEDD5"/>
+          <stop offset="100%" stop-color="#5DADE2"/>
+        </linearGradient>
+      </defs>
+      <path d="M48 50 C35 25, 5 20, 10 45 C5 70, 35 75, 48 55 Z" fill={`url(#wing-mint-${uniqueId})`}/>
+      <path d="M48 55 C35 60, 15 85, 30 90 C45 85, 48 65, 48 55 Z" fill={`url(#wing-mint-${uniqueId})`} opacity="0.7"/>
+      <path d="M52 50 C65 25, 95 20, 90 45 C95 70, 65 75, 52 55 Z" fill={`url(#wing-mint-${uniqueId})`}/>
+      <path d="M52 55 C65 60, 85 85, 70 90 C55 85, 52 65, 52 55 Z" fill={`url(#wing-mint-${uniqueId})`} opacity="0.7"/>
+      <ellipse cx="50" cy="55" rx="3" ry="15" fill="#2D2A32"/>
+      <path d="M48 42 Q45 35, 40 30" stroke="#2D2A32" stroke-width="1.5" fill="none"/>
+      <path d="M52 42 Q55 35, 60 30" stroke="#2D2A32" stroke-width="1.5" fill="none"/>
+      <circle cx="40" cy="30" r="2" fill="#2D2A32"/>
+      <circle cx="60" cy="30" r="2" fill="#2D2A32"/>
+    </>
+  )}
+
+  {variant === 'white' && (
+    <>
+      <path d="M48 50 C35 25, 5 20, 10 45 C5 70, 35 75, 48 55 Z" fill="white" opacity="0.9"/>
+      <path d="M48 55 C35 60, 15 85, 30 90 C45 85, 48 65, 48 55 Z" fill="white" opacity="0.7"/>
+      <path d="M52 50 C65 25, 95 20, 90 45 C95 70, 65 75, 52 55 Z" fill="white" opacity="0.9"/>
+      <path d="M52 55 C65 60, 85 85, 70 90 C55 85, 52 65, 52 55 Z" fill="white" opacity="0.7"/>
+      <ellipse cx="50" cy="55" rx="3" ry="15" fill="white" opacity="0.8"/>
+      <path d="M48 42 Q45 35, 40 30" stroke="white" stroke-width="1.5" fill="none" opacity="0.8"/>
+      <path d="M52 42 Q55 35, 60 30" stroke="white" stroke-width="1.5" fill="none" opacity="0.8"/>
+      <circle cx="40" cy="30" r="2" fill="white" opacity="0.8"/>
+      <circle cx="60" cy="30" r="2" fill="white" opacity="0.8"/>
+    </>
+  )}
+
+  {variant === 'outline' && (
+    <>
+      <path d="M48 50 C35 25, 5 20, 10 45 C5 70, 35 75, 48 55 Z" fill="none" stroke="currentColor" stroke-width="2"/>
+      <path d="M48 55 C35 60, 15 85, 30 90 C45 85, 48 65, 48 55 Z" fill="none" stroke="currentColor" stroke-width="2" opacity="0.7"/>
+      <path d="M52 50 C65 25, 95 20, 90 45 C95 70, 65 75, 52 55 Z" fill="none" stroke="currentColor" stroke-width="2"/>
+      <path d="M52 55 C65 60, 85 85, 70 90 C55 85, 52 65, 52 55 Z" fill="none" stroke="currentColor" stroke-width="2" opacity="0.7"/>
+      <ellipse cx="50" cy="55" rx="3" ry="15" fill="currentColor"/>
+      <path d="M48 42 Q45 35, 40 30" stroke="currentColor" stroke-width="1.5" fill="none"/>
+      <path d="M52 42 Q55 35, 60 30" stroke="currentColor" stroke-width="1.5" fill="none"/>
+      <circle cx="40" cy="30" r="2" fill="currentColor"/>
+      <circle cx="60" cy="30" r="2" fill="currentColor"/>
+    </>
+  )}
+</svg>
+
+<style>
+  .butterfly-icon {
+    display: inline-block;
+    flex-shrink: 0;
+  }
+
+  .butterfly-animated {
+    animation: butterflyFloat 3s ease-in-out infinite;
+  }
+
+  .butterfly-animated .wing-left,
+  .butterfly-animated .wing-left-lower {
+    transform-origin: 48px 52px;
+    animation: wingFlapLeft 0.8s ease-in-out infinite;
+  }
+
+  .butterfly-animated .wing-right,
+  .butterfly-animated .wing-right-lower {
+    transform-origin: 52px 52px;
+    animation: wingFlapRight 0.8s ease-in-out infinite;
+  }
+
+  @keyframes butterflyFloat {
+    0%, 100% {
+      transform: translateY(0) rotate(0deg);
+    }
+    25% {
+      transform: translateY(-5px) rotate(2deg);
+    }
+    50% {
+      transform: translateY(-2px) rotate(0deg);
+    }
+    75% {
+      transform: translateY(-6px) rotate(-2deg);
+    }
+  }
+
+  @keyframes wingFlapLeft {
+    0%, 100% {
+      transform: rotateY(0deg);
+    }
+    50% {
+      transform: rotateY(-30deg);
+    }
+  }
+
+  @keyframes wingFlapRight {
+    0%, 100% {
+      transform: rotateY(0deg);
+    }
+    50% {
+      transform: rotateY(30deg);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .butterfly-animated {
+      animation: none;
+    }
+    .butterfly-animated .wing-left,
+    .butterfly-animated .wing-left-lower,
+    .butterfly-animated .wing-right,
+    .butterfly-animated .wing-right-lower {
+      animation: none;
+    }
+  }
+</style>
