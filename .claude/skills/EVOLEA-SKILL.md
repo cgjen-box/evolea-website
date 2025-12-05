@@ -351,6 +351,43 @@ colors: {
 
 ## Quick Reference
 
+### Responsive Breakpoints
+| Name | Width | Typical Use |
+|------|-------|-------------|
+| Mobile | <768px | Single column, stacked layouts |
+| Tablet | 768-1024px | 2 columns, touch-friendly |
+| Desktop | 1024-1440px | Standard 2-column layouts |
+| Large | 1440-1920px | Wider containers, larger text |
+| Full HD | 1920-2560px | 4-column grids, scale up spacing |
+| 2K/QHD | 2560-3840px | Generous whitespace, larger elements |
+| 4K | >3840px | Maximum scaling, distant viewing |
+
+```css
+/* Standard breakpoint media queries */
+@media (max-width: 768px) { /* Mobile */ }
+@media (min-width: 768px) { /* Tablet+ */ }
+@media (min-width: 1024px) { /* Desktop+ */ }
+@media (min-width: 1440px) { /* Large+ */ }
+@media (min-width: 1920px) { /* Full HD+ */ }
+@media (min-width: 2560px) { /* 2K/QHD+ */ }
+@media (min-width: 3840px) { /* 4K+ */ }
+```
+
+### Container Max-Widths by Breakpoint
+```css
+.container {
+  width: 100%;
+  margin: 0 auto;
+  padding: 0 1.5rem;
+}
+
+@media (min-width: 1024px) { .container { max-width: 1200px; } }
+@media (min-width: 1440px) { .container { max-width: 1400px; } }
+@media (min-width: 1920px) { .container { max-width: 1800px; } }
+@media (min-width: 2560px) { .container { max-width: 2400px; padding: 0 4rem; } }
+@media (min-width: 3840px) { .container { max-width: 3200px; padding: 0 6rem; } }
+```
+
 ### When Building New Components
 1. Check this skill file first
 2. Use CSS variables for all colors

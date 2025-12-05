@@ -110,3 +110,6 @@ evolea-orange: #E8A858
 
 ## Deployment
 GitHub Actions automatically builds and deploys on push to `main` branch. Custom domain: evolea.ch
+
+## Image Generation
+Use ImageAgent to create pictures with google nano banana pro. He has the API key. 
