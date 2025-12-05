@@ -6,6 +6,7 @@ interface Props {
   title: string;
   subtitle: string;
   videoSrc?: string;
+  videoSrcMobile?: string;
   posterSrc?: string;
   primaryButtonText?: string;
   primaryButtonHref?: string;
@@ -20,6 +21,7 @@ const {
   title,
   subtitle,
   videoSrc = `${base}/videos/hero.mp4`,
+  videoSrcMobile = `${base}/videos/hero-mobile.mp4`,
   posterSrc = `${base}/images/hero-poster.jpg`,
   primaryButtonText,
   primaryButtonHref,
@@ -32,7 +34,7 @@ const lang = getLangFromUrl(Astro.url);
 ---
 
 <section class="hero-video" aria-label={lang === 'de' ? 'Hauptbereich' : 'Hero section'}>
-  <!-- Video Background - iOS Safari compatible (matches planted-website) -->
+  <!-- Video Background - iOS Safari optimized with mobile-specific source -->
   <video
     class="hero-video-element"
     autoplay
@@ -40,8 +42,11 @@ const lang = getLangFromUrl(Astro.url);
     loop
     playsinline
     id="hero-video"
+    data-src-desktop={videoSrc}
+    data-src-mobile={videoSrcMobile}
   >
-    <source src={videoSrc} type="video/mp4" />
+    <!-- Mobile-first: serve small video by default, JS upgrades on desktop -->
+    <source src={videoSrcMobile} type="video/mp4" />
   </video>
 
   <!-- Poster fallback for reduced motion or if video fails -->
@@ -181,7 +186,9 @@ const lang = getLangFromUrl(Astro.url);
 </style>
 
 <script>
-  // Simple video initialization - matches planted-website approach
+  // iOS-optimized video initialization
+  // Mobile-first: serves small 1.3MB video by default
+  // Desktop: upgrades to larger video if screen is wide enough
   function initHeroVideo() {
     const video = document.getElementById('hero-video') as HTMLVideoElement;
     const poster = document.querySelector('.poster-fallback') as HTMLElement;
@@ -191,7 +198,22 @@ const lang = getLangFromUrl(Astro.url);
     // Ensure muted (required for iOS autoplay)
     video.muted = true;
 
-    // Try to play
+    // On desktop (>768px), upgrade to higher quality video
+    const isDesktop = window.innerWidth > 768;
+    const desktopSrc = video.dataset.srcDesktop;
+    const mobileSrc = video.dataset.srcMobile;
+
+    if (isDesktop && desktopSrc) {
+      // Desktop: use larger video
+      video.src = desktopSrc;
+    } else if (mobileSrc) {
+      // Mobile: use small optimized video (already set, but ensure it's loaded)
+      video.src = mobileSrc;
+    }
+
+    // Load and play
+    video.load();
+
     const playPromise = video.play();
 
     if (playPromise !== undefined) {
