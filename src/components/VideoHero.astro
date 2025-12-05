@@ -34,18 +34,28 @@ const lang = getLangFromUrl(Astro.url);
 ---
 
 <section class="hero-video" aria-label={lang === 'de' ? 'Hauptbereich' : 'Hero section'}>
-  <!-- Video Background - iOS Safari optimized with mobile-specific source -->
+  <!-- Video Background - iOS Safari optimized: NO JavaScript, pure HTML autoplay -->
+  <!-- Desktop video - hidden on mobile via CSS -->
   <video
-    class="hero-video-element"
+    class="hero-video-element hero-video-desktop"
     autoplay
     muted
     loop
     playsinline
-    id="hero-video"
-    data-src-desktop={videoSrc}
-    data-src-mobile={videoSrcMobile}
+    poster={posterSrc}
   >
-    <!-- Mobile-first: serve small video by default, JS upgrades on desktop -->
+    <source src={videoSrc} type="video/mp4" />
+  </video>
+
+  <!-- Mobile video - hidden on desktop via CSS, smaller file for iOS -->
+  <video
+    class="hero-video-element hero-video-mobile"
+    autoplay
+    muted
+    loop
+    playsinline
+    poster={posterSrc}
+  >
     <source src={videoSrcMobile} type="video/mp4" />
   </video>
 
@@ -112,6 +122,26 @@ const lang = getLangFromUrl(Astro.url);
     width: 100%;
     height: 100%;
     object-fit: cover;
+  }
+
+  /* Mobile-first: show mobile video by default, hide desktop */
+  .hero-video-desktop {
+    display: none;
+  }
+
+  .hero-video-mobile {
+    display: block;
+  }
+
+  /* Desktop: show desktop video, hide mobile */
+  @media (min-width: 769px) {
+    .hero-video-desktop {
+      display: block;
+    }
+
+    .hero-video-mobile {
+      display: none;
+    }
   }
 
   /* Poster fallback - hidden by default, shown if video fails or reduced motion */
@@ -186,51 +216,35 @@ const lang = getLangFromUrl(Astro.url);
 </style>
 
 <script>
-  // iOS-optimized video initialization
-  // Mobile-first: serves small 1.3MB video by default
-  // Desktop: upgrades to larger video if screen is wide enough
-  function initHeroVideo() {
-    const video = document.getElementById('hero-video') as HTMLVideoElement;
+  // iOS Safari: NO JavaScript src manipulation - let browser handle autoplay naturally
+  // The HTML already has autoplay, muted, playsinline, loop attributes
+  // CSS shows/hides appropriate video based on screen size
+  // This script only handles fallback if autoplay is blocked
+
+  function handleVideoFallback() {
+    const videos = document.querySelectorAll('.hero-video-element');
     const poster = document.querySelector('.poster-fallback') as HTMLElement;
 
-    if (!video) return;
+    videos.forEach((video) => {
+      const videoEl = video as HTMLVideoElement;
 
-    // Ensure muted (required for iOS autoplay)
-    video.muted = true;
+      // Ensure muted attribute is set (required for iOS autoplay)
+      videoEl.muted = true;
 
-    // On desktop (>768px), upgrade to higher quality video
-    const isDesktop = window.innerWidth > 768;
-    const desktopSrc = video.dataset.srcDesktop;
-    const mobileSrc = video.dataset.srcMobile;
-
-    if (isDesktop && desktopSrc) {
-      // Desktop: use larger video
-      video.src = desktopSrc;
-    } else if (mobileSrc) {
-      // Mobile: use small optimized video (already set, but ensure it's loaded)
-      video.src = mobileSrc;
-    }
-
-    // Load and play
-    video.load();
-
-    const playPromise = video.play();
-
-    if (playPromise !== undefined) {
-      playPromise.catch(() => {
-        // Autoplay blocked - show poster
-        if (poster) poster.style.display = 'block';
-      });
-    }
+      // If video is paused and should be playing, try to play
+      // But don't call load() - that breaks iOS autoplay
+      if (videoEl.paused) {
+        const playPromise = videoEl.play();
+        if (playPromise !== undefined) {
+          playPromise.catch(() => {
+            // Autoplay blocked - show poster
+            if (poster) poster.style.display = 'block';
+          });
+        }
+      }
+    });
   }
 
-  // Initialize on load
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', initHeroVideo);
-  } else {
-    initHeroVideo();
-  }
-
-  // Also handle Astro page transitions
-  document.addEventListener('astro:page-load', initHeroVideo);
+  // Handle Astro page transitions (re-trigger video if needed)
+  document.addEventListener('astro:page-load', handleVideoFallback);
 </script>
