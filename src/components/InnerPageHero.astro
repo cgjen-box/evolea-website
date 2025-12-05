@@ -1,0 +1,410 @@
+---
+/**
+ * InnerPageHero - Premium hero section for inner pages
+ *
+ * Features:
+ * - Bold animated prism gradient background
+ * - 4 floating orbs with radial gradients
+ * - 2 floating butterflies
+ * - Breadcrumb navigation
+ * - Page title with text shadow
+ * - Optional subtitle
+ * - Wave transition at bottom
+ * - Entrance animations
+ */
+import Butterfly from './Butterfly.astro';
+
+interface BreadcrumbItem {
+  label: string;
+  href?: string;
+}
+
+interface Props {
+  title: string;
+  subtitle?: string;
+  breadcrumbs: BreadcrumbItem[];
+  size?: 'sm' | 'md' | 'lg';
+  label?: string;
+}
+
+const {
+  title,
+  subtitle,
+  breadcrumbs,
+  size = 'md',
+  label,
+} = Astro.props;
+
+const sizeClasses = {
+  sm: 'hero-sm',
+  md: 'hero-md',
+  lg: 'hero-lg',
+};
+---
+
+<section class:list={['inner-page-hero', sizeClasses[size]]}>
+  <!-- Animated Prism Gradient Background -->
+  <div class="hero-prism-bg"></div>
+
+  <!-- Floating Orbs -->
+  <div class="hero-orbs" aria-hidden="true">
+    <div class="hero-orb orb-mint"></div>
+    <div class="hero-orb orb-gold"></div>
+    <div class="hero-orb orb-pink"></div>
+    <div class="hero-orb orb-purple"></div>
+  </div>
+
+  <!-- Floating Butterflies -->
+  <div class="hero-butterflies" aria-hidden="true">
+    <div class="hero-butterfly butterfly-1">
+      <Butterfly size="md" variant="spectrum" />
+    </div>
+    <div class="hero-butterfly butterfly-2">
+      <Butterfly size="sm" variant="white" />
+    </div>
+  </div>
+
+  <!-- Hero Content -->
+  <div class="hero-content container mx-auto max-w-6xl px-4">
+    <!-- Breadcrumb -->
+    <nav class="hero-breadcrumb" aria-label="Breadcrumb">
+      {breadcrumbs.map((item, index) => (
+        <>
+          {item.href ? (
+            <a href={item.href} class="breadcrumb-link">{item.label}</a>
+          ) : (
+            <span class="breadcrumb-current">{item.label}</span>
+          )}
+          {index < breadcrumbs.length - 1 && (
+            <span class="breadcrumb-separator">/</span>
+          )}
+        </>
+      ))}
+    </nav>
+
+    <!-- Optional Label -->
+    {label && (
+      <span class="hero-label">{label}</span>
+    )}
+
+    <!-- Page Title -->
+    <h1 class="hero-title">{title}</h1>
+
+    <!-- Subtitle -->
+    {subtitle && (
+      <p class="hero-subtitle">{subtitle}</p>
+    )}
+  </div>
+
+  <!-- Wave Transition -->
+  <div class="hero-wave" aria-hidden="true">
+    <svg viewBox="0 0 1440 120" preserveAspectRatio="none">
+      <path d="M0,60 C360,120 1080,0 1440,60 L1440,120 L0,120 Z" fill="#FFFBF7"/>
+    </svg>
+  </div>
+</section>
+
+<style>
+  /* ===== INNER PAGE HERO ===== */
+  .inner-page-hero {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    padding: 10rem 0 8rem;
+  }
+
+  /* Size Variants */
+  .hero-sm { min-height: 40vh; padding: 8rem 0 6rem; }
+  .hero-md { min-height: 50vh; padding: 10rem 0 8rem; }
+  .hero-lg { min-height: 60vh; padding: 12rem 0 10rem; }
+
+  /* ===== PRISM GRADIENT BACKGROUND ===== */
+  .hero-prism-bg {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      135deg,
+      #7BEDD5 0%,
+      #A8F0E0 12%,
+      #FFE066 28%,
+      #FFEEBB 38%,
+      #FFD5E5 48%,
+      #F5B8D0 58%,
+      #E97BF1 72%,
+      #CD87F8 86%,
+      #B56FE8 100%
+    );
+    background-size: 300% 300%;
+    animation: prismFlow 20s ease infinite;
+  }
+
+  @keyframes prismFlow {
+    0%, 100% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+  }
+
+  /* Soft overlay for better readability */
+  .hero-prism-bg::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(
+      ellipse at center,
+      rgba(255, 255, 255, 0.15) 0%,
+      transparent 70%
+    );
+  }
+
+  /* ===== FLOATING ORBS ===== */
+  .hero-orbs {
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+    pointer-events: none;
+  }
+
+  .hero-orb {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(80px);
+    opacity: 0.6;
+    animation: orbFloat 20s ease-in-out infinite;
+  }
+
+  .orb-mint {
+    width: 350px;
+    height: 350px;
+    background: radial-gradient(circle, #7BEDD5 0%, #4ECDC4 100%);
+    top: -15%;
+    left: -8%;
+    animation-delay: 0s;
+  }
+
+  .orb-gold {
+    width: 300px;
+    height: 300px;
+    background: radial-gradient(circle, #FFE066 0%, #FFD84D 100%);
+    top: 20%;
+    left: 30%;
+    animation-delay: -5s;
+  }
+
+  .orb-pink {
+    width: 400px;
+    height: 400px;
+    background: radial-gradient(circle, #FF9ECC 0%, #E84C82 100%);
+    top: -20%;
+    right: 5%;
+    animation-delay: -10s;
+  }
+
+  .orb-purple {
+    width: 320px;
+    height: 320px;
+    background: radial-gradient(circle, #CD87F8 0%, #B56FE8 100%);
+    bottom: -20%;
+    right: 20%;
+    animation-delay: -15s;
+  }
+
+  @keyframes orbFloat {
+    0%, 100% { transform: translate(0, 0) scale(1); }
+    25% { transform: translate(30px, -30px) scale(1.05); }
+    50% { transform: translate(-20px, 20px) scale(0.95); }
+    75% { transform: translate(20px, 10px) scale(1.02); }
+  }
+
+  /* ===== FLOATING BUTTERFLIES ===== */
+  .hero-butterflies {
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+    pointer-events: none;
+  }
+
+  .hero-butterfly {
+    position: absolute;
+    animation: butterflyDrift 25s ease-in-out infinite;
+  }
+
+  .butterfly-1 {
+    top: 18%;
+    right: 15%;
+    opacity: 0.4;
+    animation-delay: 0s;
+  }
+
+  .butterfly-2 {
+    bottom: 25%;
+    left: 12%;
+    opacity: 0.25;
+    animation-delay: -12s;
+  }
+
+  @keyframes butterflyDrift {
+    0%, 100% { transform: translate(0, 0) rotate(0deg); }
+    25% { transform: translate(50px, -40px) rotate(10deg); }
+    50% { transform: translate(20px, 30px) rotate(-5deg); }
+    75% { transform: translate(-30px, -20px) rotate(8deg); }
+  }
+
+  /* ===== HERO CONTENT ===== */
+  .hero-content {
+    position: relative;
+    z-index: 10;
+    text-align: center;
+  }
+
+  /* Breadcrumb */
+  .hero-breadcrumb {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.75rem;
+    margin-bottom: 1.5rem;
+    font-size: 0.9rem;
+    opacity: 0;
+    animation: fadeSlideDown 0.6s ease 0.1s forwards;
+  }
+
+  .breadcrumb-link {
+    color: rgba(93, 46, 140, 0.7);
+    text-decoration: none;
+    transition: color 0.3s ease;
+  }
+
+  .breadcrumb-link:hover {
+    color: var(--evolea-purple, #BA53AD);
+  }
+
+  .breadcrumb-separator {
+    color: rgba(93, 46, 140, 0.4);
+  }
+
+  .breadcrumb-current {
+    color: var(--evolea-magenta, #DD48E0);
+    font-weight: 500;
+  }
+
+  /* Label */
+  .hero-label {
+    display: inline-block;
+    padding: 0.5rem 1.25rem;
+    background: rgba(255, 255, 255, 0.3);
+    backdrop-filter: blur(10px);
+    color: var(--evolea-purple, #BA53AD);
+    border-radius: 100px;
+    font-size: 0.875rem;
+    font-weight: 600;
+    margin-bottom: 1.5rem;
+    border: 1px solid rgba(186, 83, 173, 0.2);
+    opacity: 0;
+    animation: fadeSlideDown 0.6s ease 0.15s forwards;
+  }
+
+  /* Title */
+  .hero-title {
+    font-family: 'Fredoka', sans-serif;
+    font-size: clamp(2.5rem, 7vw, 4.5rem);
+    font-weight: 700;
+    color: var(--evolea-purple, #BA53AD);
+    margin-bottom: 1.25rem;
+    line-height: 1.1;
+    text-shadow:
+      0 2px 4px rgba(255, 255, 255, 0.5),
+      0 4px 20px rgba(138, 61, 158, 0.2);
+    opacity: 0;
+    animation: fadeSlideUp 0.8s ease 0.2s forwards;
+  }
+
+  /* Subtitle */
+  .hero-subtitle {
+    font-family: 'Poppins', sans-serif;
+    font-size: clamp(1rem, 2vw, 1.25rem);
+    color: rgba(93, 46, 140, 0.85);
+    max-width: 650px;
+    margin: 0 auto;
+    line-height: 1.7;
+    opacity: 0;
+    animation: fadeSlideUp 0.8s ease 0.35s forwards;
+  }
+
+  /* ===== WAVE TRANSITION ===== */
+  .hero-wave {
+    position: absolute;
+    bottom: -1px;
+    left: 0;
+    right: 0;
+    height: 80px;
+    overflow: hidden;
+  }
+
+  .hero-wave svg {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: 100%;
+  }
+
+  /* ===== ANIMATIONS ===== */
+  @keyframes fadeSlideUp {
+    from {
+      opacity: 0;
+      transform: translateY(30px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes fadeSlideDown {
+    from {
+      opacity: 0;
+      transform: translateY(-20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  /* ===== RESPONSIVE ===== */
+  @media (min-width: 768px) {
+    .hero-wave {
+      height: 100px;
+    }
+  }
+
+  @media (min-width: 1440px) {
+    .hero-orb.orb-mint { width: 450px; height: 450px; }
+    .hero-orb.orb-gold { width: 380px; height: 380px; }
+    .hero-orb.orb-pink { width: 500px; height: 500px; }
+    .hero-orb.orb-purple { width: 420px; height: 420px; }
+  }
+
+  /* ===== REDUCED MOTION ===== */
+  @media (prefers-reduced-motion: reduce) {
+    .hero-prism-bg {
+      animation: none;
+    }
+
+    .hero-orb {
+      animation: none;
+    }
+
+    .hero-butterfly {
+      animation: none;
+    }
+
+    .hero-breadcrumb,
+    .hero-label,
+    .hero-title,
+    .hero-subtitle {
+      animation: none;
+      opacity: 1;
+    }
+  }
+</style>

@@ -1,28 +1,26 @@
 ---
 import Base from '@layouts/Base.astro';
-import FloatingShapes from '@components/FloatingShapes.astro';
-import { getLangFromUrl, useTranslations } from '@i18n/utils';
+import InnerPageHero from '@components/InnerPageHero.astro';
+import PageCloser from '@components/PageCloser.astro';
+import { getLangFromUrl, useTranslations, useTranslatedPath } from '@i18n/utils';
 
 const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
+const translatePath = useTranslatedPath(lang);
 ---
 
-<Base title="Kontakt" description="Kontaktieren Sie EVOLEA - wir freuen uns auf Ihre Anfrage. Standort: Stapferstrasse 10, 8006 Zürich.">
-  <!-- Hero Section -->
-  <section class="relative py-20 md:py-28 bg-gradient-to-br from-evolea-purple/10 to-evolea-cream overflow-hidden">
-    <FloatingShapes variant="minimal" />
-    <div class="container mx-auto max-w-4xl px-4 relative z-10 text-center">
-      <span class="inline-block bg-evolea-purple/10 text-evolea-purple px-4 py-2 rounded-full text-sm font-medium mb-6">
-        Kontakt
-      </span>
-      <h1 class="text-4xl md:text-5xl lg:text-6xl font-display font-bold text-evolea-purple mb-6 leading-tight">
-        {t('contact.title')}
-      </h1>
-      <p class="text-xl text-evolea-text-light max-w-2xl mx-auto">
-        Haben Sie Fragen zu unseren Angeboten? Wir freuen uns auf Ihre Nachricht.
-      </p>
-    </div>
-  </section>
+<Base title="Kontakt" description="Kontaktieren Sie EVOLEA - wir freuen uns auf Ihre Anfrage. Standort: Stapferstrasse 10, 8006 Zürich." transparentHeader={true}>
+  <!-- Premium Hero with Prism Gradient -->
+  <InnerPageHero
+    title={t('contact.title')}
+    subtitle="Haben Sie Fragen zu unseren Angeboten? Wir freuen uns auf Ihre Nachricht."
+    breadcrumbs={[
+      { label: 'Startseite', href: translatePath('/') },
+      { label: 'Kontakt' }
+    ]}
+    label="Kontakt"
+    size="sm"
+  />
 
   <!-- Contact Content -->
   <section class="py-16 md:py-24">
@@ -184,4 +182,7 @@ const t = useTranslations(lang);
       </div>
     </div>
   </section>
+
+  <!-- Page Closer - Prism Gradient -->
+  <PageCloser />
 </Base>

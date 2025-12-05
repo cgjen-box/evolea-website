@@ -1,13 +1,12 @@
 ---
 import Base from '@layouts/Base.astro';
 import FloatingShapes from '@components/FloatingShapes.astro';
-import GradientCTA from '@components/GradientCTA.astro';
+import PageCloser from '@components/PageCloser.astro';
 import Butterfly from '@components/Butterfly.astro';
 import Icon from '@components/Icon.astro';
 import { getLangFromUrl, useTranslations, useTranslatedPath } from '@i18n/utils';
 
 const lang = getLangFromUrl(Astro.url);
-const t = useTranslations(lang);
 const translatePath = useTranslatedPath(lang);
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 
@@ -322,13 +321,13 @@ const colorClasses: Record<string, string> = {
     </div>
   </section>
 
-  <!-- CTA Section -->
-  <GradientCTA
-    title="Bereit für den nächsten Schritt?"
-    description="Wir freuen uns darauf, Sie und Ihr Kind kennenzulernen."
-    buttonText="Kontakt aufnehmen"
-    buttonHref={translatePath('/kontakt/')}
-    variant="hero"
+  <!-- Page Closer - Prism Gradient -->
+  <PageCloser
+    showCTA={true}
+    ctaTitle="Bereit für den nächsten Schritt?"
+    ctaDescription="Wir freuen uns darauf, Sie und Ihr Kind kennenzulernen."
+    ctaButtonText="Kontakt aufnehmen"
+    ctaButtonHref={translatePath('/kontakt/')}
   />
 </Base>
 

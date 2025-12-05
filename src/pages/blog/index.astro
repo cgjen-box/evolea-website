@@ -1,20 +1,19 @@
 ---
 import Base from '@layouts/Base.astro';
-import FloatingShapes from '@components/FloatingShapes.astro';
+import InnerPageHero from '@components/InnerPageHero.astro';
+import PageCloser from '@components/PageCloser.astro';
 import { getCollection } from 'astro:content';
 import { getLangFromUrl, useTranslations, useTranslatedPath } from '@i18n/utils';
 
 const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
 const translatePath = useTranslatedPath(lang);
-const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 
 const posts = (await getCollection('blog')).sort(
   (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
 );
 
 const featuredPosts = posts.filter(post => post.data.featured);
-const regularPosts = posts.filter(post => !post.data.featured);
 
 function formatDate(date: Date): string {
   return date.toLocaleDateString('de-CH', {
@@ -25,27 +24,17 @@ function formatDate(date: Date): string {
 }
 ---
 
-<Base title="Blog" description="Neuigkeiten, Tipps und Einblicke rund um EVOLEA und die Foerderung von Kindern im Spektrum.">
-  <!-- Hero Section -->
-  <section class="relative py-16 md:py-24 bg-gradient-to-br from-evolea-purple/10 to-evolea-cream overflow-hidden">
-    <FloatingShapes variant="minimal" />
-    <div class="container mx-auto max-w-6xl px-4 relative z-10">
-      <nav class="mb-8 text-sm text-evolea-text-light">
-        <a href={translatePath('/')} class="hover:text-evolea-purple transition-colors">Startseite</a>
-        <span class="mx-2">/</span>
-        <span class="text-evolea-purple font-medium">Blog</span>
-      </nav>
-
-      <div class="text-center max-w-3xl mx-auto">
-        <h1 class="text-4xl md:text-5xl lg:text-6xl font-display font-bold text-evolea-purple mb-6">
-          {t('nav.blog')}
-        </h1>
-        <p class="text-xl text-evolea-text-light">
-          Neuigkeiten, Tipps und Einblicke rund um EVOLEA und die Foerderung von Kindern im Spektrum.
-        </p>
-      </div>
-    </div>
-  </section>
+<Base title="Blog" description="Neuigkeiten, Tipps und Einblicke rund um EVOLEA und die Foerderung von Kindern im Spektrum." transparentHeader={true}>
+  <!-- Premium Hero with Prism Gradient -->
+  <InnerPageHero
+    title={t('nav.blog')}
+    subtitle="Neuigkeiten, Tipps und Einblicke rund um EVOLEA und die Förderung von Kindern im Spektrum."
+    breadcrumbs={[
+      { label: 'Startseite', href: translatePath('/') },
+      { label: 'Blog' }
+    ]}
+    size="md"
+  />
 
   <!-- Featured Posts -->
   {featuredPosts.length > 0 && (
@@ -110,19 +99,12 @@ function formatDate(date: Date): string {
     </div>
   </section>
 
-  <!-- Newsletter CTA -->
-  <section class="py-16 bg-white">
-    <div class="container mx-auto max-w-3xl px-4 text-center">
-      <h2 class="text-2xl font-display font-bold text-evolea-purple mb-4">Bleiben Sie informiert</h2>
-      <p class="text-evolea-text-light mb-6">
-        Haben Sie Fragen oder moechten Sie mehr erfahren? Kontaktieren Sie uns jederzeit.
-      </p>
-      <a href={translatePath('/kontakt/')} class="btn-primary inline-flex">
-        Kontakt aufnehmen
-        <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
-        </svg>
-      </a>
-    </div>
-  </section>
+  <!-- Page Closer - Prism Gradient -->
+  <PageCloser
+    showCTA={true}
+    ctaTitle="Bleiben Sie informiert"
+    ctaDescription="Haben Sie Fragen oder möchten Sie mehr erfahren? Kontaktieren Sie uns jederzeit."
+    ctaButtonText="Kontakt aufnehmen"
+    ctaButtonHref={translatePath('/kontakt/')}
+  />
 </Base>

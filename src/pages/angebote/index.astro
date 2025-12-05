@@ -1,8 +1,7 @@
 ---
 import Base from '@layouts/Base.astro';
-import FloatingShapes from '@components/FloatingShapes.astro';
-import ProgramCard from '@components/ProgramCard.astro';
-import GradientCTA from '@components/GradientCTA.astro';
+import InnerPageHero from '@components/InnerPageHero.astro';
+import PageCloser from '@components/PageCloser.astro';
 import Icon from '@components/Icon.astro';
 import { getLangFromUrl, useTranslations, useTranslatedPath } from '@i18n/utils';
 
@@ -55,27 +54,17 @@ const programs = [
 ];
 ---
 
-<Base title="Angebote" description="EVOLEA bietet verschiedene Foerderprogramme fuer Kinder im Autismus Spektrum oder mit ADHS an: Mini Garten, Mini Projekte, Mini Turnen, Tagesschule und Schulberatung.">
-  <!-- Hero Section -->
-  <section class="relative py-20 md:py-28 bg-gradient-to-br from-evolea-purple/10 to-evolea-cream overflow-hidden">
-    <FloatingShapes variant="minimal" />
-    <div class="container mx-auto max-w-6xl px-4 relative z-10">
-      <nav class="mb-8 text-sm text-evolea-text-light">
-        <a href={translatePath('/')} class="hover:text-evolea-purple transition-colors">Startseite</a>
-        <span class="mx-2">/</span>
-        <span class="text-evolea-purple font-medium">Angebote</span>
-      </nav>
-
-      <div class="text-center max-w-3xl mx-auto">
-        <h1 class="text-4xl md:text-5xl lg:text-6xl font-display font-bold text-evolea-purple mb-6">
-          {t('nav.programs')}
-        </h1>
-        <p class="text-xl md:text-2xl text-evolea-text-light leading-relaxed">
-          Evidenzbasierte Programme, die jedes Kind dort abholen, wo es steht. Entwickelt fuer Kinder im Spektrum und mit ADHS.
-        </p>
-      </div>
-    </div>
-  </section>
+<Base title="Angebote" description="EVOLEA bietet verschiedene Foerderprogramme fuer Kinder im Autismus Spektrum oder mit ADHS an: Mini Garten, Mini Projekte, Mini Turnen, Tagesschule und Schulberatung." transparentHeader={true}>
+  <!-- Premium Hero with Prism Gradient -->
+  <InnerPageHero
+    title={t('nav.programs')}
+    subtitle="Evidenzbasierte Programme, die jedes Kind dort abholen, wo es steht. Entwickelt für Kinder im Spektrum und mit ADHS."
+    breadcrumbs={[
+      { label: 'Startseite', href: translatePath('/') },
+      { label: 'Angebote' }
+    ]}
+    size="md"
+  />
 
   <!-- Age Groups Quick Reference -->
   <section class="py-8 bg-white border-b border-evolea-purple/10">
@@ -186,12 +175,12 @@ const programs = [
     </div>
   </section>
 
-  <!-- CTA Section -->
-  <GradientCTA
-    title="Bereit fuer den naechsten Schritt?"
-    description="Kontaktieren Sie uns fuer ein unverbindliches Kennenlerngespraech."
-    buttonText="Jetzt Kontakt aufnehmen"
-    buttonHref={translatePath('/kontakt/')}
-    variant="calm"
+  <!-- Page Closer - Prism Gradient -->
+  <PageCloser
+    showCTA={true}
+    ctaTitle="Bereit für den nächsten Schritt?"
+    ctaDescription="Kontaktieren Sie uns für ein unverbindliches Kennenlerngespräch."
+    ctaButtonText="Jetzt Kontakt aufnehmen"
+    ctaButtonHref={translatePath('/kontakt/')}
   />
 </Base>

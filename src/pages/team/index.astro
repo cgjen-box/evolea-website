@@ -1,7 +1,7 @@
 ---
 import Base from '@layouts/Base.astro';
-import FloatingShapes from '@components/FloatingShapes.astro';
-import GradientCTA from '@components/GradientCTA.astro';
+import InnerPageHero from '@components/InnerPageHero.astro';
+import PageCloser from '@components/PageCloser.astro';
 import Icon from '@components/Icon.astro';
 import { getLangFromUrl, useTranslations, useTranslatedPath } from '@i18n/utils';
 
@@ -42,24 +42,18 @@ const team = [
 ];
 ---
 
-<Base title="Team" description="Lernen Sie das interdisziplinäre Team von EVOLEA kennen - erfahrene Fachpersonen aus Psychologie, Verhaltensanalyse und Pädagogik.">
-  <!-- Hero Section -->
-  <section class="relative py-20 md:py-28 bg-gradient-to-br from-evolea-purple/10 to-evolea-cream overflow-hidden">
-    <FloatingShapes variant="minimal" />
-    <div class="container mx-auto max-w-6xl px-4 relative z-10">
-      <div class="text-center max-w-3xl mx-auto">
-        <span class="inline-block bg-evolea-purple/10 text-evolea-purple px-4 py-2 rounded-full text-sm font-medium mb-6">
-          Das EVOLEA Team
-        </span>
-        <h1 class="text-4xl md:text-5xl lg:text-6xl font-display font-bold text-evolea-purple mb-6 leading-tight">
-          {t('team.title')}
-        </h1>
-        <p class="text-xl text-evolea-text-light leading-relaxed">
-          {t('team.description')}
-        </p>
-      </div>
-    </div>
-  </section>
+<Base title="Team" description="Lernen Sie das interdisziplinäre Team von EVOLEA kennen - erfahrene Fachpersonen aus Psychologie, Verhaltensanalyse und Pädagogik." transparentHeader={true}>
+  <!-- Premium Hero with Prism Gradient -->
+  <InnerPageHero
+    title={t('team.title')}
+    subtitle={t('team.description')}
+    breadcrumbs={[
+      { label: 'Startseite', href: translatePath('/') },
+      { label: 'Team' }
+    ]}
+    label="Das EVOLEA Team"
+    size="md"
+  />
 
   <!-- Team Philosophy -->
   <section class="py-16 bg-white">
@@ -131,18 +125,18 @@ const team = [
     </div>
   </section>
 
-  <!-- CTA Section -->
-  <GradientCTA
-    title="Lernen Sie uns kennen"
-    description="Wir freuen uns auf den Austausch mit Ihnen."
-    buttonText="Kontakt aufnehmen"
-    buttonHref={translatePath('/kontakt/')}
-    variant="hero"
+  <!-- Page Closer - Prism Gradient -->
+  <PageCloser
+    showCTA={true}
+    ctaTitle="Lernen Sie uns kennen"
+    ctaDescription="Wir freuen uns auf den Austausch mit Ihnen."
+    ctaButtonText="Kontakt aufnehmen"
+    ctaButtonHref={translatePath('/kontakt/')}
   />
 </Base>
 
 <style>
   .bg-gradient-spectrum {
-    background: linear-gradient(90deg, #FF6B6B 0%, #FFD93D 25%, #5DD99B 50%, #6BCFFF 75%, #9B7BC0 100%);
+    background: linear-gradient(90deg, #7BEDD5 0%, #FFE066 25%, #FF7E5D 50%, #E97BF1 75%, #CD87F8 100%);
   }
 </style>
