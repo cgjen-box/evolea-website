@@ -1,9 +1,16 @@
 ---
+import Icon from '@components/Icon.astro';
+
+type IconName = 'sprout' | 'palette' | 'ball' | 'school' | 'chart' | 'target' | 'gamepad' | 'clipboard' |
+                'diamond' | 'family' | 'rainbow' | 'lightning' | 'heart' | 'book' | 'brain' | 'handshake' |
+                'teacher' | 'running' | 'gymnast' | 'sparkle' | 'leaf' | 'people';
+
 interface Props {
   title: string;
   description: string;
   href: string;
   icon?: string;
+  iconName?: IconName;
   imageSrc?: string;
   imageAlt?: string;
   colorAccent?: 'magenta' | 'mint' | 'coral' | 'pink' | 'yellow' | 'sky' | 'purple' | 'teal' | 'gold';
@@ -15,6 +22,7 @@ const {
   description,
   href,
   icon,
+  iconName,
   imageSrc,
   imageAlt = '',
   colorAccent = 'magenta',
@@ -83,7 +91,11 @@ const backgroundImage = imageSrc || defaultImages[colorAccent] || defaultImages.
 
   <!-- Overlay -->
   <div class="program-card-overlay">
-    {icon && (
+    {iconName ? (
+      <div class="program-card-icon" aria-hidden="true">
+        <Icon name={iconName} size="xl" />
+      </div>
+    ) : icon && (
       <span class="program-card-icon" aria-hidden="true">{icon}</span>
     )}
     <h3 class="program-card-title">{title}</h3>

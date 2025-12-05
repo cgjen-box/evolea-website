@@ -2,14 +2,43 @@
 import Base from '@layouts/Base.astro';
 import VideoHero from '@components/VideoHero.astro';
 import ProgramCardEnhanced from '@components/ProgramCardEnhanced.astro';
-import ValuePillar from '@components/ValuePillar.astro';
 import GradientCTA from '@components/GradientCTA.astro';
 import FloatingShapes from '@components/FloatingShapes.astro';
+import Icon from '@components/Icon.astro';
 import { getLangFromUrl, useTranslations, useTranslatedPath } from '@i18n/utils';
 
 const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
 const translatePath = useTranslatedPath(lang);
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+
+// Values for English version
+const values = [
+  {
+    iconName: 'shield' as const,
+    title: t('values.safety.title'),
+    description: t('values.safety.desc'),
+    color: 'magenta',
+  },
+  {
+    iconName: 'sparkle' as const,
+    title: t('values.empower.title'),
+    description: t('values.empower.desc'),
+    color: 'coral',
+  },
+  {
+    iconName: 'diamond' as const,
+    title: t('values.potential.title'),
+    description: t('values.potential.desc'),
+    color: 'mint',
+  },
+];
+
+const colorClasses: Record<string, string> = {
+  magenta: 'bg-evolea-magenta/10 border-evolea-magenta',
+  coral: 'bg-evolea-coral/10 border-evolea-coral',
+  mint: 'bg-evolea-mint/10 border-evolea-mint',
+};
 ---
 
 <Base
@@ -21,8 +50,8 @@ const translatePath = useTranslatedPath(lang);
   <VideoHero
     title={t('hero.title')}
     subtitle={t('hero.subtitle')}
-    videoSrc="/videos/hero.mp4"
-    posterSrc="/images/hero-poster.jpg"
+    videoSrc={base + "/videos/hero.mp4"}
+    posterSrc={base + "/images/hero-poster.jpg"}
     primaryButtonText={t('hero.cta.primary')}
     primaryButtonHref={translatePath('/angebote/')}
     secondaryButtonText={t('hero.cta.secondary')}
@@ -93,7 +122,7 @@ const translatePath = useTranslatedPath(lang);
             title={t('programs.miniGarten')}
             description={t('programs.miniGarten.desc')}
             href={translatePath('/angebote/mini-garten/')}
-            icon="🌱"
+            iconName="sprout"
             imageSrc="/images/programs/garden.jpg"
             imageAlt="Children learning through play in the garden"
             colorAccent="mint"
@@ -104,7 +133,7 @@ const translatePath = useTranslatedPath(lang);
             title={t('programs.miniProjekte')}
             description={t('programs.miniProjekte.desc')}
             href={translatePath('/angebote/mini-projekte/')}
-            icon="🎨"
+            iconName="palette"
             imageSrc="/images/programs/projects.jpg"
             imageAlt="Children engaged in creative projects"
             colorAccent="coral"
@@ -116,7 +145,7 @@ const translatePath = useTranslatedPath(lang);
             title={t('programs.miniTurnen')}
             description={t('programs.miniTurnen.desc')}
             href={translatePath('/angebote/mini-turnen/')}
-            icon="⚽"
+            iconName="ball"
             imageSrc="/images/programs/sports.png"
             imageAlt="Children doing sports and gymnastics"
             colorAccent="sky"
@@ -127,7 +156,7 @@ const translatePath = useTranslatedPath(lang);
             title={t('programs.schulberatung')}
             description={t('programs.schulberatung.desc')}
             href={translatePath('/angebote/schulberatung/')}
-            icon="🏫"
+            iconName="school"
             imageSrc="/images/programs/school.jpg"
             imageAlt="School consultation and support"
             colorAccent="magenta"
@@ -149,30 +178,29 @@ const translatePath = useTranslatedPath(lang);
       </div>
 
       <div class="grid md:grid-cols-3 gap-6">
-        <div class="reveal reveal-delay-1">
-          <ValuePillar
-            title={t('values.safety.title')}
-            description={t('values.safety.desc')}
-            icon="🛡️"
-            color="magenta"
-          />
-        </div>
-        <div class="reveal reveal-delay-2">
-          <ValuePillar
-            title={t('values.empower.title')}
-            description={t('values.empower.desc')}
-            icon="💪"
-            color="coral"
-          />
-        </div>
-        <div class="reveal reveal-delay-3">
-          <ValuePillar
-            title={t('values.potential.title')}
-            description={t('values.potential.desc')}
-            icon="✨"
-            color="mint"
-          />
-        </div>
+        {values.map((value, index) => (
+          <div
+            class:list={[
+              'reveal p-6 rounded-evolea-lg border-l-4 transition-all hover:shadow-soft bg-white',
+              colorClasses[value.color],
+            ]}
+            style={`animation-delay: ${index * 0.1}s`}
+          >
+            <div class="flex items-start gap-4">
+              <div class="flex-shrink-0">
+                <Icon name={value.iconName} size="lg" />
+              </div>
+              <div>
+                <h3 class="font-display font-bold text-evolea-purple text-lg mb-2">
+                  {value.title}
+                </h3>
+                <p class="text-evolea-text-light text-sm leading-relaxed">
+                  {value.description}
+                </p>
+              </div>
+            </div>
+          </div>
+        ))}
       </div>
     </div>
 

@@ -2,15 +2,64 @@
 import Base from '@layouts/Base.astro';
 import VideoHero from '@components/VideoHero.astro';
 import ProgramCardEnhanced from '@components/ProgramCardEnhanced.astro';
-import ValuePillar from '@components/ValuePillar.astro';
 import GradientCTA from '@components/GradientCTA.astro';
 import FloatingShapes from '@components/FloatingShapes.astro';
+import Icon from '@components/Icon.astro';
 import { getLangFromUrl, useTranslations, useTranslatedPath } from '@i18n/utils';
 
 const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
 const translatePath = useTranslatedPath(lang);
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+
+// 9 Pedagogical Principles - matching ueber-uns page
+const principles = [
+  {
+    iconName: 'chart' as const,
+    title: 'Evidenzbasiert',
+    description: 'Unsere Arbeit basiert auf wissenschaftlichen Erkenntnissen und bewährten Methoden.',
+    color: 'magenta',
+  },
+  {
+    iconName: 'target' as const,
+    title: 'Individuell',
+    description: 'Jedes Kind wird dort abgeholt, wo es steht.',
+    color: 'coral',
+  },
+  {
+    iconName: 'gamepad' as const,
+    title: 'Spielerisch',
+    description: 'Lernen geschieht durch Spiel und positive Erfahrungen.',
+    color: 'yellow',
+  },
+  {
+    iconName: 'clipboard' as const,
+    title: 'Strukturiert',
+    description: 'Klare Abläufe geben Sicherheit und ermöglichen Lernen.',
+    color: 'sky',
+  },
+  {
+    iconName: 'diamond' as const,
+    title: 'Ressourcenorientiert',
+    description: 'Wir fokussieren auf Stärken, nicht auf Defizite.',
+    color: 'mint',
+  },
+  {
+    iconName: 'family' as const,
+    title: 'Familienzentriert',
+    description: 'Familien sind Partner in der Förderung.',
+    color: 'purple',
+  },
+];
+
+const colorClasses: Record<string, string> = {
+  magenta: 'bg-evolea-magenta/10 border-evolea-magenta',
+  coral: 'bg-evolea-coral/10 border-evolea-coral',
+  yellow: 'bg-evolea-yellow/10 border-evolea-yellow',
+  sky: 'bg-evolea-sky/10 border-evolea-sky',
+  mint: 'bg-evolea-mint/10 border-evolea-mint',
+  purple: 'bg-evolea-purple-light/10 border-evolea-purple-light',
+};
 ---
 
 <Base
@@ -94,7 +143,7 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
             title={t('programs.miniGarten')}
             description={t('programs.miniGarten.desc')}
             href={translatePath('/angebote/mini-garten/')}
-            icon="🌱"
+            iconName="sprout"
             imageSrc="/images/programs/garden.jpg"
             imageAlt="Kinder im Garten beim spielerischen Lernen"
             colorAccent="mint"
@@ -105,7 +154,7 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
             title={t('programs.miniProjekte')}
             description={t('programs.miniProjekte.desc')}
             href={translatePath('/angebote/mini-projekte/')}
-            icon="🎨"
+            iconName="palette"
             imageSrc="/images/programs/projects.jpg"
             imageAlt="Kinder bei kreativen Projekten"
             colorAccent="coral"
@@ -117,7 +166,7 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
             title={t('programs.miniTurnen')}
             description={t('programs.miniTurnen.desc')}
             href={translatePath('/angebote/mini-turnen/')}
-            icon="⚽"
+            iconName="ball"
             imageSrc="/images/programs/sports.png"
             imageAlt="Kinder beim Sport und Turnen"
             colorAccent="sky"
@@ -128,7 +177,7 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
             title={t('programs.schulberatung')}
             description={t('programs.schulberatung.desc')}
             href={translatePath('/angebote/schulberatung/')}
-            icon="🏫"
+            iconName="school"
             imageSrc="/images/programs/school.jpg"
             imageAlt="Schulberatung und Unterstützung"
             colorAccent="magenta"
@@ -151,55 +200,30 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
       </div>
 
       <!-- Show 6 principles in a grid, link to full list -->
-      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
-        <div class="reveal reveal-delay-1">
-          <ValuePillar
-            title="Evidenzbasiert"
-            description="Unsere Arbeit basiert auf wissenschaftlichen Erkenntnissen und bewährten Methoden."
-            icon="📊"
-            color="magenta"
-          />
-        </div>
-        <div class="reveal reveal-delay-2">
-          <ValuePillar
-            title="Individuell"
-            description="Jedes Kind wird dort abgeholt, wo es steht."
-            icon="🎯"
-            color="coral"
-          />
-        </div>
-        <div class="reveal reveal-delay-3">
-          <ValuePillar
-            title="Spielerisch"
-            description="Lernen geschieht durch Spiel und positive Erfahrungen."
-            icon="🎮"
-            color="yellow"
-          />
-        </div>
-        <div class="reveal reveal-delay-4">
-          <ValuePillar
-            title="Strukturiert"
-            description="Klare Abläufe geben Sicherheit und ermöglichen Lernen."
-            icon="📋"
-            color="sky"
-          />
-        </div>
-        <div class="reveal reveal-delay-5">
-          <ValuePillar
-            title="Ressourcenorientiert"
-            description="Wir fokussieren auf Stärken, nicht auf Defizite."
-            icon="💎"
-            color="mint"
-          />
-        </div>
-        <div class="reveal reveal-delay-6">
-          <ValuePillar
-            title="Familienzentriert"
-            description="Familien sind Partner in der Förderung."
-            icon="👨‍👩‍👧"
-            color="purple"
-          />
-        </div>
+      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {principles.map((principle, index) => (
+          <div
+            class:list={[
+              'reveal p-6 rounded-evolea-lg border-l-4 transition-all hover:shadow-soft bg-white',
+              colorClasses[principle.color],
+            ]}
+            style={`animation-delay: ${index * 0.1}s`}
+          >
+            <div class="flex items-start gap-4">
+              <div class="flex-shrink-0">
+                <Icon name={principle.iconName} size="lg" />
+              </div>
+              <div>
+                <h3 class="font-display font-bold text-evolea-purple text-lg mb-2">
+                  {principle.title}
+                </h3>
+                <p class="text-evolea-text-light text-sm leading-relaxed">
+                  {principle.description}
+                </p>
+              </div>
+            </div>
+          </div>
+        ))}
       </div>
 
       <!-- Link to full principles -->
