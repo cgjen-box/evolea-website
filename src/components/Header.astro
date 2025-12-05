@@ -25,7 +25,7 @@ const navItems = [
 <header
   id="main-header"
   class:list={[
-    'fixed top-0 left-0 right-0 z-header transition-all duration-300',
+    'fixed top-0 left-0 right-0 z-header header-slide transition-transform duration-300',
     transparent ? 'header-transparent' : 'header-solid',
   ]}
   data-transparent={transparent}
@@ -77,38 +77,90 @@ const navItems = [
     </button>
   </nav>
 
-  <!-- Mobile Navigation -->
+  <!-- Mobile Navigation - Premium Gradient Background -->
   <div
     id="mobile-menu"
-    class="mobile-menu md:hidden fixed inset-0 top-[72px] bg-evolea-cream/98 backdrop-blur-lg transform translate-x-full transition-transform duration-300 ease-smooth-out"
+    class="mobile-menu md:hidden fixed inset-0 top-0 transform translate-x-full transition-transform duration-500 ease-out"
     aria-hidden="true"
   >
-    <nav class="container mx-auto px-4 py-8 flex flex-col">
-      {navItems.map(({ key, href }, index) => (
-        <a
-          href={translatePath(href)}
-          class="mobile-nav-link py-4 text-2xl font-display font-semibold text-evolea-purple border-b border-evolea-purple/10 transition-colors hover:text-evolea-orange"
-          style={`animation-delay: ${index * 0.1}s`}
-        >
-          {t(key)}
-        </a>
-      ))}
-      <div class="pt-6 mt-2">
-        <LanguagePicker />
+    <!-- Animated Gradient Background -->
+    <div class="mobile-menu-bg absolute inset-0"></div>
+
+    <!-- Floating decorative elements -->
+    <div class="absolute inset-0 overflow-hidden pointer-events-none" aria-hidden="true">
+      <div class="absolute top-20 left-10 w-32 h-32 rounded-full bg-white/10 blur-3xl animate-float-slow"></div>
+      <div class="absolute top-1/3 right-10 w-40 h-40 rounded-full bg-evolea-mint/20 blur-3xl animate-float"></div>
+      <div class="absolute bottom-1/4 left-1/4 w-48 h-48 rounded-full bg-evolea-coral/15 blur-3xl animate-float-delayed"></div>
+    </div>
+
+    <!-- Mobile menu content -->
+    <nav class="relative z-10 h-full flex flex-col px-8 pt-24 pb-12">
+      <!-- Close button at top -->
+      <button
+        type="button"
+        class="absolute top-6 right-6 p-3 rounded-full bg-white/20 text-white hover:bg-white/30 transition-colors"
+        id="mobile-menu-close"
+        aria-label={lang === 'de' ? 'Menü schließen' : 'Close menu'}
+      >
+        <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+        </svg>
+      </button>
+
+      <!-- Logo in mobile menu -->
+      <a href={translatePath('/')} class="font-display font-bold text-3xl text-white mb-12 flex items-center gap-3">
+        EVOLEA
+        <Butterfly size="md" variant="white" />
+      </a>
+
+      <!-- Navigation links -->
+      <div class="flex-1 flex flex-col gap-2">
+        {navItems.map(({ key, href }, index) => (
+          <a
+            href={translatePath(href)}
+            class="mobile-nav-link group py-4 text-3xl font-display font-bold text-white/90 hover:text-white transition-all flex items-center justify-between"
+            style={`animation-delay: ${index * 0.08}s`}
+          >
+            <span>{t(key)}</span>
+            <svg class="w-6 h-6 opacity-0 -translate-x-4 group-hover:opacity-100 group-hover:translate-x-0 transition-all" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+            </svg>
+          </a>
+        ))}
       </div>
 
-      <!-- Mobile CTA -->
-      <a
-        href={translatePath('/kontakt/')}
-        class="btn-primary mt-8 text-center"
-      >
-        {t('contact.cta')}
-      </a>
+      <!-- Bottom section -->
+      <div class="mt-auto pt-8 border-t border-white/20">
+        <div class="flex items-center justify-between mb-6">
+          <span class="text-white/70 text-sm">{lang === 'de' ? 'Sprache' : 'Language'}</span>
+          <LanguagePicker />
+        </div>
+
+        <!-- Mobile CTA -->
+        <a
+          href={translatePath('/kontakt/')}
+          class="mobile-cta-btn flex items-center justify-center gap-3 w-full py-4 px-8 bg-white text-evolea-magenta font-display font-bold text-lg rounded-full shadow-lg hover:shadow-xl hover:scale-[1.02] transition-all"
+        >
+          {t('contact.cta')}
+          <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+          </svg>
+        </a>
+      </div>
     </nav>
   </div>
 </header>
 
 <style>
+  /* ===== HIDE ON SCROLL DOWN / SHOW ON SCROLL UP ===== */
+  .header-slide {
+    transform: translateY(0);
+  }
+
+  .header-hidden {
+    transform: translateY(-100%);
+  }
+
   /* Transparent header (for hero sections) */
   .header-transparent {
     @apply bg-transparent;
@@ -224,24 +276,57 @@ const navItems = [
     transform: scaleX(1);
   }
 
+  /* ===== MOBILE MENU - PREMIUM GRADIENT ===== */
+  .mobile-menu-bg {
+    background: linear-gradient(
+      135deg,
+      #BA53AD 0%,
+      #DD48E0 25%,
+      #CD87F8 50%,
+      #7BEDD5 75%,
+      #5DADE2 100%
+    );
+    background-size: 400% 400%;
+    animation: gradientShift 15s ease infinite;
+  }
+
+  @keyframes gradientShift {
+    0%, 100% {
+      background-position: 0% 50%;
+    }
+    50% {
+      background-position: 100% 50%;
+    }
+  }
+
   /* Mobile menu open state */
   .mobile-menu.open {
     transform: translateX(0);
   }
 
   .mobile-menu.open .mobile-nav-link {
-    animation: slideIn 0.4s ease forwards;
+    animation: slideInNav 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
     opacity: 0;
+    transform: translateX(30px);
   }
 
-  @keyframes slideIn {
-    from {
-      opacity: 0;
-      transform: translateX(20px);
-    }
+  .mobile-menu.open .mobile-cta-btn {
+    animation: scaleIn 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) 0.4s forwards;
+    opacity: 0;
+    transform: scale(0.9);
+  }
+
+  @keyframes slideInNav {
     to {
       opacity: 1;
       transform: translateX(0);
+    }
+  }
+
+  @keyframes scaleIn {
+    to {
+      opacity: 1;
+      transform: scale(1);
     }
   }
 
@@ -253,58 +338,155 @@ const navItems = [
   .mobile-menu-btn.open .close-icon {
     display: block;
   }
+
+  /* Float animations for decorative elements */
+  @keyframes float {
+    0%, 100% { transform: translateY(0) rotate(0deg); }
+    50% { transform: translateY(-20px) rotate(5deg); }
+  }
+
+  @keyframes float-slow {
+    0%, 100% { transform: translateY(0) rotate(0deg); }
+    50% { transform: translateY(-15px) rotate(-3deg); }
+  }
+
+  @keyframes float-delayed {
+    0%, 100% { transform: translateY(0) rotate(0deg); }
+    50% { transform: translateY(-25px) rotate(8deg); }
+  }
+
+  .animate-float { animation: float 6s ease-in-out infinite; }
+  .animate-float-slow { animation: float-slow 8s ease-in-out infinite; }
+  .animate-float-delayed { animation: float-delayed 7s ease-in-out infinite 1s; }
+
+  /* Reduce motion */
+  @media (prefers-reduced-motion: reduce) {
+    .mobile-menu-bg {
+      animation: none;
+    }
+    .animate-float,
+    .animate-float-slow,
+    .animate-float-delayed {
+      animation: none;
+    }
+    .mobile-menu.open .mobile-nav-link,
+    .mobile-menu.open .mobile-cta-btn {
+      animation: none;
+      opacity: 1;
+      transform: none;
+    }
+    .header-slide {
+      transition: none;
+    }
+  }
 </style>
 
 <script>
-  const header = document.getElementById('main-header');
-  const menuButton = document.getElementById('mobile-menu-button');
-  const mobileMenu = document.getElementById('mobile-menu');
-  const isTransparent = header?.dataset.transparent === 'true';
+  function initHeader() {
+    const header = document.getElementById('main-header');
+    const menuButton = document.getElementById('mobile-menu-button');
+    const menuCloseButton = document.getElementById('mobile-menu-close');
+    const mobileMenu = document.getElementById('mobile-menu');
+    const isTransparent = header?.dataset.transparent === 'true';
 
-  // Handle scroll for transparent headers
-  if (isTransparent && header) {
-    const handleScroll = () => {
-      if (window.scrollY > 50) {
-        header.classList.add('header-scrolled');
-      } else {
-        header.classList.remove('header-scrolled');
+    // ===== HIDE ON SCROLL DOWN / SHOW ON SCROLL UP =====
+    let lastScrollY = window.scrollY;
+    let ticking = false;
+    const scrollThreshold = 10; // Minimum scroll before hiding
+    let mobileMenuOpen = false;
+
+    const updateHeaderVisibility = () => {
+      const currentScrollY = window.scrollY;
+
+      // Don't hide header when mobile menu is open
+      if (mobileMenuOpen) {
+        header?.classList.remove('header-hidden');
+        return;
+      }
+
+      // Always show header at top of page
+      if (currentScrollY < 100) {
+        header?.classList.remove('header-hidden');
+      }
+      // Scrolling down - hide header
+      else if (currentScrollY > lastScrollY + scrollThreshold) {
+        header?.classList.add('header-hidden');
+      }
+      // Scrolling up - show header
+      else if (currentScrollY < lastScrollY - scrollThreshold) {
+        header?.classList.remove('header-hidden');
+      }
+
+      // Handle transparent header scroll state
+      if (isTransparent && header) {
+        if (currentScrollY > 50) {
+          header.classList.add('header-scrolled');
+        } else {
+          header.classList.remove('header-scrolled');
+        }
+      }
+
+      lastScrollY = currentScrollY;
+      ticking = false;
+    };
+
+    const onScroll = () => {
+      if (!ticking) {
+        requestAnimationFrame(updateHeaderVisibility);
+        ticking = true;
       }
     };
 
-    window.addEventListener('scroll', handleScroll, { passive: true });
-    handleScroll(); // Check initial state
+    window.addEventListener('scroll', onScroll, { passive: true });
+    updateHeaderVisibility(); // Check initial state
+
+    // ===== MOBILE MENU FUNCTIONS =====
+    const openMobileMenu = () => {
+      mobileMenuOpen = true;
+      menuButton?.classList.add('open');
+      mobileMenu?.classList.add('open');
+      mobileMenu?.setAttribute('aria-hidden', 'false');
+      menuButton?.setAttribute('aria-expanded', 'true');
+      document.body.style.overflow = 'hidden';
+      // Ensure header stays visible when menu opens
+      header?.classList.remove('header-hidden');
+    };
+
+    const closeMobileMenu = () => {
+      mobileMenuOpen = false;
+      menuButton?.classList.remove('open');
+      mobileMenu?.classList.remove('open');
+      mobileMenu?.setAttribute('aria-hidden', 'true');
+      menuButton?.setAttribute('aria-expanded', 'false');
+      document.body.style.overflow = '';
+    };
+
+    // Toggle menu on hamburger click
+    menuButton?.addEventListener('click', () => {
+      if (mobileMenu?.classList.contains('open')) {
+        closeMobileMenu();
+      } else {
+        openMobileMenu();
+      }
+    });
+
+    // Close button inside mobile menu
+    menuCloseButton?.addEventListener('click', closeMobileMenu);
+
+    // Close menu on link click
+    mobileMenu?.querySelectorAll('a').forEach(link => {
+      link.addEventListener('click', closeMobileMenu);
+    });
+
+    // Close menu on escape key
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && mobileMenu?.classList.contains('open')) {
+        closeMobileMenu();
+      }
+    });
   }
 
-  // Mobile menu toggle
-  menuButton?.addEventListener('click', () => {
-    const isOpen = menuButton.classList.toggle('open');
-    mobileMenu?.classList.toggle('open');
-    mobileMenu?.setAttribute('aria-hidden', (!isOpen).toString());
-    menuButton.setAttribute('aria-expanded', isOpen.toString());
-
-    // Prevent body scroll when menu is open
-    document.body.style.overflow = isOpen ? 'hidden' : '';
-  });
-
-  // Close menu on link click
-  mobileMenu?.querySelectorAll('a').forEach(link => {
-    link.addEventListener('click', () => {
-      menuButton?.classList.remove('open');
-      mobileMenu?.classList.remove('open');
-      mobileMenu?.setAttribute('aria-hidden', 'true');
-      menuButton?.setAttribute('aria-expanded', 'false');
-      document.body.style.overflow = '';
-    });
-  });
-
-  // Close menu on escape key
-  document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape' && mobileMenu?.classList.contains('open')) {
-      menuButton?.classList.remove('open');
-      mobileMenu?.classList.remove('open');
-      mobileMenu?.setAttribute('aria-hidden', 'true');
-      menuButton?.setAttribute('aria-expanded', 'false');
-      document.body.style.overflow = '';
-    }
-  });
+  // Initialize on DOM ready and after Astro page transitions
+  document.addEventListener('DOMContentLoaded', initHeader);
+  document.addEventListener('astro:page-load', initHeader);
 </script>
