@@ -7,16 +7,8 @@ const t = useTranslations(lang);
 const translatePath = useTranslatedPath(lang);
 ---
 
-<footer class="relative bg-evolea-purple text-white overflow-hidden">
-  <!-- Decorative wave at top -->
-  <div class="absolute top-0 left-0 right-0 w-full overflow-hidden leading-none transform rotate-180" aria-hidden="true">
-    <svg class="relative block w-full h-12 md:h-16" viewBox="0 0 1200 120" preserveAspectRatio="none">
-      <path
-        d="M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V0H0V27.35A600.21,600.21,0,0,0,321.39,56.44Z"
-        fill="#FDF8F3"
-      ></path>
-    </svg>
-  </div>
+<footer class="relative text-white overflow-hidden footer-gradient">
+  <!-- No wave needed - seamless gradient connection from CTA -->
 
   <!-- Floating decorative elements -->
   <div class="absolute inset-0 pointer-events-none overflow-hidden" aria-hidden="true">
@@ -34,19 +26,16 @@ const translatePath = useTranslatedPath(lang);
   </div>
 
   <!-- Main footer content -->
-  <div class="relative pt-20 pb-8">
+  <div class="relative pt-12 pb-8">
     <div class="container mx-auto px-4">
       <!-- Top section with branding and links -->
       <div class="grid md:grid-cols-4 gap-12 mb-16">
         <!-- Brand column -->
         <div class="md:col-span-2">
-          <a href={translatePath('/')} class="inline-flex items-center gap-1 font-display font-bold text-2xl mb-4 group">
-            <span>EVOLE</span>
-            <span class="relative">
-              <span>A</span>
-              <span class="absolute -top-1 -right-3 opacity-80 group-hover:opacity-100 transition-opacity" style="transform: rotate(-15deg);">
-                <Butterfly size="sm" variant="white" />
-              </span>
+          <a href={translatePath('/')} class="inline-flex items-center gap-2 font-display font-bold text-2xl mb-4 group">
+            <span>EVOLEA</span>
+            <span class="opacity-80 group-hover:opacity-100 transition-opacity" style="transform: rotate(-15deg);">
+              <Butterfly size="sm" variant="white" />
             </span>
           </a>
           <p class="text-white/80 max-w-md leading-relaxed mb-6">
@@ -163,9 +152,19 @@ const translatePath = useTranslatedPath(lang);
 </footer>
 
 <style>
+  /* Footer gradient - connects seamlessly from CTA section */
+  .footer-gradient {
+    background: linear-gradient(
+      180deg,
+      #8A3D7E 0%,
+      #7A2D6E 30%,
+      #5C2854 100%
+    );
+  }
+
   /* Spectrum gradient for decorative line */
   .bg-gradient-spectrum {
-    background: linear-gradient(90deg, #FF6B6B 0%, #FFD93D 25%, #5DD99B 50%, #6BCFFF 75%, #9B7BC0 100%);
+    background: linear-gradient(90deg, #7BEDD5 0%, #FFE066 25%, #FF7E5D 50%, #E97BF1 75%, #CD87F8 100%);
   }
 
   /* Reduce motion preferences */

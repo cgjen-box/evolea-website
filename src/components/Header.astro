@@ -34,17 +34,14 @@ const navItems = [
     class="container mx-auto px-4 py-4 flex items-center justify-between"
     aria-label={lang === 'de' ? 'Hauptnavigation' : 'Main navigation'}
   >
-    <!-- Logo with Butterfly -->
+    <!-- Logo with Butterfly - EVOLEA as one word -->
     <a
       href={translatePath('/')}
-      class="flex items-center gap-1 font-display font-bold text-xl transition-colors logo-link group"
+      class="flex items-center gap-2 font-display font-bold text-xl transition-colors logo-link group"
     >
-      <span class="logo-text">EVOLE</span>
-      <span class="logo-a-container relative">
-        <span class="logo-text">A</span>
-        <span class="logo-butterfly absolute -top-1 -right-2 opacity-90 group-hover:opacity-100 transition-opacity">
-          <Butterfly size="sm" variant="spectrum" class="header-butterfly" />
-        </span>
+      <span class="logo-text">EVOLEA</span>
+      <span class="logo-butterfly opacity-90 group-hover:opacity-100 transition-opacity">
+        <Butterfly size="sm" variant="spectrum" class="header-butterfly" />
       </span>
     </a>
 
@@ -168,18 +165,14 @@ const navItems = [
     background-clip: text !important;
   }
 
-  .logo-a-container {
-    display: inline-flex;
-    align-items: center;
-  }
-
   .logo-butterfly {
+    display: inline-flex;
     transform: rotate(-15deg);
     transition: transform 0.3s ease;
   }
 
   .logo-link:hover .logo-butterfly {
-    transform: rotate(-10deg) scale(1.1);
+    transform: rotate(-5deg) scale(1.15);
   }
 
   /* Hide butterfly colors when header is transparent (white logo) */

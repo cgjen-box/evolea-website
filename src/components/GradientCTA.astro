@@ -16,35 +16,21 @@ const {
   buttonHref,
   variant = 'hero',
 } = Astro.props;
-
-// TRUE evolea.ch prism gradients
-const gradientClasses = {
-  hero: 'bg-gradient-prism',
-  sunset: 'bg-gradient-sunset',
-  calm: 'bg-gradient-ocean',
-};
 ---
 
-<section class:list={['gradient-cta', gradientClasses[variant]]} aria-labelledby="cta-title">
+<section class="gradient-cta" aria-labelledby="cta-title">
   <!-- Floating decorations -->
   <FloatingShapes variant="minimal" />
 
-  <!-- Wave decoration at top -->
-  <div class="absolute top-0 left-0 right-0 w-full overflow-hidden leading-none" aria-hidden="true">
-    <svg class="relative block w-full h-12 md:h-20" viewBox="0 0 1200 120" preserveAspectRatio="none">
-      <path
-        d="M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V0H0V27.35A600.21,600.21,0,0,0,321.39,56.44Z"
-        fill="#FDF8F3"
-      ></path>
-    </svg>
-  </div>
+  <!-- Soft gradient fade at top instead of hard wave -->
+  <div class="absolute top-0 left-0 right-0 h-24 bg-gradient-to-b from-evolea-cream to-transparent" aria-hidden="true"></div>
 
   <div class="gradient-cta-content reveal">
     <h2 id="cta-title" class="text-balance">{title}</h2>
     {description && (
       <p class="text-balance">{description}</p>
     )}
-    <a href={buttonHref} class="btn-white btn-mobile-full">
+    <a href={buttonHref} class="cta-button btn-mobile-full">
       {buttonText}
       <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
@@ -60,9 +46,20 @@ const gradientClasses = {
 <style>
   .gradient-cta {
     position: relative;
-    padding: 8rem 1rem 6rem;
+    padding: 8rem 1rem 5rem;
     overflow: hidden;
-    margin-top: 4rem;
+    margin: 0;
+    /* Flowing gradient from cream through magenta to purple - connects to footer */
+    background: linear-gradient(
+      180deg,
+      #FFFBF7 0%,
+      #F5E6F5 8%,
+      #E9D5F5 15%,
+      #CD87F8 30%,
+      #DD48E0 50%,
+      #BA53AD 75%,
+      #8A3D7E 100%
+    );
   }
 
   .gradient-cta-content {
@@ -73,14 +70,15 @@ const gradientClasses = {
     margin: 0 auto;
   }
 
+  /* WHITE text for contrast on gradient background */
   .gradient-cta h2 {
     font-family: 'Fredoka', 'Poppins', sans-serif;
     font-weight: 700;
     font-size: 2rem;
-    color: #BA53AD; /* TRUE evolea.ch purple for contrast on prism bg */
+    color: #FFFFFF;
     margin-bottom: 1.5rem;
     line-height: 1.2;
-    text-shadow: 0 2px 10px rgba(255, 255, 255, 0.5);
+    text-shadow: 0 2px 20px rgba(0, 0, 0, 0.15);
   }
 
   @media (min-width: 768px) {
@@ -96,47 +94,57 @@ const gradientClasses = {
   }
 
   .gradient-cta p {
-    color: rgba(138, 61, 158, 0.9); /* TRUE evolea.ch purple */
+    color: rgba(255, 255, 255, 0.9);
     font-size: 1.125rem;
     margin-bottom: 2rem;
     max-width: 36rem;
     margin-left: auto;
     margin-right: auto;
+    text-shadow: 0 1px 10px rgba(0, 0, 0, 0.1);
   }
 
-  /* TRUE evolea.ch PRISM gradient backgrounds */
-  .gradient-cta.bg-gradient-prism {
-    background: linear-gradient(118deg, #7BEDD5 0%, #FFE066 21%, #FFFFFF 48%, #E97BF1 81%, #CD87F8 100%);
-    background-size: 200% 200%;
-    animation: gradientFlow 8s ease infinite;
+  /* Enhanced CTA button with more pop */
+  .cta-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    background: #FFFFFF;
+    color: var(--evolea-magenta, #DD48E0);
+    font-weight: 600;
+    font-size: 1.125rem;
+    padding: 1.25rem 2.5rem;
+    border-radius: 100px;
+    text-decoration: none;
+    box-shadow:
+      0 4px 20px rgba(0, 0, 0, 0.15),
+      0 0 40px rgba(255, 255, 255, 0.3);
+    transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
   }
 
-  .gradient-cta.bg-gradient-sunset {
-    background: linear-gradient(135deg, #FF7E5D 0%, #EF8EAE 50%, #E97BF1 100%);
-    background-size: 200% 200%;
-    animation: gradientFlow 8s ease infinite;
+  .cta-button:hover {
+    transform: translateY(-3px) scale(1.02);
+    box-shadow:
+      0 8px 30px rgba(0, 0, 0, 0.2),
+      0 0 60px rgba(255, 255, 255, 0.4);
   }
 
-  .gradient-cta.bg-gradient-ocean {
-    background: linear-gradient(135deg, #7BEDD5 0%, #5DADE2 50%, #CD87F8 100%);
-    background-size: 200% 200%;
-    animation: gradientFlow 8s ease infinite;
+  .cta-button:active {
+    transform: translateY(-1px) scale(0.98);
   }
 
-  @keyframes gradientFlow {
-    0%, 100% {
-      background-position: 0% 50%;
-    }
-    50% {
-      background-position: 100% 50%;
-    }
+  .cta-button:focus-visible {
+    outline: 3px solid white;
+    outline-offset: 4px;
   }
 
   /* Reduce motion: disable animation */
   @media (prefers-reduced-motion: reduce) {
-    .gradient-cta {
-      animation: none;
-      background-size: 100% 100%;
+    .cta-button {
+      transition: none;
+    }
+    .cta-button:hover {
+      transform: none;
     }
   }
 </style>

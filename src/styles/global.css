@@ -604,6 +604,61 @@
   .glass-dark {
     @apply bg-evolea-purple/80 backdrop-blur-md;
   }
+
+  /* ===== STAT CARDS - Glassmorphism ===== */
+  .stat-card {
+    @apply rounded-evolea-lg p-6 text-center transition-all duration-300;
+    background: rgba(255, 255, 255, 0.7);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(221, 72, 224, 0.15);
+    box-shadow: 0 4px 20px rgba(186, 83, 173, 0.1);
+  }
+
+  .stat-card:hover {
+    @apply -translate-y-1;
+    background: rgba(255, 255, 255, 0.9);
+    box-shadow: 0 10px 40px rgba(186, 83, 173, 0.15);
+  }
+
+  .stat-number {
+    @apply text-4xl font-display font-bold mb-2;
+  }
+
+  .stat-label {
+    @apply text-sm text-evolea-text-light font-medium;
+  }
+
+  .stat-card-featured {
+    @apply rounded-evolea-lg p-6 text-center transition-all duration-300;
+    background: var(--gradient-prism);
+    box-shadow: 0 4px 20px rgba(186, 83, 173, 0.2);
+  }
+
+  .stat-card-featured:hover {
+    @apply -translate-y-1;
+    box-shadow: 0 10px 40px rgba(186, 83, 173, 0.25);
+  }
+
+  .stat-number-featured {
+    @apply text-4xl font-display font-bold mb-2 text-evolea-purple;
+  }
+
+  .stat-label-featured {
+    @apply text-sm font-medium text-evolea-purple/80;
+  }
+
+  /* ===== TEAM PHOTO HOVER ===== */
+  .team-photo-container {
+    @apply relative transition-all duration-300;
+  }
+
+  .team-photo-container:hover {
+    @apply -translate-y-2;
+  }
+
+  .team-photo-container:hover .team-photo-ring {
+    box-shadow: 0 0 0 4px var(--evolea-magenta);
+  }
 }
 
 @layer utilities {
