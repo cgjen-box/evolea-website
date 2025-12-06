@@ -41,7 +41,7 @@ const lang = getLangFromUrl(Astro.url);
     muted
     loop
     playsinline
-    preload="auto"
+    webkit-playsinline
   >
     <source src={videoSrc} type="video/mp4" />
   </video>
@@ -158,24 +158,64 @@ const lang = getLangFromUrl(Astro.url);
 </style>
 
 <script>
-  // iOS Safari fix: ensure video plays on initial page load
-  // This is needed because iOS sometimes doesn't autoplay even with correct attributes
-  function ensureVideoPlays() {
+  // AGGRESSIVE iOS Safari video autoplay fix
+  // Problem: DOMContentLoaded fires BEFORE video is ready on iOS
+  // Solution: Use video-specific events + multiple retry strategies
+
+  function initVideoAutoplay() {
     const video = document.getElementById('hero-video') as HTMLVideoElement;
     if (!video) return;
 
-    // Ensure muted (required for iOS autoplay)
+    // Critical: ensure muted attribute is set (required for iOS autoplay)
     video.muted = true;
+    video.setAttribute('muted', '');
+    video.setAttribute('playsinline', '');
+    video.setAttribute('webkit-playsinline', '');
 
-    // If paused, try to play
-    if (video.paused) {
-      video.play().catch(() => {
-        // Autoplay blocked - that's ok, user can interact
-      });
+    // Attempt to play with retry logic
+    function attemptPlay() {
+      if (!video.paused) return; // Already playing
+
+      const playPromise = video.play();
+      if (playPromise !== undefined) {
+        playPromise.catch(() => {
+          // Silently fail - will retry
+        });
+      }
+    }
+
+    // Strategy 1: Play when video has enough data
+    video.addEventListener('canplaythrough', attemptPlay, { once: true });
+    video.addEventListener('loadeddata', attemptPlay, { once: true });
+    video.addEventListener('loadedmetadata', attemptPlay, { once: true });
+
+    // Strategy 2: Progressive retry with increasing delays
+    // iOS sometimes needs time after DOM is ready
+    const delays = [0, 100, 300, 500, 1000, 2000];
+    delays.forEach(delay => {
+      setTimeout(attemptPlay, delay);
+    });
+
+    // Strategy 3: Try to play immediately
+    attemptPlay();
+
+    // Strategy 4: Force load if not started
+    if (video.readyState < 2) {
+      video.load();
     }
   }
 
-  // Run on initial load and Astro page transitions
-  document.addEventListener('DOMContentLoaded', ensureVideoPlays);
-  document.addEventListener('astro:page-load', ensureVideoPlays);
+  // Run on initial page load
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initVideoAutoplay);
+  } else {
+    // DOM already ready
+    initVideoAutoplay();
+  }
+
+  // Run on Astro page transitions
+  document.addEventListener('astro:page-load', initVideoAutoplay);
+
+  // Fallback: also try on window load (all resources loaded)
+  window.addEventListener('load', initVideoAutoplay);
 </script>
