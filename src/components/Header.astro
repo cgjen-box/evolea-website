@@ -45,19 +45,30 @@ const navItems = [
     </a>
 
     <!-- Desktop Navigation -->
-    <div class="hidden md:flex items-center gap-8">
-      {navItems.map(({ key, href }) => (
-        <a
-          href={translatePath(href)}
-          class:list={[
-            'font-medium transition-colors hover:opacity-80',
-            transparent ? 'text-white/90 hover:text-white' : 'text-evolea-text hover:text-evolea-purple',
-          ]}
-        >
-          {t(key)}
-        </a>
-      ))}
+    <div class="hidden md:flex items-center gap-6">
+      {navItems.map(({ key, href }) => {
+        const isActive = Astro.url.pathname.startsWith(translatePath(href));
+        return (
+          <a
+            href={translatePath(href)}
+            class:list={[
+              'nav-link relative font-medium transition-colors py-2',
+              transparent ? 'text-white/90 hover:text-white' : 'text-evolea-text hover:text-evolea-magenta',
+              isActive && !transparent && 'nav-link-active text-evolea-magenta',
+              isActive && transparent && 'nav-link-active-light',
+            ]}
+          >
+            {t(key)}
+          </a>
+        );
+      })}
       <LanguagePicker />
+      <a
+        href={translatePath('/kontakt/')}
+        class="nav-cta"
+      >
+        {t('contact.cta')}
+      </a>
     </div>
 
     <!-- Mobile Menu Button -->
@@ -150,6 +161,53 @@ const navItems = [
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
+  }
+
+  /* Nav link with spectrum underline on active - per Brand Guide v3 */
+  .nav-link-active::after {
+    content: '';
+    position: absolute;
+    bottom: -4px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100%;
+    height: 3px;
+    background: linear-gradient(90deg, #7BEDD5, #FFE066, #FF7E5D, #E97BF1, #CD87F8);
+    border-radius: 2px;
+  }
+
+  .nav-link-active-light::after {
+    content: '';
+    position: absolute;
+    bottom: -4px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100%;
+    height: 3px;
+    background: white;
+    border-radius: 2px;
+  }
+
+  /* CTA button in nav - per Brand Guide v3 */
+  .nav-cta {
+    background: linear-gradient(135deg, #BA53AD 0%, #DD48E0 50%, #E97BF1 100%);
+    color: white;
+    padding: 0.6rem 1.25rem;
+    border-radius: 100px;
+    font-weight: 600;
+    font-size: 0.9rem;
+    box-shadow: 0 2px 10px rgba(186, 83, 173, 0.2);
+    transition: all 0.3s ease;
+  }
+
+  .nav-cta:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 20px rgba(186, 83, 173, 0.3);
+  }
+
+  [data-transparent="true"] .nav-cta {
+    background: white;
+    color: #BA53AD;
   }
 
   /* ============================================

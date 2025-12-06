@@ -39,6 +39,10 @@ export default {
           // Text
           text: '#2D2A32',
           'text-light': '#5C5762',
+
+          // Dark Mode / Vision - per Brand Guide v3
+          charcoal: '#1A1A2E',
+          'charcoal-light': '#2D2A32',
         },
       },
       fontFamily: {

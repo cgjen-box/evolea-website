@@ -44,6 +44,25 @@ function formatDate(date: Date): string {
         <div class="grid md:grid-cols-2 gap-8">
           {featuredPosts.map((post) => (
             <a href={`/blog/${post.slug}/`} class="group block bg-evolea-cream rounded-evolea-lg overflow-hidden hover:shadow-card transition-shadow">
+              {/* Featured Image with gradient fallback - per Brand Guide v3 */}
+              <div class="blog-card-image h-48 relative overflow-hidden">
+                {post.data.image ? (
+                  <img
+                    src={post.data.image}
+                    alt={post.data.title}
+                    class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                    loading="lazy"
+                  />
+                ) : (
+                  <div class="w-full h-full bg-gradient-prism"></div>
+                )}
+                {/* Decorative butterfly overlay */}
+                <div class="absolute bottom-2 right-2 opacity-40">
+                  <svg class="w-8 h-8" viewBox="0 0 100 100">
+                    <path d="M48 50 C35 25, 5 20, 10 45 C5 70, 35 75, 48 55 Z M52 50 C65 25, 95 20, 90 45 C95 70, 65 75, 52 55 Z" fill="white"/>
+                  </svg>
+                </div>
+              </div>
               <div class="p-6">
                 <div class="flex flex-wrap gap-2 mb-4">
                   {post.data.tags.slice(0, 2).map((tag) => (
@@ -77,6 +96,19 @@ function formatDate(date: Date): string {
       <div class="grid md:grid-cols-3 gap-6">
         {posts.map((post) => (
           <a href={`/blog/${post.slug}/`} class="group block bg-white rounded-evolea-lg overflow-hidden hover:shadow-card transition-shadow">
+            {/* Featured Image with gradient fallback - per Brand Guide v3 */}
+            <div class="blog-card-image h-40 relative overflow-hidden">
+              {post.data.image ? (
+                <img
+                  src={post.data.image}
+                  alt={post.data.title}
+                  class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                  loading="lazy"
+                />
+              ) : (
+                <div class="w-full h-full bg-gradient-prism"></div>
+              )}
+            </div>
             <div class="p-6">
               <div class="flex flex-wrap gap-2 mb-3">
                 {post.data.tags.slice(0, 2).map((tag) => (

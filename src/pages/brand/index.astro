@@ -227,17 +227,37 @@ colors: {
         </p>
         <div class="grid md:grid-cols-3 gap-6 my-8">
           <div class="p-6 rounded-2xl text-center" style="background: linear-gradient(135deg, #7BEDD5 0%, #CD87F8 100%);">
-            <span class="text-4xl">🌈</span>
+            <!-- Spectrum SVG Icon -->
+            <svg class="w-12 h-12 mx-auto" viewBox="0 0 40 40" fill="none">
+              <path d="M5 35 Q20 5 35 35" stroke="url(#rainbow-icon)" stroke-width="4" fill="none" stroke-linecap="round"/>
+              <defs>
+                <linearGradient id="rainbow-icon" x1="0%" y1="0%" x2="100%" y2="0%">
+                  <stop offset="0%" stop-color="#FFFFFF"/>
+                  <stop offset="50%" stop-color="#FFE066"/>
+                  <stop offset="100%" stop-color="#FFFFFF"/>
+                </linearGradient>
+              </defs>
+            </svg>
             <h4 class="font-display font-bold text-white mt-2">Spectrum</h4>
             <p class="text-white/80 text-sm">Light through a prism</p>
           </div>
           <div class="p-6 rounded-2xl text-center" style="background: linear-gradient(135deg, #DD48E0 0%, #E97BF1 100%);">
-            <span class="text-4xl">🦋</span>
+            <!-- Butterfly SVG Icon -->
+            <svg class="w-12 h-12 mx-auto" viewBox="0 0 100 100">
+              <path d="M48 50 C35 25, 5 20, 10 45 C5 70, 35 75, 48 55 Z" fill="white" opacity="0.9"/>
+              <path d="M48 55 C35 60, 15 85, 30 90 C45 85, 48 65, 48 55 Z" fill="white" opacity="0.7"/>
+              <path d="M52 50 C65 25, 95 20, 90 45 C95 70, 65 75, 52 55 Z" fill="white" opacity="0.9"/>
+              <path d="M52 55 C65 60, 85 85, 70 90 C55 85, 52 65, 52 55 Z" fill="white" opacity="0.7"/>
+              <ellipse cx="50" cy="55" rx="2" ry="10" fill="white"/>
+            </svg>
             <h4 class="font-display font-bold text-white mt-2">Transformation</h4>
             <p class="text-white/80 text-sm">Evolution & growth</p>
           </div>
           <div class="p-6 rounded-2xl text-center" style="background: linear-gradient(135deg, #FFE066 0%, #FF7E5D 100%);">
-            <span class="text-4xl">⚡</span>
+            <!-- Energy/Lightning SVG Icon -->
+            <svg class="w-12 h-12 mx-auto" viewBox="0 0 40 40" fill="none">
+              <path d="M22 5L10 22H18L16 35L30 18H22L22 5Z" fill="white"/>
+            </svg>
             <h4 class="font-display font-bold text-white mt-2">Energy</h4>
             <p class="text-white/80 text-sm">Bold & vibrant</p>
           </div>
@@ -563,8 +583,8 @@ colors: {
         <!-- Gradient Background -->
         <div class="rounded-2xl p-12 flex flex-col items-center justify-center" style="background: linear-gradient(118deg, #7BEDD5 0%, #FFE066 21%, #FFFFFF 48%, #E97BF1 81%, #CD87F8 100%);">
           <div class="flex items-center gap-2 mb-8">
-            <span class="text-4xl font-display font-bold text-white drop-shadow-lg">EVOLEA</span>
-            <svg class="w-10 h-10 -ml-1 -mt-4 drop-shadow-lg" viewBox="0 0 100 100">
+            <span class="text-4xl font-display font-bold logo-on-prism">EVOLEA</span>
+            <svg class="w-10 h-10 -ml-1 -mt-4 butterfly-on-prism" viewBox="0 0 100 100">
               <path d="M48 50 C35 25, 5 20, 10 45 C5 70, 35 75, 48 55 Z" fill="white" opacity="0.95"/>
               <path d="M48 55 C35 60, 15 85, 30 90 C45 85, 48 65, 48 55 Z" fill="white" opacity="0.7"/>
               <path d="M52 50 C65 25, 95 20, 90 45 C95 70, 65 75, 52 55 Z" fill="white" opacity="0.95"/>
@@ -675,8 +695,11 @@ colors: {
               <path d="M48 50 C35 25, 5 20, 10 45 C5 70, 35 75, 48 55 Z M52 50 C65 25, 95 20, 90 45 C95 70, 65 75, 52 55 Z" fill="#DD48E0"/>
             </svg>
             <div class="relative">
-              <div class="w-12 h-12 rounded-xl mb-4 flex items-center justify-center text-2xl" style="background: linear-gradient(135deg, #DD48E0 0%, #CD87F8 100%);">
-                <span class="text-white">✨</span>
+              <div class="w-12 h-12 rounded-xl mb-4 flex items-center justify-center" style="background: linear-gradient(135deg, #DD48E0 0%, #CD87F8 100%);">
+                <!-- Star/Sparkle SVG Icon -->
+                <svg class="w-6 h-6" viewBox="0 0 24 24" fill="white">
+                  <path d="M12 2L14.09 8.26L20.18 9.27L15.54 13.14L16.82 19.77L12 16.77L7.18 19.77L8.46 13.14L3.82 9.27L9.91 8.26L12 2Z"/>
+                </svg>
               </div>
               <h4 class="font-display font-bold text-xl mb-2">Feature Card</h4>
               <p class="text-gray-600 text-sm">With butterfly watermark and magenta accent.</p>
@@ -687,8 +710,12 @@ colors: {
               <path d="M48 50 C35 25, 5 20, 10 45 C5 70, 35 75, 48 55 Z M52 50 C65 25, 95 20, 90 45 C95 70, 65 75, 52 55 Z" fill="white"/>
             </svg>
             <div class="relative">
-              <div class="w-12 h-12 rounded-xl mb-4 flex items-center justify-center text-2xl bg-white/20">
-                <span>🦋</span>
+              <div class="w-12 h-12 rounded-xl mb-4 flex items-center justify-center bg-white/20">
+                <!-- Butterfly SVG Icon -->
+                <svg class="w-6 h-6" viewBox="0 0 100 100">
+                  <path d="M48 50 C35 25, 5 20, 10 45 C5 70, 35 75, 48 55 Z M52 50 C65 25, 95 20, 90 45 C95 70, 65 75, 52 55 Z" fill="white"/>
+                  <ellipse cx="50" cy="52" rx="2" ry="8" fill="white"/>
+                </svg>
               </div>
               <h4 class="font-display font-bold text-xl mb-2">Gradient Card</h4>
               <p class="text-white/90 text-sm">Full gradient with butterfly decoration.</p>
@@ -929,6 +956,21 @@ colors: {
 
   .animate-float-slow {
     animation: float-slow 8s ease-in-out infinite;
+  }
+
+  /* Logo on Prism Gradient - per Brand Guide v3 */
+  .logo-on-prism {
+    color: #FFFFFF;
+    text-shadow:
+      0 0 20px rgba(93, 46, 140, 0.6),
+      0 0 40px rgba(186, 83, 173, 0.4),
+      0 2px 4px rgba(0, 0, 0, 0.15);
+    -webkit-text-stroke: 0.5px rgba(186, 83, 173, 0.2);
+  }
+
+  .butterfly-on-prism {
+    filter: drop-shadow(0 0 15px rgba(255, 255, 255, 0.8))
+            drop-shadow(0 2px 8px rgba(93, 46, 140, 0.4));
   }
 
   /* Reduced motion */

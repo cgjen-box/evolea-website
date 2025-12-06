@@ -43,11 +43,17 @@
     --evolea-text: #2D2A32;
     --evolea-text-light: #5C5762;
 
+    /* Dark Mode / Vision Statements - per Brand Guide v3 */
+    --evolea-charcoal: #1A1A2E;
+    --evolea-charcoal-light: #2D2A32;
+
     /* Shadows - Vibrant with magenta undertones */
     --shadow-soft: 0 4px 20px rgba(186, 83, 173, 0.15);
     --shadow-card: 0 8px 30px rgba(186, 83, 173, 0.2);
     --shadow-elevated: 0 20px 50px rgba(186, 83, 173, 0.25);
     --shadow-prism: 0 0 100px rgba(233, 123, 241, 0.4), 0 0 150px rgba(123, 237, 213, 0.3);
+    --shadow-text: 0 2px 4px rgba(0, 0, 0, 0.1), 0 4px 20px rgba(138, 61, 158, 0.3);
+    --shadow-glow: 0 0 60px rgba(221, 72, 224, 0.5);
 
     /* THE evolea.ch SIGNATURE PRISM GRADIENT */
     --gradient-prism: linear-gradient(118deg, #7BEDD5 0%, #FFE066 21%, #FFFFFF 48%, #E97BF1 81%, #CD87F8 100%);
@@ -658,6 +664,31 @@
 
   .team-photo-container:hover .team-photo-ring {
     box-shadow: 0 0 0 4px var(--evolea-magenta);
+  }
+
+  /* ===== STANDARDIZED TEAM PHOTOS - Brand Guide v3 ===== */
+  .team-photo {
+    @apply rounded-full object-cover object-top;
+    width: 180px;
+    height: 180px;
+    border: 4px solid white;
+    box-shadow: 0 8px 30px rgba(186, 83, 173, 0.2);
+  }
+
+  .team-photo-sm {
+    width: 128px;
+    height: 128px;
+  }
+
+  .team-photo-lg {
+    width: 200px;
+    height: 200px;
+  }
+
+  /* ===== BLOG CARD IMAGE - Brand Guide v3 ===== */
+  .blog-card-image {
+    min-height: 160px;
+    border-radius: 16px 16px 0 0;
   }
 }
 

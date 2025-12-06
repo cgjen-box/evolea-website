@@ -309,6 +309,51 @@ const programs = [
     </div>
   </section>
 
+  <!-- Dark Vision Section - per Brand Guide v3 -->
+  <section class="vision-section relative overflow-hidden">
+    <!-- Background gradient orbs -->
+    <div class="absolute inset-0 pointer-events-none">
+      <div class="absolute w-[600px] h-[600px] rounded-full top-[-200px] right-[-200px]" style="background: radial-gradient(circle, rgba(221, 72, 224, 0.15) 0%, transparent 70%);"></div>
+      <div class="absolute w-[400px] h-[400px] rounded-full bottom-[-100px] left-[-100px]" style="background: radial-gradient(circle, rgba(123, 237, 213, 0.12) 0%, transparent 70%);"></div>
+    </div>
+
+    <div class="container mx-auto max-w-4xl px-4 relative z-10 text-center">
+      <!-- Rainbow gradient logo text -->
+      <div class="vision-logo mb-8">EVOLEA</div>
+
+      <h2 class="vision-title">
+        {lang === 'de' ? 'Wo Kinder im Spektrum aufblühen' : 'Where Children on the Spectrum Flourish'}
+      </h2>
+
+      <p class="vision-description">
+        {lang === 'de'
+          ? 'EVOLEA schafft Räume, damit sich Kinder im Spektrum entfalten und ihren Weg glücklich und selbstbestimmt gehen können.'
+          : 'EVOLEA creates spaces where children on the spectrum can thrive and walk their path happily and self-determined.'}
+      </p>
+
+      <!-- Decorative butterfly -->
+      <div class="flex justify-center mt-10 opacity-50">
+        <svg class="w-16 h-16" viewBox="0 0 100 100">
+          <defs>
+            <linearGradient id="vision-bf-l" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stop-color="#7BEDD5"/>
+              <stop offset="100%" stop-color="#CD87F8"/>
+            </linearGradient>
+            <linearGradient id="vision-bf-r" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stop-color="#FFE066"/>
+              <stop offset="100%" stop-color="#E97BF1"/>
+            </linearGradient>
+          </defs>
+          <path d="M48 50 C35 25, 5 20, 10 45 C5 70, 35 75, 48 55 Z" fill="url(#vision-bf-l)"/>
+          <path d="M48 55 C35 60, 15 85, 30 90 C45 85, 48 65, 48 55 Z" fill="url(#vision-bf-l)" opacity="0.8"/>
+          <path d="M52 50 C65 25, 95 20, 90 45 C95 70, 65 75, 52 55 Z" fill="url(#vision-bf-r)"/>
+          <path d="M52 55 C65 60, 85 85, 70 90 C55 85, 52 65, 52 55 Z" fill="url(#vision-bf-r)" opacity="0.8"/>
+          <ellipse cx="50" cy="55" rx="2" ry="10" fill="white" opacity="0.8"/>
+        </svg>
+      </div>
+    </div>
+  </section>
+
   <!-- Page Closer - Prism Gradient with Floating Elements -->
   <PageCloser
     showCTA={true}
@@ -318,3 +363,39 @@ const programs = [
     ctaButtonHref={translatePath('/kontakt/')}
   />
 </Base>
+
+<style>
+  /* Vision Section - Dark mode per Brand Guide v3 */
+  .vision-section {
+    background: linear-gradient(180deg, #1A1A2E 0%, #2D2A32 100%);
+    padding: 6rem 0;
+  }
+
+  .vision-logo {
+    font-family: 'Fredoka', sans-serif;
+    font-size: 1.25rem;
+    font-weight: 600;
+    background: linear-gradient(90deg, #7BEDD5, #FFE066, #FF9ECC, #E97BF1, #CD87F8);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    letter-spacing: 0.1em;
+  }
+
+  .vision-title {
+    font-family: 'Fredoka', sans-serif;
+    font-size: clamp(2rem, 5vw, 3.5rem);
+    font-weight: 700;
+    color: #FFFFFF;
+    margin-bottom: 1.5rem;
+    line-height: 1.2;
+  }
+
+  .vision-description {
+    font-size: 1.25rem;
+    color: rgba(255, 255, 255, 0.8);
+    max-width: 600px;
+    margin: 0 auto;
+    line-height: 1.7;
+  }
+</style>

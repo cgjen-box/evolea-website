@@ -1,7 +1,65 @@
 # EVOLEA Website - Claude Project Instructions
 
 ## Project Overview
-EVOLEA Verein website - a Swiss non-profit providing educational programs for children on the autism spectrum or with ADHD, based in Zürich. Built with Astro, TypeScript, and Tailwind CSS. Bilingual: German (default) and English.
+EVOLEA Verein website - a Swiss non-profit providing educational programs for children on the autism spectrum or with ADHD, based in Zurich. Built with Astro, TypeScript, and Tailwind CSS. Bilingual: German (default) and English.
+
+---
+
+## BRAND GUIDE ADHERENCE (MANDATORY)
+
+**The EVOLEA Brand Guide v3.0 is the definitive source of truth.**
+Location: `.claude/todo/EVOLEA-BRAND-GUIDE-V3.md`
+
+### The 10 Brand Commandments (NON-NEGOTIABLE)
+
+1. **NEVER use emojis anywhere on the site** - Use SVG icons only
+2. **NEVER use transparent mobile menus** - Solid backgrounds always (white or brand gradient)
+3. **NEVER use text without shadows on gradients** - Always add depth for readability
+4. **NEVER use AI images for real content** - Real photos only for heroes, team, programs
+5. **NEVER let the butterfly cover the "A"** - Proper spacing required
+6. **NEVER use flat, muted, or corporate colors** - Bold and vibrant spectrum only
+7. **ALWAYS have a prism gradient hero** - Every page needs hero gradient
+8. **ALWAYS have a page closer** - Before every footer
+9. **ALWAYS use Fredoka for headlines** - Brand consistency
+10. **ALWAYS test on mobile** - Before deploying
+
+### Color Palette (CURRENT - DO NOT USE OLD COLORS)
+
+**Primary Colors:**
+| Name | Hex | Usage |
+|------|-----|-------|
+| Magenta | #DD48E0 | Primary CTAs, highlights |
+| Deep Purple | #BA53AD | Headlines, accents |
+| Lavender | #CD87F8 | Secondary accents |
+
+**Spectrum Colors:**
+| Name | Hex | Usage |
+|------|-----|-------|
+| Mint | #7BEDD5 | Fresh accents, success |
+| Sunshine | #FFE066 | Joy, warmth, highlights |
+| Coral | #FF7E5D | Energy, warm accents |
+| Sky Blue | #5DADE2 | Trust, calm |
+| Blush | #EF8EAE | Soft pink accents |
+
+**Neutrals:**
+| Name | Hex | Usage |
+|------|-----|-------|
+| Cream | #FFFBF7 | Page backgrounds |
+| Dark Text | #2D2A32 | Body text |
+| Light Text | #5C5762 | Secondary text |
+| Pure White | #FFFFFF | Cards, overlays |
+| Charcoal | #1A1A2E | Dark mode, vision statements |
+
+### Typography
+- **Headlines/Display**: Fredoka (Bold 700, SemiBold 600)
+- **Body/UI**: Poppins (Regular 400, Medium 500, SemiBold 600)
+
+### Imagery Hierarchy (STRICT)
+1. **Real Photography** (Primary) - Heroes, team, programs, blog featured
+2. **Illustrations** (Secondary) - Icons, decorative, 404 pages
+3. **AI-Generated** (LIMITED) - Only for blog illustrations when no photo available, social media, internal. NEVER for team/hero/real content.
+
+---
 
 ## Tech Stack
 - **Framework**: Astro 5.x with static site generation
@@ -61,7 +119,7 @@ const { title, variant = 'cream' } = Astro.props;
 
 ### Accessibility (WCAG AA Required)
 - All images need descriptive alt text
-- Color contrast ≥ 4.5:1
+- Color contrast >= 4.5:1
 - Keyboard navigation must work
 - Use semantic HTML elements
 - Include skip links
@@ -75,17 +133,7 @@ import { getLangFromUrl, useTranslations } from '@i18n/utils';
 const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
 
-// Usage: t('nav.home') → "Startseite" or "Home"
-```
-
-## Brand Colors
-```
-evolea-purple: #6B4C8A
-evolea-purple-light: #8B6CAA
-evolea-purple-dark: #4A3460
-evolea-cream: #FDF8F3
-evolea-green: #7CB97C
-evolea-orange: #E8A858
+// Usage: t('nav.home') -> "Startseite" or "Home"
 ```
 
 ## Content Guidelines
@@ -101,15 +149,15 @@ evolea-orange: #E8A858
 4. **B+U Schulberatung** - School consultation
 
 ## Testing Checklist
-- [ ] Lighthouse accessibility score ≥ 90
+- [ ] Lighthouse accessibility score >= 90
 - [ ] Mobile responsive (test 375px, 768px, 1024px)
 - [ ] Both DE and EN routes work
 - [ ] Forms submit correctly (Formspree)
 - [ ] No console errors
 - [ ] Images optimized and lazy-loaded
+- [ ] No emojis on any page (SVG icons only)
+- [ ] Mobile menu has solid background
+- [ ] All text readable on gradients
 
 ## Deployment
 GitHub Actions automatically builds and deploys on push to `main` branch. Custom domain: evolea.ch
-
-## Image Generation
-Use ImageAgent to create pictures with google nano banana pro. He has the API key. 
