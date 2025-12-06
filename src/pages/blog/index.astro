@@ -46,7 +46,7 @@ function formatDate(date: Date): string {
         <h2 class="text-2xl font-display font-bold text-evolea-purple mb-8">Empfohlene Artikel</h2>
         <div class="grid md:grid-cols-2 gap-8">
           {featuredPosts.map((post) => (
-            <a href={`/blog/${post.slug}/`} class="group block bg-evolea-cream rounded-evolea-lg overflow-hidden hover:shadow-card transition-shadow">
+            <a href={`${base}/blog/${post.slug}/`} class="group block bg-evolea-cream rounded-evolea-lg overflow-hidden hover:shadow-card transition-shadow">
               {/* Featured Image with gradient fallback - per Brand Guide v3 */}
               <div class="blog-card-image h-48 relative overflow-hidden">
                 {post.data.image ? (
@@ -98,7 +98,7 @@ function formatDate(date: Date): string {
       <h2 class="text-2xl font-display font-bold text-evolea-purple mb-8">Alle Artikel</h2>
       <div class="grid md:grid-cols-3 gap-6">
         {posts.map((post) => (
-          <a href={`/blog/${post.slug}/`} class="group block bg-white rounded-evolea-lg overflow-hidden hover:shadow-card transition-shadow">
+          <a href={`${base}/blog/${post.slug}/`} class="group block bg-white rounded-evolea-lg overflow-hidden hover:shadow-card transition-shadow">
             {/* Featured Image with gradient fallback - per Brand Guide v3 */}
             <div class="blog-card-image h-40 relative overflow-hidden">
               {post.data.image ? (
