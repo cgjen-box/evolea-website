@@ -1,7 +1,14 @@
 # Cloudflare Pages configuration for EVOLEA Website
 name = "evolea-website"
 pages_build_output_dir = "./dist"
-compatibility_date = "2024-12-01"
+
+# Use a recent compatibility date to enable process.env support
+compatibility_date = "2025-04-01"
+
+# Enable Node.js compatibility - this makes process.env work at runtime
+# which is required for Keystatic to read KEYSTATIC_SECRET, etc.
+# See: https://developers.cloudflare.com/workers/runtime-apis/nodejs/process/
+compatibility_flags = ["nodejs_compat"]
 
 # Environment variables for local development
 # Production values should be set in Cloudflare Dashboard
