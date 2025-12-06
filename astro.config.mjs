@@ -60,16 +60,5 @@ export default defineConfig({
       'process.env.KEYSTATIC_GITHUB_CLIENT_SECRET': JSON.stringify(process.env.KEYSTATIC_GITHUB_CLIENT_SECRET),
       'process.env.KEYSTATIC_SECRET': JSON.stringify(process.env.KEYSTATIC_SECRET),
     },
-    // Fix for React 19 + Cloudflare Workers (MessageChannel not defined)
-    // Use workerd-compatible resolve conditions for SSR
-    ssr: useCloudflare ? {
-      resolve: {
-        conditions: ['workerd', 'worker', 'browser'],
-        externalConditions: ['workerd', 'worker'],
-      },
-    } : {},
-    resolve: useCloudflare ? {
-      conditions: ['workerd', 'worker', 'browser', 'module', 'import', 'require'],
-    } : {},
   },
 });
