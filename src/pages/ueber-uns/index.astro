@@ -147,18 +147,48 @@ const colorClasses: Record<string, string> = {
     </div>
   </section>
 
-  <!-- Vision Section -->
-  <section class="py-16 md:py-24 bg-white">
-    <div class="container mx-auto max-w-4xl px-4 text-center">
+  <!-- Vision Section - Dark Theme per Brand Guide v3 -->
+  <section class="vision-dark-section relative py-20 md:py-28 overflow-hidden">
+    <!-- Background gradient orbs -->
+    <div class="absolute inset-0 pointer-events-none">
+      <div class="absolute w-[500px] h-[500px] rounded-full top-[-150px] right-[-150px]" style="background: radial-gradient(circle, rgba(221, 72, 224, 0.12) 0%, transparent 70%);"></div>
+      <div class="absolute w-[400px] h-[400px] rounded-full bottom-[-100px] left-[-100px]" style="background: radial-gradient(circle, rgba(123, 237, 213, 0.1) 0%, transparent 70%);"></div>
+      <div class="absolute w-[300px] h-[300px] rounded-full top-[50%] left-[50%] -translate-x-1/2 -translate-y-1/2" style="background: radial-gradient(circle, rgba(205, 135, 248, 0.08) 0%, transparent 70%);"></div>
+    </div>
+
+    <div class="container mx-auto max-w-4xl px-4 text-center relative z-10">
       <div class="reveal">
-        <span class="section-label">Unsere Vision</span>
-        <h2 class="text-3xl md:text-4xl font-display font-bold text-evolea-purple mb-8">
+        <!-- Rainbow gradient label -->
+        <span class="vision-label">Unsere Vision</span>
+
+        <h2 class="vision-title">
           Eine Gesellschaft, die Vielfalt feiert
         </h2>
-        <blockquote class="text-xl md:text-2xl text-evolea-text-light leading-relaxed italic mb-8">
+
+        <blockquote class="vision-quote">
           "Wir träumen von einer Welt, in der neurotypische Entwicklung nicht die einzige Norm ist - in der jedes Kind, unabhängig von seiner Art zu denken und zu lernen, die gleichen Chancen hat."
         </blockquote>
-        <div class="w-24 h-1 bg-gradient-spectrum mx-auto rounded-full"></div>
+
+        <!-- Decorative butterfly -->
+        <div class="flex justify-center mt-8">
+          <svg class="w-12 h-12 opacity-40" viewBox="0 0 100 100">
+            <defs>
+              <linearGradient id="vision-dark-bf-l" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stop-color="#7BEDD5"/>
+                <stop offset="100%" stop-color="#CD87F8"/>
+              </linearGradient>
+              <linearGradient id="vision-dark-bf-r" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stop-color="#FFE066"/>
+                <stop offset="100%" stop-color="#E97BF1"/>
+              </linearGradient>
+            </defs>
+            <path d="M48 50 C35 25, 5 20, 10 45 C5 70, 35 75, 48 55 Z" fill="url(#vision-dark-bf-l)"/>
+            <path d="M48 55 C35 60, 15 85, 30 90 C45 85, 48 65, 48 55 Z" fill="url(#vision-dark-bf-l)" opacity="0.7"/>
+            <path d="M52 50 C65 25, 95 20, 90 45 C95 70, 65 75, 52 55 Z" fill="url(#vision-dark-bf-r)"/>
+            <path d="M52 55 C65 60, 85 85, 70 90 C55 85, 52 65, 52 55 Z" fill="url(#vision-dark-bf-r)" opacity="0.7"/>
+            <ellipse cx="50" cy="55" rx="2" ry="10" fill="white" opacity="0.6"/>
+          </svg>
+        </div>
       </div>
     </div>
   </section>
@@ -320,5 +350,42 @@ const colorClasses: Record<string, string> = {
 <style>
   .bg-gradient-spectrum {
     background: linear-gradient(90deg, #7BEDD5 0%, #FFE066 16%, #FF7E5D 32%, #EF8EAE 48%, #E97BF1 64%, #CD87F8 80%, #7BEDD5 100%);
+  }
+
+  /* Dark Vision Section - per Brand Guide v3 */
+  .vision-dark-section {
+    background: linear-gradient(180deg, #1A1A2E 0%, #2D2A32 100%);
+  }
+
+  .vision-label {
+    display: inline-block;
+    font-family: 'Fredoka', sans-serif;
+    font-size: 0.9rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    background: linear-gradient(90deg, #7BEDD5, #FFE066, #FF9ECC, #E97BF1, #CD87F8);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 1.5rem;
+  }
+
+  .vision-title {
+    font-family: 'Fredoka', sans-serif;
+    font-size: clamp(1.75rem, 4vw, 2.75rem);
+    font-weight: 700;
+    color: #FFFFFF;
+    margin-bottom: 2rem;
+    line-height: 1.2;
+  }
+
+  .vision-quote {
+    font-size: clamp(1.1rem, 2.5vw, 1.4rem);
+    color: rgba(255, 255, 255, 0.85);
+    font-style: italic;
+    line-height: 1.8;
+    max-width: 700px;
+    margin: 0 auto;
   }
 </style>
