@@ -45,4 +45,13 @@ export default defineConfig({
   build: {
     assets: 'assets',
   },
+  // Fix for Keystatic environment variables on Cloudflare Pages
+  // See: https://github.com/Thinkmill/keystatic/issues/1229
+  vite: {
+    define: {
+      'process.env.KEYSTATIC_GITHUB_CLIENT_ID': JSON.stringify(process.env.KEYSTATIC_GITHUB_CLIENT_ID),
+      'process.env.KEYSTATIC_GITHUB_CLIENT_SECRET': JSON.stringify(process.env.KEYSTATIC_GITHUB_CLIENT_SECRET),
+      'process.env.KEYSTATIC_SECRET': JSON.stringify(process.env.KEYSTATIC_SECRET),
+    },
+  },
 });
