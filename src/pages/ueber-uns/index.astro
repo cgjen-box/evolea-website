@@ -1,12 +1,13 @@
 ---
 import Base from '@layouts/Base.astro';
-import FloatingShapes from '@components/FloatingShapes.astro';
+import InnerPageHero from '@components/InnerPageHero.astro';
 import PageCloser from '@components/PageCloser.astro';
 import Butterfly from '@components/Butterfly.astro';
 import Icon from '@components/Icon.astro';
 import { getLangFromUrl, useTranslations, useTranslatedPath } from '@i18n/utils';
 
 const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
 const translatePath = useTranslatedPath(lang);
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 
@@ -81,32 +82,17 @@ const colorClasses: Record<string, string> = {
 };
 ---
 
-<Base title="Uber uns" description="EVOLEA ist ein gemeinnütziger Verein in Zürich. Erfahren Sie mehr über unsere Mission, Werte und pädagogischen Grundsätze für Kinder im Autismus Spektrum.">
-  <!-- Hero Section -->
-  <section class="relative py-20 md:py-32 overflow-hidden" style="background: var(--gradient-prism);">
-    <FloatingShapes variant="hero" />
-    <div class="container mx-auto max-w-6xl px-4 relative z-10">
-      <div class="text-center max-w-3xl mx-auto">
-        <span class="inline-flex items-center gap-2 bg-white/20 backdrop-blur-sm text-white px-4 py-2 rounded-full text-sm font-medium mb-6">
-          <Butterfly size="xs" variant="white" />
-          <span>Uber EVOLEA</span>
-        </span>
-        <h1 class="text-4xl md:text-5xl lg:text-6xl font-display font-bold text-white mb-6 leading-tight drop-shadow-lg">
-          Wo Kinder im Spektrum aufblühen
-        </h1>
-        <p class="text-xl md:text-2xl text-white/90 leading-relaxed drop-shadow">
-          EVOLEA schafft Räume, damit sich Kinder im Spektrum entfalten und ihren Weg glücklich und selbstbestimmt gehen können.
-        </p>
-      </div>
-    </div>
-
-    <!-- Decorative wave -->
-    <div class="absolute bottom-0 left-0 right-0 w-full overflow-hidden leading-none">
-      <svg class="relative block w-full h-16 md:h-24" viewBox="0 0 1200 120" preserveAspectRatio="none">
-        <path d="M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V120H0V27.35A600.21,600.21,0,0,0,321.39,56.44Z" fill="#FFFBF7"></path>
-      </svg>
-    </div>
-  </section>
+<Base title="Über uns" description="EVOLEA ist ein gemeinnütziger Verein in Zürich. Erfahren Sie mehr über unsere Mission, Werte und pädagogischen Grundsätze für Kinder im Autismus Spektrum." transparentHeader={true}>
+  <!-- Premium Hero with Prism Gradient -->
+  <InnerPageHero
+    title={t('nav.about')}
+    subtitle="EVOLEA schafft Räume, damit sich Kinder im Spektrum entfalten und ihren Weg glücklich und selbstbestimmt gehen können."
+    breadcrumbs={[
+      { label: 'Startseite', href: translatePath('/') },
+      { label: 'Über uns' }
+    ]}
+    size="md"
+  />
 
   <!-- Mission Section -->
   <section class="py-16 md:py-24 bg-evolea-cream">
