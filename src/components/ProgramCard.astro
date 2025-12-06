@@ -1,9 +1,15 @@
 ---
+/**
+ * ProgramCard - Card component for displaying programs
+ * BRAND COMPLIANCE: Uses SVG icons instead of emojis per Brand Guide v3.0
+ */
+import Icon from './Icon.astro';
+
 interface Props {
   title: string;
   description: string;
   href: string;
-  icon?: string;
+  icon?: 'sprout' | 'palette' | 'ball' | 'school' | 'museum' | 'cooking' | 'coffee';
   variant?: 'default' | 'featured';
 }
 
@@ -23,7 +29,9 @@ const { title, description, href, icon, variant = 'default' } = Astro.props;
   ]}
 >
   {icon && (
-    <div class="text-4xl mb-4" aria-hidden="true">{icon}</div>
+    <div class:list={["mb-4", { 'program-icon-white': variant === 'featured' }]} aria-hidden="true">
+      <Icon name={icon} size="xl" gradient={variant === 'default'} />
+    </div>
   )}
   <h3 class:list={[
     'text-xl font-semibold mb-2 group-hover:underline',
@@ -44,3 +52,11 @@ const { title, description, href, icon, variant = 'default' } = Astro.props;
     {description}
   </p>
 </a>
+
+<style>
+  .program-icon-white :global(path),
+  .program-icon-white :global(circle),
+  .program-icon-white :global(rect) {
+    stroke: white;
+  }
+</style>
