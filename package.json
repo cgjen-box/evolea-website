@@ -12,7 +12,10 @@
   },
   "dependencies": {
     "@astrojs/check": "^0.9.4",
+    "@astrojs/node": "^9.5.1",
     "@fontsource/fredoka": "^5.2.10",
+    "@keystatic/astro": "^5.0.6",
+    "@keystatic/core": "^0.5.48",
     "astro": "^5.1.1",
     "typescript": "^5.7.2"
   },

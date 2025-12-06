@@ -1,0 +1,21 @@
+{
+  "pageId": "homepage",
+  "de": {
+    "title": "EVOLEA - Wo Kinder im Spektrum aufblühen",
+    "subtitle": "Bildungsprogramme für Kinder mit Autismus oder ADHS",
+    "description": "EVOLEA schafft Räume für Kinder mit Autismus oder ADHS, in denen sie wachsen, lernen und ihre einzigartigen Stärken entdecken können.",
+    "heroTitle": "Wo Kinder im Spektrum aufblühen",
+    "heroSubtitle": "EVOLEA schafft Räume für Kinder mit Autismus oder ADHS, in denen sie wachsen, lernen und ihre einzigartigen Stärken entdecken können.",
+    "ctaText": "Angebote entdecken",
+    "sections": []
+  },
+  "en": {
+    "title": "EVOLEA - Where Children on the Spectrum Flourish",
+    "subtitle": "Educational programs for children with autism or ADHD",
+    "description": "EVOLEA creates spaces for children with autism or ADHD where they can grow, learn, and discover their unique strengths.",
+    "heroTitle": "Where Children on the Spectrum Flourish",
+    "heroSubtitle": "EVOLEA creates spaces for children with autism or ADHD where they can grow, learn, and discover their unique strengths.",
+    "ctaText": "Explore Programs",
+    "sections": []
+  }
+}

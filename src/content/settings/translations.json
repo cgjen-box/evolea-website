@@ -1,0 +1,62 @@
+{
+  "navigation": {
+    "de": {
+      "home": "Startseite",
+      "programs": "Angebote",
+      "about": "Über uns",
+      "team": "Team",
+      "blog": "Blog",
+      "contact": "Kontakt"
+    },
+    "en": {
+      "home": "Home",
+      "programs": "Programs",
+      "about": "About Us",
+      "team": "Team",
+      "blog": "Blog",
+      "contact": "Contact"
+    }
+  },
+  "hero": {
+    "de": {
+      "title": "Wo Kinder im Spektrum aufblühen",
+      "subtitle": "EVOLEA schafft Räume für Kinder mit Autismus oder ADHS, in denen sie wachsen, lernen und ihre einzigartigen Stärken entdecken können.",
+      "ctaPrimary": "Angebote entdecken",
+      "ctaSecondary": "Kontakt aufnehmen"
+    },
+    "en": {
+      "title": "Where Children on the Spectrum Flourish",
+      "subtitle": "EVOLEA creates spaces for children with autism or ADHD where they can grow, learn, and discover their unique strengths.",
+      "ctaPrimary": "Explore Programs",
+      "ctaSecondary": "Get in Touch"
+    }
+  },
+  "footer": {
+    "de": {
+      "tagline": "EVOLEA schafft Räume, damit sich Kinder im Spektrum entfalten und ihren Weg glücklich und selbstbestimmt gehen können.",
+      "privacy": "Datenschutz",
+      "imprint": "Impressum",
+      "copyright": "© 2025 EVOLEA Verein. Alle Rechte vorbehalten."
+    },
+    "en": {
+      "tagline": "EVOLEA creates spaces for children on the spectrum to flourish and go their own way happily and self-determined.",
+      "privacy": "Privacy Policy",
+      "imprint": "Legal Notice",
+      "copyright": "© 2025 EVOLEA Verein. All rights reserved."
+    }
+  },
+  "common": {
+    "de": {
+      "learnMore": "Mehr erfahren",
+      "contact": "Kontakt aufnehmen",
+      "readMore": "Weiterlesen",
+      "backHome": "Zurück zur Startseite"
+    },
+    "en": {
+      "learnMore": "Learn more",
+      "contact": "Get in touch",
+      "readMore": "Read more",
+      "backHome": "Back to home"
+    }
+  }
+}
