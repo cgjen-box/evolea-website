@@ -23,7 +23,7 @@ if (!isGitHubPages) {
 
 // https://astro.build/config
 export default defineConfig({
-  site: isGitHubPages ? 'https://cgjen-box.github.io' : 'https://evolea-cms.pages.dev',
+  site: isGitHubPages ? 'https://cgjen-box.github.io' : 'https://evolea-website.pages.dev',
   base: isGitHubPages ? '/evolea-website' : '/',
   // Astro 5: use 'server' instead of 'hybrid', with static pages prerendered by default
   output: isGitHubPages || !cloudflareAdapter ? 'static' : 'server',
