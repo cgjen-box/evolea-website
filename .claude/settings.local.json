@@ -10,7 +10,14 @@
       "Bash(curl:*)",
       "WebFetch(domain:cgjen-box.github.io)",
       "Bash(git checkout:*)",
-      "Bash(python3:*)"
+      "Bash(python3:*)",
+      "Bash(npm install:*)",
+      "Bash(set GITHUB_PAGES=true)",
+      "Bash(npx husky init)",
+      "WebFetch(domain:github.com)",
+      "WebSearch",
+      "WebFetch(domain:developers.cloudflare.com)",
+      "WebFetch(domain:evolea-website.pages.dev)"
     ],
     "deny": [],
     "ask": []
