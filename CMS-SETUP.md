@@ -5,50 +5,54 @@ This project uses **Keystatic CMS** for content management with GitHub integrati
 ## Architecture
 
 - **Main Website**: GitHub Pages (static) - https://cgjen-box.github.io/evolea-website/
-- **CMS Admin**: Vercel (hybrid/SSR) - Your Vercel URL
+- **CMS Admin**: Cloudflare Pages (hybrid/SSR) - https://evolea-cms.pages.dev
 
 The CMS commits changes directly to GitHub, which triggers GitHub Actions to rebuild and deploy the static site.
 
 ## Setup Instructions
 
-### 1. Deploy CMS to Vercel (Free)
+### 1. Deploy CMS to Cloudflare Pages (Free)
 
-1. Go to [vercel.com](https://vercel.com) and sign up/login with GitHub
-2. Click "Add New Project"
-3. Import the `cgjen-box/evolea-website` repository
-4. Vercel will auto-detect Astro - click "Deploy"
-5. Note your Vercel URL (e.g., `evolea-website-cms.vercel.app`)
+1. Go to [pages.cloudflare.com](https://pages.cloudflare.com) and sign up/login
+2. Click "Create a project" → "Connect to Git"
+3. Connect your GitHub account and select `cgjen-box/evolea-website`
+4. Configure build settings:
+   - **Framework preset**: Astro
+   - **Build command**: `npm run build`
+   - **Build output directory**: `dist`
+5. Click "Save and Deploy"
+6. Note your Cloudflare Pages URL (e.g., `evolea-cms.pages.dev`)
 
 ### 2. Create GitHub OAuth App
 
-1. Go to GitHub → Settings → Developer settings → OAuth Apps
+1. Go to GitHub → Settings → Developer settings → [OAuth Apps](https://github.com/settings/developers)
 2. Click "New OAuth App"
 3. Fill in:
    - **Application name**: EVOLEA CMS
-   - **Homepage URL**: Your Vercel URL (e.g., `https://evolea-website-cms.vercel.app`)
-   - **Authorization callback URL**: `https://YOUR-VERCEL-URL/api/keystatic/github/oauth/callback`
+   - **Homepage URL**: `https://evolea-cms.pages.dev` (your Cloudflare URL)
+   - **Authorization callback URL**: `https://evolea-cms.pages.dev/api/keystatic/github/oauth/callback`
 4. Click "Register application"
 5. Copy the **Client ID**
 6. Click "Generate a new client secret" and copy it
 
-### 3. Configure Vercel Environment Variables
+### 3. Configure Cloudflare Environment Variables
 
-In your Vercel project dashboard:
+In your Cloudflare Pages dashboard:
 
-1. Go to Settings → Environment Variables
-2. Add these variables:
+1. Go to your project → Settings → Environment variables
+2. Add these variables (for **Production** environment):
 
 | Variable | Value |
 |----------|-------|
 | `KEYSTATIC_GITHUB_CLIENT_ID` | Your GitHub OAuth Client ID |
 | `KEYSTATIC_GITHUB_CLIENT_SECRET` | Your GitHub OAuth Client Secret |
-| `KEYSTATIC_SECRET` | A random string (generate with `openssl rand -hex 32`) |
+| `KEYSTATIC_SECRET` | A random string (use `openssl rand -hex 32` to generate) |
 
-3. Redeploy the project
+3. Trigger a new deployment (Settings → Builds → Retry deployment)
 
 ### 4. Access the CMS
 
-1. Go to `https://YOUR-VERCEL-URL/keystatic`
+1. Go to `https://evolea-cms.pages.dev/keystatic`
 2. Click "Sign in with GitHub"
 3. Authorize the app
 4. Start editing!
@@ -79,6 +83,20 @@ In your Vercel project dashboard:
 
 ## How It Works
 
+```
+┌─────────────────┐     commits      ┌─────────────────┐
+│  Keystatic CMS  │ ───────────────> │     GitHub      │
+│  (Cloudflare)   │                  │   Repository    │
+└─────────────────┘                  └────────┬────────┘
+                                              │
+                                              │ triggers
+                                              ▼
+┌─────────────────┐     deploys      ┌─────────────────┐
+│  GitHub Pages   │ <─────────────── │  GitHub Actions │
+│  (Static Site)  │                  │    (Build)      │
+└─────────────────┘                  └─────────────────┘
+```
+
 1. **Editor makes change** in Keystatic CMS
 2. **Keystatic commits** the change to GitHub
 3. **GitHub Actions** automatically rebuilds the static site
@@ -88,19 +106,19 @@ Changes typically appear on the live site within 2-3 minutes.
 
 ## Local Development
 
-For local development, the CMS runs in "local" mode (no GitHub auth needed):
+For local development, run in static mode:
 
 ```bash
 npm run dev
 ```
 
-Then visit `http://localhost:4321/keystatic` to access the local CMS.
+Note: The Cloudflare adapter doesn't support Windows ARM64 locally, but this doesn't affect deployment. For local CMS testing, you can edit content files directly or use GitHub's web editor.
 
 ## Troubleshooting
 
 ### "Unauthorized" error when signing in
-- Check that your OAuth callback URL matches exactly
-- Verify environment variables are set in Vercel
+- Check that your OAuth callback URL matches exactly: `https://YOUR-CLOUDFLARE-URL/api/keystatic/github/oauth/callback`
+- Verify environment variables are set in Cloudflare Pages
 
 ### Changes not appearing on live site
 - Check GitHub Actions for build errors
@@ -109,7 +127,11 @@ Then visit `http://localhost:4321/keystatic` to access the local CMS.
 ### CMS shows blank page
 - Clear browser cache
 - Check browser console for errors
-- Verify Vercel deployment succeeded
+- Verify Cloudflare deployment succeeded
+
+### Build fails on Cloudflare
+- Check that all environment variables are set
+- Look at the build logs for specific errors
 
 ## Team Access
 
@@ -119,9 +141,18 @@ Any team member with:
 
 Can use the CMS. No additional accounts needed!
 
+## Cloudflare Pages Free Tier Limits
+
+- **Builds**: 500 per month
+- **Bandwidth**: Unlimited
+- **Sites**: Unlimited
+- **Custom domains**: Supported
+
+These limits are very generous for a CMS that only rebuilds when content changes.
+
 ## Security Notes
 
 - The CMS only has access to this repository
 - All changes are tracked in git history
 - OAuth tokens are securely managed by Keystatic
-- Vercel environment variables are encrypted
+- Cloudflare environment variables are encrypted
