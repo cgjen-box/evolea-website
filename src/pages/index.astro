@@ -5,6 +5,7 @@ import AngeboteSectionV3 from '@components/AngeboteSectionV3.astro';
 import PageCloser from '@components/PageCloser.astro';
 import FloatingShapes from '@components/FloatingShapes.astro';
 import Icon from '@components/Icon.astro';
+import EditLink from '@components/EditLink.astro';
 import { getLangFromUrl, useTranslations, useTranslatedPath } from '@i18n/utils';
 
 const lang = getLangFromUrl(Astro.url);
@@ -286,6 +287,9 @@ const colorClasses: Record<string, string> = {
     ctaButtonText={t('contact.cta')}
     ctaButtonHref={translatePath('/kontakt/')}
   />
+
+  <!-- Edit Link for Keystatic -->
+  <EditLink type="singleton" collection="siteSettings" label="Edit" />
 </Base>
 
 <style>
