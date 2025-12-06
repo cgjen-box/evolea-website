@@ -40,13 +40,15 @@ jobs:
         run: npm ci
         working-directory: ${{ env.BUILD_PATH }}
 
-      - name: Build with Astro
+      - name: Build with Astro (Static for GitHub Pages)
         run: |
           npm run build \
             -- \
             --site "${{ steps.pages.outputs.origin }}" \
             --base "${{ steps.pages.outputs.base_path }}"
         working-directory: ${{ env.BUILD_PATH }}
+        env:
+          GITHUB_PAGES: 'true'
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
