@@ -2,6 +2,7 @@
 import Base from '@layouts/Base.astro';
 import FloatingShapes from '@components/FloatingShapes.astro';
 import GradientCTA from '@components/GradientCTA.astro';
+import EditLink from '@components/EditLink.astro';
 import { getCollection, type CollectionEntry } from 'astro:content';
 import { getLangFromUrl, useTranslatedPath } from '@i18n/utils';
 
@@ -132,6 +133,9 @@ const relatedPosts = allPosts
     buttonHref={translatePath('/kontakt/')}
     variant="calm"
   />
+
+  <!-- Edit Link for Keystatic -->
+  <EditLink type="collection" collection="blog" slug={post.slug} label="Edit" />
 </Base>
 
 <style>
