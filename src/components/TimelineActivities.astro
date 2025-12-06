@@ -4,8 +4,10 @@
  *
  * Prioritizes programs with open registration over running programs.
  * Design per EVOLEA Brand Guidelines v3.
+ * BRAND COMPLIANCE: All emojis replaced with SVG icons per Brand Guide v3.0
  */
 import { getLangFromUrl, useTranslatedPath } from '@i18n/utils';
+import Icon from './Icon.astro';
 
 const lang = getLangFromUrl(Astro.url);
 const translatePath = useTranslatedPath(lang);
@@ -38,7 +40,7 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
       <!-- Mini Turnen - Registration Open -->
       <article class="activity-card registration-open" data-animate="card" data-delay="0">
         <div class="status-badge">
-          <span class="meta-icon">✨</span>
+          <Icon name="sparkle" size="xs" class="status-icon-white" gradient={false} />
           <span>Anmeldung offen</span>
         </div>
         <h3 class="activity-title">Mini Turnen</h3>
@@ -48,15 +50,15 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
         </p>
         <div class="activity-meta">
           <div class="meta-item">
-            <span class="meta-icon">📅</span>
+            <Icon name="calendar" size="xs" class="meta-icon-white" gradient={false} />
             <span>Start: Januar 2025</span>
           </div>
           <div class="meta-item">
-            <span class="meta-icon">👶</span>
+            <Icon name="child" size="xs" class="meta-icon-white" gradient={false} />
             <span>5–8 Jahre</span>
           </div>
           <div class="meta-item">
-            <span class="meta-icon">📍</span>
+            <Icon name="location" size="xs" class="meta-icon-white" gradient={false} />
             <span>Zürich</span>
           </div>
         </div>
@@ -69,7 +71,7 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
       <!-- Mini Gallery - Registration Open -->
       <article class="activity-card registration-open" data-animate="card" data-delay="1">
         <div class="status-badge">
-          <span class="meta-icon">✨</span>
+          <Icon name="sparkle" size="xs" class="status-icon-white" gradient={false} />
           <span>Anmeldung offen</span>
         </div>
         <h3 class="activity-title">Mini Gallery</h3>
@@ -79,15 +81,15 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
         </p>
         <div class="activity-meta">
           <div class="meta-item">
-            <span class="meta-icon">📅</span>
+            <Icon name="calendar" size="xs" class="meta-icon-white" gradient={false} />
             <span>Start: März 2025</span>
           </div>
           <div class="meta-item">
-            <span class="meta-icon">👶</span>
+            <Icon name="child" size="xs" class="meta-icon-white" gradient={false} />
             <span>5–8 Jahre</span>
           </div>
           <div class="meta-item">
-            <span class="meta-icon">🎨</span>
+            <Icon name="palette" size="xs" class="meta-icon-white" gradient={false} />
             <span>Kreativ</span>
           </div>
         </div>
@@ -105,7 +107,7 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
       <!-- Mini Garten - Currently Running -->
       <article class="activity-card currently-running" data-animate="card" data-delay="2">
         <div class="status-badge">
-          <span class="meta-icon">✅</span>
+          <Icon name="check" size="xs" class="status-icon-dark" />
           <span>Laufend</span>
         </div>
         <h3 class="activity-title">Mini Garten</h3>
@@ -114,11 +116,11 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
         </p>
         <div class="activity-meta">
           <div class="meta-item">
-            <span class="meta-icon">📅</span>
+            <Icon name="calendar" size="xs" class="meta-icon-dark" />
             <span>Seit September 2024</span>
           </div>
           <div class="meta-item">
-            <span class="meta-icon">👥</span>
+            <Icon name="people" size="xs" class="meta-icon-dark" />
             <span>Aktive Gruppe</span>
           </div>
         </div>
@@ -130,7 +132,7 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
       <!-- Mini Restaurant - Currently Running -->
       <article class="activity-card currently-running" data-animate="card" data-delay="3">
         <div class="status-badge">
-          <span class="meta-icon">🔥</span>
+          <Icon name="fire" size="xs" class="status-icon-dark" />
           <span>Woche 8 von 10</span>
         </div>
         <h3 class="activity-title">Mini Restaurant</h3>
@@ -139,11 +141,11 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
         </p>
         <div class="activity-meta">
           <div class="meta-item">
-            <span class="meta-icon">📅</span>
+            <Icon name="calendar" size="xs" class="meta-icon-dark" />
             <span>10-Wochen-Programm</span>
           </div>
           <div class="meta-item">
-            <span class="meta-icon">👥</span>
+            <Icon name="people" size="xs" class="meta-icon-dark" />
             <span>6 Teilnehmer</span>
           </div>
         </div>
@@ -157,7 +159,7 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
     <!-- Schulberatung - Separate Section -->
     <div class="schulberatung-standalone">
       <a href={translatePath('/angebote/schulberatung/')} class="schulberatung-card">
-        <h3>🏫 Schulberatung</h3>
+        <h3 class="schulberatung-title"><Icon name="school" size="sm" class="schulberatung-icon" /> Schulberatung</h3>
         <p>Beratung und Unterstützung für Schulen, Lehrpersonen und Fachkräfte im Umgang mit Kindern im Spektrum.</p>
         <span class="schulberatung-link">Mehr erfahren →</span>
       </a>
@@ -423,8 +425,57 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
     font-size: 0.9rem;
   }
 
-  .meta-icon {
-    font-size: 1rem;
+  /* Icon styling */
+  .status-icon-white {
+    color: white;
+  }
+
+  .status-icon-white :global(path),
+  .status-icon-white :global(circle) {
+    stroke: white;
+    fill: white;
+    fill-opacity: 0.3;
+  }
+
+  .status-icon-dark {
+    color: #2D2D2D;
+  }
+
+  .status-icon-dark :global(path),
+  .status-icon-dark :global(circle) {
+    stroke: #2D2D2D;
+  }
+
+  .meta-icon-white {
+    color: white;
+  }
+
+  .meta-icon-white :global(path),
+  .meta-icon-white :global(circle),
+  .meta-icon-white :global(rect) {
+    stroke: white;
+  }
+
+  .meta-icon-dark {
+    color: #374151;
+  }
+
+  .meta-icon-dark :global(path),
+  .meta-icon-dark :global(circle),
+  .meta-icon-dark :global(rect) {
+    stroke: #374151;
+  }
+
+  .schulberatung-icon {
+    display: inline-block;
+    vertical-align: middle;
+    margin-right: 0.5rem;
+  }
+
+  .schulberatung-title {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
   }
 
   .activity-actions {
@@ -464,6 +515,10 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
     color: #BA53AD;
     font-size: 1.25rem;
     margin-bottom: 0.75rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
   }
 
   .schulberatung-card p {

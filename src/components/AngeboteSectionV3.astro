@@ -6,8 +6,10 @@
  * BOTTOM ROW: 3 smaller cards for ongoing/future programs
  *
  * Design per EVOLEA-ANGEBOTE-CLAUDE-CODEv6.md
+ * BRAND COMPLIANCE: All emojis replaced with SVG icons per Brand Guide v3.0
  */
 import { getLangFromUrl, useTranslatedPath } from '@i18n/utils';
+import Icon from './Icon.astro';
 
 const lang = getLangFromUrl(Astro.url);
 const translatePath = useTranslatedPath(lang);
@@ -32,18 +34,18 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
       <!-- Mini Turnen -->
       <article class="angebot-card-v3 card-open-v3" data-animate="card" data-delay="0">
         <div class="status-badge-v3 badge-open-v3">
-          <span>✨</span>
+          <Icon name="sparkle" size="xs" class="badge-icon-white" gradient={false} />
           <span>Anmeldung offen</span>
         </div>
-        <div class="angebot-icon-v3">⚽</div>
+        <div class="angebot-icon-v3"><Icon name="ball" size="lg" class="icon-white" gradient={false} /></div>
         <h3 class="angebot-title-v3">Mini Turnen</h3>
         <p class="angebot-description-v3">
           Bewegung, Spass und motorische Förderung in einer kleinen, verständnisvollen Gruppe.
         </p>
         <div class="angebot-meta-v3">
-          <span>📅 Start: Januar 2025</span>
-          <span>🕐 Mittwochs 18:30</span>
-          <span>👶 3–6 Jahre</span>
+          <span class="meta-item-v3"><Icon name="calendar" size="xs" class="meta-icon-white" gradient={false} /> Start: Januar 2025</span>
+          <span class="meta-item-v3"><Icon name="clock" size="xs" class="meta-icon-white" gradient={false} /> Mittwochs 18:30</span>
+          <span class="meta-item-v3"><Icon name="child" size="xs" class="meta-icon-white" gradient={false} /> 3–6 Jahre</span>
         </div>
         <div class="angebot-actions-v3">
           <a href={translatePath('/angebote/mini-turnen/')} class="btn-angebot-primary-v3">Mehr →</a>
@@ -53,18 +55,18 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
       <!-- Mini Museum -->
       <article class="angebot-card-v3 card-open-v3" data-animate="card" data-delay="1">
         <div class="status-badge-v3 badge-open-v3">
-          <span>✨</span>
+          <Icon name="sparkle" size="xs" class="badge-icon-white" gradient={false} />
           <span>Anmeldung offen</span>
         </div>
-        <div class="angebot-icon-v3">🏛️</div>
+        <div class="angebot-icon-v3"><Icon name="museum" size="lg" class="icon-white" gradient={false} /></div>
         <h3 class="angebot-title-v3">Mini Museum</h3>
         <p class="angebot-description-v3">
           Kreative Kunstprojekte und gemeinsame Ausstellungen. Soziale Kompetenz durch Schaffen.
         </p>
         <div class="angebot-meta-v3">
-          <span>📅 Start: Februar 2026</span>
-          <span>🕐 Samstag 09:00, ca. jede 2. Woche</span>
-          <span>👶 5–8 Jahre</span>
+          <span class="meta-item-v3"><Icon name="calendar" size="xs" class="meta-icon-white" gradient={false} /> Start: Februar 2026</span>
+          <span class="meta-item-v3"><Icon name="clock" size="xs" class="meta-icon-white" gradient={false} /> Samstag 09:00, ca. jede 2. Woche</span>
+          <span class="meta-item-v3"><Icon name="child" size="xs" class="meta-icon-white" gradient={false} /> 5–8 Jahre</span>
         </div>
         <div class="angebot-actions-v3">
           <a href={translatePath('/angebote/mini-museum/')} class="btn-angebot-primary-v3">Mehr →</a>
@@ -74,18 +76,18 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
       <!-- Mini Garten -->
       <article class="angebot-card-v3 card-open-v3" data-animate="card" data-delay="2">
         <div class="status-badge-v3 badge-open-v3">
-          <span>✨</span>
+          <Icon name="sparkle" size="xs" class="badge-icon-white" gradient={false} />
           <span>Anmeldung offen</span>
         </div>
-        <div class="angebot-icon-v3">🌱</div>
+        <div class="angebot-icon-v3"><Icon name="sprout" size="lg" class="icon-white" gradient={false} /></div>
         <h3 class="angebot-title-v3">Mini Garten</h3>
         <p class="angebot-description-v3">
           Spielerische Vorbereitung auf den Kindergarten in einer kleinen, geschützten Gruppe.
         </p>
         <div class="angebot-meta-v3">
-          <span>📅 Laufend</span>
-          <span>🕐 Montag 13:00–17:00</span>
-          <span>👶 3–5 Jahre</span>
+          <span class="meta-item-v3"><Icon name="calendar" size="xs" class="meta-icon-white" gradient={false} /> Laufend</span>
+          <span class="meta-item-v3"><Icon name="clock" size="xs" class="meta-icon-white" gradient={false} /> Montag 13:00–17:00</span>
+          <span class="meta-item-v3"><Icon name="child" size="xs" class="meta-icon-white" gradient={false} /> 3–5 Jahre</span>
         </div>
         <div class="angebot-actions-v3">
           <a href={translatePath('/angebote/mini-garten/')} class="btn-angebot-primary-v3">Mehr →</a>
@@ -107,10 +109,10 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
       <!-- Mini Restaurant - Ongoing -->
       <article class="angebot-card-v3 card-ongoing-v3" data-animate="card" data-delay="3">
         <div class="status-badge-v3 badge-ongoing-v3">
-          <span>🔥</span>
+          <Icon name="fire" size="xs" class="badge-icon-grey" />
           <span>Läuft · Keine Anmeldung</span>
         </div>
-        <div class="angebot-icon-small-v3">🍳</div>
+        <div class="angebot-icon-small-v3"><Icon name="cooking" size="md" /></div>
         <h3 class="angebot-title-small-v3">Mini Restaurant</h3>
         <p class="angebot-description-small-v3">
           Soziale Kompetenz durch gemeinsames Kochen und Restaurantspiel.
@@ -124,10 +126,10 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
       <!-- EVOLEA Cafe - Ongoing -->
       <article class="angebot-card-v3 card-ongoing-v3" data-animate="card" data-delay="4">
         <div class="status-badge-v3 badge-ongoing-v3">
-          <span>☕</span>
+          <Icon name="coffee" size="xs" class="badge-icon-grey" />
           <span>Offen für alle</span>
         </div>
-        <div class="angebot-icon-small-v3">☕</div>
+        <div class="angebot-icon-small-v3"><Icon name="coffee" size="md" /></div>
         <h3 class="angebot-title-small-v3">EVOLEA Cafe</h3>
         <p class="angebot-description-small-v3">
           Austausch und Gemeinschaft für Eltern. Jeden 2. Mittwoch im Monat um 20:00 Uhr.
@@ -141,15 +143,15 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
       <!-- Tagessonderschule - Coming Soon -->
       <article class="angebot-card-v3 card-coming-v3" data-animate="card" data-delay="5">
         <div class="status-badge-v3 badge-coming-v3">
-          <span>🚀</span>
+          <Icon name="rocket" size="xs" class="badge-icon-purple" />
           <span>In Planung</span>
         </div>
-        <div class="angebot-icon-small-v3">🏫</div>
+        <div class="angebot-icon-small-v3"><Icon name="school" size="md" /></div>
         <h3 class="angebot-title-small-v3">Tagessonderschule</h3>
         <p class="angebot-description-small-v3">
           Sonderschule Typ A für Kinder im Spektrum. Kindergarten bis Primarschulalter.
         </p>
-        <div class="angebot-detail-coming-v3">📅 2025/2026</div>
+        <div class="angebot-detail-coming-v3"><Icon name="calendar" size="xs" class="detail-icon-purple" /> 2025/2026</div>
         <div class="angebot-actions-v3">
           <a href={translatePath('/angebote/tagesschule/')} class="btn-angebot-notify-v3">Mehr erfahren</a>
         </div>
@@ -361,14 +363,88 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 
   /* Card Icons */
   .angebot-icon-v3 {
-    font-size: 1.75rem;
     margin-bottom: 0.625rem;
-    filter: grayscale(100%) brightness(10);
+    display: flex;
+    align-items: center;
   }
 
   .angebot-icon-small-v3 {
-    font-size: 1.25rem;
     margin-bottom: 0.5rem;
+    display: flex;
+    align-items: center;
+  }
+
+  /* Icon color utilities */
+  .icon-white {
+    color: white;
+    stroke: white;
+  }
+
+  .icon-white :global(path),
+  .icon-white :global(circle),
+  .icon-white :global(rect) {
+    stroke: white;
+  }
+
+  .badge-icon-white {
+    color: white;
+  }
+
+  .badge-icon-white :global(path),
+  .badge-icon-white :global(circle) {
+    stroke: white;
+    fill: white;
+    fill-opacity: 0.3;
+  }
+
+  .badge-icon-grey {
+    color: #78716C;
+  }
+
+  .badge-icon-grey :global(path),
+  .badge-icon-grey :global(circle) {
+    stroke: #78716C;
+  }
+
+  .badge-icon-purple {
+    color: #A21CAF;
+  }
+
+  .badge-icon-purple :global(path),
+  .badge-icon-purple :global(circle) {
+    stroke: #A21CAF;
+  }
+
+  .detail-icon-purple {
+    color: #A21CAF;
+    display: inline-block;
+    vertical-align: middle;
+    margin-right: 0.25rem;
+  }
+
+  .detail-icon-purple :global(path),
+  .detail-icon-purple :global(circle),
+  .detail-icon-purple :global(rect) {
+    stroke: #A21CAF;
+  }
+
+  .meta-icon-white {
+    color: white;
+    display: inline-block;
+    vertical-align: middle;
+    margin-right: 0.25rem;
+  }
+
+  .meta-icon-white :global(path),
+  .meta-icon-white :global(circle),
+  .meta-icon-white :global(rect) {
+    stroke: white;
+  }
+
+  .meta-item-v3 {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.25rem;
   }
 
   /* Card Titles */
