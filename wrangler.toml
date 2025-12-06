@@ -1,0 +1,14 @@
+# Cloudflare Pages configuration for EVOLEA Website
+name = "evolea-website"
+pages_build_output_dir = "./dist"
+compatibility_date = "2024-12-01"
+
+# Environment variables for local development
+# Production values should be set in Cloudflare Dashboard
+[vars]
+NODE_ENV = "production"
+
+# For local development, create a .dev.vars file with:
+# KEYSTATIC_GITHUB_CLIENT_ID=your_client_id
+# KEYSTATIC_GITHUB_CLIENT_SECRET=your_client_secret
+# KEYSTATIC_SECRET=your_secret

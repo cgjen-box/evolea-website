@@ -12,7 +12,14 @@ let keystaticIntegration;
 let useCloudflare = false;
 if (!isGitHubPages) {
   try {
-    cloudflareAdapter = (await import('@astrojs/cloudflare')).default();
+    const cloudflareModule = await import('@astrojs/cloudflare');
+    cloudflareAdapter = cloudflareModule.default({
+      // Enable platform proxy for accessing Cloudflare runtime bindings (env vars)
+      platformProxy: {
+        enabled: true,
+        configPath: 'wrangler.toml',
+      },
+    });
     keystaticIntegration = (await import('@keystatic/astro')).default();
     useCloudflare = true;
   } catch {
