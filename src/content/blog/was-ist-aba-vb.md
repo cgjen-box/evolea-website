@@ -3,6 +3,7 @@ title: "Was ist ABA/VB? Ein Ueberblick ueber unsere Methodik"
 description: "Applied Behavior Analysis und Verbal Behavior erklaert - die wissenschaftlichen Grundlagen unserer Arbeit bei EVOLEA."
 pubDate: 2025-01-10
 author: "EVOLEA Team"
+image: "/images/blog/was-ist-aba-vb.png"
 tags: ["Methodik", "ABA", "VB", "Wissenschaft"]
 featured: true
 ---

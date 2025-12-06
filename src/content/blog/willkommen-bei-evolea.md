@@ -3,6 +3,7 @@ title: "Willkommen bei EVOLEA"
 description: "Lernen Sie EVOLEA kennen - unsere Mission, unsere Werte und warum wir tun, was wir tun."
 pubDate: 2025-01-15
 author: "EVOLEA Team"
+image: "/images/blog/willkommen-bei-evolea.png"
 tags: ["EVOLEA", "Ueber uns", "Willkommen"]
 featured: true
 ---

@@ -3,6 +3,7 @@ title: "5 Tipps fuer einen gelungenen Kindergarten-Uebergang"
 description: "Praktische Tipps, wie Sie Ihr Kind im Spektrum auf den Kindergarten vorbereiten koennen."
 pubDate: 2025-01-05
 author: "EVOLEA Team"
+image: "/images/blog/tipps-kindergarten-uebergang.png"
 tags: ["Tipps", "Kindergarten", "Eltern", "Vorbereitung"]
 featured: false
 ---
