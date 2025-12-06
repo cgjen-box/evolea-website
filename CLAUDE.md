@@ -59,6 +59,38 @@ Location: `.claude/todo/EVOLEA-BRAND-GUIDE-V3.md`
 2. **Illustrations** (Secondary) - Icons, decorative, 404 pages
 3. **AI-Generated** (LIMITED) - Only for blog illustrations when no photo available, social media, internal. NEVER for team/hero/real content.
 
+### Image Generation Guidelines (When AI images are allowed)
+
+**Cultural Context:**
+- EVOLEA is based in Zurich, Switzerland
+- Images should reflect Swiss/Central European demographics
+- Avoid religious symbols or head coverings on children
+- Show diversity through hair colors, features - not religious attire
+
+**Style Requirements:**
+- Warm, soft color palette (cream, pink, purple, mint)
+- Watercolor or soft illustration style preferred
+- Bright, natural lighting
+- Professional but warm feeling
+- Not overly "stock photo" or generic
+
+**Always Generate 2 Options:**
+When generating images for EVOLEA, ALWAYS provide 2 different versions for the user to choose from. This allows for better selection and ensures the final image matches the brand perfectly.
+
+**Subject Guidelines:**
+- Children should appear ages 3-8 (depending on program)
+- Show genuine joy and engagement
+- Include activities relevant to the program
+- Keep backgrounds simple but warm
+- Butterflies can be included as brand element
+
+**Brand Colors to Incorporate:**
+- Cream: #FFFBF7
+- Magenta: #DD48E0
+- Purple: #BA53AD
+- Mint: #7BEDD5
+- Soft pinks and lavenders
+
 ---
 
 ## Tech Stack
