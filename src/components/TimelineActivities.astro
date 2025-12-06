@@ -1,0 +1,670 @@
+---
+/**
+ * TimelineActivities - "Was passiert jetzt" section for homepage
+ *
+ * Prioritizes programs with open registration over running programs.
+ * Design per EVOLEA Brand Guidelines v3.
+ */
+import { getLangFromUrl, useTranslatedPath } from '@i18n/utils';
+
+const lang = getLangFromUrl(Astro.url);
+const translatePath = useTranslatedPath(lang);
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+---
+
+<section class="timeline-activities" id="aktivitaeten">
+  <div class="timeline-container">
+
+    <!-- Section Header -->
+    <header class="timeline-header" data-animate="header">
+      <h2>Was passiert jetzt</h2>
+      <p class="timeline-subtitle">
+        Aktuelle und kommende Programme für Kinder im Spektrum.
+        Melden Sie sich jetzt für unsere neuen Kurse an.
+      </p>
+      <div class="spectrum-line-container">
+        <div class="timeline-spectrum-line" data-animate="line"></div>
+      </div>
+    </header>
+
+    <!-- Activity Cards Grid -->
+    <div class="activity-grid">
+
+      <!-- ============================================
+           REGISTRATION OPEN - HIGHEST PRIORITY
+           These cards get maximum visual prominence
+           ============================================ -->
+
+      <!-- Mini Turnen - Registration Open -->
+      <article class="activity-card registration-open" data-animate="card" data-delay="0">
+        <div class="status-badge">
+          <span class="meta-icon">✨</span>
+          <span>Anmeldung offen</span>
+        </div>
+        <h3 class="activity-title">Mini Turnen</h3>
+        <p class="activity-description">
+          Bewegung, Spass und motorische Förderung in einer kleinen, verständnisvollen Gruppe.
+          Ihr Kind entwickelt Körperbewusstsein und soziale Fähigkeiten durch spielerische Bewegung.
+        </p>
+        <div class="activity-meta">
+          <div class="meta-item">
+            <span class="meta-icon">📅</span>
+            <span>Start: Januar 2025</span>
+          </div>
+          <div class="meta-item">
+            <span class="meta-icon">👶</span>
+            <span>5–8 Jahre</span>
+          </div>
+          <div class="meta-item">
+            <span class="meta-icon">📍</span>
+            <span>Zürich</span>
+          </div>
+        </div>
+        <div class="activity-actions">
+          <a href={`${base}/kontakt/?programm=mini-turnen`} class="btn-primary">Jetzt anmelden</a>
+          <a href={translatePath('/angebote/mini-turnen/')} class="btn-link">Mehr erfahren →</a>
+        </div>
+      </article>
+
+      <!-- Mini Gallery - Registration Open -->
+      <article class="activity-card registration-open" data-animate="card" data-delay="1">
+        <div class="status-badge">
+          <span class="meta-icon">✨</span>
+          <span>Anmeldung offen</span>
+        </div>
+        <h3 class="activity-title">Mini Gallery</h3>
+        <p class="activity-description">
+          Kreative Kunstprojekte und gemeinsame Ausstellungen. Kinder entdecken ihre
+          künstlerische Seite und bauen soziale Kompetenzen durch gemeinsames Schaffen auf.
+        </p>
+        <div class="activity-meta">
+          <div class="meta-item">
+            <span class="meta-icon">📅</span>
+            <span>Start: März 2025</span>
+          </div>
+          <div class="meta-item">
+            <span class="meta-icon">👶</span>
+            <span>5–8 Jahre</span>
+          </div>
+          <div class="meta-item">
+            <span class="meta-icon">🎨</span>
+            <span>Kreativ</span>
+          </div>
+        </div>
+        <div class="activity-actions">
+          <a href={`${base}/kontakt/?programm=mini-gallery`} class="btn-primary">Jetzt anmelden</a>
+          <a href={translatePath('/angebote/mini-projekte/')} class="btn-link">Mehr erfahren →</a>
+        </div>
+      </article>
+
+      <!-- ============================================
+           CURRENTLY RUNNING - LOWER PRIORITY
+           Smaller cards for existing families
+           ============================================ -->
+
+      <!-- Mini Garten - Currently Running -->
+      <article class="activity-card currently-running" data-animate="card" data-delay="2">
+        <div class="status-badge">
+          <span class="meta-icon">✅</span>
+          <span>Laufend</span>
+        </div>
+        <h3 class="activity-title">Mini Garten</h3>
+        <p class="activity-description">
+          Spielerische Vorbereitung auf den Kindergarten in einer kleinen, geschützten Gruppe.
+        </p>
+        <div class="activity-meta">
+          <div class="meta-item">
+            <span class="meta-icon">📅</span>
+            <span>Seit September 2024</span>
+          </div>
+          <div class="meta-item">
+            <span class="meta-icon">👥</span>
+            <span>Aktive Gruppe</span>
+          </div>
+        </div>
+        <div class="activity-actions">
+          <a href={translatePath('/angebote/mini-garten/')} class="btn-info">Informationen für Eltern</a>
+        </div>
+      </article>
+
+      <!-- Mini Restaurant - Currently Running -->
+      <article class="activity-card currently-running" data-animate="card" data-delay="3">
+        <div class="status-badge">
+          <span class="meta-icon">🔥</span>
+          <span>Woche 8 von 10</span>
+        </div>
+        <h3 class="activity-title">Mini Restaurant</h3>
+        <p class="activity-description">
+          Soziale Kompetenz durch gemeinsames Kochen und Restaurantspiel. Das Programm läuft sehr erfolgreich!
+        </p>
+        <div class="activity-meta">
+          <div class="meta-item">
+            <span class="meta-icon">📅</span>
+            <span>10-Wochen-Programm</span>
+          </div>
+          <div class="meta-item">
+            <span class="meta-icon">👥</span>
+            <span>6 Teilnehmer</span>
+          </div>
+        </div>
+        <div class="activity-actions">
+          <a href={translatePath('/angebote/mini-projekte/mini-restaurant/')} class="btn-info">Informationen für Eltern</a>
+        </div>
+      </article>
+
+    </div>
+
+    <!-- Schulberatung - Separate Section -->
+    <div class="schulberatung-standalone">
+      <a href={translatePath('/angebote/schulberatung/')} class="schulberatung-card">
+        <h3>🏫 Schulberatung</h3>
+        <p>Beratung und Unterstützung für Schulen, Lehrpersonen und Fachkräfte im Umgang mit Kindern im Spektrum.</p>
+        <span class="schulberatung-link">Mehr erfahren →</span>
+      </a>
+    </div>
+
+  </div>
+</section>
+
+<style>
+  /* ===========================================
+     EVOLEA TIMELINE ACTIVITIES SECTION
+     =========================================== */
+
+  /* Section Container */
+  .timeline-activities {
+    padding: 6rem 2rem 8rem;
+    background: var(--evolea-cream, #FFFBF7);
+    position: relative;
+  }
+
+  .timeline-container {
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  /* Section Header */
+  .timeline-header {
+    text-align: center;
+    margin-bottom: 4rem;
+    opacity: 0;
+    transform: translateY(40px);
+  }
+
+  .timeline-header.animate {
+    animation: fadeSlideUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  }
+
+  .timeline-header h2 {
+    font-family: 'Fredoka', sans-serif;
+    font-size: clamp(2rem, 5vw, 3rem);
+    font-weight: 700;
+    margin-bottom: 1rem;
+    background: linear-gradient(135deg, #DD48E0 0%, #BA53AD 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .timeline-subtitle {
+    font-family: 'Poppins', sans-serif;
+    font-size: 1.125rem;
+    color: #6B7280;
+    max-width: 600px;
+    margin: 0 auto 2rem;
+    line-height: 1.6;
+  }
+
+  /* Spectrum Line */
+  .spectrum-line-container {
+    display: flex;
+    justify-content: center;
+  }
+
+  .timeline-spectrum-line {
+    width: 200px;
+    height: 4px;
+    border-radius: 2px;
+    background: linear-gradient(90deg, #7BEDD5 0%, #FFE066 25%, #E97BF1 50%, #DD48E0 75%, #CD87F8 100%);
+    background-size: 200% 100%;
+    transform: scaleX(0);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .timeline-spectrum-line.animate {
+    animation: drawLine 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  }
+
+  .timeline-spectrum-line::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(90deg, transparent 0%, rgba(255, 255, 255, 0.5) 50%, transparent 100%);
+    animation: shimmer 3s ease-in-out infinite;
+    animation-play-state: paused;
+  }
+
+  .timeline-spectrum-line.animate::after {
+    animation-play-state: running;
+  }
+
+  /* Activity Cards Grid */
+  .activity-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 2rem;
+    margin-bottom: 3rem;
+  }
+
+  /* Base Card Styles */
+  .activity-card {
+    border-radius: 1.5rem;
+    padding: 2rem;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    overflow: hidden;
+    opacity: 0;
+    transform: translateY(40px);
+  }
+
+  .activity-card.animate {
+    animation: fadeSlideUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  }
+
+  .activity-card:hover {
+    transform: translateY(-6px);
+  }
+
+  /* ---- REGISTRATION OPEN (Highest Priority) ---- */
+  .activity-card.registration-open {
+    background: linear-gradient(135deg, #DD48E0 0%, #BA53AD 100%);
+    color: white;
+    box-shadow: 0 12px 40px rgba(221, 72, 224, 0.25);
+    min-height: 340px;
+  }
+
+  .activity-card.registration-open:hover {
+    box-shadow: 0 20px 50px rgba(221, 72, 224, 0.35);
+  }
+
+  .activity-card.registration-open .status-badge {
+    background: rgba(255, 255, 255, 0.2);
+    color: white;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+  }
+
+  .activity-card.registration-open .activity-title {
+    color: white;
+  }
+
+  .activity-card.registration-open .activity-description {
+    color: rgba(255, 255, 255, 0.9);
+  }
+
+  .activity-card.registration-open .meta-item {
+    color: rgba(255, 255, 255, 0.85);
+  }
+
+  .activity-card.registration-open .btn-primary {
+    background: white;
+    color: #DD48E0;
+    border: none;
+    padding: 1rem 2rem;
+    border-radius: 0.75rem;
+    font-family: 'Poppins', sans-serif;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-decoration: none;
+    display: inline-block;
+  }
+
+  .activity-card.registration-open .btn-primary:hover {
+    transform: scale(1.05);
+    box-shadow: 0 8px 25px rgba(255, 255, 255, 0.3);
+  }
+
+  .activity-card.registration-open .btn-link {
+    color: rgba(255, 255, 255, 0.9);
+    text-decoration: underline;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 500;
+    transition: color 0.2s ease;
+  }
+
+  .activity-card.registration-open .btn-link:hover {
+    color: white;
+  }
+
+  /* ---- CURRENTLY RUNNING (Lower Priority) ---- */
+  .activity-card.currently-running {
+    background: linear-gradient(135deg, #F0FDF4 0%, #DCFCE7 100%);
+    border: 1px solid #BBF7D0;
+    color: #2D2D2D;
+    min-height: 280px;
+  }
+
+  .activity-card.currently-running:hover {
+    box-shadow: 0 12px 30px rgba(123, 237, 213, 0.2);
+  }
+
+  .activity-card.currently-running .status-badge {
+    background: #7BEDD5;
+    color: #2D2D2D;
+  }
+
+  .activity-card.currently-running .btn-info {
+    background: transparent;
+    color: #0D9488;
+    border: 2px solid #7BEDD5;
+    padding: 0.75rem 1.5rem;
+    border-radius: 0.75rem;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-decoration: none;
+    display: inline-block;
+  }
+
+  .activity-card.currently-running .btn-info:hover {
+    background: #7BEDD5;
+    color: #2D2D2D;
+  }
+
+  /* Card Components */
+  .status-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.5rem 1rem;
+    border-radius: 2rem;
+    font-family: 'Poppins', sans-serif;
+    font-size: 0.8rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 1.25rem;
+    width: fit-content;
+  }
+
+  .activity-title {
+    font-family: 'Fredoka', sans-serif;
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin-bottom: 0.75rem;
+    line-height: 1.3;
+  }
+
+  .activity-description {
+    font-family: 'Poppins', sans-serif;
+    font-size: 1rem;
+    line-height: 1.6;
+    margin-bottom: 1.5rem;
+    flex-grow: 1;
+  }
+
+  .activity-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .meta-item {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-family: 'Poppins', sans-serif;
+    font-size: 0.9rem;
+  }
+
+  .meta-icon {
+    font-size: 1rem;
+  }
+
+  .activity-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    align-items: center;
+    margin-top: auto;
+  }
+
+  /* Schulberatung Standalone */
+  .schulberatung-standalone {
+    text-align: center;
+    margin-top: 3rem;
+    padding-top: 3rem;
+    border-top: 1px solid #E5E7EB;
+  }
+
+  .schulberatung-card {
+    display: inline-block;
+    background: white;
+    border: 2px solid #BA53AD;
+    border-radius: 1.5rem;
+    padding: 2rem 3rem;
+    max-width: 500px;
+    transition: all 0.3s ease;
+    text-decoration: none;
+  }
+
+  .schulberatung-card:hover {
+    box-shadow: 0 8px 30px rgba(186, 83, 173, 0.15);
+    transform: translateY(-4px);
+  }
+
+  .schulberatung-card h3 {
+    font-family: 'Fredoka', sans-serif;
+    color: #BA53AD;
+    font-size: 1.25rem;
+    margin-bottom: 0.75rem;
+  }
+
+  .schulberatung-card p {
+    font-family: 'Poppins', sans-serif;
+    color: #6B7280;
+    margin-bottom: 1.25rem;
+    line-height: 1.5;
+  }
+
+  .schulberatung-link {
+    color: #BA53AD;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 600;
+    transition: color 0.2s ease;
+  }
+
+  .schulberatung-card:hover .schulberatung-link {
+    color: #DD48E0;
+  }
+
+  /* Animations */
+  @keyframes fadeSlideUp {
+    from {
+      opacity: 0;
+      transform: translateY(40px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes drawLine {
+    from {
+      transform: scaleX(0);
+    }
+    to {
+      transform: scaleX(1);
+    }
+  }
+
+  @keyframes shimmer {
+    0%, 100% {
+      transform: translateX(-100%);
+    }
+    50% {
+      transform: translateX(100%);
+    }
+  }
+
+  /* Mobile Responsive */
+  @media (max-width: 900px) {
+    .activity-grid {
+      grid-template-columns: 1fr;
+      gap: 1.5rem;
+    }
+
+    .timeline-activities {
+      padding: 4rem 1.5rem 5rem;
+    }
+
+    .activity-card {
+      min-height: auto;
+      padding: 1.75rem;
+    }
+
+    .activity-card.registration-open {
+      min-height: auto;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .timeline-header h2 {
+      font-size: 1.75rem;
+    }
+
+    .activity-title {
+      font-size: 1.25rem;
+    }
+
+    .activity-meta {
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    .activity-actions {
+      flex-direction: column;
+      align-items: stretch;
+    }
+
+    .activity-card.registration-open .btn-primary,
+    .activity-card.currently-running .btn-info {
+      width: 100%;
+      text-align: center;
+    }
+
+    .schulberatung-card {
+      padding: 1.5rem;
+    }
+  }
+
+  /* Large Desktop */
+  @media (min-width: 1440px) {
+    .timeline-container {
+      max-width: 1400px;
+    }
+
+    .timeline-header h2 {
+      font-size: 3.5rem;
+    }
+
+    .activity-card.registration-open {
+      min-height: 380px;
+    }
+  }
+
+  /* Reduced Motion */
+  @media (prefers-reduced-motion: reduce) {
+    .timeline-header,
+    .activity-card {
+      opacity: 1;
+      transform: none;
+    }
+
+    .timeline-spectrum-line {
+      transform: scaleX(1);
+    }
+
+    .timeline-spectrum-line::after {
+      animation: none;
+    }
+
+    .activity-card,
+    .activity-card:hover,
+    .schulberatung-card,
+    .schulberatung-card:hover,
+    .activity-card.registration-open .btn-primary,
+    .activity-card.currently-running .btn-info {
+      transition: none;
+    }
+
+    .activity-card:hover {
+      transform: none;
+    }
+  }
+</style>
+
+<script>
+  // Intersection Observer for scroll animations
+  function initTimelineAnimations() {
+    const section = document.querySelector('.timeline-activities');
+    if (!section) return;
+
+    // Check for reduced motion preference
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (prefersReducedMotion) {
+      section.querySelectorAll('[data-animate]').forEach(el => {
+        el.classList.add('animate');
+      });
+      return;
+    }
+
+    const observerOptions: IntersectionObserverInit = {
+      threshold: 0.15,
+      rootMargin: '0px 0px -50px 0px'
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          // Animate header first
+          const header = entry.target.querySelector('[data-animate="header"]');
+          if (header) {
+            header.classList.add('animate');
+          }
+
+          // Animate spectrum line with delay
+          const line = entry.target.querySelector('[data-animate="line"]');
+          if (line) {
+            setTimeout(() => {
+              line.classList.add('animate');
+            }, 300);
+          }
+
+          // Animate cards with staggered delay
+          const cards = entry.target.querySelectorAll('[data-animate="card"]');
+          cards.forEach((card) => {
+            const delay = parseInt((card as HTMLElement).dataset.delay || '0');
+            setTimeout(() => {
+              card.classList.add('animate');
+            }, 450 + (delay * 150));
+          });
+
+          observer.unobserve(entry.target);
+        }
+      });
+    }, observerOptions);
+
+    observer.observe(section);
+  }
+
+  document.addEventListener('DOMContentLoaded', initTimelineAnimations);
+  document.addEventListener('astro:page-load', initTimelineAnimations);
+</script>

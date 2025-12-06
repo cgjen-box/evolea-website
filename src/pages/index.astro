@@ -1,7 +1,7 @@
 ---
 import Base from '@layouts/Base.astro';
 import VideoHero from '@components/VideoHero.astro';
-import AngeboteSection from '@components/AngeboteSection.astro';
+import TimelineActivities from '@components/TimelineActivities.astro';
 import PageCloser from '@components/PageCloser.astro';
 import FloatingShapes from '@components/FloatingShapes.astro';
 import Icon from '@components/Icon.astro';
@@ -61,45 +61,6 @@ const colorClasses: Record<string, string> = {
   purple: 'bg-evolea-purple-light/10 border-evolea-purple-light',
 };
 
-// Programs data for AngeboteSection
-const programs = [
-  {
-    title: t('programs.miniGarten'),
-    description: t('programs.miniGarten.desc'),
-    href: translatePath('/angebote/mini-garten/'),
-    iconName: 'sprout' as const,
-    imageSrc: base + '/images/programs/garden.jpg',
-    imageAlt: 'Kinder im Garten beim spielerischen Lernen',
-    colorAccent: 'mint' as const,
-  },
-  {
-    title: t('programs.miniProjekte'),
-    description: t('programs.miniProjekte.desc'),
-    href: translatePath('/angebote/mini-projekte/'),
-    iconName: 'palette' as const,
-    imageSrc: base + '/images/programs/projects.jpg',
-    imageAlt: 'Kinder bei kreativen Projekten',
-    colorAccent: 'coral' as const,
-  },
-  {
-    title: t('programs.miniTurnen'),
-    description: t('programs.miniTurnen.desc'),
-    href: translatePath('/angebote/mini-turnen/'),
-    iconName: 'ball' as const,
-    imageSrc: base + '/images/programs/sports.png',
-    imageAlt: 'Kinder beim Sport und Turnen',
-    colorAccent: 'sky' as const,
-  },
-  {
-    title: t('programs.schulberatung'),
-    description: t('programs.schulberatung.desc'),
-    href: translatePath('/angebote/schulberatung/'),
-    iconName: 'school' as const,
-    imageSrc: base + '/images/programs/school.jpg',
-    imageAlt: 'Schulberatung und Unterstützung',
-    colorAccent: 'magenta' as const,
-  },
-];
 ---
 
 <Base
@@ -167,14 +128,8 @@ const programs = [
     </div>
   </section>
 
-  <!-- Programs Section - Premium Redesigned -->
-  <AngeboteSection
-    sectionLabel={t('nav.programs')}
-    title={t('programs.title')}
-    subtitle={t('programs.subtitle')}
-    programs={programs}
-    learnMoreText="Mehr erfahren"
-  />
+  <!-- Timeline Activities Section - "Was passiert jetzt" -->
+  <TimelineActivities />
 
   <!-- Pedagogical Principles Section -->
   <section class="section-padding relative overflow-hidden">
