@@ -192,4 +192,26 @@ const t = useTranslations(lang);
 - [ ] All text readable on gradients
 
 ## Deployment
+
+### Deployment Targets
+- **GitHub Pages** (static site): https://cgjen-box.github.io/evolea-website/
+- **Cloudflare Pages** (CMS): https://evolea-website.pages.dev/keystatic
+
 GitHub Actions automatically builds and deploys on push to `main` branch. Custom domain: evolea.ch
+
+### Post-Commit Verification (MANDATORY)
+
+**After every git push, ALWAYS verify the deployment succeeded:**
+
+1. **Check GitHub Actions** - Fetch https://github.com/cgjen-box/evolea-website/actions to verify the build passed
+2. **Check for errors** - Look for TypeScript errors, build failures, or warnings that became errors
+3. **Test the live site** - Fetch the deployed URL to confirm changes are live
+4. **For Cloudflare deployments** - Wait 2-3 minutes for Cloudflare to rebuild, then verify
+
+**Common deployment issues:**
+- TypeScript errors (unused variables, wrong imports)
+- Missing dependencies
+- Wrong import paths or exports
+- Cloudflare not picking up latest commit (may need manual retry)
+
+**Never assume a push succeeded - always verify!**
