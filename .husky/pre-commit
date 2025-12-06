@@ -1,0 +1,3 @@
+# Run TypeScript type checking before committing
+# This prevents commits with TypeScript errors from being deployed
+npm run build

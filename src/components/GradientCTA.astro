@@ -6,6 +6,7 @@ interface Props {
   description?: string;
   buttonText: string;
   buttonHref: string;
+  variant?: 'default' | 'calm' | 'sunset' | 'hero';
 }
 
 const {
@@ -13,6 +14,7 @@ const {
   description,
   buttonText,
   buttonHref,
+  variant: _variant = 'default',
 } = Astro.props;
 ---
 
