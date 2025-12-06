@@ -9,6 +9,9 @@ const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
 const translatePath = useTranslatedPath(lang);
 
+// Base URL for GitHub Pages deployment
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+
 const posts = (await getCollection('blog')).sort(
   (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
 );
@@ -48,7 +51,7 @@ function formatDate(date: Date): string {
               <div class="blog-card-image h-48 relative overflow-hidden">
                 {post.data.image ? (
                   <img
-                    src={post.data.image}
+                    src={`${base}${post.data.image}`}
                     alt={post.data.title}
                     class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                     loading="lazy"
@@ -100,7 +103,7 @@ function formatDate(date: Date): string {
             <div class="blog-card-image h-40 relative overflow-hidden">
               {post.data.image ? (
                 <img
-                  src={post.data.image}
+                  src={`${base}${post.data.image}`}
                   alt={post.data.title}
                   class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                   loading="lazy"
