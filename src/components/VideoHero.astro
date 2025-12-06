@@ -193,15 +193,11 @@ const lang = getLangFromUrl(Astro.url);
     animation: fadeSlideUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
   }
 
-  /* Reduced motion: show poster, hide video */
+  /* Reduced motion: disable animations but keep video playing */
+  /* Note: Video is NOT hidden because muted autoplay is accessible
+     and many iOS users have Reduce Motion enabled by default */
   @media (prefers-reduced-motion: reduce) {
-    .hero-video-element {
-      display: none !important;
-    }
-
-    .poster-fallback {
-      display: block !important;
-    }
+    /* Removed: display:none for video - was breaking iPhone playback */
 
     .animate-fade-slide-down,
     .animate-fade-slide-up {

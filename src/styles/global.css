@@ -111,7 +111,9 @@
     }
   }
 
-  /* Respect reduced motion */
+  /* Respect reduced motion - disable animations but keep videos playing */
+  /* Note: Videos are NOT hidden because muted autoplay is accessible and
+     many iOS users have Reduce Motion enabled by default */
   @media (prefers-reduced-motion: reduce) {
     *, *::before, *::after {
       animation-duration: 0.01ms !important;
@@ -120,15 +122,8 @@
       scroll-behavior: auto !important;
     }
 
-    .hero-video video,
-    .video-background video {
-      display: none !important;
-    }
-
-    .hero-video .poster-fallback,
-    .video-background .poster-fallback {
-      display: block !important;
-    }
+    /* Removed: display:none for videos - was breaking iPhone playback */
+    /* Muted autoplay videos are considered accessible */
 
     .floating-shape,
     .animate-float,
