@@ -10,6 +10,11 @@ const t = useTranslations(lang);
 const translatePath = useTranslatedPath(lang);
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 
+// Video paths
+const videoSrc = `${base}/videos/mini-restaurant.mp4`;
+const videoSrcMobile = `${base}/videos/mini-restaurant-mobile.mp4`;
+const posterSrc = `${base}/images/mini-restaurant-poster.jpg`;
+
 // Program schedule data
 const schedule = [
   {
@@ -64,78 +69,171 @@ const schedule = [
 ];
 ---
 
-<Base title="Mini Restaurant - Mini Projekte" description="Mini Restaurant: ich bin ein Kochprofi! Ein inklusives Projekt für Kinder im Autismus-Spektrum (5-8 Jahre). Kochen, Servieren und Teamwork spielerisch lernen.">
-  <!-- Hero Section -->
-  <section class="relative py-20 md:py-28 bg-gradient-to-br from-evolea-coral/10 to-evolea-cream overflow-hidden">
-    <FloatingShapes variant="minimal" />
-    <div class="container mx-auto max-w-6xl px-4 relative z-10">
-      <nav class="mb-8 text-sm text-evolea-text-light">
-        <a href={translatePath('/')} class="hover:text-evolea-purple transition-colors">Startseite</a>
+<Base title="Mini Restaurant - Mini Projekte" description="Mini Restaurant: ich bin ein Kochprofi! Ein inklusives Projekt für Kinder im Autismus-Spektrum (5-8 Jahre). Kochen, Servieren und Teamwork spielerisch lernen." transparentHeader={true}>
+  <!-- Video Hero Section -->
+  <section class="mini-restaurant-hero relative min-h-[80vh] md:min-h-screen flex items-center overflow-hidden">
+    <!-- Video Background - iOS Safari optimized -->
+    <video
+      class="video-bg video-bg-desktop"
+      autoplay
+      muted
+      loop
+      playsinline
+      poster={posterSrc}
+    >
+      <source src={videoSrc} type="video/mp4" />
+    </video>
+    <video
+      class="video-bg video-bg-mobile"
+      autoplay
+      muted
+      loop
+      playsinline
+      poster={posterSrc}
+    >
+      <source src={videoSrcMobile} type="video/mp4" />
+    </video>
+
+    <!-- Poster fallback -->
+    <img src={posterSrc} alt="" class="video-poster-fallback" aria-hidden="true" />
+
+    <!-- Dark overlay for text readability -->
+    <div class="absolute inset-0 bg-gradient-to-b from-black/50 via-black/30 to-black/60 z-10"></div>
+
+    <!-- Content -->
+    <div class="container mx-auto max-w-6xl px-4 relative z-20 pt-24 pb-12">
+      <!-- Breadcrumbs -->
+      <nav class="mb-8 text-sm text-white/80">
+        <a href={translatePath('/')} class="hover:text-white transition-colors">Startseite</a>
         <span class="mx-2">/</span>
-        <a href={translatePath('/angebote/')} class="hover:text-evolea-purple transition-colors">Angebote</a>
+        <a href={translatePath('/angebote/')} class="hover:text-white transition-colors">Angebote</a>
         <span class="mx-2">/</span>
-        <a href={translatePath('/angebote/mini-projekte/')} class="hover:text-evolea-purple transition-colors">Mini Projekte</a>
+        <a href={translatePath('/angebote/mini-projekte/')} class="hover:text-white transition-colors">Mini Projekte</a>
         <span class="mx-2">/</span>
-        <span class="text-evolea-purple font-medium">Mini Restaurant</span>
+        <span class="text-white font-medium">Mini Restaurant</span>
       </nav>
 
-      <div class="grid lg:grid-cols-2 gap-12 items-center">
-        <div>
-          <div class="inline-flex items-center gap-2 bg-evolea-coral/20 text-evolea-coral px-4 py-2 rounded-full text-sm font-medium mb-6">
-            <Icon name="heart" size="sm" />
-            <span>Oktober - Dezember 2025</span>
-          </div>
-          <h1 class="text-4xl md:text-5xl lg:text-6xl font-display font-bold text-evolea-purple mb-6 leading-tight">
-            Mini Restaurant
-          </h1>
-          <p class="text-xl md:text-2xl text-evolea-text-light mb-4 leading-relaxed">
-            Ich bin ein Kochprofi!
-          </p>
-          <p class="text-lg text-evolea-text-light mb-8">
-            In diesem inklusiven Projekt erleben Kinder die Welt der Gastronomie. Sie lernen Kochen, Servieren und Teamwork in einem sicheren, klar strukturierten Rahmen.
-          </p>
-
-          <!-- Status Badge -->
-          <div class="bg-evolea-magenta/10 border border-evolea-magenta/30 rounded-evolea-lg p-4 mb-8">
-            <div class="flex items-center gap-3">
-              <div class="w-3 h-3 bg-evolea-magenta rounded-full animate-pulse"></div>
-              <span class="text-evolea-magenta font-semibold">Aktuell ausgebucht</span>
-            </div>
-            <p class="text-sm text-evolea-text-light mt-2 mb-0">
-              Interessierte Familien können sich auf die Warteliste setzen lassen.
-            </p>
-          </div>
-
-          <div class="flex flex-wrap gap-4">
-            <a href="#anmeldung" class="btn-primary">
-              Auf Warteliste setzen
-              <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
-              </svg>
-            </a>
-            <a href="#programm" class="btn-secondary">
-              Programm ansehen
-            </a>
-          </div>
+      <div class="max-w-2xl">
+        <div class="inline-flex items-center gap-2 bg-white/20 backdrop-blur-sm text-white px-4 py-2 rounded-full text-sm font-medium mb-6">
+          <Icon name="heart" size="sm" />
+          <span>Oktober - Dezember 2025</span>
         </div>
-        <div class="relative">
-          <div class="aspect-4/3 rounded-evolea-lg shadow-elevated overflow-hidden bg-gradient-to-br from-evolea-coral/20 to-evolea-orange/20 flex items-center justify-center">
-            <!-- Placeholder with cooking icon -->
-            <div class="text-center p-8">
-              <svg class="w-32 h-32 mx-auto text-evolea-coral/60 mb-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M12 8.25v-1.5m0 1.5c-1.355 0-2.697.056-4.024.166C6.845 8.51 6 9.473 6 10.608v2.513m6-4.87c1.355 0 2.697.055 4.024.165C17.155 8.51 18 9.473 18 10.608v2.513m-3-4.87v-1.5m-6 1.5v-1.5m12 9.75l-1.5.75a3.354 3.354 0 01-3 0 3.354 3.354 0 00-3 0 3.354 3.354 0 01-3 0 3.354 3.354 0 00-3 0 3.354 3.354 0 01-3 0L3 16.5m15-3.38a48.474 48.474 0 00-6-.37c-2.032 0-4.034.125-6 .37m12 0c.39.049.777.102 1.163.16 1.07.16 1.837 1.094 1.837 2.175v5.17c0 .62-.504 1.124-1.125 1.124H4.125A1.125 1.125 0 013 20.625v-5.17c0-1.08.768-2.014 1.837-2.174A47.78 47.78 0 016 13.12M12.265 3.11a.375.375 0 11-.53 0L12 2.845l.265.265zm-3 0a.375.375 0 11-.53 0L9 2.845l.265.265zm6 0a.375.375 0 11-.53 0L15 2.845l.265.265z" />
-              </svg>
-              <p class="text-evolea-text-light font-medium">Kochen, Servieren, Teamwork</p>
-            </div>
+        <h1 class="text-4xl md:text-5xl lg:text-6xl font-display font-bold text-white mb-4 leading-tight drop-shadow-lg">
+          Mini Restaurant
+        </h1>
+        <p class="text-2xl md:text-3xl text-white/90 mb-4 leading-relaxed font-display">
+          Ich bin ein Kochprofi!
+        </p>
+        <p class="text-lg text-white/80 mb-8 max-w-xl">
+          In diesem inklusiven Projekt erleben Kinder die Welt der Gastronomie. Sie lernen Kochen, Servieren und Teamwork in einem sicheren, klar strukturierten Rahmen.
+        </p>
+
+        <!-- Status Badge -->
+        <div class="bg-white/10 backdrop-blur-sm border border-white/30 rounded-evolea-lg p-4 mb-8 max-w-md">
+          <div class="flex items-center gap-3">
+            <div class="w-3 h-3 bg-evolea-magenta rounded-full animate-pulse"></div>
+            <span class="text-white font-semibold">Aktuell ausgebucht</span>
           </div>
-          <div class="absolute -bottom-4 -right-4 bg-white rounded-evolea p-4 shadow-card">
-            <div class="text-3xl font-display font-bold text-evolea-coral">6</div>
-            <div class="text-sm text-evolea-text-light">Halbtage</div>
-          </div>
+          <p class="text-sm text-white/80 mt-2 mb-0">
+            Interessierte Familien können sich auf die Warteliste setzen lassen.
+          </p>
+        </div>
+
+        <div class="flex flex-wrap gap-4">
+          <a href="#anmeldung" class="btn-white">
+            Auf Warteliste setzen
+            <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+            </svg>
+          </a>
+          <a href="#programm" class="btn-outline-hero">
+            Programm ansehen
+          </a>
         </div>
       </div>
+
+      <!-- Info badge -->
+      <div class="absolute bottom-8 right-8 hidden md:block bg-white rounded-evolea p-4 shadow-card">
+        <div class="text-3xl font-display font-bold text-evolea-coral">6</div>
+        <div class="text-sm text-evolea-text-light">Halbtage</div>
+      </div>
+    </div>
+
+    <!-- Scroll indicator -->
+    <div class="absolute bottom-6 left-1/2 -translate-x-1/2 z-20 text-white/80 flex flex-col items-center gap-2 animate-bounce">
+      <span class="text-sm font-medium">Mehr erfahren</span>
+      <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3" />
+      </svg>
     </div>
   </section>
+
+  <style>
+    .mini-restaurant-hero {
+      min-height: 100vh;
+      min-height: 100dvh;
+    }
+
+    .video-bg {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      z-index: 0;
+    }
+
+    /* Mobile-first: show mobile video by default */
+    .video-bg-desktop { display: none; }
+    .video-bg-mobile { display: block; }
+
+    /* Desktop: swap videos */
+    @media (min-width: 769px) {
+      .video-bg-desktop { display: block; }
+      .video-bg-mobile { display: none; }
+    }
+
+    .video-poster-fallback {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: none;
+      z-index: 0;
+    }
+
+    /* Reduced motion: disable animations but keep video playing */
+    @media (prefers-reduced-motion: reduce) {
+      .animate-bounce {
+        animation: none;
+      }
+    }
+  </style>
+
+  <script>
+    // Fallback for video autoplay issues
+    function handleVideoFallback() {
+      const videos = document.querySelectorAll('.video-bg');
+      const poster = document.querySelector('.video-poster-fallback') as HTMLElement;
+
+      videos.forEach((video) => {
+        const videoEl = video as HTMLVideoElement;
+        videoEl.muted = true;
+
+        if (videoEl.paused) {
+          const playPromise = videoEl.play();
+          if (playPromise !== undefined) {
+            playPromise.catch(() => {
+              if (poster) poster.style.display = 'block';
+            });
+          }
+        }
+      });
+    }
+
+    document.addEventListener('astro:page-load', handleVideoFallback);
+  </script>
 
   <!-- Key Info Cards -->
   <section class="py-16 bg-white">
