@@ -36,10 +36,12 @@ const lang = getLangFromUrl(Astro.url);
   <!-- Using mobile-optimized video (1.3MB) for all devices - iOS Safari compatible -->
   <video
     class="hero-video-element"
+    id="hero-video"
     autoplay
     muted
     loop
     playsinline
+    preload="auto"
   >
     <source src={videoSrc} type="video/mp4" />
   </video>
@@ -155,4 +157,25 @@ const lang = getLangFromUrl(Astro.url);
   }
 </style>
 
-<!-- NO JavaScript - let browser handle autoplay naturally like planted-website -->
+<script>
+  // iOS Safari fix: ensure video plays on initial page load
+  // This is needed because iOS sometimes doesn't autoplay even with correct attributes
+  function ensureVideoPlays() {
+    const video = document.getElementById('hero-video') as HTMLVideoElement;
+    if (!video) return;
+
+    // Ensure muted (required for iOS autoplay)
+    video.muted = true;
+
+    // If paused, try to play
+    if (video.paused) {
+      video.play().catch(() => {
+        // Autoplay blocked - that's ok, user can interact
+      });
+    }
+  }
+
+  // Run on initial load and Astro page transitions
+  document.addEventListener('DOMContentLoaded', ensureVideoPlays);
+  document.addEventListener('astro:page-load', ensureVideoPlays);
+</script>
