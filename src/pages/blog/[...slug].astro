@@ -5,6 +5,9 @@ import GradientCTA from '@components/GradientCTA.astro';
 import { getCollection, type CollectionEntry } from 'astro:content';
 import { getLangFromUrl, useTranslatedPath } from '@i18n/utils';
 
+// Base URL for GitHub Pages deployment
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+
 export async function getStaticPaths() {
   const posts = await getCollection('blog');
   return posts.map((post) => ({
@@ -100,7 +103,7 @@ const relatedPosts = allPosts
         <h2 class="text-2xl font-display font-bold text-evolea-purple mb-8">Weitere Artikel</h2>
         <div class="grid md:grid-cols-2 gap-6">
           {relatedPosts.map((relatedPost) => (
-            <a href={`/blog/${relatedPost.slug}/`} class="group block bg-white rounded-evolea-lg overflow-hidden hover:shadow-card transition-shadow">
+            <a href={`${base}/blog/${relatedPost.slug}/`} class="group block bg-white rounded-evolea-lg overflow-hidden hover:shadow-card transition-shadow">
               <div class="p-6">
                 <div class="flex flex-wrap gap-2 mb-3">
                   {relatedPost.data.tags.slice(0, 2).map((tag) => (
