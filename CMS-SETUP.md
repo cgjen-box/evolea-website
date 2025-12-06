@@ -18,7 +18,7 @@ The CMS commits changes directly to GitHub, which triggers GitHub Actions to reb
 3. Connect your GitHub account and select `cgjen-box/evolea-website`
 4. Configure build settings:
    - **Framework preset**: Astro
-   - **Build command**: `npm run build`
+   - **Build command**: `npm run build:cloudflare`
    - **Build output directory**: `dist`
 5. Click "Save and Deploy"
 6. Note your Cloudflare Pages URL (e.g., `evolea-cms.pages.dev`)
