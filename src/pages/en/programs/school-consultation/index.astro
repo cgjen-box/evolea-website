@@ -1,5 +1,6 @@
 ---
 import Base from '@layouts/Base.astro';
+import Icon from '@components/Icon.astro';
 import { getLangFromUrl, useTranslations, useTranslatedPath } from '@i18n/utils';
 
 const lang = getLangFromUrl(Astro.url);
@@ -17,8 +18,8 @@ const translatePath = useTranslatedPath(lang);
         <span class="mx-2">/</span>
         <span class="text-evolea-purple">School Consultation</span>
       </nav>
-      
-      <div class="text-6xl mb-6">🏫</div>
+
+      <div class="mb-6"><Icon name="school" size="2xl" /></div>
       <h1 class="text-4xl md:text-5xl font-bold text-evolea-purple mb-6">
         School Consultation
       </h1>
