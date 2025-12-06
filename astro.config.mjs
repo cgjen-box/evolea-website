@@ -61,13 +61,15 @@ export default defineConfig({
       'process.env.KEYSTATIC_SECRET': JSON.stringify(process.env.KEYSTATIC_SECRET),
     },
     // Fix for React 19 + Cloudflare Workers (MessageChannel not defined)
-    ssr: {
-      external: ['react-dom/server'],
-    },
-    resolve: {
-      alias: useCloudflare ? {
-        'react-dom/server': 'react-dom/server.browser',
-      } : {},
-    },
+    // Use workerd-compatible resolve conditions for SSR
+    ssr: useCloudflare ? {
+      resolve: {
+        conditions: ['workerd', 'worker', 'browser'],
+        externalConditions: ['workerd', 'worker'],
+      },
+    } : {},
+    resolve: useCloudflare ? {
+      conditions: ['workerd', 'worker', 'browser', 'module', 'import', 'require'],
+    } : {},
   },
 });
