@@ -199,19 +199,28 @@ const t = useTranslations(lang);
 
 GitHub Actions automatically builds and deploys on push to `main` branch. Custom domain: evolea.ch
 
-### Post-Commit Verification (MANDATORY)
+### Post-Commit Deployment (MANDATORY)
 
-**After every git push, ALWAYS verify the deployment succeeded:**
+**After every git push, ALWAYS do the following:**
 
-1. **Check GitHub Actions** - Fetch https://github.com/cgjen-box/evolea-website/actions to verify the build passed
-2. **Check for errors** - Look for TypeScript errors, build failures, or warnings that became errors
-3. **Test the live site** - Fetch the deployed URL to confirm changes are live
-4. **For Cloudflare deployments** - Wait 2-3 minutes for Cloudflare to rebuild, then verify
+1. **Trigger Cloudflare Deploy Hook** - Run this command to ensure Cloudflare deploys the latest commit:
+   ```bash
+   curl -X POST "https://api.cloudflare.com/client/v4/pages/webhooks/deploy_hooks/3e0b6230-6965-46cf-a7a2-176969101e48"
+   ```
+   This is required because Cloudflare's automatic GitHub webhook is unreliable.
+
+2. **Check GitHub Actions** - Fetch https://github.com/cgjen-box/evolea-website/actions to verify the build passed
+
+3. **Check for errors** - Look for TypeScript errors, build failures, or warnings that became errors
+
+4. **Test the live sites** - Verify both deployments are live:
+   - GitHub Pages: https://cgjen-box.github.io/evolea-website/
+   - Cloudflare Pages: https://evolea-website.pages.dev/
 
 **Common deployment issues:**
 - TypeScript errors (unused variables, wrong imports)
 - Missing dependencies
 - Wrong import paths or exports
-- Cloudflare not picking up latest commit (may need manual retry)
+- Cloudflare stuck on old commit (use the deploy hook above to fix)
 
-**Never assume a push succeeded - always verify!**
+**Never assume a push succeeded - always verify and trigger the Cloudflare webhook!**

@@ -1,6 +1,7 @@
 import { defineConfig } from 'astro/config';
 import sitemap from '@astrojs/sitemap';
 import tailwind from '@astrojs/tailwind';
+import react from '@astrojs/react';
 
 // Check if we're building for GitHub Pages (static)
 const isGitHubPages = process.env.GITHUB_PAGES === 'true';
@@ -28,6 +29,7 @@ export default defineConfig({
   integrations: [
     sitemap(),
     tailwind(),
+    react(),
     ...(keystaticIntegration ? [keystaticIntegration] : []),
   ],
   i18n: {
