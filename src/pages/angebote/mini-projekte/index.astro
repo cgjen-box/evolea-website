@@ -151,13 +151,22 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
         </h2>
 
         <div class="space-y-6 mb-12">
-          <div class="bg-gradient-to-r from-evolea-orange/10 to-transparent rounded-evolea-lg p-6 border-l-4 border-evolea-orange">
-            <div class="flex items-center gap-2 text-evolea-orange font-medium text-sm mb-2">
-              <Icon name="heart" size="sm" /> Oktober 2025
+          <a href={translatePath('/angebote/mini-projekte/mini-restaurant/')} class="block bg-gradient-to-r from-evolea-orange/10 to-transparent rounded-evolea-lg p-6 border-l-4 border-evolea-orange hover:shadow-card transition-all group">
+            <div class="flex items-center justify-between mb-2">
+              <div class="flex items-center gap-2 text-evolea-orange font-medium text-sm">
+                <Icon name="heart" size="sm" /> Oktober - Dezember 2025
+              </div>
+              <span class="text-xs bg-evolea-magenta/20 text-evolea-magenta px-2 py-1 rounded-full">Ausgebucht</span>
             </div>
-            <h3 class="font-display font-bold text-evolea-purple text-xl mb-2">Mini Restaurant</h3>
-            <p class="text-evolea-text-light mb-0">Kochen, Servieren, Teamwork – die Kinder gestalten und betreiben ihr eigenes kleines Restaurant.</p>
-          </div>
+            <h3 class="font-display font-bold text-evolea-purple text-xl mb-2 group-hover:text-evolea-purple-light transition-colors">Mini Restaurant</h3>
+            <p class="text-evolea-text-light mb-3">Kochen, Servieren, Teamwork – die Kinder gestalten und betreiben ihr eigenes kleines Restaurant.</p>
+            <span class="text-evolea-orange font-medium text-sm flex items-center gap-1 group-hover:gap-2 transition-all">
+              Mehr erfahren
+              <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+              </svg>
+            </span>
+          </a>
 
           <div class="bg-gradient-to-r from-evolea-purple/10 to-transparent rounded-evolea-lg p-6 border-l-4 border-evolea-purple">
             <div class="flex items-center gap-2 text-evolea-purple font-medium text-sm mb-2">

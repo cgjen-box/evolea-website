@@ -1,0 +1,395 @@
+---
+import Base from '@layouts/Base.astro';
+import FloatingShapes from '@components/FloatingShapes.astro';
+import GradientCTA from '@components/GradientCTA.astro';
+import Icon from '@components/Icon.astro';
+import { getLangFromUrl, useTranslations, useTranslatedPath } from '@i18n/utils';
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+const translatePath = useTranslatedPath(lang);
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+
+// Program schedule data
+const schedule = [
+  {
+    day: 1,
+    title: 'Eröffnung des Mini Restaurants',
+    date: 'Samstag, 25. Oktober 2025',
+    time: '09:00 - 12:00',
+    focus: 'Kennenlernen & Einführung',
+    location: 'Stapferstrasse 10, Zürich'
+  },
+  {
+    day: 2,
+    title: 'Ich bin ein Gast',
+    date: 'Samstag, 1. November 2025',
+    time: '09:00 - 12:00',
+    focus: 'Kommunikation & Wünsche äussern',
+    location: 'Stapferstrasse 10, Zürich'
+  },
+  {
+    day: 3,
+    title: 'Ich bin ein Kellner',
+    date: 'Samstag, 15. November 2025',
+    time: '09:00 - 12:00',
+    focus: 'Zuhören & Sprechen',
+    location: 'Stapferstrasse 10, Zürich'
+  },
+  {
+    day: 4,
+    title: 'Ich bin ein Koch (Teil 1)',
+    date: 'Samstag, 22. November 2025',
+    time: '09:00 - 12:00',
+    focus: 'Gemeinsam kochen',
+    location: 'Stapferstrasse 10, Zürich'
+  },
+  {
+    day: 5,
+    title: 'Ich bin ein Koch (Teil 2)',
+    date: 'Samstag, 6. Dezember 2025',
+    time: '09:00 - 12:00',
+    focus: 'Kochen & Zusammenarbeit',
+    location: 'Stapferstrasse 10, Zürich'
+  },
+  {
+    day: 6,
+    title: 'Gala Dinner',
+    date: 'Sonntag, 7. Dezember 2025',
+    time: '13:00 - 17:00',
+    focus: 'Familienfest mit Eltern',
+    location: 'Planted Restaurant, Kemptthal',
+    isSpecial: true
+  }
+];
+---
+
+<Base title="Mini Restaurant - Mini Projekte" description="Mini Restaurant: ich bin ein Kochprofi! Ein inklusives Projekt für Kinder im Autismus-Spektrum (5-8 Jahre). Kochen, Servieren und Teamwork spielerisch lernen.">
+  <!-- Hero Section -->
+  <section class="relative py-20 md:py-28 bg-gradient-to-br from-evolea-coral/10 to-evolea-cream overflow-hidden">
+    <FloatingShapes variant="minimal" />
+    <div class="container mx-auto max-w-6xl px-4 relative z-10">
+      <nav class="mb-8 text-sm text-evolea-text-light">
+        <a href={translatePath('/')} class="hover:text-evolea-purple transition-colors">Startseite</a>
+        <span class="mx-2">/</span>
+        <a href={translatePath('/angebote/')} class="hover:text-evolea-purple transition-colors">Angebote</a>
+        <span class="mx-2">/</span>
+        <a href={translatePath('/angebote/mini-projekte/')} class="hover:text-evolea-purple transition-colors">Mini Projekte</a>
+        <span class="mx-2">/</span>
+        <span class="text-evolea-purple font-medium">Mini Restaurant</span>
+      </nav>
+
+      <div class="grid lg:grid-cols-2 gap-12 items-center">
+        <div>
+          <div class="inline-flex items-center gap-2 bg-evolea-coral/20 text-evolea-coral px-4 py-2 rounded-full text-sm font-medium mb-6">
+            <Icon name="heart" size="sm" />
+            <span>Oktober - Dezember 2025</span>
+          </div>
+          <h1 class="text-4xl md:text-5xl lg:text-6xl font-display font-bold text-evolea-purple mb-6 leading-tight">
+            Mini Restaurant
+          </h1>
+          <p class="text-xl md:text-2xl text-evolea-text-light mb-4 leading-relaxed">
+            Ich bin ein Kochprofi!
+          </p>
+          <p class="text-lg text-evolea-text-light mb-8">
+            In diesem inklusiven Projekt erleben Kinder die Welt der Gastronomie. Sie lernen Kochen, Servieren und Teamwork in einem sicheren, klar strukturierten Rahmen.
+          </p>
+
+          <!-- Status Badge -->
+          <div class="bg-evolea-magenta/10 border border-evolea-magenta/30 rounded-evolea-lg p-4 mb-8">
+            <div class="flex items-center gap-3">
+              <div class="w-3 h-3 bg-evolea-magenta rounded-full animate-pulse"></div>
+              <span class="text-evolea-magenta font-semibold">Aktuell ausgebucht</span>
+            </div>
+            <p class="text-sm text-evolea-text-light mt-2 mb-0">
+              Interessierte Familien können sich auf die Warteliste setzen lassen.
+            </p>
+          </div>
+
+          <div class="flex flex-wrap gap-4">
+            <a href="#anmeldung" class="btn-primary">
+              Auf Warteliste setzen
+              <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+              </svg>
+            </a>
+            <a href="#programm" class="btn-secondary">
+              Programm ansehen
+            </a>
+          </div>
+        </div>
+        <div class="relative">
+          <div class="aspect-4/3 rounded-evolea-lg shadow-elevated overflow-hidden bg-gradient-to-br from-evolea-coral/20 to-evolea-orange/20 flex items-center justify-center">
+            <!-- Placeholder with cooking icon -->
+            <div class="text-center p-8">
+              <svg class="w-32 h-32 mx-auto text-evolea-coral/60 mb-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M12 8.25v-1.5m0 1.5c-1.355 0-2.697.056-4.024.166C6.845 8.51 6 9.473 6 10.608v2.513m6-4.87c1.355 0 2.697.055 4.024.165C17.155 8.51 18 9.473 18 10.608v2.513m-3-4.87v-1.5m-6 1.5v-1.5m12 9.75l-1.5.75a3.354 3.354 0 01-3 0 3.354 3.354 0 00-3 0 3.354 3.354 0 01-3 0 3.354 3.354 0 00-3 0 3.354 3.354 0 01-3 0L3 16.5m15-3.38a48.474 48.474 0 00-6-.37c-2.032 0-4.034.125-6 .37m12 0c.39.049.777.102 1.163.16 1.07.16 1.837 1.094 1.837 2.175v5.17c0 .62-.504 1.124-1.125 1.124H4.125A1.125 1.125 0 013 20.625v-5.17c0-1.08.768-2.014 1.837-2.174A47.78 47.78 0 016 13.12M12.265 3.11a.375.375 0 11-.53 0L12 2.845l.265.265zm-3 0a.375.375 0 11-.53 0L9 2.845l.265.265zm6 0a.375.375 0 11-.53 0L15 2.845l.265.265z" />
+              </svg>
+              <p class="text-evolea-text-light font-medium">Kochen, Servieren, Teamwork</p>
+            </div>
+          </div>
+          <div class="absolute -bottom-4 -right-4 bg-white rounded-evolea p-4 shadow-card">
+            <div class="text-3xl font-display font-bold text-evolea-coral">6</div>
+            <div class="text-sm text-evolea-text-light">Halbtage</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Key Info Cards -->
+  <section class="py-16 bg-white">
+    <div class="container mx-auto max-w-6xl px-4">
+      <div class="grid md:grid-cols-4 gap-6">
+        <div class="bg-evolea-cream rounded-evolea-lg p-6 text-center">
+          <div class="flex justify-center mb-3"><Icon name="sparkle" size="lg" /></div>
+          <div class="font-display font-bold text-evolea-purple text-lg">Alter</div>
+          <div class="text-evolea-text-light">5-8 Jahre</div>
+        </div>
+        <div class="bg-evolea-cream rounded-evolea-lg p-6 text-center">
+          <div class="flex justify-center mb-3"><Icon name="calendar" size="lg" /></div>
+          <div class="font-display font-bold text-evolea-purple text-lg">Wann</div>
+          <div class="text-evolea-text-light">Samstags, alle 2 Wochen</div>
+        </div>
+        <div class="bg-evolea-cream rounded-evolea-lg p-6 text-center">
+          <div class="flex justify-center mb-3"><Icon name="chart" size="lg" /></div>
+          <div class="font-display font-bold text-evolea-purple text-lg">Dauer</div>
+          <div class="text-evolea-text-light">09:00 - 12:00 Uhr</div>
+        </div>
+        <div class="bg-evolea-cream rounded-evolea-lg p-6 text-center">
+          <div class="flex justify-center mb-3"><Icon name="location" size="lg" /></div>
+          <div class="font-display font-bold text-evolea-purple text-lg">Ort</div>
+          <div class="text-evolea-text-light">Zürich & Kemptthal</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Program Concept -->
+  <section class="py-16 md:py-24 bg-evolea-cream/30">
+    <div class="container mx-auto max-w-4xl px-4">
+      <div class="text-center mb-12">
+        <h2 class="text-3xl md:text-4xl font-display font-bold text-evolea-purple mb-4">
+          Das Konzept
+        </h2>
+        <p class="text-lg text-evolea-text-light max-w-2xl mx-auto">
+          Ein inklusives Projekt, das soziales Lernen mit praktischen Alltagsfähigkeiten verbindet.
+        </p>
+      </div>
+
+      <div class="grid md:grid-cols-2 gap-6 mb-12">
+        <div class="bg-white rounded-evolea-lg p-6 shadow-soft">
+          <div class="flex justify-center mb-4">
+            <div class="w-12 h-12 bg-evolea-mint/20 rounded-full flex items-center justify-center">
+              <Icon name="handshake" size="md" />
+            </div>
+          </div>
+          <h3 class="font-display font-bold text-evolea-purple text-lg mb-2 text-center">Kommunikation</h3>
+          <p class="text-evolea-text-light text-center mb-0">Wünsche äussern, zuhören und im Team sprechen lernen.</p>
+        </div>
+        <div class="bg-white rounded-evolea-lg p-6 shadow-soft">
+          <div class="flex justify-center mb-4">
+            <div class="w-12 h-12 bg-evolea-coral/20 rounded-full flex items-center justify-center">
+              <Icon name="target" size="md" />
+            </div>
+          </div>
+          <h3 class="font-display font-bold text-evolea-purple text-lg mb-2 text-center">Alltagskompetenzen</h3>
+          <p class="text-evolea-text-light text-center mb-0">Praktische Fähigkeiten in der Gastronomie entwickeln.</p>
+        </div>
+        <div class="bg-white rounded-evolea-lg p-6 shadow-soft">
+          <div class="flex justify-center mb-4">
+            <div class="w-12 h-12 bg-evolea-purple/20 rounded-full flex items-center justify-center">
+              <Icon name="people" size="md" />
+            </div>
+          </div>
+          <h3 class="font-display font-bold text-evolea-purple text-lg mb-2 text-center">Teamwork</h3>
+          <p class="text-evolea-text-light text-center mb-0">Rollenübernahme und Zusammenarbeit im sicheren Rahmen.</p>
+        </div>
+        <div class="bg-white rounded-evolea-lg p-6 shadow-soft">
+          <div class="flex justify-center mb-4">
+            <div class="w-12 h-12 bg-evolea-orange/20 rounded-full flex items-center justify-center">
+              <Icon name="sparkle" size="md" />
+            </div>
+          </div>
+          <h3 class="font-display font-bold text-evolea-purple text-lg mb-2 text-center">Selbstwirksamkeit</h3>
+          <p class="text-evolea-text-light text-center mb-0">Feinmotorik und Selbstvertrauen durch Erfolgserlebnisse.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Program Schedule -->
+  <section class="py-16 md:py-24" id="programm">
+    <div class="container mx-auto max-w-4xl px-4">
+      <div class="text-center mb-12">
+        <h2 class="text-3xl md:text-4xl font-display font-bold text-evolea-purple mb-4">
+          Programm
+        </h2>
+        <p class="text-lg text-evolea-text-light">
+          6 Halbtage voller Lernen, Spass und Entwicklung
+        </p>
+      </div>
+
+      <div class="space-y-4">
+        {schedule.map((session) => (
+          <div class={`rounded-evolea-lg p-6 border-l-4 ${session.isSpecial ? 'bg-gradient-to-r from-evolea-magenta/10 to-evolea-coral/10 border-evolea-magenta' : 'bg-white border-evolea-coral shadow-soft'}`}>
+            <div class="flex flex-col md:flex-row md:items-center gap-4">
+              <div class={`flex-shrink-0 w-12 h-12 rounded-full flex items-center justify-center font-display font-bold text-lg ${session.isSpecial ? 'bg-evolea-magenta text-white' : 'bg-evolea-coral/20 text-evolea-coral'}`}>
+                {session.day}
+              </div>
+              <div class="flex-grow">
+                <h3 class="font-display font-bold text-evolea-purple text-lg mb-1">
+                  {session.title}
+                  {session.isSpecial && <span class="ml-2 text-sm bg-evolea-magenta/20 text-evolea-magenta px-2 py-0.5 rounded-full">Abschlussfeier</span>}
+                </h3>
+                <p class="text-evolea-text-light text-sm mb-2">{session.focus}</p>
+                <div class="flex flex-wrap gap-4 text-sm text-evolea-text-light">
+                  <span class="flex items-center gap-1">
+                    <Icon name="calendar" size="xs" />
+                    {session.date}
+                  </span>
+                  <span class="flex items-center gap-1">
+                    <Icon name="chart" size="xs" />
+                    {session.time}
+                  </span>
+                  <span class="flex items-center gap-1">
+                    <Icon name="location" size="xs" />
+                    {session.location}
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+
+      <!-- Special Note about Gala Dinner -->
+      <div class="mt-8 bg-evolea-purple/5 rounded-evolea-lg p-6">
+        <div class="flex items-start gap-4">
+          <div class="flex-shrink-0">
+            <Icon name="heart" size="lg" />
+          </div>
+          <div>
+            <h4 class="font-display font-bold text-evolea-purple mb-2">Gala Dinner im Planted Restaurant</h4>
+            <p class="text-evolea-text-light mb-0">
+              Der krönende Abschluss findet im <strong>Planted Restaurant in Kemptthal</strong> statt. Die Kinder zeigen ihren Familien, was sie gelernt haben, und servieren ein selbst zubereitetes Menü. Ein unvergessliches Erlebnis für die ganze Familie!
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Admission Criteria -->
+  <section class="py-16 bg-evolea-cream/30">
+    <div class="container mx-auto max-w-4xl px-4">
+      <h2 class="text-3xl font-display font-bold text-evolea-purple mb-8 text-center">
+        Voraussetzungen für die Teilnahme
+      </h2>
+
+      <div class="bg-white rounded-evolea-lg p-8 shadow-soft">
+        <p class="text-evolea-text-light mb-6">
+          Für eine erfolgreiche Teilnahme sollten die Kinder idealerweise folgende Fähigkeiten mitbringen:
+        </p>
+        <ul class="space-y-3 mb-6">
+          <li class="flex items-start gap-3">
+            <span class="flex-shrink-0 w-6 h-6 bg-evolea-mint/20 rounded-full flex items-center justify-center text-evolea-mint font-bold text-sm">1</span>
+            <span class="text-evolea-text-light"><strong class="text-evolea-purple">Funktionelle Kommunikation</strong> - verbal oder unterstützt</span>
+          </li>
+          <li class="flex items-start gap-3">
+            <span class="flex-shrink-0 w-6 h-6 bg-evolea-mint/20 rounded-full flex items-center justify-center text-evolea-mint font-bold text-sm">2</span>
+            <span class="text-evolea-text-light"><strong class="text-evolea-purple">Interesse an sozialem Kontakt</strong> mit anderen Kindern</span>
+          </li>
+          <li class="flex items-start gap-3">
+            <span class="flex-shrink-0 w-6 h-6 bg-evolea-mint/20 rounded-full flex items-center justify-center text-evolea-mint font-bold text-sm">3</span>
+            <span class="text-evolea-text-light"><strong class="text-evolea-purple">Verständnis von Anweisungen</strong> und Regeln</span>
+          </li>
+          <li class="flex items-start gap-3">
+            <span class="flex-shrink-0 w-6 h-6 bg-evolea-mint/20 rounded-full flex items-center justify-center text-evolea-mint font-bold text-sm">4</span>
+            <span class="text-evolea-text-light"><strong class="text-evolea-purple">Grundlegende Selbstständigkeit</strong> (Händewaschen, Schuhe anziehen)</span>
+          </li>
+          <li class="flex items-start gap-3">
+            <span class="flex-shrink-0 w-6 h-6 bg-evolea-mint/20 rounded-full flex items-center justify-center text-evolea-mint font-bold text-sm">5</span>
+            <span class="text-evolea-text-light"><strong class="text-evolea-purple">Keine selbst- oder fremdverletzenden Verhaltensweisen</strong></span>
+          </li>
+        </ul>
+        <p class="text-sm text-evolea-text-light bg-evolea-purple/5 rounded-evolea p-4 mb-0">
+          Entscheidungen werden individuell und situativ getroffen. Unser Ziel ist immer, die Sicherheit aller Kinder zu gewährleisten und ein positives Gruppenerlebnis zu ermöglichen.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Practical Info -->
+  <section class="py-16 md:py-24" id="anmeldung">
+    <div class="container mx-auto max-w-4xl px-4">
+      <h2 class="text-3xl font-display font-bold text-evolea-purple mb-8 text-center">
+        Praktische Informationen
+      </h2>
+
+      <div class="grid md:grid-cols-2 gap-6 mb-12">
+        <div class="bg-evolea-cream rounded-evolea-lg p-6">
+          <div class="flex items-start gap-4">
+            <Icon name="location" size="md" />
+            <div>
+              <h4 class="font-display font-bold text-evolea-purple mb-2">Standorte</h4>
+              <p class="text-evolea-text-light text-sm mb-2">
+                <strong>Tag 1-5:</strong><br/>
+                Stapferstrasse 10<br/>
+                8006 Zürich
+              </p>
+              <p class="text-evolea-text-light text-sm mb-0">
+                <strong>Tag 6 (Gala Dinner):</strong><br/>
+                Planted Restaurant<br/>
+                Kemptpark 34, 8310 Kemptthal
+              </p>
+            </div>
+          </div>
+        </div>
+        <div class="bg-evolea-cream rounded-evolea-lg p-6">
+          <div class="flex items-start gap-4">
+            <Icon name="mail" size="md" />
+            <div>
+              <h4 class="font-display font-bold text-evolea-purple mb-2">Kontakt & Anmeldung</h4>
+              <p class="text-evolea-text-light text-sm mb-2">
+                Für ein kostenloses Erstgespräch und Informationen zur Warteliste:
+              </p>
+              <a href="mailto:hello@evolea.ch" class="text-evolea-magenta hover:text-evolea-purple transition-colors font-semibold">
+                hello@evolea.ch
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- WhatsApp Info -->
+      <div class="bg-gradient-to-r from-evolea-mint/20 to-evolea-sky/20 rounded-evolea-lg p-6 text-center">
+        <h4 class="font-display font-bold text-evolea-purple mb-2">Bleiben Sie informiert</h4>
+        <p class="text-evolea-text-light mb-0">
+          Treten Sie unserer WhatsApp-Gruppe bei, um Updates zu kommenden Mini Projekten zu erhalten.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Back to Mini Projekte -->
+  <section class="py-8 border-t border-evolea-purple/10">
+    <div class="container mx-auto max-w-4xl px-4">
+      <a href={translatePath('/angebote/mini-projekte/')} class="text-evolea-purple hover:text-evolea-purple-light transition-colors flex items-center gap-2">
+        <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16l-4-4m0 0l4-4m-4 4h18" />
+        </svg>
+        Zurück zu Mini Projekte
+      </a>
+    </div>
+  </section>
+
+  <!-- CTA Section -->
+  <GradientCTA
+    title="Interesse am Mini Restaurant?"
+    description="Setzen Sie sich auf die Warteliste oder erfahren Sie mehr über unsere anderen Mini Projekte."
+    buttonText="Jetzt Kontakt aufnehmen"
+    buttonHref={translatePath('/kontakt/')}
+    variant="sunset"
+  />
+</Base>
