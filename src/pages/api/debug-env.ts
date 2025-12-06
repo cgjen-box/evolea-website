@@ -17,9 +17,13 @@ export const GET: APIRoute = async (context) => {
     hasClientSecret: !!env?.KEYSTATIC_GITHUB_CLIENT_SECRET,
     hasSecret: !!env?.KEYSTATIC_SECRET,
     secretLength: env?.KEYSTATIC_SECRET?.length || 0,
+    clientSecretLength: env?.KEYSTATIC_GITHUB_CLIENT_SECRET?.length || 0,
+    clientIdValue: env?.KEYSTATIC_GITHUB_CLIENT_ID || 'not set',
     // Also check process.env
     processEnvClientId: !!process.env.KEYSTATIC_GITHUB_CLIENT_ID,
     processEnvSecret: !!process.env.KEYSTATIC_SECRET,
+    processEnvClientIdValue: process.env.KEYSTATIC_GITHUB_CLIENT_ID || 'not set',
+    processEnvClientSecretLength: process.env.KEYSTATIC_GITHUB_CLIENT_SECRET?.length || 0,
   };
 
   return new Response(JSON.stringify(debug, null, 2), {
