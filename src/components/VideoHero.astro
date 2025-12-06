@@ -6,7 +6,6 @@ interface Props {
   title: string;
   subtitle: string;
   videoSrc?: string;
-  videoSrcMobile?: string;
   posterSrc?: string;
   primaryButtonText?: string;
   primaryButtonHref?: string;
@@ -20,8 +19,7 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 const {
   title,
   subtitle,
-  videoSrc = `${base}/videos/hero.mp4`,
-  videoSrcMobile = `${base}/videos/hero-mobile.mp4`,
+  videoSrc = `${base}/videos/hero-mobile.mp4`,
   posterSrc = `${base}/images/hero-poster.jpg`,
   primaryButtonText,
   primaryButtonHref,
@@ -34,38 +32,17 @@ const lang = getLangFromUrl(Astro.url);
 ---
 
 <section class="hero-video" aria-label={lang === 'de' ? 'Hauptbereich' : 'Hero section'}>
-  <!-- Video Background - iOS Safari optimized: NO JavaScript, pure HTML autoplay -->
-  <!-- Desktop video - hidden on mobile via CSS -->
+  <!-- Video Background - iOS Safari optimized: SINGLE video, NO display:none -->
+  <!-- Using mobile-optimized video (1.3MB) for all devices - iOS Safari compatible -->
   <video
-    class="hero-video-element hero-video-desktop"
+    class="hero-video-element"
     autoplay
     muted
     loop
     playsinline
-    poster={posterSrc}
   >
     <source src={videoSrc} type="video/mp4" />
   </video>
-
-  <!-- Mobile video - hidden on desktop via CSS, smaller file for iOS -->
-  <video
-    class="hero-video-element hero-video-mobile"
-    autoplay
-    muted
-    loop
-    playsinline
-    poster={posterSrc}
-  >
-    <source src={videoSrcMobile} type="video/mp4" />
-  </video>
-
-  <!-- Poster fallback for reduced motion or if video fails -->
-  <img
-    src={posterSrc}
-    alt=""
-    class="poster-fallback"
-    aria-hidden="true"
-  />
 
   <!-- Overlay gradient -->
   <div class="hero-video-overlay" aria-hidden="true"></div>
@@ -115,43 +92,14 @@ const lang = getLangFromUrl(Astro.url);
     min-height: 100dvh; /* Dynamic viewport height for mobile */
   }
 
-  /* Video element - matches planted-website approach */
+  /* Video element - matches planted-website approach exactly */
+  /* CRITICAL: No display:none anywhere - iOS Safari breaks autoplay with display:none */
   .hero-video-element {
     position: absolute;
     inset: 0;
     width: 100%;
     height: 100%;
     object-fit: cover;
-  }
-
-  /* Mobile-first: show mobile video by default, hide desktop */
-  .hero-video-desktop {
-    display: none;
-  }
-
-  .hero-video-mobile {
-    display: block;
-  }
-
-  /* Desktop: show desktop video, hide mobile */
-  @media (min-width: 769px) {
-    .hero-video-desktop {
-      display: block;
-    }
-
-    .hero-video-mobile {
-      display: none;
-    }
-  }
-
-  /* Poster fallback - hidden by default, shown if video fails or reduced motion */
-  .poster-fallback {
-    position: absolute;
-    inset: 0;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    display: none;
   }
 
   /* Ensure content stays above video */
@@ -194,11 +142,7 @@ const lang = getLangFromUrl(Astro.url);
   }
 
   /* Reduced motion: disable animations but keep video playing */
-  /* Note: Video is NOT hidden because muted autoplay is accessible
-     and many iOS users have Reduce Motion enabled by default */
   @media (prefers-reduced-motion: reduce) {
-    /* Removed: display:none for video - was breaking iPhone playback */
-
     .animate-fade-slide-down,
     .animate-fade-slide-up {
       opacity: 1;
@@ -211,36 +155,4 @@ const lang = getLangFromUrl(Astro.url);
   }
 </style>
 
-<script>
-  // iOS Safari: NO JavaScript src manipulation - let browser handle autoplay naturally
-  // The HTML already has autoplay, muted, playsinline, loop attributes
-  // CSS shows/hides appropriate video based on screen size
-  // This script only handles fallback if autoplay is blocked
-
-  function handleVideoFallback() {
-    const videos = document.querySelectorAll('.hero-video-element');
-    const poster = document.querySelector('.poster-fallback') as HTMLElement;
-
-    videos.forEach((video) => {
-      const videoEl = video as HTMLVideoElement;
-
-      // Ensure muted attribute is set (required for iOS autoplay)
-      videoEl.muted = true;
-
-      // If video is paused and should be playing, try to play
-      // But don't call load() - that breaks iOS autoplay
-      if (videoEl.paused) {
-        const playPromise = videoEl.play();
-        if (playPromise !== undefined) {
-          playPromise.catch(() => {
-            // Autoplay blocked - show poster
-            if (poster) poster.style.display = 'block';
-          });
-        }
-      }
-    });
-  }
-
-  // Handle Astro page transitions (re-trigger video if needed)
-  document.addEventListener('astro:page-load', handleVideoFallback);
-</script>
+<!-- NO JavaScript - let browser handle autoplay naturally like planted-website -->
