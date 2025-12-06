@@ -6,6 +6,7 @@ interface Props {
   title: string;
   subtitle: string;
   videoSrc?: string;
+  posterSrc?: string;
   primaryButtonText?: string;
   primaryButtonHref?: string;
   secondaryButtonText?: string;
@@ -19,6 +20,7 @@ const {
   title,
   subtitle,
   videoSrc = `${base}/videos/hero-mobile.mp4`,
+  posterSrc,
   primaryButtonText,
   primaryButtonHref,
   secondaryButtonText,
@@ -40,6 +42,7 @@ const lang = getLangFromUrl(Astro.url);
     loop
     playsinline
     webkit-playsinline
+    poster={posterSrc}
   >
     <source src={videoSrc} type="video/mp4" />
   </video>
