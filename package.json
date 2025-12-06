@@ -15,19 +15,19 @@
   "dependencies": {
     "@astrojs/check": "^0.9.4",
     "@astrojs/react": "^4.4.2",
+    "@astrojs/sitemap": "^3.2.1",
+    "@astrojs/tailwind": "^6.0.2",
     "@fontsource/fredoka": "^5.2.10",
+    "@fontsource/poppins": "^5.1.0",
     "@keystatic/astro": "^5.0.6",
     "@keystatic/core": "^0.5.48",
     "astro": "^5.1.1",
     "react": "^19.2.1",
     "react-dom": "^19.2.1",
+    "tailwindcss": "^3.4.18",
     "typescript": "^5.7.2"
   },
   "devDependencies": {
-    "@astrojs/sitemap": "^3.2.1",
-    "@astrojs/tailwind": "^6.0.2",
-    "@fontsource/poppins": "^5.1.0",
-    "husky": "^9.1.7",
-    "tailwindcss": "^3.4.18"
+    "husky": "^9.1.7"
   }
 }
