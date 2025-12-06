@@ -1,0 +1,665 @@
+---
+/**
+ * AngeboteSectionV3 - "Unsere Angebote" section with 3-column layout
+ *
+ * TOP ROW: 3 magenta gradient cards for programs with open registration
+ * BOTTOM ROW: 3 smaller cards for ongoing/future programs
+ *
+ * Design per EVOLEA-ANGEBOTE-CLAUDE-CODEv6.md
+ */
+import { getLangFromUrl, useTranslatedPath } from '@i18n/utils';
+
+const lang = getLangFromUrl(Astro.url);
+const translatePath = useTranslatedPath(lang);
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+---
+
+<section class="angebote-section-v3" id="angebote">
+  <div class="angebote-container-v3">
+
+    <!-- Header -->
+    <header class="angebote-header-v3" data-animate="header">
+      <span class="angebote-label-v3">Angebote</span>
+      <h2 class="angebote-title-v3">Unsere Angebote</h2>
+      <p class="angebote-subtitle-v3">
+        Evidenzbasierte Programme, die jedes Kind dort abholen, wo es steht.
+      </p>
+    </header>
+
+    <!-- ===== TOP ROW: Registration Open (3 cards) ===== -->
+    <div class="angebote-grid-top-v3">
+
+      <!-- Mini Turnen -->
+      <article class="angebot-card-v3 card-open-v3" data-animate="card" data-delay="0">
+        <div class="status-badge-v3 badge-open-v3">
+          <span>✨</span>
+          <span>Anmeldung offen</span>
+        </div>
+        <div class="angebot-icon-v3">⚽</div>
+        <h3 class="angebot-title-v3">Mini Turnen</h3>
+        <p class="angebot-description-v3">
+          Bewegung, Spass und motorische Förderung in einer kleinen, verständnisvollen Gruppe.
+        </p>
+        <div class="angebot-meta-v3">
+          <span>📅 Start: Januar 2025</span>
+          <span>👶 3–6 Jahre</span>
+        </div>
+        <div class="angebot-actions-v3">
+          <a href={`${base}/kontakt/?programm=mini-turnen`} class="btn-angebot-primary-v3">Jetzt anmelden</a>
+          <a href={translatePath('/angebote/mini-turnen/')} class="btn-angebot-secondary-v3">Mehr →</a>
+        </div>
+      </article>
+
+      <!-- Mini Gallery -->
+      <article class="angebot-card-v3 card-open-v3" data-animate="card" data-delay="1">
+        <div class="status-badge-v3 badge-open-v3">
+          <span>✨</span>
+          <span>Anmeldung offen</span>
+        </div>
+        <div class="angebot-icon-v3">🎨</div>
+        <h3 class="angebot-title-v3">Mini Gallery</h3>
+        <p class="angebot-description-v3">
+          Kreative Kunstprojekte und gemeinsame Ausstellungen. Soziale Kompetenz durch Schaffen.
+        </p>
+        <div class="angebot-meta-v3">
+          <span>📅 Start: März 2025</span>
+          <span>👶 4–8 Jahre</span>
+        </div>
+        <div class="angebot-actions-v3">
+          <a href={`${base}/kontakt/?programm=mini-gallery`} class="btn-angebot-primary-v3">Jetzt anmelden</a>
+          <a href={translatePath('/angebote/mini-projekte/')} class="btn-angebot-secondary-v3">Mehr →</a>
+        </div>
+      </article>
+
+      <!-- Mini Garten -->
+      <article class="angebot-card-v3 card-open-v3" data-animate="card" data-delay="2">
+        <div class="status-badge-v3 badge-open-v3">
+          <span>✨</span>
+          <span>Anmeldung offen</span>
+        </div>
+        <div class="angebot-icon-v3">🌱</div>
+        <h3 class="angebot-title-v3">Mini Garten</h3>
+        <p class="angebot-description-v3">
+          Spielerische Vorbereitung auf den Kindergarten in einer kleinen, geschützten Gruppe.
+        </p>
+        <div class="angebot-meta-v3">
+          <span>📅 Laufend</span>
+          <span>👶 3–5 Jahre</span>
+        </div>
+        <div class="angebot-actions-v3">
+          <a href={`${base}/kontakt/?programm=mini-garten`} class="btn-angebot-primary-v3">Jetzt anmelden</a>
+          <a href={translatePath('/angebote/mini-garten/')} class="btn-angebot-secondary-v3">Mehr →</a>
+        </div>
+      </article>
+
+    </div>
+
+    <!-- Divider -->
+    <div class="angebote-divider-v3">
+      <div class="angebote-divider-line-v3"></div>
+      <span class="angebote-divider-text-v3">Weitere Angebote</span>
+      <div class="angebote-divider-line-v3"></div>
+    </div>
+
+    <!-- ===== BOTTOM ROW: Ongoing + Coming Soon (3 cards) ===== -->
+    <div class="angebote-grid-bottom-v3">
+
+      <!-- Mini Restaurant - Ongoing -->
+      <article class="angebot-card-v3 card-ongoing-v3" data-animate="card" data-delay="3">
+        <div class="status-badge-v3 badge-ongoing-v3">
+          <span>🔥</span>
+          <span>Läuft · Keine Anmeldung</span>
+        </div>
+        <div class="angebot-icon-small-v3">🍳</div>
+        <h3 class="angebot-title-small-v3">Mini Restaurant</h3>
+        <p class="angebot-description-small-v3">
+          Soziale Kompetenz durch gemeinsames Kochen und Restaurantspiel.
+        </p>
+        <div class="angebot-detail-v3">Woche 8 von 10</div>
+        <div class="angebot-actions-v3">
+          <a href={translatePath('/angebote/mini-projekte/mini-restaurant/')} class="btn-angebot-info-v3">Für Teilnehmer</a>
+        </div>
+      </article>
+
+      <!-- EVOLEA Cafe - Ongoing -->
+      <article class="angebot-card-v3 card-ongoing-v3" data-animate="card" data-delay="4">
+        <div class="status-badge-v3 badge-ongoing-v3">
+          <span>☕</span>
+          <span>Offen für alle</span>
+        </div>
+        <div class="angebot-icon-small-v3">☕</div>
+        <h3 class="angebot-title-small-v3">EVOLEA Cafe</h3>
+        <p class="angebot-description-small-v3">
+          Austausch und Gemeinschaft für Eltern. Jeden 2. Mittwoch im Monat um 20:00 Uhr.
+        </p>
+        <div class="angebot-detail-v3">Keine Anmeldung nötig</div>
+        <div class="angebot-actions-v3">
+          <a href={translatePath('/kontakt/')} class="btn-angebot-info-v3">Mehr erfahren</a>
+        </div>
+      </article>
+
+      <!-- Tagessonderschule - Coming Soon -->
+      <article class="angebot-card-v3 card-coming-v3" data-animate="card" data-delay="5">
+        <div class="status-badge-v3 badge-coming-v3">
+          <span>🚀</span>
+          <span>In Planung</span>
+        </div>
+        <div class="angebot-icon-small-v3">🏫</div>
+        <h3 class="angebot-title-small-v3">Tagessonderschule</h3>
+        <p class="angebot-description-small-v3">
+          Sonderschule Typ A für Kinder im Spektrum. Kindergarten bis Primarschulalter.
+        </p>
+        <div class="angebot-detail-coming-v3">📅 2025/2026</div>
+        <div class="angebot-actions-v3">
+          <a href={translatePath('/angebote/tagesschule/')} class="btn-angebot-notify-v3">Mehr erfahren</a>
+        </div>
+      </article>
+
+    </div>
+
+  </div>
+</section>
+
+<style>
+  /* ===========================================
+     EVOLEA ANGEBOTE SECTION V3
+     =========================================== */
+
+  /* Section Container */
+  .angebote-section-v3 {
+    padding: 5rem 2rem 6rem;
+    background: var(--evolea-cream, #FFFBF7);
+  }
+
+  .angebote-container-v3 {
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+
+  /* Section Header */
+  .angebote-header-v3 {
+    text-align: center;
+    margin-bottom: 3rem;
+    opacity: 0;
+    transform: translateY(30px);
+  }
+
+  .angebote-header-v3.animate {
+    animation: fadeSlideUpV3 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  }
+
+  .angebote-label-v3 {
+    display: inline-block;
+    font-family: 'Poppins', sans-serif;
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: #BA53AD;
+    margin-bottom: 1rem;
+  }
+
+  .angebote-title-v3 {
+    font-family: 'Fredoka', sans-serif;
+    font-size: clamp(2rem, 5vw, 2.25rem);
+    font-weight: 700;
+    margin-bottom: 0.75rem;
+    line-height: 1.2;
+    background: linear-gradient(135deg, #DD48E0 0%, #BA53AD 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .angebote-subtitle-v3 {
+    font-family: 'Poppins', sans-serif;
+    font-size: 1.05rem;
+    color: #6B7280;
+    max-width: 520px;
+    margin: 0 auto;
+    line-height: 1.7;
+  }
+
+  /* Card Grids */
+  .angebote-grid-top-v3 {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.25rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .angebote-grid-bottom-v3 {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.25rem;
+  }
+
+  /* Divider */
+  .angebote-divider-v3 {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin: 2rem 0 1.5rem;
+  }
+
+  .angebote-divider-line-v3 {
+    flex: 1;
+    height: 1px;
+    background: #E5E7EB;
+  }
+
+  .angebote-divider-text-v3 {
+    font-family: 'Poppins', sans-serif;
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    color: #9CA3AF;
+  }
+
+  /* ========== CARD STYLES ========== */
+
+  /* Base Card */
+  .angebot-card-v3 {
+    border-radius: 1.25rem;
+    padding: 1.75rem;
+    display: flex;
+    flex-direction: column;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    opacity: 0;
+    transform: translateY(30px);
+  }
+
+  .angebot-card-v3.animate {
+    animation: fadeSlideUpV3 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  }
+
+  /* Open Registration Cards (Top Row) */
+  .card-open-v3 {
+    background: linear-gradient(135deg, #DD48E0 0%, #BA53AD 100%);
+    color: white;
+    box-shadow: 0 12px 32px rgba(221, 72, 224, 0.2);
+    min-height: 290px;
+  }
+
+  .card-open-v3:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 24px 48px rgba(221, 72, 224, 0.35);
+  }
+
+  /* Ongoing Cards (Bottom Row - Grey) */
+  .card-ongoing-v3 {
+    background: linear-gradient(135deg, #F5F5F4 0%, #E7E5E4 100%);
+    border: 1px solid #D6D3D1;
+    color: #2D2D2D;
+    border-radius: 1rem;
+    padding: 1.5rem;
+  }
+
+  .card-ongoing-v3:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.08);
+  }
+
+  /* Coming Soon Card (Bottom Row - Dashed) */
+  .card-coming-v3 {
+    background: linear-gradient(135deg, #FDF4FF 0%, #FAE8FF 100%);
+    border: 1.5px dashed #E879F9;
+    color: #2D2D2D;
+    border-radius: 1rem;
+    padding: 1.5rem;
+  }
+
+  .card-coming-v3:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 24px rgba(232, 121, 249, 0.15);
+    border-style: solid;
+  }
+
+  /* ========== CARD COMPONENTS ========== */
+
+  /* Status Badges */
+  .status-badge-v3 {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.35rem 0.75rem;
+    border-radius: 2rem;
+    font-family: 'Poppins', sans-serif;
+    font-size: 0.7rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    width: fit-content;
+    margin-bottom: 1rem;
+  }
+
+  .badge-open-v3 {
+    background: rgba(255, 255, 255, 0.2);
+    color: white;
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    backdrop-filter: blur(8px);
+  }
+
+  .badge-ongoing-v3 {
+    background: #E7E5E4;
+    color: #78716C;
+    border: 1px solid #D6D3D1;
+    font-size: 0.65rem;
+    padding: 0.3rem 0.65rem;
+    margin-bottom: 0.875rem;
+  }
+
+  .badge-coming-v3 {
+    background: #FAE8FF;
+    color: #A21CAF;
+    border: 1px solid #E879F9;
+    font-size: 0.65rem;
+    padding: 0.3rem 0.65rem;
+    margin-bottom: 0.875rem;
+  }
+
+  /* Card Icons */
+  .angebot-icon-v3 {
+    font-size: 1.75rem;
+    margin-bottom: 0.625rem;
+    filter: grayscale(100%) brightness(10);
+  }
+
+  .angebot-icon-small-v3 {
+    font-size: 1.25rem;
+    margin-bottom: 0.5rem;
+  }
+
+  /* Card Titles */
+  .angebot-title-v3 {
+    font-family: 'Fredoka', sans-serif;
+    font-size: 1.25rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+    line-height: 1.3;
+  }
+
+  .angebot-title-small-v3 {
+    font-family: 'Fredoka', sans-serif;
+    font-size: 1.05rem;
+    font-weight: 600;
+    margin-bottom: 0.4rem;
+    color: #2D2D2D;
+  }
+
+  /* Card Descriptions */
+  .angebot-description-v3 {
+    font-family: 'Poppins', sans-serif;
+    font-size: 0.9rem;
+    line-height: 1.55;
+    opacity: 0.9;
+    margin-bottom: 1rem;
+    flex-grow: 1;
+  }
+
+  .angebot-description-small-v3 {
+    font-family: 'Poppins', sans-serif;
+    font-size: 0.825rem;
+    line-height: 1.5;
+    color: #6B7280;
+    margin-bottom: 0.75rem;
+    flex-grow: 1;
+  }
+
+  /* Card Meta */
+  .angebot-meta-v3 {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    margin-bottom: 1.25rem;
+    font-family: 'Poppins', sans-serif;
+    font-size: 0.8rem;
+    opacity: 0.85;
+  }
+
+  .angebot-detail-v3 {
+    font-family: 'Poppins', sans-serif;
+    font-size: 0.75rem;
+    color: #9CA3AF;
+    margin-bottom: 1rem;
+  }
+
+  .angebot-detail-coming-v3 {
+    font-family: 'Poppins', sans-serif;
+    font-size: 0.75rem;
+    color: #A21CAF;
+    font-weight: 500;
+    margin-bottom: 1rem;
+  }
+
+  /* Card Actions */
+  .angebot-actions-v3 {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-top: auto;
+  }
+
+  /* ========== BUTTONS ========== */
+
+  /* Primary Button (White on gradient) */
+  .btn-angebot-primary-v3 {
+    background: white;
+    color: #DD48E0;
+    border: none;
+    padding: 0.875rem 1.75rem;
+    border-radius: 0.625rem;
+    font-family: 'Poppins', sans-serif;
+    font-size: 0.95rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-decoration: none;
+    display: inline-block;
+  }
+
+  .btn-angebot-primary-v3:hover {
+    transform: scale(1.05);
+    box-shadow: 0 8px 20px rgba(255, 255, 255, 0.3);
+  }
+
+  /* Secondary Button (Underline) */
+  .btn-angebot-secondary-v3 {
+    background: transparent;
+    color: rgba(255, 255, 255, 0.9);
+    border: none;
+    padding: 0.875rem 1rem;
+    font-family: 'Poppins', sans-serif;
+    font-size: 0.9rem;
+    font-weight: 500;
+    cursor: pointer;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+
+  .btn-angebot-secondary-v3:hover {
+    color: white;
+  }
+
+  /* Info Button (Grey outline) */
+  .btn-angebot-info-v3 {
+    background: transparent;
+    color: #6B7280;
+    border: 1.5px solid #D1D5DB;
+    padding: 0.625rem 1.25rem;
+    border-radius: 0.5rem;
+    font-family: 'Poppins', sans-serif;
+    font-size: 0.85rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-decoration: none;
+    display: inline-block;
+  }
+
+  .btn-angebot-info-v3:hover {
+    border-color: #BA53AD;
+    color: #BA53AD;
+  }
+
+  /* Notify Button (Purple outline) */
+  .btn-angebot-notify-v3 {
+    background: transparent;
+    color: #C026D3;
+    border: 1.5px solid #E879F9;
+    padding: 0.625rem 1.25rem;
+    border-radius: 0.5rem;
+    font-family: 'Poppins', sans-serif;
+    font-size: 0.85rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-decoration: none;
+    display: inline-block;
+  }
+
+  .btn-angebot-notify-v3:hover {
+    background: #FAE8FF;
+  }
+
+  /* ========== ANIMATIONS ========== */
+  @keyframes fadeSlideUpV3 {
+    from {
+      opacity: 0;
+      transform: translateY(30px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  /* ========== RESPONSIVE ========== */
+  @media (max-width: 900px) {
+    .angebote-grid-top-v3,
+    .angebote-grid-bottom-v3 {
+      grid-template-columns: 1fr;
+      gap: 1.25rem;
+    }
+
+    .angebote-section-v3 {
+      padding: 3rem 1.5rem 4rem;
+    }
+
+    .card-open-v3 {
+      min-height: auto;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .angebote-title-v3 {
+      font-size: 1.75rem;
+    }
+
+    .angebot-card-v3 {
+      padding: 1.5rem;
+    }
+
+    .angebot-meta-v3 {
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    .angebot-actions-v3 {
+      flex-direction: column;
+      align-items: stretch;
+    }
+
+    .btn-angebot-primary-v3,
+    .btn-angebot-info-v3,
+    .btn-angebot-notify-v3 {
+      width: 100%;
+      text-align: center;
+    }
+  }
+
+  /* Large Desktop */
+  @media (min-width: 1440px) {
+    .angebote-container-v3 {
+      max-width: 1200px;
+    }
+
+    .angebote-title-v3 {
+      font-size: 2.5rem;
+    }
+  }
+
+  /* ========== REDUCED MOTION ========== */
+  @media (prefers-reduced-motion: reduce) {
+    .angebote-header-v3,
+    .angebot-card-v3 {
+      opacity: 1;
+      transform: none;
+    }
+
+    .angebot-card-v3,
+    .angebot-card-v3:hover,
+    .btn-angebot-primary-v3,
+    .btn-angebot-info-v3,
+    .btn-angebot-notify-v3 {
+      transition: none;
+    }
+
+    .card-open-v3:hover,
+    .card-ongoing-v3:hover,
+    .card-coming-v3:hover {
+      transform: none;
+    }
+  }
+</style>
+
+<script>
+  // Intersection Observer for scroll animations
+  function initAngeboteV3Animations() {
+    const section = document.querySelector('.angebote-section-v3');
+    if (!section) return;
+
+    // Check for reduced motion preference
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (prefersReducedMotion) {
+      section.querySelectorAll('[data-animate]').forEach(el => {
+        el.classList.add('animate');
+      });
+      return;
+    }
+
+    const observerOptions: IntersectionObserverInit = {
+      threshold: 0.1,
+      rootMargin: '0px 0px -50px 0px'
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          // Animate header first
+          const header = entry.target.querySelector('[data-animate="header"]');
+          if (header) {
+            header.classList.add('animate');
+          }
+
+          // Animate cards with staggered delay
+          const cards = entry.target.querySelectorAll('[data-animate="card"]');
+          cards.forEach((card) => {
+            const delay = parseInt((card as HTMLElement).dataset.delay || '0');
+            setTimeout(() => {
+              card.classList.add('animate');
+            }, 200 + (delay * 100));
+          });
+
+          observer.unobserve(entry.target);
+        }
+      });
+    }, observerOptions);
+
+    observer.observe(section);
+  }
+
+  document.addEventListener('DOMContentLoaded', initAngeboteV3Animations);
+  document.addEventListener('astro:page-load', initAngeboteV3Animations);
+</script>
