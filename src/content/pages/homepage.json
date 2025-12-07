@@ -84,9 +84,5 @@
       "en": "Get in Touch"
     },
     "buttonLink": "/kontakt/"
-  },
-  "seo": {
-    "discriminant": false,
-    "value": {}
   }
 }
