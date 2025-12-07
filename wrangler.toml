@@ -2,6 +2,11 @@
 name = "evolea-website"
 pages_build_output_dir = "./dist"
 
+# Build command that installs @astrojs/cloudflare adapter before building
+# This is needed because the adapter doesn't install on Windows ARM64 (local dev)
+# so it's not in package-lock.json
+command = "npm run build:cloudflare"
+
 # Use a recent compatibility date to enable process.env support
 compatibility_date = "2025-04-01"
 
