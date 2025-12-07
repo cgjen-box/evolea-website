@@ -16,12 +16,15 @@ interface Props {
   label?: string;
   /** Position: 'fixed' stays in corner, 'inline' flows with content */
   position?: 'fixed' | 'inline';
+  /** Git branch to edit (default: 'main') - required for GitHub storage mode */
+  branch?: string;
 }
 
-const { type, collection, slug, label = 'Edit', position = 'fixed' } = Astro.props;
+const { type, collection, slug, label = 'Edit', position = 'fixed', branch = 'main' } = Astro.props;
 
 // Build the Keystatic edit URL
-const baseUrl = '/keystatic';
+// GitHub storage mode requires branch in the URL: /keystatic/branch/{branch}/...
+const baseUrl = `/keystatic/branch/${branch}`;
 let editUrl: string;
 
 if (type === 'singleton') {
