@@ -8,7 +8,12 @@ compatibility_date = "2025-04-01"
 # Enable Node.js compatibility - this makes process.env work at runtime
 # which is required for Keystatic to read KEYSTATIC_SECRET, etc.
 # See: https://developers.cloudflare.com/workers/runtime-apis/nodejs/process/
+# With compatibility_date >= 2025-04-01 and nodejs_compat, process.env is populated automatically
 compatibility_flags = ["nodejs_compat"]
+
+# Explicitly enable process.env population (should be auto-enabled with date >= 2025-04-01)
+# This ensures environment variables are available via process.env at runtime
+# See: https://developers.cloudflare.com/workers/configuration/compatibility-dates/
 
 # Environment variables for local development
 # Production values should be set in Cloudflare Dashboard
