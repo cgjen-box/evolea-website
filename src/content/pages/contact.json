@@ -76,13 +76,6 @@
         }
       },
       {
-        "value": "schulberatung",
-        "label": {
-          "de": "Schulberatung",
-          "en": "School Consultation"
-        }
-      },
-      {
         "value": "allgemein",
         "label": {
           "de": "Allgemeine Anfrage",

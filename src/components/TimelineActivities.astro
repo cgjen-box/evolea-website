@@ -156,15 +156,6 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 
     </div>
 
-    <!-- Schulberatung - Separate Section -->
-    <div class="schulberatung-standalone">
-      <a href={translatePath('/angebote/schulberatung/')} class="schulberatung-card">
-        <h3 class="schulberatung-title"><Icon name="school" size="sm" class="schulberatung-icon" /> Schulberatung</h3>
-        <p>Beratung und Unterstützung für Schulen, Lehrpersonen und Fachkräfte im Umgang mit Kindern im Spektrum.</p>
-        <span class="schulberatung-link">Mehr erfahren →</span>
-      </a>
-    </div>
-
   </div>
 </section>
 
@@ -466,77 +457,12 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
     stroke: #374151;
   }
 
-  .schulberatung-icon {
-    display: inline-block;
-    vertical-align: middle;
-    margin-right: 0.5rem;
-  }
-
-  .schulberatung-title {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-  }
-
   .activity-actions {
     display: flex;
     flex-wrap: wrap;
     gap: 1rem;
     align-items: center;
     margin-top: auto;
-  }
-
-  /* Schulberatung Standalone */
-  .schulberatung-standalone {
-    text-align: center;
-    margin-top: 3rem;
-    padding-top: 3rem;
-    border-top: 1px solid #E5E7EB;
-  }
-
-  .schulberatung-card {
-    display: inline-block;
-    background: white;
-    border: 2px solid #BA53AD;
-    border-radius: 1.5rem;
-    padding: 2rem 3rem;
-    max-width: 500px;
-    transition: all 0.3s ease;
-    text-decoration: none;
-  }
-
-  .schulberatung-card:hover {
-    box-shadow: 0 8px 30px rgba(186, 83, 173, 0.15);
-    transform: translateY(-4px);
-  }
-
-  .schulberatung-card h3 {
-    font-family: 'Fredoka', sans-serif;
-    color: #BA53AD;
-    font-size: 1.25rem;
-    margin-bottom: 0.75rem;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 0.5rem;
-  }
-
-  .schulberatung-card p {
-    font-family: 'Poppins', sans-serif;
-    color: #6B7280;
-    margin-bottom: 1.25rem;
-    line-height: 1.5;
-  }
-
-  .schulberatung-link {
-    color: #BA53AD;
-    font-family: 'Poppins', sans-serif;
-    font-weight: 600;
-    transition: color 0.2s ease;
-  }
-
-  .schulberatung-card:hover .schulberatung-link {
-    color: #DD48E0;
   }
 
   /* Animations */
@@ -615,9 +541,6 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
       text-align: center;
     }
 
-    .schulberatung-card {
-      padding: 1.5rem;
-    }
   }
 
   /* Large Desktop */
@@ -653,8 +576,6 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 
     .activity-card,
     .activity-card:hover,
-    .schulberatung-card,
-    .schulberatung-card:hover,
     .activity-card.registration-open .btn-primary,
     .activity-card.currently-running .btn-info {
       transition: none;

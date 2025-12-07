@@ -9,56 +9,66 @@ const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
 const translatePath = useTranslatedPath(lang);
 
-const programs = [
+// Main programs (currently enrolling)
+const mainPrograms = [
   {
-    title: t('programs.miniGarten'),
-    desc: t('programs.miniGarten.desc'),
+    title: 'Mini Garten',
+    desc: 'Spielerische Vorbereitung auf den Kindergarten in einer kleinen, geschützten Gruppe.',
     iconName: 'sprout' as const,
     color: 'green',
-    ages: '3-6',
+    ages: '3-5',
     href: '/angebote/mini-garten/',
+    status: 'Anmeldung offen',
   },
   {
-    title: t('programs.miniProjekte'),
-    desc: t('programs.miniProjekte.desc'),
+    title: 'Mini Projekte',
+    desc: 'Soziale Kompetenz durch kreative Projekte in kleinen Gruppen.',
     iconName: 'palette' as const,
     color: 'orange',
     ages: '5-8',
     href: '/angebote/mini-projekte/',
+    status: 'Anmeldung offen',
   },
   {
-    title: t('programs.miniTurnen'),
-    desc: t('programs.miniTurnen.desc'),
+    title: 'Mini Turnen',
+    desc: 'Bewegung, Spass und motorische Förderung in einer kleinen, verständnisvollen Gruppe.',
     iconName: 'ball' as const,
     color: 'sky',
     ages: '5-8',
     href: '/angebote/mini-turnen/',
+    status: 'Anmeldung offen',
   },
+];
+
+// Additional programs
+const additionalPrograms = [
   {
-    title: t('programs.schulberatung'),
-    desc: t('programs.schulberatung.desc'),
-    iconName: 'school' as const,
+    title: 'EVOLEA Cafe',
+    desc: 'Austausch und Gemeinschaft für Eltern. Jeden 2. Mittwoch im Monat.',
+    iconName: 'coffee' as const,
     color: 'coral',
-    ages: 'alle',
-    href: '/angebote/schulberatung/',
+    ages: 'Eltern',
+    href: '/kontakt/',
+    status: 'Offen für alle',
   },
   {
-    title: t('programs.tagesschule'),
-    desc: t('programs.tagesschule.desc'),
-    iconName: 'book' as const,
+    title: 'Tagesschule',
+    desc: 'Sonderschule Typ A für Kinder im Spektrum. Wir arbeiten noch daran.',
+    iconName: 'school' as const,
     color: 'purple',
-    ages: '6-12',
+    ages: '4-12',
     href: '/angebote/tagesschule/',
-    featured: true,
+    status: 'Vision',
+    isVision: true,
   },
 ];
 ---
 
-<Base title="Angebote" description="EVOLEA bietet verschiedene Foerderprogramme fuer Kinder im Autismus Spektrum oder mit ADHS an: Mini Garten, Mini Projekte, Mini Turnen, Tagesschule und Schulberatung." transparentHeader={true}>
+<Base title="Angebote" description="EVOLEA bietet verschiedene Förderprogramme für Kinder im Autismus Spektrum oder mit ADHS an: Mini Garten, Mini Projekte, Mini Turnen, Tagesschule und mehr." transparentHeader={true}>
   <!-- Premium Hero with Prism Gradient -->
   <InnerPageHero
     title={t('nav.programs')}
-    subtitle="Evidenzbasierte Programme, die jedes Kind dort abholen, wo es steht. Entwickelt für Kinder im Spektrum und mit ADHS."
+    subtitle="Programme, die jedes Kind dort abholen, wo es steht."
     breadcrumbs={[
       { label: 'Startseite', href: translatePath('/') },
       { label: 'Angebote' }
@@ -66,85 +76,108 @@ const programs = [
     size="md"
   />
 
-  <!-- Age Groups Quick Reference -->
-  <section class="py-8 bg-white border-b border-evolea-purple/10">
-    <div class="container mx-auto max-w-6xl px-4">
-      <div class="flex flex-wrap justify-center gap-6 md:gap-12">
-        <div class="text-center">
-          <span class="text-2xl font-display font-bold text-evolea-green">3-6</span>
-          <span class="text-sm text-evolea-text-light ml-2">Jahre: Kindergartenvorbereitung</span>
-        </div>
-        <div class="text-center">
-          <span class="text-2xl font-display font-bold text-evolea-orange">5-8</span>
-          <span class="text-sm text-evolea-text-light ml-2">Jahre: Soziale Kompetenzen</span>
-        </div>
-        <div class="text-center">
-          <span class="text-2xl font-display font-bold text-evolea-purple">6-12</span>
-          <span class="text-sm text-evolea-text-light ml-2">Jahre: Tagesstruktur</span>
-        </div>
-      </div>
-    </div>
-  </section>
-
   <!-- Introduction -->
   <section class="py-12 bg-evolea-cream/30">
     <div class="container mx-auto max-w-4xl px-4 text-center">
       <h2 class="text-2xl font-display font-bold text-evolea-purple mb-4">Unser Ansatz</h2>
       <p class="text-lg text-evolea-text-light leading-relaxed">
-        Alle unsere Programme basieren auf <strong class="text-evolea-purple">Applied Behavior Analysis (ABA)</strong> und <strong class="text-evolea-purple">Verbal Behavior (VB)</strong> - wissenschaftlich fundierte Methoden, die nachweislich wirksam sind. In kleinen Gruppen mit hohem Betreuungsschluessel schaffen wir einen geschuetzten Rahmen fuer individuelle Entwicklung.
+        Wir bestärken Erfolge und motivieren die Kinder, neue Herausforderungen anzunehmen. Wir setzen auf wissenschaftlich fundierte Methoden, die nachweislich wirksam sind. In kleinen Gruppen mit hohem Betreuungsschlüssel schaffen wir einen geschützten Rahmen für individuelle Entwicklung.
       </p>
     </div>
   </section>
 
-  <!-- Programs Grid -->
+  <!-- Main Programs Section -->
   <section class="py-16 md:py-24">
     <div class="container mx-auto max-w-6xl px-4">
-      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {programs.map((program) => (
+      <!-- Aktuelle Angebote Header -->
+      <div class="text-center mb-12">
+        <span class="inline-block bg-evolea-magenta/10 text-evolea-magenta px-4 py-2 rounded-full text-sm font-semibold mb-4">
+          Aktuelle Angebote
+        </span>
+        <h2 class="text-3xl font-display font-bold text-evolea-purple">
+          Jetzt anmelden
+        </h2>
+      </div>
+
+      <!-- Main Programs Grid - Purple Gradient Cards -->
+      <div class="grid md:grid-cols-3 gap-6 mb-16">
+        {mainPrograms.map((program) => (
           <a
             href={translatePath(program.href)}
-            class:list={[
-              'group block rounded-evolea-lg overflow-hidden transition-all hover:shadow-card',
-              program.featured ? 'bg-evolea-purple text-white' : 'bg-white',
-            ]}
+            class="group block rounded-evolea-lg overflow-hidden transition-all hover:shadow-card bg-gradient-to-br from-evolea-magenta to-evolea-purple text-white"
           >
             <div class="p-6">
               <div class="flex items-center justify-between mb-4">
-                <Icon name={program.iconName} size="lg" gradient={!program.featured} />
-                <span class:list={[
-                  'text-sm font-medium px-3 py-1 rounded-full',
-                  program.featured ? 'bg-white/20' : 'bg-evolea-purple/10 text-evolea-purple',
-                ]}>
+                <div class="w-12 h-12 bg-white/20 rounded-full flex items-center justify-center">
+                  <Icon name={program.iconName} size="lg" gradient={false} />
+                </div>
+                <span class="text-sm font-medium px-3 py-1 rounded-full bg-white/20">
                   {program.ages} Jahre
                 </span>
               </div>
-              <h3 class:list={[
-                'text-xl font-display font-bold mb-2 group-hover:underline',
-                program.featured ? 'text-white' : 'text-evolea-purple',
-              ]}>
+              <div class="mb-2">
+                <span class="inline-flex items-center gap-1 text-xs font-semibold bg-white/30 px-2 py-1 rounded-full">
+                  <Icon name="sparkle" size="xs" gradient={false} />
+                  {program.status}
+                </span>
+              </div>
+              <h3 class="text-xl font-display font-bold mb-2 group-hover:underline">
                 {program.title}
               </h3>
-              <p class:list={[
-                'text-sm mb-4',
-                program.featured ? 'text-white/80' : 'text-evolea-text-light',
-              ]}>
+              <p class="text-sm text-white/90 mb-4">
                 {program.desc}
               </p>
-              <div class:list={[
-                'flex items-center gap-2 text-sm font-medium',
-                program.featured ? 'text-white' : 'text-evolea-purple',
-              ]}>
+              <div class="flex items-center gap-2 text-sm font-medium">
                 Mehr erfahren
                 <svg class="w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
                 </svg>
               </div>
             </div>
-            {program.featured && (
-              <div class="px-6 py-3 bg-white/10 border-t border-white/20">
-                <span class="text-sm text-white/90">Neues Angebot - Interesse anmelden</span>
+          </a>
+        ))}
+      </div>
+
+      <!-- Weitere Angebote Divider -->
+      <div class="flex items-center gap-4 mb-8">
+        <div class="flex-1 h-px bg-evolea-purple/20"></div>
+        <span class="text-sm font-semibold text-evolea-text-light uppercase tracking-wider">Weitere Angebote</span>
+        <div class="flex-1 h-px bg-evolea-purple/20"></div>
+      </div>
+
+      <!-- Additional Programs Grid -->
+      <div class="grid md:grid-cols-2 gap-6">
+        {additionalPrograms.map((program) => (
+          <a
+            href={translatePath(program.href)}
+            class:list={[
+              'group block rounded-evolea-lg overflow-hidden transition-all hover:shadow-card',
+              program.isVision ? 'bg-evolea-purple/5 border-2 border-dashed border-evolea-purple/30' : 'bg-white border border-evolea-purple/10',
+            ]}
+          >
+            <div class="p-6">
+              <div class="flex items-center justify-between mb-4">
+                <Icon name={program.iconName} size="lg" />
+                <span class:list={[
+                  'text-sm font-medium px-3 py-1 rounded-full',
+                  program.isVision ? 'bg-evolea-purple/10 text-evolea-purple' : 'bg-evolea-coral/10 text-evolea-coral',
+                ]}>
+                  {program.status}
+                </span>
               </div>
-            )}
+              <h3 class="text-xl font-display font-bold text-evolea-purple mb-2 group-hover:underline">
+                {program.title}
+              </h3>
+              <p class="text-sm text-evolea-text-light mb-4">
+                {program.desc}
+              </p>
+              <div class="flex items-center gap-2 text-sm font-medium text-evolea-purple">
+                Mehr erfahren
+                <svg class="w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                </svg>
+              </div>
+            </div>
           </a>
         ))}
       </div>
@@ -156,11 +189,11 @@ const programs = [
     <div class="container mx-auto max-w-4xl px-4 text-center">
       <h2 class="text-2xl font-display font-bold text-evolea-purple mb-4">Nicht sicher, welches Programm passt?</h2>
       <p class="text-lg text-evolea-text-light mb-8">
-        Wir beraten Sie gerne und finden gemeinsam das passende Angebot fuer Ihr Kind. Jedes Kind ist einzigartig - und so ist auch unsere Beratung.
+        Wir beraten Sie gerne und finden gemeinsam das passende Angebot für Ihr Kind. Jedes Kind ist einzigartig - und so ist auch unsere Beratung.
       </p>
       <div class="flex flex-wrap justify-center gap-4">
         <a href={translatePath('/kontakt/')} class="btn-primary">
-          Beratungsgespraech vereinbaren
+          Beratungsgespräch vereinbaren
           <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
           </svg>
