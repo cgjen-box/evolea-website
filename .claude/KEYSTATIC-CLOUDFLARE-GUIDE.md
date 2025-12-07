@@ -274,9 +274,32 @@ After deploying:
 
 ---
 
+## File Format Requirements
+
+### Blog/Content Files
+
+Keystatic with `format: { contentField: 'content' }` expects `.mdx` extension, NOT `.md`.
+
+**If blog articles aren't showing up:**
+1. Rename all `.md` files to `.mdx` in `src/content/blog/`
+2. The files use YAML frontmatter (between `---` delimiters) which works in MDX
+
+```bash
+# Rename all .md to .mdx
+cd src/content/blog
+for f in *.md; do mv "$f" "${f%.md}.mdx"; done
+```
+
+### JSON Files
+
+Singletons and data collections use `.json` format with `format: { data: 'json' }`.
+
+---
+
 ## Version History
 
 - 2025-12-07: Initial guide created after debugging 500 errors
   - Identified content-components as incompatible
   - Identified conditional field data mismatch
   - Created working simplified config
+  - Blog files must use .mdx extension
