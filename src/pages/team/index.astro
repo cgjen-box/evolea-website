@@ -2,47 +2,34 @@
 import Base from '@layouts/Base.astro';
 import InnerPageHero from '@components/InnerPageHero.astro';
 import PageCloser from '@components/PageCloser.astro';
+import EditLink from '@components/EditLink.astro';
 import Icon from '@components/Icon.astro';
 import { getLangFromUrl, useTranslations, useTranslatedPath } from '@i18n/utils';
+import { getCollection } from 'astro:content';
 
 const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
 const translatePath = useTranslatedPath(lang);
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 
-const team = [
-  {
-    name: 'Gianna Spiess',
-    credentials: 'M.Sc., BCBA',
-    role: 'Mitgründerin, Psychologin',
-    image: base + '/images/team/gianna-spiess.png',
-    description: 'Board Certified Behavior Analyst mit Schwerpunkt auf kindliche Entwicklung und evidenzbasierte Interventionen.',
-  },
-  {
-    name: 'Annemarie Elias',
-    credentials: 'M.Sc., BCBA',
-    role: 'Mitgründerin, Psychologin',
-    image: base + '/images/team/annemarie-elias.png',
-    description: 'Board Certified Behavior Analyst mit Expertise in sozialen Kompetenzen und Verhaltensanalyse.',
-  },
-  {
-    name: 'Christoph Jenny',
-    credentials: '',
-    role: 'Mitgründer',
-    image: base + '/images/team/christoph-jenny.png',
-    description: 'Treibende Kraft hinter der Vision von EVOLEA und verantwortlich für Organisation und Entwicklung.',
-  },
-  {
-    name: 'Alexandra Aleksic',
-    credentials: 'B.Sc.',
-    role: 'Mitgründerin, Psychologie-Studentin',
-    image: base + '/images/team/alexandra-aleksic.jpg',
-    description: 'Angehende Psychologin mit Leidenschaft für die Arbeit mit Kindern im Spektrum.',
-  },
-];
+// Get team members from collection, sorted by order
+const teamEntries = await getCollection('team', ({ data }) => data.veroeffentlicht);
+const team = teamEntries
+  .sort((a, b) => a.data.reihenfolge - b.data.reihenfolge)
+  .map((entry) => ({
+    slug: entry.id.replace(/\.json$/, ''),
+    name: entry.data.name,
+    credentials: entry.data.credentials || '',
+    role: lang === 'de' ? entry.data.rolle?.de : entry.data.rolle?.en,
+    image: base + entry.data.foto,
+    description: lang === 'de' ? entry.data.beschreibung?.de : entry.data.beschreibung?.en,
+  }));
 ---
 
 <Base title="Team" description="Lernen Sie das interdisziplinäre Team von EVOLEA kennen - erfahrene Fachpersonen aus Psychologie, Verhaltensanalyse und Pädagogik." transparentHeader={true}>
+  <!-- Edit Link for Keystatic CMS -->
+  <EditLink type="collection" collection="team" label="Team bearbeiten" />
+
   <!-- Premium Hero with Prism Gradient -->
   <InnerPageHero
     title={t('team.title')}

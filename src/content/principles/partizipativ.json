@@ -1,0 +1,12 @@
+{
+  "titel": "Partizipativ",
+  "titelEn": "Participatory",
+  "beschreibung": {
+    "de": "Kinder werden aktiv in Entscheidungen einbezogen und ihre Stimme wird gehört und respektiert.",
+    "en": "Children are actively involved in decisions and their voice is heard and respected."
+  },
+  "icon": "handshake",
+  "farbe": "mint",
+  "veroeffentlicht": true,
+  "reihenfolge": 4
+}

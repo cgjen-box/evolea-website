@@ -1,0 +1,12 @@
+{
+  "titel": "Spielerisch",
+  "titelEn": "Playful",
+  "beschreibung": {
+    "de": "Lernen geschieht durch Spiel und positive Erfahrungen - natürlich, motivierend und freudvoll.",
+    "en": "Learning happens through play and positive experiences - natural, motivating, and joyful."
+  },
+  "icon": "gamepad",
+  "farbe": "yellow",
+  "veroeffentlicht": true,
+  "reihenfolge": 2
+}

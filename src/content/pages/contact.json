@@ -1,0 +1,98 @@
+{
+  "hero": {
+    "titel": {
+      "de": "Kontakt",
+      "en": "Contact"
+    },
+    "untertitel": {
+      "de": "Haben Sie Fragen zu unseren Angeboten? Wir freuen uns auf Ihre Nachricht.",
+      "en": "Do you have questions about our programs? We look forward to hearing from you."
+    }
+  },
+  "kontaktInfo": {
+    "sectionTitel": {
+      "de": "So erreichen Sie uns",
+      "en": "How to reach us"
+    },
+    "email": "hello@evolea.ch",
+    "telefon": "+41 78 959 19 74",
+    "whatsapp": "https://wa.me/41789591974",
+    "instagram": "@evolea.verein",
+    "instagramUrl": "https://www.instagram.com/evolea.verein/"
+  },
+  "adresse": {
+    "strasse": "Stapferstrasse 10",
+    "plz": "8006",
+    "ort": "Zürich",
+    "land": "Schweiz",
+    "hinweis": {
+      "de": "Nähe Seilbahn Rigiblick",
+      "en": "Near Rigiblick cable car"
+    }
+  },
+  "erstgespraech": {
+    "titel": {
+      "de": "Kostenloses Erstgespräch",
+      "en": "Free Initial Consultation"
+    },
+    "text": {
+      "de": "Möchten Sie mehr über unsere Angebote erfahren? Vereinbaren Sie ein unverbindliches Beratungsgespräch - telefonisch oder vor Ort.",
+      "en": "Would you like to learn more about our programs? Schedule a no-obligation consultation - by phone or in person."
+    }
+  },
+  "formular": {
+    "titel": {
+      "de": "Anfrage senden",
+      "en": "Send Inquiry"
+    },
+    "formspreeId": "xpznqrjk",
+    "betreffs": [
+      {
+        "value": "mini-garten",
+        "label": {
+          "de": "Mini Garten",
+          "en": "Mini Garten"
+        }
+      },
+      {
+        "value": "mini-projekte",
+        "label": {
+          "de": "Mini Projekte",
+          "en": "Mini Projekte"
+        }
+      },
+      {
+        "value": "mini-turnen",
+        "label": {
+          "de": "Mini Turnen",
+          "en": "Mini Turnen"
+        }
+      },
+      {
+        "value": "tagesschule",
+        "label": {
+          "de": "Tagesschule",
+          "en": "Day School"
+        }
+      },
+      {
+        "value": "schulberatung",
+        "label": {
+          "de": "Schulberatung",
+          "en": "School Consultation"
+        }
+      },
+      {
+        "value": "allgemein",
+        "label": {
+          "de": "Allgemeine Anfrage",
+          "en": "General Inquiry"
+        }
+      }
+    ]
+  },
+  "seo": {
+    "discriminant": false,
+    "value": {}
+  }
+}

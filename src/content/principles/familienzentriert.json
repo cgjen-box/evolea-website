@@ -1,0 +1,12 @@
+{
+  "titel": "Familienzentriert",
+  "titelEn": "Family-Centered",
+  "beschreibung": {
+    "de": "Familien sind Partner in der Förderung. Wir arbeiten eng mit Eltern zusammen und unterstützen das ganze System.",
+    "en": "Families are partners in development. We work closely with parents and support the whole system."
+  },
+  "icon": "family",
+  "farbe": "gold",
+  "veroeffentlicht": true,
+  "reihenfolge": 7
+}

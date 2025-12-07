@@ -1,0 +1,12 @@
+{
+  "titel": "Ressourcenorientiert",
+  "titelEn": "Strength-Based",
+  "beschreibung": {
+    "de": "Wir fokussieren auf Stärken und Potenziale, nicht auf Defizite. Jedes Kind hat einzigartige Fähigkeiten.",
+    "en": "We focus on strengths and potential, not deficits. Every child has unique abilities."
+  },
+  "icon": "diamond",
+  "farbe": "purple",
+  "veroeffentlicht": true,
+  "reihenfolge": 5
+}
