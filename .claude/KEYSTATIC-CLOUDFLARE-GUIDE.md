@@ -296,8 +296,47 @@ Singletons and data collections use `.json` format with `format: { data: 'json' 
 
 ---
 
+## Password Gate (Optional)
+
+Add an additional password layer before GitHub OAuth using Astro middleware.
+
+### Setup
+
+1. **Set the environment variable** in Cloudflare Pages:
+   ```
+   KEYSTATIC_ACCESS_PASSWORD=your-shared-password
+   ```
+
+2. **Add to astro.config.mjs vite.define**:
+   ```javascript
+   'import.meta.env.KEYSTATIC_ACCESS_PASSWORD': JSON.stringify(process.env.KEYSTATIC_ACCESS_PASSWORD),
+   ```
+
+3. **Create middleware** (`src/middleware.ts`):
+   The middleware intercepts `/keystatic/*` routes and shows a branded login page if:
+   - `KEYSTATIC_ACCESS_PASSWORD` is set
+   - User doesn't have `keystatic_access` cookie
+
+### How it works
+
+- Shows a branded EVOLEA login form before Keystatic
+- Sets a cookie for 24 hours after successful password entry
+- After password gate, users still need to authenticate with GitHub
+- If no password is set, access is granted directly to GitHub OAuth
+
+### Why middleware instead of custom page?
+
+A custom `src/pages/keystatic/[...params].astro` page would conflict with:
+- The Keystatic Astro integration's automatic route handling
+- Static builds (GitHub Pages) that can't have `prerender = false` pages without an adapter
+
+Middleware only runs on server-rendered builds (Cloudflare) and is ignored in static builds.
+
+---
+
 ## Version History
 
+- 2025-12-07: Added password gate middleware for optional access control
 - 2025-12-07: Initial guide created after debugging 500 errors
   - Identified content-components as incompatible
   - Identified conditional field data mismatch
