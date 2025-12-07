@@ -22,9 +22,17 @@ const translatePath = useTranslatedPath(lang);
     <header class="angebote-header-v3" data-animate="header">
       <span class="angebote-label-v3">Angebote</span>
       <h2 class="angebote-title-v3">Unsere Angebote</h2>
-      <p class="angebote-subtitle-v3">
-        Programme, die jedes Kind dort abholen, wo es steht.
-      </p>
+      <div class="angebote-description-v3">
+        <p>Wir bieten Förderangebote für Kinder im Autismus Spektrum oder mit ADHS an.</p>
+        <p>Wir arbeiten inklusiv, individuell und mit den neusten wissenschaftlichen Erkenntnissen. Unsere Angebote umfassen:</p>
+        <ul class="angebote-list-v3">
+          <li>Mini Projekte: Social Skills Gruppe für Kinder im Spektrum</li>
+          <li>Mini Garten: Vorbereitung für den Kindergarten</li>
+          <li>Beratung und Unterstützung Schulen</li>
+        </ul>
+        <p>Unsere Angebote werden in Zukunft stets erweitert.</p>
+        <p class="angebote-funding-v3">Als Trägerschaft fungiert der EVOLEA Verein, welcher von Eltern, Unternehmen und gemeinnützigen Stiftungen finanziert wird.</p>
+      </div>
     </header>
 
     <!-- ===== TOP ROW: Registration Open (3 cards) ===== -->
@@ -219,6 +227,36 @@ const translatePath = useTranslatedPath(lang);
     max-width: 520px;
     margin: 0 auto;
     line-height: 1.7;
+  }
+
+  .angebote-description-v3 {
+    font-family: 'Poppins', sans-serif;
+    font-size: 1rem;
+    color: #5C5762;
+    max-width: 650px;
+    margin: 0 auto;
+    line-height: 1.7;
+    text-align: left;
+  }
+
+  .angebote-description-v3 p {
+    margin-bottom: 0.75rem;
+  }
+
+  .angebote-list-v3 {
+    margin: 0.75rem 0 0.75rem 1.5rem;
+    padding: 0;
+    list-style: disc;
+  }
+
+  .angebote-list-v3 li {
+    margin-bottom: 0.25rem;
+  }
+
+  .angebote-funding-v3 {
+    font-size: 0.9rem;
+    color: #6B7280;
+    margin-top: 1rem;
   }
 
   /* Card Grids */
