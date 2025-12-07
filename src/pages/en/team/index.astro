@@ -1,40 +1,129 @@
 ---
 import Base from '@layouts/Base.astro';
+import InnerPageHero from '@components/InnerPageHero.astro';
+import PageCloser from '@components/PageCloser.astro';
+import EditLink from '@components/EditLink.astro';
+import Icon from '@components/Icon.astro';
 import { getLangFromUrl, useTranslations, useTranslatedPath } from '@i18n/utils';
+import { getCollection } from 'astro:content';
 
 const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
 const translatePath = useTranslatedPath(lang);
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+
+// Get team members from collection, sorted by order
+const teamEntries = await getCollection('team', ({ data }) => data.veroeffentlicht);
+const team = teamEntries
+  .sort((a, b) => a.data.reihenfolge - b.data.reihenfolge)
+  .map((entry) => ({
+    slug: entry.id.replace(/\.json$/, ''),
+    name: entry.data.name,
+    credentials: entry.data.credentials || '',
+    role: lang === 'de' ? entry.data.rolle?.de : entry.data.rolle?.en,
+    image: base + entry.data.foto,
+    description: lang === 'de' ? entry.data.beschreibung?.de : entry.data.beschreibung?.en,
+  }));
 ---
 
-<Base title="Team" description="Meet the EVOLEA team - experienced professionals from special education, psychology, and pedagogy.">
-  <section class="py-20 px-4">
-    <div class="container mx-auto max-w-4xl">
-      <h1 class="text-4xl md:text-5xl font-bold text-evolea-purple mb-6 text-center">
-        {t('team.title')}
-      </h1>
-      <p class="text-xl text-evolea-text-light text-center max-w-2xl mx-auto mb-16">
-        {t('team.description')}
-      </p>
-      
-      <div class="bg-white rounded-evolea-lg p-8 shadow-sm">
-        <h2 class="text-2xl font-semibold text-evolea-purple mb-4">Our Team</h2>
-        <p class="text-evolea-text-light mb-6">
-          At EVOLEA, experienced professionals from various fields work together. Our team combines expertise from special education, psychology, pedagogy, and social work.
-        </p>
-        <p class="text-evolea-text-light mb-6">
-          What unites us: the conviction that every child is unique and has the right to develop at their own pace. We meet children and families with empathy, openness, and respect.
-        </p>
-        <p class="text-evolea-text-light">
-          All staff members regularly participate in professional development and work according to current scientific standards.
-        </p>
-      </div>
-      
-      <div class="mt-12 text-center">
-        <a href={translatePath('/contact/')} class="btn-primary">
-          {t('common.contact')}
-        </a>
+<Base title="Team" description="Meet the interdisciplinary EVOLEA team - experienced professionals from psychology, behavior analysis, and pedagogy." transparentHeader={true}>
+  <!-- Edit Link for Keystatic CMS -->
+  <EditLink type="collection" collection="team" label="Edit Team" />
+
+  <!-- Premium Hero with Prism Gradient -->
+  <InnerPageHero
+    title={t('team.title')}
+    subtitle={t('team.description')}
+    breadcrumbs={[
+      { label: 'Home', href: translatePath('/') },
+      { label: 'Team' }
+    ]}
+    label="The EVOLEA Team"
+    size="md"
+  />
+
+  <!-- Team Philosophy -->
+  <section class="py-16 bg-white">
+    <div class="container mx-auto max-w-4xl px-4">
+      <div class="bg-evolea-cream/50 rounded-evolea-lg p-8 md:p-12 text-center">
+        <blockquote class="text-xl md:text-2xl text-evolea-purple font-display font-medium leading-relaxed mb-6">
+          "Our team is interdisciplinary and experienced. We act with empathy, openness, and inclusion. Professional quality and continuous development guide us. We share knowledge and grow together with the families."
+        </blockquote>
+        <div class="w-16 h-1 bg-gradient-spectrum mx-auto rounded-full"></div>
       </div>
     </div>
   </section>
+
+  <!-- Team Grid -->
+  <section class="py-16 md:py-24">
+    <div class="container mx-auto max-w-6xl px-4">
+      <div class="grid md:grid-cols-2 gap-8">
+        {team.map((member) => (
+          <div class="group bg-white rounded-evolea-lg overflow-hidden shadow-soft hover:shadow-elevated transition-all duration-300">
+            <div class="aspect-square overflow-hidden bg-evolea-cream">
+              <img
+                src={member.image}
+                alt={member.name}
+                class="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-500"
+                loading="lazy"
+              />
+            </div>
+            <div class="p-6">
+              <div class="flex items-baseline gap-2 mb-1">
+                <h3 class="font-display font-bold text-evolea-purple text-xl">
+                  {member.name}
+                </h3>
+                {member.credentials && (
+                  <span class="text-evolea-text-light text-sm">{member.credentials}</span>
+                )}
+              </div>
+              <p class="text-evolea-orange font-medium mb-3">{member.role}</p>
+              <p class="text-evolea-text-light text-sm leading-relaxed">{member.description}</p>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Values Section -->
+  <section class="py-16 bg-evolea-cream/50">
+    <div class="container mx-auto max-w-4xl px-4">
+      <h2 class="text-3xl font-display font-bold text-evolea-purple text-center mb-12">
+        What Unites Us
+      </h2>
+      <div class="grid md:grid-cols-3 gap-6">
+        <div class="bg-white rounded-evolea-lg p-6 text-center">
+          <div class="flex justify-center mb-4"><Icon name="heart" size="lg" /></div>
+          <h3 class="font-display font-bold text-evolea-purple mb-2">Empathy</h3>
+          <p class="text-evolea-text-light text-sm">We meet every child and family with understanding and compassion.</p>
+        </div>
+        <div class="bg-white rounded-evolea-lg p-6 text-center">
+          <div class="flex justify-center mb-4"><Icon name="book" size="lg" /></div>
+          <h3 class="font-display font-bold text-evolea-purple mb-2">Evidence-Based</h3>
+          <p class="text-evolea-text-light text-sm">Our work is based on current scientific research.</p>
+        </div>
+        <div class="bg-white rounded-evolea-lg p-6 text-center">
+          <div class="flex justify-center mb-4"><Icon name="sprout" size="lg" /></div>
+          <h3 class="font-display font-bold text-evolea-purple mb-2">Growth</h3>
+          <p class="text-evolea-text-light text-sm">We continuously learn and develop together with the families.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Page Closer - Prism Gradient -->
+  <PageCloser
+    showCTA={true}
+    ctaTitle="Get to Know Us"
+    ctaDescription="We look forward to connecting with you."
+    ctaButtonText="Contact Us"
+    ctaButtonHref={translatePath('/contact/')}
+  />
 </Base>
+
+<style>
+  .bg-gradient-spectrum {
+    background: linear-gradient(90deg, #7BEDD5 0%, #FFE066 25%, #FF7E5D 50%, #E97BF1 75%, #CD87F8 100%);
+  }
+</style>

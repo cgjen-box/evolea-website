@@ -6,12 +6,22 @@ import Butterfly from '@components/Butterfly.astro';
 import Icon from '@components/Icon.astro';
 import EditLink from '@components/EditLink.astro';
 import { getLangFromUrl, useTranslations, useTranslatedPath } from '@i18n/utils';
-import { getCollection } from 'astro:content';
+import { getCollection, getEntry } from 'astro:content';
 
 const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
 const translatePath = useTranslatedPath(lang);
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+
+// Get about page singleton data
+const aboutEntry = await getEntry('pages', 'about');
+const about = aboutEntry?.data;
+
+// Helper to get bilingual text
+const getText = (obj: { de?: string; en?: string } | undefined, fallback: string = '') => {
+  if (!obj) return fallback;
+  return lang === 'de' ? (obj.de || fallback) : (obj.en || obj.de || fallback);
+};
 
 // Get principles from collection, sorted by order
 const principleEntries = await getCollection('principles', ({ data }) => data.veroeffentlicht);
@@ -39,12 +49,12 @@ const colorClasses: Record<string, string> = {
 
 <Base title="Über uns" description="EVOLEA ist ein gemeinnütziger Verein in Zürich. Erfahren Sie mehr über unsere Mission, Werte und pädagogischen Grundsätze für Kinder im Autismus Spektrum." transparentHeader={true}>
   <!-- Edit Link for Keystatic CMS -->
-  <EditLink type="collection" collection="principles" label="Grundsätze bearbeiten" />
+  <EditLink type="singleton" collection="about" label="Über uns bearbeiten" />
 
   <!-- Premium Hero with Prism Gradient -->
   <InnerPageHero
-    title={t('nav.about')}
-    subtitle="EVOLEA schafft Räume, damit sich Kinder im Spektrum entfalten und ihren Weg glücklich und selbstbestimmt gehen können."
+    title={getText(about?.hero?.titel, t('nav.about'))}
+    subtitle={getText(about?.hero?.untertitel, 'EVOLEA schafft Räume, damit sich Kinder im Spektrum entfalten und ihren Weg glücklich und selbstbestimmt gehen können.')}
     breadcrumbs={[
       { label: 'Startseite', href: translatePath('/') },
       { label: 'Über uns' }
@@ -57,15 +67,15 @@ const colorClasses: Record<string, string> = {
     <div class="container mx-auto max-w-6xl px-4">
       <div class="grid lg:grid-cols-2 gap-12 items-center">
         <div class="reveal">
-          <span class="section-label">Unsere Mission</span>
+          <span class="section-label">{getText(about?.mission?.label, 'Unsere Mission')}</span>
           <h2 class="text-3xl md:text-4xl font-display font-bold text-evolea-purple mb-6">
-            Jedes Kind verdient die Chance, sein volles Potenzial zu entfalten
+            {getText(about?.mission?.titel, 'Jedes Kind verdient die Chance, sein volles Potenzial zu entfalten')}
           </h2>
           <p class="text-lg text-evolea-text-light leading-relaxed mb-6">
-            EVOLEA entstand aus der Überzeugung, dass Kinder im Autismus Spektrum oder mit ADHS spezielle Unterstützung verdienen - aber keine, die sie ausgrenzt. Unsere Programme ergänzen die Regelschule und schaffen geschützte Räume zum Wachsen.
+            {getText(about?.mission?.text1, 'EVOLEA entstand aus der Überzeugung, dass Kinder im Autismus Spektrum oder mit ADHS spezielle Unterstützung verdienen - aber keine, die sie ausgrenzt. Unsere Programme ergänzen die Regelschule und schaffen geschützte Räume zum Wachsen.')}
           </p>
           <p class="text-lg text-evolea-text-light leading-relaxed mb-8">
-            Wir glauben an die Stärken jedes Kindes. Nicht Defizite stehen im Vordergrund, sondern die einzigartigen Fähigkeiten und Potenziale, die jedes Kind mitbringt.
+            {getText(about?.mission?.text2, 'Wir glauben an die Stärken jedes Kindes. Nicht Defizite stehen im Vordergrund, sondern die einzigartigen Fähigkeiten und Potenziale, die jedes Kind mitbringt.')}
           </p>
           <div class="flex flex-wrap gap-4">
             <a href={translatePath('/angebote/')} class="btn-primary">
@@ -83,8 +93,8 @@ const colorClasses: Record<string, string> = {
           <div class="relative">
             <div class="aspect-square rounded-evolea-lg overflow-hidden shadow-elevated">
               <img
-                src={base + "/images/about/children-playing-1.jpg"}
-                alt="Kinder beim gemeinsamen Spielen"
+                src={base + (about?.mission?.bild || "/images/about/children-playing-1.jpg")}
+                alt={getText(about?.mission?.bildAlt, 'Kinder beim gemeinsamen Spielen')}
                 class="w-full h-full object-cover"
                 loading="lazy"
               />
@@ -117,14 +127,14 @@ const colorClasses: Record<string, string> = {
     <div class="container mx-auto max-w-4xl px-4 text-center relative z-10">
       <div class="reveal">
         <!-- Rainbow gradient label -->
-        <span class="vision-label">Unsere Vision</span>
+        <span class="vision-label">{getText(about?.vision?.label, 'Unsere Vision')}</span>
 
         <h2 class="vision-title">
-          Eine Gesellschaft, die Vielfalt feiert
+          {getText(about?.vision?.titel, 'Eine Gesellschaft, die Vielfalt feiert')}
         </h2>
 
         <blockquote class="vision-quote">
-          "Wir träumen von einer Welt, in der neurotypische Entwicklung nicht die einzige Norm ist - in der jedes Kind, unabhängig von seiner Art zu denken und zu lernen, die gleichen Chancen hat."
+          "{getText(about?.vision?.zitat, 'Wir träumen von einer Welt, in der neurotypische Entwicklung nicht die einzige Norm ist - in der jedes Kind, unabhängig von seiner Art zu denken und zu lernen, die gleichen Chancen hat.')}"
         </blockquote>
 
         <!-- Decorative butterfly -->
@@ -155,40 +165,22 @@ const colorClasses: Record<string, string> = {
   <section class="py-16 md:py-24 bg-evolea-cream/50">
     <div class="container mx-auto max-w-6xl px-4">
       <div class="section-header reveal">
-        <span class="section-label">Für wen sind wir da?</span>
-        <h2>Kinder im Spektrum und ihre Familien</h2>
+        <span class="section-label">{getText(about?.fuerWen?.label, 'Für wen sind wir da?')}</span>
+        <h2>{getText(about?.fuerWen?.titel, 'Kinder im Spektrum und ihre Familien')}</h2>
       </div>
 
       <div class="grid md:grid-cols-3 gap-8">
-        <div class="reveal reveal-delay-1 bg-white rounded-evolea-lg p-8 shadow-soft">
-          <div class="w-16 h-16 bg-evolea-magenta/10 rounded-full flex items-center justify-center mb-6">
-            <Icon name="sparkle" size="lg" />
+        {(about?.fuerWen?.gruppen || []).map((group: any, index: number) => (
+          <div class={`reveal reveal-delay-${index + 1} bg-white rounded-evolea-lg p-8 shadow-soft`}>
+            <div class={`w-16 h-16 bg-evolea-${group.farbe || 'magenta'}/10 rounded-full flex items-center justify-center mb-6`}>
+              <Icon name={group.icon || 'sparkle'} size="lg" />
+            </div>
+            <h3 class="font-display font-bold text-evolea-purple text-xl mb-4">{getText(group.titel)}</h3>
+            <p class="text-evolea-text-light">
+              {getText(group.beschreibung)}
+            </p>
           </div>
-          <h3 class="font-display font-bold text-evolea-purple text-xl mb-4">Kinder im Autismus Spektrum</h3>
-          <p class="text-evolea-text-light">
-            Kinder mit Autismus-Spektrum-Störung (ASS) finden bei uns einen Ort, an dem ihre Art zu sein verstanden und wertgeschätzt wird.
-          </p>
-        </div>
-
-        <div class="reveal reveal-delay-2 bg-white rounded-evolea-lg p-8 shadow-soft">
-          <div class="w-16 h-16 bg-evolea-coral/10 rounded-full flex items-center justify-center mb-6">
-            <Icon name="brain" size="lg" />
-          </div>
-          <h3 class="font-display font-bold text-evolea-purple text-xl mb-4">Kinder mit ADHS</h3>
-          <p class="text-evolea-text-light">
-            Kinder mit ADHS profitieren von unseren strukturierten Angeboten, die Bewegung, Kreativität und soziales Lernen verbinden.
-          </p>
-        </div>
-
-        <div class="reveal reveal-delay-3 bg-white rounded-evolea-lg p-8 shadow-soft">
-          <div class="w-16 h-16 bg-evolea-mint/10 rounded-full flex items-center justify-center mb-6">
-            <Icon name="family" size="lg" />
-          </div>
-          <h3 class="font-display font-bold text-evolea-purple text-xl mb-4">Familien</h3>
-          <p class="text-evolea-text-light">
-            Wir unterstützen nicht nur Kinder, sondern auch Eltern und Familien mit Beratung, Austausch und praktischer Hilfe.
-          </p>
-        </div>
+        ))}
       </div>
 
       <div class="mt-12 text-center reveal">
@@ -196,7 +188,7 @@ const colorClasses: Record<string, string> = {
           <svg class="w-6 h-6 text-evolea-purple" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
           </svg>
-          <span class="text-evolea-text-light">Wir verwenden den Begriff <strong class="text-evolea-purple">"Kinder im Spektrum"</strong> respektvoll und identitätsbejahend.</span>
+          <span class="text-evolea-text-light">{getText(about?.fuerWen?.hinweis, 'Wir verwenden den Begriff "Kinder im Spektrum" respektvoll und identitätsbejahend.')}</span>
         </div>
       </div>
     </div>
@@ -245,27 +237,19 @@ const colorClasses: Record<string, string> = {
       <div class="grid lg:grid-cols-2 gap-12 items-center">
         <div class="reveal order-2 lg:order-1">
           <div class="bg-white rounded-evolea-lg p-8 shadow-soft">
-            <h3 class="font-display font-bold text-evolea-purple text-2xl mb-6">Der Verein</h3>
+            <h3 class="font-display font-bold text-evolea-purple text-2xl mb-6">{getText(about?.verein?.kartenTitel, 'Der Verein')}</h3>
             <div class="space-y-4 text-evolea-text-light">
-              <p>
-                <strong class="text-evolea-purple">EVOLEA Verein</strong> ist ein gemeinnütziger Verein mit Sitz in Zürich. Wir sind politisch und konfessionell unabhängig.
-              </p>
-              <p>
-                Der Name EVOLEA verbindet <em>Evolution</em> (Entwicklung) mit <em>LEA</em> (Lernen, Erleben, Aufblühen) - ein Sinnbild für die transformative Reise, die jedes Kind bei uns erleben kann.
-              </p>
-              <p>
-                Unser Schmetterlings-Symbol steht für diese Transformation: Wie eine Raupe zum Schmetterling wird, so entfaltet jedes Kind bei uns seine einzigartigen Flügel.
-              </p>
+              <p set:html={getText(about?.verein?.kartenText, '<strong class="text-evolea-purple">EVOLEA Verein</strong> ist ein gemeinnütziger Verein mit Sitz in Zürich. Wir sind politisch und konfessionell unabhängig. Der Name EVOLEA verbindet <em>Evolution</em> (Entwicklung) mit <em>LEA</em> (Lernen, Erleben, Aufblühen) - ein Sinnbild für die transformative Reise, die jedes Kind bei uns erleben kann.')} />
             </div>
 
             <div class="mt-8 pt-6 border-t border-evolea-purple/10">
               <div class="grid grid-cols-2 gap-6">
                 <div>
-                  <div class="text-2xl font-display font-bold text-evolea-magenta">2024</div>
+                  <div class="text-2xl font-display font-bold text-evolea-magenta">{about?.verein?.gruendung || '2024'}</div>
                   <div class="text-sm text-evolea-text-light">Gegründet</div>
                 </div>
                 <div>
-                  <div class="text-2xl font-display font-bold text-evolea-mint">Zürich</div>
+                  <div class="text-2xl font-display font-bold text-evolea-mint">{about?.verein?.standort || 'Zürich'}</div>
                   <div class="text-sm text-evolea-text-light">Standort</div>
                 </div>
               </div>
@@ -274,15 +258,15 @@ const colorClasses: Record<string, string> = {
         </div>
 
         <div class="reveal order-1 lg:order-2">
-          <span class="section-label">Über den Verein</span>
+          <span class="section-label">{getText(about?.verein?.label, 'Über den Verein')}</span>
           <h2 class="text-3xl md:text-4xl font-display font-bold text-evolea-purple mb-6">
-            Gemeinnützig und unabhängig
+            {getText(about?.verein?.titel, 'Gemeinnützig und unabhängig')}
           </h2>
           <p class="text-lg text-evolea-text-light leading-relaxed mb-6">
-            EVOLEA wurde von einem Team aus Fachpersonen und betroffenen Eltern gegründet, die eine Lücke im Angebot für Kinder im Spektrum sahen.
+            {getText(about?.verein?.text1, 'EVOLEA wurde von einem Team aus Fachpersonen und betroffenen Eltern gegründet, die eine Lücke im Angebot für Kinder im Spektrum sahen.')}
           </p>
           <p class="text-lg text-evolea-text-light leading-relaxed mb-8">
-            Als Verein sind wir nicht gewinnorientiert. Alle Einnahmen fliessen direkt in die Qualität unserer Programme und die Weiterbildung unseres Teams.
+            {getText(about?.verein?.text2, 'Als Verein sind wir nicht gewinnorientiert. Alle Einnahmen fliessen direkt in die Qualität unserer Programme und die Weiterbildung unseres Teams.')}
           </p>
           <a href={translatePath('/team/')} class="btn-primary">
             Unser Team kennenlernen
@@ -298,10 +282,10 @@ const colorClasses: Record<string, string> = {
   <!-- Page Closer - Prism Gradient -->
   <PageCloser
     showCTA={true}
-    ctaTitle="Bereit für den nächsten Schritt?"
-    ctaDescription="Wir freuen uns darauf, Sie und Ihr Kind kennenzulernen."
-    ctaButtonText="Kontakt aufnehmen"
-    ctaButtonHref={translatePath('/kontakt/')}
+    ctaTitle={getText(about?.cta?.titel, 'Bereit für den nächsten Schritt?')}
+    ctaDescription={getText(about?.cta?.beschreibung, 'Wir freuen uns darauf, Sie und Ihr Kind kennenzulernen.')}
+    ctaButtonText={getText(about?.cta?.buttonText, 'Kontakt aufnehmen')}
+    ctaButtonHref={about?.cta?.buttonLink || translatePath('/kontakt/')}
   />
 </Base>
 
