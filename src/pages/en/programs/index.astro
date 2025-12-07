@@ -8,7 +8,7 @@ const t = useTranslations(lang);
 const translatePath = useTranslatedPath(lang);
 ---
 
-<Base title="Programs" description="EVOLEA offers various support programs for children on the autism spectrum or with ADHD: Mini Garden, Mini Projects, Mini Sports, and School Consultation.">
+<Base title="Programs" description="EVOLEA offers various support programs for children on the autism spectrum or with ADHD: Mini Garden, Mini Projects, and Mini Sports.">
   <section class="py-20 px-4">
     <div class="container mx-auto max-w-6xl">
       <h1 class="text-4xl md:text-5xl font-bold text-evolea-purple mb-6 text-center">
@@ -36,13 +36,6 @@ const translatePath = useTranslatedPath(lang);
           description={t('programs.miniTurnen.desc')}
           href={translatePath('/programs/mini-sports/')}
           icon="ball"
-        />
-        <ProgramCard
-          title={t('programs.schulberatung')}
-          description={t('programs.schulberatung.desc')}
-          href={translatePath('/programs/school-consultation/')}
-          icon="school"
-          variant="featured"
         />
       </div>
     </div>

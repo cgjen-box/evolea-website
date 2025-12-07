@@ -33,8 +33,6 @@ export const ui = {
     'programs.miniProjekte.desc': 'Soziale Kompetenz durch kreative Projekte und gemeinsames Entdecken.',
     'programs.miniTurnen': 'Mini Turnen',
     'programs.miniTurnen.desc': 'Bewegung, Spass und motorische Förderung für Kinder im Spektrum.',
-    'programs.schulberatung': 'Schulberatung',
-    'programs.schulberatung.desc': 'Beratung und Unterstützung für Schulen und Lehrpersonen.',
     'programs.tagesschule': 'Tagesschule',
     'programs.tagesschule.desc': 'Strukturiertes Tagesschulprogramm mit individueller Förderung für Kinder im Spektrum.',
 
@@ -107,8 +105,6 @@ export const ui = {
     'programs.miniProjekte.desc': 'Social skills through creative projects and shared discovery.',
     'programs.miniTurnen': 'Mini Sports',
     'programs.miniTurnen.desc': 'Movement, fun, and motor skills development for children on the spectrum.',
-    'programs.schulberatung': 'School Consultation',
-    'programs.schulberatung.desc': 'Support and consultation for schools and teachers.',
     'programs.tagesschule': 'Day School',
     'programs.tagesschule.desc': 'Structured day school program with individualized support for children on the spectrum.',
 
