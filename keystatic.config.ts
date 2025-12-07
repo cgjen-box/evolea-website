@@ -1,5 +1,6 @@
 import { config, fields, collection, singleton } from '@keystatic/core';
-import { block, wrapper } from '@keystatic/core/content-components';
+// Note: Temporarily disabled content-components to test Cloudflare compatibility
+// import { block, wrapper } from '@keystatic/core/content-components';
 
 // =============================================================================
 // EVOLEA CMS - Ultimate Keystatic Configuration
@@ -85,88 +86,11 @@ const statusFields = {
 // =============================================================================
 // CONTENT COMPONENTS (for MDX fields)
 // =============================================================================
+// Note: Content components (Hinweis, Zitat, BildMitBeschriftung, YouTube, InfoKarte)
+// temporarily disabled to test Cloudflare compatibility.
+// The wrapper/block from @keystatic/core/content-components may not work in workers.
 
-const contentComponents = {
-  // Callout/Hint Box
-  Hinweis: wrapper({
-    label: 'Hinweis-Box',
-    description: 'Hervorgehobener Hinweis mit farbigem Hintergrund',
-    schema: {
-      typ: fields.select({
-        label: 'Typ',
-        options: [
-          { label: 'Tipp', value: 'tip' },
-          { label: 'Info', value: 'info' },
-          { label: 'Wichtig', value: 'warning' },
-          { label: 'Erfolg', value: 'success' },
-        ],
-        defaultValue: 'info',
-      }),
-    },
-  }),
-
-  // Quote Block
-  Zitat: wrapper({
-    label: 'Zitat',
-    description: 'Blockzitat mit optionaler Quellenangabe',
-    schema: {
-      quelle: fields.text({ label: 'Quelle (optional)' }),
-    },
-  }),
-
-  // Image with Caption
-  BildMitBeschriftung: block({
-    label: 'Bild mit Beschriftung',
-    description: 'Bild mit Bildunterschrift und Alt-Text',
-    schema: {
-      bild: fields.image({
-        label: 'Bild',
-        directory: 'public/images/content',
-        publicPath: '/images/content/',
-      }),
-      beschriftung: fields.text({ label: 'Bildunterschrift' }),
-      alt: fields.text({
-        label: 'Alt-Text',
-        description: 'Beschreibung für Screenreader und SEO',
-      }),
-    },
-  }),
-
-  // YouTube Embed
-  YouTube: block({
-    label: 'YouTube Video',
-    description: 'YouTube Video einbetten',
-    schema: {
-      videoId: fields.text({
-        label: 'Video ID',
-        description: 'Die ID aus der YouTube-URL (z.B. dQw4w9WgXcQ aus youtube.com/watch?v=dQw4w9WgXcQ)',
-      }),
-      titel: fields.text({ label: 'Video-Titel (für Barrierefreiheit)' }),
-    },
-  }),
-
-  // Info Card
-  InfoKarte: block({
-    label: 'Info-Karte',
-    description: 'Kompakte Informationskarte mit Icon',
-    schema: {
-      icon: fields.select({
-        label: 'Icon',
-        options: [
-          { label: 'Kalender', value: 'calendar' },
-          { label: 'Uhr', value: 'clock' },
-          { label: 'Ort', value: 'location' },
-          { label: 'Gruppe', value: 'people' },
-          { label: 'Info', value: 'info' },
-          { label: 'Herz', value: 'heart' },
-        ],
-        defaultValue: 'info',
-      }),
-      titel: fields.text({ label: 'Titel' }),
-      text: fields.text({ label: 'Text', multiline: true }),
-    },
-  }),
-};
+const contentComponents = {};
 
 // =============================================================================
 // ICON OPTIONS (reused across collections)
