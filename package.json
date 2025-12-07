@@ -7,7 +7,7 @@
     "dev": "astro dev",
     "start": "astro dev",
     "build": "astro check && astro build",
-    "build:cloudflare": "npm install @astrojs/cloudflare --no-save && astro check && astro build",
+    "build:cloudflare": "astro check && astro build",
     "preview": "astro preview",
     "astro": "astro",
     "prepare": "husky || true"
@@ -29,5 +29,8 @@
   },
   "devDependencies": {
     "husky": "^9.1.7"
+  },
+  "optionalDependencies": {
+    "@astrojs/cloudflare": "^12.2.1"
   }
 }
