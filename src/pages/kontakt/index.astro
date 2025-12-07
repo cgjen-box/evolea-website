@@ -2,23 +2,60 @@
 import Base from '@layouts/Base.astro';
 import InnerPageHero from '@components/InnerPageHero.astro';
 import PageCloser from '@components/PageCloser.astro';
+import EditLink from '@components/EditLink.astro';
 import { getLangFromUrl, useTranslations, useTranslatedPath } from '@i18n/utils';
+import { getEntry } from 'astro:content';
 
 const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
 const translatePath = useTranslatedPath(lang);
+
+// Get contact page singleton
+const contactEntry = await getEntry('pages', 'contact');
+const contact = contactEntry?.data;
+
+// Get site settings
+const siteSettingsEntry = await getEntry('settings', 'site');
+const siteSettings = siteSettingsEntry?.data;
+
+// Helper to get bilingual text
+const getText = (obj: { de?: string; en?: string } | undefined, fallback: string = '') => {
+  if (!obj) return fallback;
+  return lang === 'de' ? (obj.de || fallback) : (obj.en || obj.de || fallback);
+};
+
+// Get contact info from settings or contact page
+const email = contact?.kontaktInfo?.email || siteSettings?.kontakt?.email || 'hello@evolea.ch';
+const whatsapp = contact?.kontaktInfo?.whatsapp || siteSettings?.kontakt?.whatsapp || 'https://wa.me/41789591974';
+const instagram = contact?.kontaktInfo?.instagramUrl || siteSettings?.social?.instagram || 'https://www.instagram.com/evolea.verein/';
+const instagramHandle = contact?.kontaktInfo?.instagram || '@evolea.verein';
+
+// Address
+const adresse = contact?.adresse || siteSettings?.adresse || {};
+const strasse = adresse.strasse || 'Stapferstrasse 10';
+const plz = adresse.plz || '8006';
+const ort = adresse.ort || 'Zürich';
+const land = adresse.land || 'Schweiz';
+const hinweis = getText(adresse.hinweis, 'Nähe Seilbahn Rigiblick');
+
+// Form subjects from contact singleton
+const betreffs = contact?.formular?.betreffs || [];
+const formspreeId = contact?.formular?.formspreeId || 'xpznqrjk';
 ---
 
-<Base title="Kontakt" description="Kontaktieren Sie EVOLEA - wir freuen uns auf Ihre Anfrage. Standort: Stapferstrasse 10, 8006 Zürich." transparentHeader={true}>
+<Base title="Kontakt" description={`Kontaktieren Sie EVOLEA - wir freuen uns auf Ihre Anfrage. Standort: ${strasse}, ${plz} ${ort}.`} transparentHeader={true}>
+  <!-- Edit Link for Keystatic -->
+  <EditLink type="singleton" collection="contact" label="Kontakt bearbeiten" />
+
   <!-- Premium Hero with Prism Gradient -->
   <InnerPageHero
-    title={t('contact.title')}
-    subtitle="Haben Sie Fragen zu unseren Angeboten? Wir freuen uns auf Ihre Nachricht."
+    title={getText(contact?.hero?.titel, t('contact.title'))}
+    subtitle={getText(contact?.hero?.untertitel, "Haben Sie Fragen zu unseren Angeboten? Wir freuen uns auf Ihre Nachricht.")}
     breadcrumbs={[
-      { label: 'Startseite', href: translatePath('/') },
-      { label: 'Kontakt' }
+      { label: lang === 'de' ? 'Startseite' : 'Home', href: translatePath('/') },
+      { label: lang === 'de' ? 'Kontakt' : 'Contact' }
     ]}
-    label="Kontakt"
+    label={lang === 'de' ? 'Kontakt' : 'Contact'}
     size="sm"
   />
 
@@ -28,7 +65,7 @@ const translatePath = useTranslatedPath(lang);
       <div class="grid lg:grid-cols-2 gap-12">
         <!-- Contact Info -->
         <div>
-          <h2 class="text-2xl font-display font-bold text-evolea-purple mb-8">So erreichen Sie uns</h2>
+          <h2 class="text-2xl font-display font-bold text-evolea-purple mb-8">{getText(contact?.kontaktInfo?.sectionTitel, "So erreichen Sie uns")}</h2>
 
           <div class="space-y-6">
             <!-- Email -->
@@ -40,8 +77,8 @@ const translatePath = useTranslatedPath(lang);
               </div>
               <div>
                 <h3 class="font-display font-bold text-evolea-purple">E-Mail</h3>
-                <a href="mailto:hello@evolea.ch" class="text-evolea-text-light hover:text-evolea-purple transition-colors">
-                  hello@evolea.ch
+                <a href={`mailto:${email}`} class="text-evolea-text-light hover:text-evolea-purple transition-colors">
+                  {email}
                 </a>
               </div>
             </div>
@@ -55,15 +92,17 @@ const translatePath = useTranslatedPath(lang);
                 </svg>
               </div>
               <div>
-                <h3 class="font-display font-bold text-evolea-purple">Standort</h3>
+                <h3 class="font-display font-bold text-evolea-purple">{lang === 'de' ? 'Standort' : 'Location'}</h3>
                 <p class="text-evolea-text-light">
-                  Stapferstrasse 10<br>
-                  8006 Zürich<br>
-                  Schweiz
+                  {strasse}<br>
+                  {plz} {ort}<br>
+                  {land}
                 </p>
-                <p class="text-sm text-evolea-text-light/70 mt-1">
-                  (Nähe Seilbahn Rigiblick)
-                </p>
+                {hinweis && (
+                  <p class="text-sm text-evolea-text-light/70 mt-1">
+                    ({hinweis})
+                  </p>
+                )}
               </div>
             </div>
 
@@ -76,10 +115,10 @@ const translatePath = useTranslatedPath(lang);
               </div>
               <div>
                 <h3 class="font-display font-bold text-evolea-purple">WhatsApp</h3>
-                <a href="https://wa.me/41789591974" target="_blank" rel="noopener noreferrer" class="text-evolea-text-light hover:text-evolea-green transition-colors">
-                  Jetzt chatten
+                <a href={whatsapp} target="_blank" rel="noopener noreferrer" class="text-evolea-text-light hover:text-evolea-green transition-colors">
+                  {lang === 'de' ? 'Jetzt chatten' : 'Chat now'}
                 </a>
-                <p class="text-sm text-evolea-text-light/70 mt-1">Schnelle Antworten auf Ihre Fragen</p>
+                <p class="text-sm text-evolea-text-light/70 mt-1">{lang === 'de' ? 'Schnelle Antworten auf Ihre Fragen' : 'Quick answers to your questions'}</p>
               </div>
             </div>
 
@@ -92,26 +131,26 @@ const translatePath = useTranslatedPath(lang);
               </div>
               <div>
                 <h3 class="font-display font-bold text-evolea-purple">Instagram</h3>
-                <a href="https://www.instagram.com/evolea.verein/" target="_blank" rel="noopener noreferrer" class="text-evolea-text-light hover:text-evolea-purple transition-colors">
-                  @evolea.verein
+                <a href={instagram} target="_blank" rel="noopener noreferrer" class="text-evolea-text-light hover:text-evolea-purple transition-colors">
+                  {instagramHandle}
                 </a>
               </div>
             </div>
           </div>
 
-          <!-- Map placeholder or additional info -->
+          <!-- Free consultation info -->
           <div class="mt-8 p-6 bg-evolea-cream/50 rounded-evolea-lg">
-            <h3 class="font-display font-bold text-evolea-purple mb-2">Kostenloses Erstgespräch</h3>
+            <h3 class="font-display font-bold text-evolea-purple mb-2">{getText(contact?.erstgespraech?.titel, "Kostenloses Erstgespräch")}</h3>
             <p class="text-evolea-text-light text-sm">
-              Möchten Sie mehr über unsere Angebote erfahren? Vereinbaren Sie ein unverbindliches Beratungsgespräch – telefonisch oder vor Ort.
+              {getText(contact?.erstgespraech?.text, "Möchten Sie mehr über unsere Angebote erfahren? Vereinbaren Sie ein unverbindliches Beratungsgespräch – telefonisch oder vor Ort.")}
             </p>
           </div>
         </div>
 
         <!-- Contact Form -->
         <div class="bg-white rounded-evolea-lg p-8 shadow-card">
-          <h2 class="text-2xl font-display font-bold text-evolea-purple mb-6">Anfrage senden</h2>
-          <form action="https://formspree.io/f/your-form-id" method="POST" class="space-y-6">
+          <h2 class="text-2xl font-display font-bold text-evolea-purple mb-6">{getText(contact?.formular?.titel, "Anfrage senden")}</h2>
+          <form action={`https://formspree.io/f/${formspreeId}`} method="POST" class="space-y-6">
             <div>
               <label for="name" class="block text-sm font-medium text-evolea-text mb-2">Name *</label>
               <input
@@ -120,7 +159,7 @@ const translatePath = useTranslatedPath(lang);
                 name="name"
                 required
                 class="w-full px-4 py-3 rounded-evolea border border-evolea-purple/20 focus:border-evolea-purple focus:ring-2 focus:ring-evolea-purple/20 outline-none transition-colors"
-                placeholder="Ihr Name"
+                placeholder={lang === 'de' ? 'Ihr Name' : 'Your name'}
               />
             </div>
             <div>
@@ -131,11 +170,11 @@ const translatePath = useTranslatedPath(lang);
                 name="email"
                 required
                 class="w-full px-4 py-3 rounded-evolea border border-evolea-purple/20 focus:border-evolea-purple focus:ring-2 focus:ring-evolea-purple/20 outline-none transition-colors"
-                placeholder="ihre@email.ch"
+                placeholder={lang === 'de' ? 'ihre@email.ch' : 'your@email.ch'}
               />
             </div>
             <div>
-              <label for="phone" class="block text-sm font-medium text-evolea-text mb-2">Telefon (optional)</label>
+              <label for="phone" class="block text-sm font-medium text-evolea-text mb-2">{lang === 'de' ? 'Telefon (optional)' : 'Phone (optional)'}</label>
               <input
                 type="tel"
                 id="phone"
@@ -145,34 +184,42 @@ const translatePath = useTranslatedPath(lang);
               />
             </div>
             <div>
-              <label for="subject" class="block text-sm font-medium text-evolea-text mb-2">Betreff</label>
+              <label for="subject" class="block text-sm font-medium text-evolea-text mb-2">{lang === 'de' ? 'Betreff' : 'Subject'}</label>
               <select
                 id="subject"
                 name="subject"
                 class="w-full px-4 py-3 rounded-evolea border border-evolea-purple/20 focus:border-evolea-purple focus:ring-2 focus:ring-evolea-purple/20 outline-none transition-colors bg-white"
               >
-                <option value="">Bitte waehlen...</option>
-                <option value="mini-garten">Mini Garten</option>
-                <option value="mini-projekte">Mini Projekte</option>
-                <option value="mini-turnen">Mini Turnen</option>
-                <option value="tagesschule">Tagesschule</option>
-                <option value="schulberatung">Schulberatung</option>
-                <option value="allgemein">Allgemeine Anfrage</option>
+                <option value="">{lang === 'de' ? 'Bitte wählen...' : 'Please select...'}</option>
+                {betreffs.length > 0 ? (
+                  betreffs.map((betreff: { value: string; label: { de?: string; en?: string } }) => (
+                    <option value={betreff.value}>{getText(betreff.label, betreff.value)}</option>
+                  ))
+                ) : (
+                  <>
+                    <option value="mini-garten">Mini Garten</option>
+                    <option value="mini-projekte">Mini Projekte</option>
+                    <option value="mini-turnen">Mini Turnen</option>
+                    <option value="tagesschule">{lang === 'de' ? 'Tagesschule' : 'Day School'}</option>
+                    <option value="schulberatung">{lang === 'de' ? 'Schulberatung' : 'School Consultation'}</option>
+                    <option value="allgemein">{lang === 'de' ? 'Allgemeine Anfrage' : 'General Inquiry'}</option>
+                  </>
+                )}
               </select>
             </div>
             <div>
-              <label for="message" class="block text-sm font-medium text-evolea-text mb-2">Nachricht *</label>
+              <label for="message" class="block text-sm font-medium text-evolea-text mb-2">{lang === 'de' ? 'Nachricht' : 'Message'} *</label>
               <textarea
                 id="message"
                 name="message"
                 rows="5"
                 required
                 class="w-full px-4 py-3 rounded-evolea border border-evolea-purple/20 focus:border-evolea-purple focus:ring-2 focus:ring-evolea-purple/20 outline-none transition-colors resize-none"
-                placeholder="Ihre Nachricht an uns..."
+                placeholder={lang === 'de' ? 'Ihre Nachricht an uns...' : 'Your message to us...'}
               ></textarea>
             </div>
             <button type="submit" class="btn-primary w-full justify-center">
-              Nachricht senden
+              {lang === 'de' ? 'Nachricht senden' : 'Send message'}
               <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
               </svg>

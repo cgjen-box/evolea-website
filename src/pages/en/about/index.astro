@@ -1,68 +1,369 @@
 ---
 import Base from '@layouts/Base.astro';
-import { getLangFromUrl, useTranslations, useTranslatedPath } from '@i18n/utils';
+import InnerPageHero from '@components/InnerPageHero.astro';
+import PageCloser from '@components/PageCloser.astro';
+import Butterfly from '@components/Butterfly.astro';
+import Icon from '@components/Icon.astro';
+import EditLink from '@components/EditLink.astro';
+import { getLangFromUrl, useTranslatedPath } from '@i18n/utils';
+import { getCollection, getEntry } from 'astro:content';
 
 const lang = getLangFromUrl(Astro.url);
-const t = useTranslations(lang);
 const translatePath = useTranslatedPath(lang);
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+
+// Get about page singleton data
+const aboutEntry = await getEntry('pages', 'about');
+const about = aboutEntry?.data;
+
+// Helper to get bilingual text
+const getText = (obj: { de?: string; en?: string } | undefined, fallback: string = '') => {
+  if (!obj) return fallback;
+  return lang === 'de' ? (obj.de || fallback) : (obj.en || obj.de || fallback);
+};
+
+// Get principles from collection, sorted by order
+const principleEntries = await getCollection('principles', ({ data }) => data.veroeffentlicht);
+const principles = principleEntries
+  .sort((a, b) => a.data.reihenfolge - b.data.reihenfolge)
+  .map((entry) => ({
+    iconName: entry.data.icon as 'chart' | 'target' | 'gamepad' | 'clipboard' | 'handshake' | 'diamond' | 'people' | 'family' | 'rainbow',
+    title: lang === 'de' ? entry.data.titel : (entry.data.titelEn || entry.data.titel),
+    description: lang === 'de' ? entry.data.beschreibung?.de : entry.data.beschreibung?.en,
+    color: entry.data.farbe,
+  }));
+
+const colorClasses: Record<string, string> = {
+  magenta: 'bg-evolea-magenta/10 border-evolea-magenta',
+  coral: 'bg-evolea-coral/10 border-evolea-coral',
+  yellow: 'bg-evolea-yellow/10 border-evolea-yellow',
+  sky: 'bg-evolea-sky/10 border-evolea-sky',
+  mint: 'bg-evolea-mint/10 border-evolea-mint',
+  purple: 'bg-evolea-purple-light/10 border-evolea-purple-light',
+  pink: 'bg-evolea-pink/10 border-evolea-pink',
+  gold: 'bg-evolea-gold/10 border-evolea-gold',
+  teal: 'bg-evolea-mint/10 border-evolea-mint',
+};
+
+// Get target groups from about page or use defaults
+const targetGroups = about?.fuerWen?.gruppen || [];
 ---
 
-<Base title="About Us" description="EVOLEA is a non-profit organization based in Zurich. We offer educational programs for children on the autism spectrum or with ADHD.">
-  <section class="py-20 px-4">
-    <div class="container mx-auto max-w-4xl">
-      <h1 class="text-4xl md:text-5xl font-bold text-evolea-purple mb-6 text-center">
-        {t('about.title')}
-      </h1>
-      <p class="text-xl text-evolea-text-light text-center max-w-2xl mx-auto mb-16">
-        {t('about.description')}
-      </p>
-      
-      <div class="space-y-12">
-        <div class="bg-white rounded-evolea-lg p-8 shadow-sm">
-          <h2 class="text-2xl font-semibold text-evolea-purple mb-4">Our Mission</h2>
-          <p class="text-evolea-text-light">
-            EVOLEA creates spaces for children on the spectrum to flourish and go their own way happily and self-determined. We complement regular schooling with specialized support programs.
+<Base title="About Us" description="EVOLEA is a non-profit association in Zurich. Learn about our mission, values, and pedagogical principles for children on the autism spectrum." transparentHeader={true}>
+  <!-- Edit Link for Keystatic CMS -->
+  <EditLink type="singleton" collection="about" label="Edit About Page" />
+
+  <!-- Premium Hero with Prism Gradient -->
+  <InnerPageHero
+    title={getText(about?.hero?.titel, 'About Us')}
+    subtitle={getText(about?.hero?.untertitel, 'EVOLEA creates spaces where children on the spectrum can flourish and follow their path happily and independently.')}
+    breadcrumbs={[
+      { label: 'Home', href: translatePath('/') },
+      { label: 'About Us' }
+    ]}
+    size="md"
+  />
+
+  <!-- Mission Section -->
+  <section class="py-16 md:py-24 bg-evolea-cream">
+    <div class="container mx-auto max-w-6xl px-4">
+      <div class="grid lg:grid-cols-2 gap-12 items-center">
+        <div class="reveal">
+          <span class="section-label">{getText(about?.mission?.label, 'Our Mission')}</span>
+          <h2 class="text-3xl md:text-4xl font-display font-bold text-evolea-purple mb-6">
+            {getText(about?.mission?.titel, 'Every child deserves the chance to reach their full potential')}
+          </h2>
+          <p class="text-lg text-evolea-text-light leading-relaxed mb-6">
+            {getText(about?.mission?.text1, 'EVOLEA was born from the conviction that children on the autism spectrum or with ADHD deserve special support - but not one that excludes them. Our programs complement regular school and create protected spaces for growth.')}
           </p>
-        </div>
-        
-        <div class="bg-white rounded-evolea-lg p-8 shadow-sm">
-          <h2 class="text-2xl font-semibold text-evolea-purple mb-4">Our Values</h2>
-          <ul class="space-y-4 text-evolea-text-light">
-            <li class="flex items-start gap-3">
-              <span class="text-evolea-green text-xl">✓</span>
-              <span><strong>Evidence-based:</strong> Our work is based on scientific findings.</span>
-            </li>
-            <li class="flex items-start gap-3">
-              <span class="text-evolea-green text-xl">✓</span>
-              <span><strong>Individual:</strong> Each child is met where they are.</span>
-            </li>
-            <li class="flex items-start gap-3">
-              <span class="text-evolea-green text-xl">✓</span>
-              <span><strong>Inclusive:</strong> We see strengths, not deficits.</span>
-            </li>
-            <li class="flex items-start gap-3">
-              <span class="text-evolea-green text-xl">✓</span>
-              <span><strong>Empathetic:</strong> We meet children and families with respect and openness.</span>
-            </li>
-          </ul>
-        </div>
-        
-        <div class="bg-white rounded-evolea-lg p-8 shadow-sm">
-          <h2 class="text-2xl font-semibold text-evolea-purple mb-4">The Organization</h2>
-          <p class="text-evolea-text-light">
-            EVOLEA is a non-profit organization based in Zurich, Switzerland. We are politically and religiously independent. The organization was founded to support families with children on the autism spectrum or with ADHD.
+          <p class="text-lg text-evolea-text-light leading-relaxed mb-8">
+            {getText(about?.mission?.text2, "We believe in the strengths of every child. We don't focus on deficits, but on the unique abilities and potential that each child brings.")}
           </p>
+          <div class="flex flex-wrap gap-4">
+            <a href={translatePath('/programs/')} class="btn-primary">
+              Our Programs
+              <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+              </svg>
+            </a>
+            <a href={translatePath('/team/')} class="btn-secondary">
+              Meet the Team
+            </a>
+          </div>
         </div>
-      </div>
-      
-      <div class="mt-12 text-center">
-        <a href={translatePath('/team/')} class="btn-secondary mr-4">
-          Meet the Team
-        </a>
-        <a href={translatePath('/contact/')} class="btn-primary">
-          {t('common.contact')}
-        </a>
+        <div class="reveal reveal-delay-2">
+          <div class="relative">
+            <div class="aspect-square rounded-evolea-lg overflow-hidden shadow-elevated">
+              <img
+                src={base + (about?.mission?.bild || "/images/about/children-playing-1.jpg")}
+                alt={getText(about?.mission?.bildAlt, 'Children playing together')}
+                class="w-full h-full object-cover"
+                loading="lazy"
+              />
+            </div>
+            <!-- Floating accent card -->
+            <div class="absolute -bottom-6 -right-6 bg-white rounded-evolea p-6 shadow-card max-w-xs">
+              <div class="flex items-center gap-3 mb-2">
+                <Butterfly size="sm" variant="spectrum" />
+                <span class="font-display font-bold text-evolea-purple">Transformation</span>
+              </div>
+              <p class="text-sm text-evolea-text-light">
+                Like a butterfly, every child unfolds their unique beauty.
+              </p>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </section>
+
+  <!-- Vision Section - Dark Theme per Brand Guide v3 -->
+  <section class="vision-dark-section relative py-20 md:py-28 overflow-hidden">
+    <!-- Background gradient orbs -->
+    <div class="absolute inset-0 pointer-events-none">
+      <div class="absolute w-[500px] h-[500px] rounded-full top-[-150px] right-[-150px]" style="background: radial-gradient(circle, rgba(221, 72, 224, 0.12) 0%, transparent 70%);"></div>
+      <div class="absolute w-[400px] h-[400px] rounded-full bottom-[-100px] left-[-100px]" style="background: radial-gradient(circle, rgba(123, 237, 213, 0.1) 0%, transparent 70%);"></div>
+      <div class="absolute w-[300px] h-[300px] rounded-full top-[50%] left-[50%] -translate-x-1/2 -translate-y-1/2" style="background: radial-gradient(circle, rgba(205, 135, 248, 0.08) 0%, transparent 70%);"></div>
+    </div>
+
+    <div class="container mx-auto max-w-4xl px-4 text-center relative z-10">
+      <div class="reveal">
+        <!-- Rainbow gradient label -->
+        <span class="vision-label">{getText(about?.vision?.label, 'Our Vision')}</span>
+
+        <h2 class="vision-title">
+          {getText(about?.vision?.titel, 'A society that celebrates diversity')}
+        </h2>
+
+        <blockquote class="vision-quote">
+          "{getText(about?.vision?.zitat, 'We dream of a world where neurotypical development is not the only norm - where every child, regardless of how they think and learn, has equal opportunities.')}"
+        </blockquote>
+
+        <!-- Decorative butterfly -->
+        <div class="flex justify-center mt-8">
+          <svg class="w-12 h-12 opacity-40" viewBox="0 0 100 100">
+            <defs>
+              <linearGradient id="vision-dark-bf-l" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stop-color="#7BEDD5"/>
+                <stop offset="100%" stop-color="#CD87F8"/>
+              </linearGradient>
+              <linearGradient id="vision-dark-bf-r" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stop-color="#FFE066"/>
+                <stop offset="100%" stop-color="#E97BF1"/>
+              </linearGradient>
+            </defs>
+            <path d="M48 50 C35 25, 5 20, 10 45 C5 70, 35 75, 48 55 Z" fill="url(#vision-dark-bf-l)"/>
+            <path d="M48 55 C35 60, 15 85, 30 90 C45 85, 48 65, 48 55 Z" fill="url(#vision-dark-bf-l)" opacity="0.7"/>
+            <path d="M52 50 C65 25, 95 20, 90 45 C95 70, 65 75, 52 55 Z" fill="url(#vision-dark-bf-r)"/>
+            <path d="M52 55 C65 60, 85 85, 70 90 C55 85, 52 65, 52 55 Z" fill="url(#vision-dark-bf-r)" opacity="0.7"/>
+            <ellipse cx="50" cy="55" rx="2" ry="10" fill="white" opacity="0.6"/>
+          </svg>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- For Whom Section -->
+  <section class="py-16 md:py-24 bg-evolea-cream/50">
+    <div class="container mx-auto max-w-6xl px-4">
+      <div class="section-header reveal">
+        <span class="section-label">{getText(about?.fuerWen?.label, 'Who are we here for?')}</span>
+        <h2>{getText(about?.fuerWen?.titel, 'Children on the spectrum and their families')}</h2>
+      </div>
+
+      <div class="grid md:grid-cols-3 gap-8">
+        {targetGroups.length > 0 ? (
+          targetGroups.map((group: any, index: number) => (
+            <div class={`reveal reveal-delay-${index + 1} bg-white rounded-evolea-lg p-8 shadow-soft`}>
+              <div class={`w-16 h-16 bg-evolea-${group.farbe || 'magenta'}/10 rounded-full flex items-center justify-center mb-6`}>
+                <Icon name={group.icon || 'sparkle'} size="lg" />
+              </div>
+              <h3 class="font-display font-bold text-evolea-purple text-xl mb-4">{getText(group.titel)}</h3>
+              <p class="text-evolea-text-light">
+                {getText(group.beschreibung)}
+              </p>
+            </div>
+          ))
+        ) : (
+          <>
+            <div class="reveal reveal-delay-1 bg-white rounded-evolea-lg p-8 shadow-soft">
+              <div class="w-16 h-16 bg-evolea-magenta/10 rounded-full flex items-center justify-center mb-6">
+                <Icon name="sparkle" size="lg" />
+              </div>
+              <h3 class="font-display font-bold text-evolea-purple text-xl mb-4">Children on the Autism Spectrum</h3>
+              <p class="text-evolea-text-light">
+                Children with autism spectrum disorder (ASD) find a place with us where their way of being is understood and valued.
+              </p>
+            </div>
+
+            <div class="reveal reveal-delay-2 bg-white rounded-evolea-lg p-8 shadow-soft">
+              <div class="w-16 h-16 bg-evolea-coral/10 rounded-full flex items-center justify-center mb-6">
+                <Icon name="brain" size="lg" />
+              </div>
+              <h3 class="font-display font-bold text-evolea-purple text-xl mb-4">Children with ADHD</h3>
+              <p class="text-evolea-text-light">
+                Children with ADHD benefit from our structured programs that combine movement, creativity, and social learning.
+              </p>
+            </div>
+
+            <div class="reveal reveal-delay-3 bg-white rounded-evolea-lg p-8 shadow-soft">
+              <div class="w-16 h-16 bg-evolea-mint/10 rounded-full flex items-center justify-center mb-6">
+                <Icon name="family" size="lg" />
+              </div>
+              <h3 class="font-display font-bold text-evolea-purple text-xl mb-4">Families</h3>
+              <p class="text-evolea-text-light">
+                We support not only children, but also parents and families with counseling, exchange, and practical help.
+              </p>
+            </div>
+          </>
+        )}
+      </div>
+
+      <div class="mt-12 text-center reveal">
+        <div class="inline-flex items-center gap-2 bg-evolea-purple/5 border border-evolea-purple/20 rounded-evolea px-6 py-4">
+          <svg class="w-6 h-6 text-evolea-purple" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+          </svg>
+          <span class="text-evolea-text-light">{getText(about?.fuerWen?.hinweis, 'We use the term "children on the spectrum" respectfully and in an identity-affirming way.')}</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Pedagogical Principles -->
+  <section class="py-16 md:py-24 bg-white">
+    <div class="container mx-auto max-w-6xl px-4">
+      <div class="section-header reveal">
+        <span class="section-label">Pedagogical Concept</span>
+        <h2>9 Principles of Our Work</h2>
+        <p>These principles guide everything we do</p>
+      </div>
+
+      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {principles.map((principle, index) => (
+          <div
+            class:list={[
+              'reveal p-6 rounded-evolea-lg border-l-4 transition-all hover:shadow-soft',
+              colorClasses[principle.color],
+            ]}
+            style={`animation-delay: ${index * 0.1}s`}
+          >
+            <div class="flex items-start gap-4">
+              <div class="flex-shrink-0">
+                <Icon name={principle.iconName} size="lg" />
+              </div>
+              <div>
+                <h3 class="font-display font-bold text-evolea-purple text-lg mb-2">
+                  {principle.title}
+                </h3>
+                <p class="text-evolea-text-light text-sm leading-relaxed">
+                  {principle.description}
+                </p>
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- The Association -->
+  <section class="py-16 md:py-24 bg-evolea-cream/50">
+    <div class="container mx-auto max-w-6xl px-4">
+      <div class="grid lg:grid-cols-2 gap-12 items-center">
+        <div class="reveal order-2 lg:order-1">
+          <div class="bg-white rounded-evolea-lg p-8 shadow-soft">
+            <h3 class="font-display font-bold text-evolea-purple text-2xl mb-6">{getText(about?.verein?.kartenTitel, 'The Association')}</h3>
+            <div class="space-y-4 text-evolea-text-light">
+              <p set:html={getText(about?.verein?.kartenText, '<strong class="text-evolea-purple">EVOLEA Association</strong> is a non-profit based in Zurich. We are politically and religiously independent. The name EVOLEA combines <em>Evolution</em> with <em>LEA</em> (Learn, Experience, Flourish) - a symbol for the transformative journey every child can experience with us.')} />
+            </div>
+
+            <div class="mt-8 pt-6 border-t border-evolea-purple/10">
+              <div class="grid grid-cols-2 gap-6">
+                <div>
+                  <div class="text-2xl font-display font-bold text-evolea-magenta">{about?.verein?.gruendung || '2024'}</div>
+                  <div class="text-sm text-evolea-text-light">Founded</div>
+                </div>
+                <div>
+                  <div class="text-2xl font-display font-bold text-evolea-mint">{about?.verein?.standort || 'Zürich'}</div>
+                  <div class="text-sm text-evolea-text-light">Location</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="reveal order-1 lg:order-2">
+          <span class="section-label">{getText(about?.verein?.label, 'About the Association')}</span>
+          <h2 class="text-3xl md:text-4xl font-display font-bold text-evolea-purple mb-6">
+            {getText(about?.verein?.titel, 'Non-profit and independent')}
+          </h2>
+          <p class="text-lg text-evolea-text-light leading-relaxed mb-6">
+            {getText(about?.verein?.text1, 'EVOLEA was founded by a team of professionals and affected parents who saw a gap in services for children on the spectrum.')}
+          </p>
+          <p class="text-lg text-evolea-text-light leading-relaxed mb-8">
+            {getText(about?.verein?.text2, 'As an association, we are not profit-oriented. All income flows directly into the quality of our programs and the training of our team.')}
+          </p>
+          <a href={translatePath('/team/')} class="btn-primary">
+            Meet Our Team
+            <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+            </svg>
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Page Closer - Prism Gradient -->
+  <PageCloser
+    showCTA={true}
+    ctaTitle={getText(about?.cta?.titel, 'Ready for the next step?')}
+    ctaDescription={getText(about?.cta?.beschreibung, 'We look forward to meeting you and your child.')}
+    ctaButtonText={getText(about?.cta?.buttonText, 'Get in Touch')}
+    ctaButtonHref={translatePath('/contact/')}
+  />
 </Base>
+
+<style>
+  .bg-gradient-spectrum {
+    background: linear-gradient(90deg, #7BEDD5 0%, #FFE066 16%, #FF7E5D 32%, #EF8EAE 48%, #E97BF1 64%, #CD87F8 80%, #7BEDD5 100%);
+  }
+
+  /* Dark Vision Section - per Brand Guide v3 */
+  .vision-dark-section {
+    background: linear-gradient(180deg, #1A1A2E 0%, #2D2A32 100%);
+  }
+
+  .vision-label {
+    display: inline-block;
+    font-family: 'Fredoka', sans-serif;
+    font-size: 0.9rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    background: linear-gradient(90deg, #7BEDD5, #FFE066, #FF9ECC, #E97BF1, #CD87F8);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 1.5rem;
+  }
+
+  .vision-title {
+    font-family: 'Fredoka', sans-serif;
+    font-size: clamp(1.75rem, 4vw, 2.75rem);
+    font-weight: 700;
+    color: #FFFFFF;
+    margin-bottom: 2rem;
+    line-height: 1.2;
+  }
+
+  .vision-quote {
+    font-size: clamp(1.1rem, 2.5vw, 1.4rem);
+    color: rgba(255, 255, 255, 0.85);
+    font-style: italic;
+    line-height: 1.8;
+    max-width: 700px;
+    margin: 0 auto;
+  }
+</style>
