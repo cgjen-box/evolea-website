@@ -541,7 +541,17 @@ colors: {
               <ellipse cx="50" cy="55" rx="2" ry="10" fill="#2D2A32"/>
             </svg>
           </div>
-          <p class="text-sm text-gray-500">On Light Background</p>
+          <p class="text-sm text-gray-500 mb-4">On Light Background</p>
+          <div class="flex flex-wrap justify-center gap-2">
+            <a href={base + "/images/logo/evolea-logo-light-bg.svg"} download="evolea-logo-light-bg.svg" class="inline-flex items-center gap-2 px-3 py-1.5 bg-gray-900 text-white rounded-lg hover:bg-gray-800 transition-colors text-xs font-medium">
+              <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>
+              SVG
+            </a>
+            <a href={base + "/images/logo/evolea-logo-light-bg.png"} download="evolea-logo-light-bg.png" class="inline-flex items-center gap-2 px-3 py-1.5 bg-gray-900 text-white rounded-lg hover:bg-gray-800 transition-colors text-xs font-medium">
+              <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>
+              PNG
+            </a>
+          </div>
         </div>
 
         <!-- On Dark -->
@@ -566,7 +576,17 @@ colors: {
               <ellipse cx="50" cy="55" rx="2" ry="10" fill="white"/>
             </svg>
           </div>
-          <p class="text-sm text-white/50">On Dark Background</p>
+          <p class="text-sm text-white/50 mb-4">On Dark Background</p>
+          <div class="flex flex-wrap justify-center gap-2">
+            <a href={base + "/images/logo/evolea-logo-dark-bg.svg"} download="evolea-logo-dark-bg.svg" class="inline-flex items-center gap-2 px-3 py-1.5 bg-white/20 backdrop-blur-sm text-white rounded-lg hover:bg-white/30 transition-colors text-xs font-medium">
+              <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>
+              SVG
+            </a>
+            <a href={base + "/images/logo/evolea-logo-dark-bg.png"} download="evolea-logo-dark-bg.png" class="inline-flex items-center gap-2 px-3 py-1.5 bg-white/20 backdrop-blur-sm text-white rounded-lg hover:bg-white/30 transition-colors text-xs font-medium">
+              <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>
+              PNG
+            </a>
+          </div>
         </div>
 
         <!-- Butterfly Icon Only -->
@@ -624,12 +644,26 @@ colors: {
       <!-- Logo Downloads Section -->
       <div class="mt-12 bg-white/10 backdrop-blur-sm rounded-2xl p-8">
         <h3 class="text-xl font-display font-bold text-white mb-6">Download All Logo Assets</h3>
-        <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
+        <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
           <div class="bg-white/5 rounded-xl p-4 text-center">
-            <p class="text-white/70 text-sm mb-3">Full Logo (Color)</p>
+            <p class="text-white/70 text-sm mb-3">Full Logo (Original)</p>
             <div class="flex flex-wrap justify-center gap-2">
               <a href={base + "/images/logo/evolea-logo-full.svg"} download class="px-3 py-1.5 bg-white text-gray-900 rounded-lg text-xs font-medium hover:bg-gray-100 transition-colors">SVG</a>
               <a href={base + "/images/logo/evolea-logo-original.png"} download class="px-3 py-1.5 bg-white text-gray-900 rounded-lg text-xs font-medium hover:bg-gray-100 transition-colors">PNG</a>
+            </div>
+          </div>
+          <div class="bg-white/5 rounded-xl p-4 text-center">
+            <p class="text-white/70 text-sm mb-3">For Light Backgrounds</p>
+            <div class="flex flex-wrap justify-center gap-2">
+              <a href={base + "/images/logo/evolea-logo-light-bg.svg"} download class="px-3 py-1.5 bg-white text-gray-900 rounded-lg text-xs font-medium hover:bg-gray-100 transition-colors">SVG</a>
+              <a href={base + "/images/logo/evolea-logo-light-bg.png"} download class="px-3 py-1.5 bg-white text-gray-900 rounded-lg text-xs font-medium hover:bg-gray-100 transition-colors">PNG</a>
+            </div>
+          </div>
+          <div class="bg-white/5 rounded-xl p-4 text-center">
+            <p class="text-white/70 text-sm mb-3">For Dark Backgrounds</p>
+            <div class="flex flex-wrap justify-center gap-2">
+              <a href={base + "/images/logo/evolea-logo-dark-bg.svg"} download class="px-3 py-1.5 bg-white text-gray-900 rounded-lg text-xs font-medium hover:bg-gray-100 transition-colors">SVG</a>
+              <a href={base + "/images/logo/evolea-logo-dark-bg.png"} download class="px-3 py-1.5 bg-white text-gray-900 rounded-lg text-xs font-medium hover:bg-gray-100 transition-colors">PNG</a>
             </div>
           </div>
           <div class="bg-white/5 rounded-xl p-4 text-center">
