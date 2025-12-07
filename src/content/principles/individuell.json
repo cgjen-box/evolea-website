@@ -1,0 +1,12 @@
+{
+  "titel": "Individuell",
+  "titelEn": "Individual",
+  "beschreibung": {
+    "de": "Jedes Kind wird dort abgeholt, wo es steht. Wir passen unsere Angebote an die individuellen Bedürfnisse an.",
+    "en": "Every child is met where they are. We adapt our programs to individual needs."
+  },
+  "icon": "target",
+  "farbe": "coral",
+  "veroeffentlicht": true,
+  "reihenfolge": 1
+}

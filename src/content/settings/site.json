@@ -4,16 +4,53 @@
     "de": "EVOLEA Verein - Bildungsprogramme für Kinder im Autismus-Spektrum oder mit ADHS in Zürich, Schweiz.",
     "en": "EVOLEA Association - Educational programs for children on the autism spectrum or with ADHD in Zurich, Switzerland."
   },
-  "contactEmail": "hello@evolea.ch",
-  "socialLinks": {
-    "instagram": "https://instagram.com/evolea.ch",
-    "linkedin": "https://linkedin.com/company/evolea",
+  "kontakt": {
+    "email": "hello@evolea.ch",
+    "telefon": "+41 78 959 19 74",
+    "whatsapp": "https://wa.me/41789591974"
+  },
+  "adresse": {
+    "strasse": "Germaniastrasse 55",
+    "plz": "8006",
+    "ort": "Zürich",
+    "land": "Schweiz"
+  },
+  "social": {
+    "instagram": "https://instagram.com/evolea.verein",
+    "linkedin": "",
     "facebook": ""
   },
-  "address": {
-    "street": "",
-    "city": "Zürich",
-    "zip": "",
-    "country": "Schweiz"
+  "navigation": {
+    "de": {
+      "home": "Startseite",
+      "programs": "Angebote",
+      "about": "Über uns",
+      "team": "Team",
+      "blog": "Blog",
+      "contact": "Kontakt"
+    },
+    "en": {
+      "home": "Home",
+      "programs": "Programs",
+      "about": "About Us",
+      "team": "Team",
+      "blog": "Blog",
+      "contact": "Contact"
+    }
+  },
+  "footer": {
+    "tagline": {
+      "de": "Pädagogische Programme für Kinder im Spektrum",
+      "en": "Educational programs for children on the spectrum"
+    },
+    "copyright": "© 2025 EVOLEA Verein. Alle Rechte vorbehalten.",
+    "datenschutzText": {
+      "de": "Datenschutz",
+      "en": "Privacy Policy"
+    },
+    "impressumText": {
+      "de": "Impressum",
+      "en": "Imprint"
+    }
   }
 }

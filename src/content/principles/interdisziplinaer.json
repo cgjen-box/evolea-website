@@ -1,0 +1,12 @@
+{
+  "titel": "Interdisziplinär",
+  "titelEn": "Interdisciplinary",
+  "beschreibung": {
+    "de": "Unser Team vereint Expertise aus Psychologie, Pädagogik, Therapie und Verhaltensanalyse.",
+    "en": "Our team combines expertise from psychology, education, therapy, and behavior analysis."
+  },
+  "icon": "people",
+  "farbe": "pink",
+  "veroeffentlicht": true,
+  "reihenfolge": 6
+}

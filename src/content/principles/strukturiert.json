@@ -1,0 +1,12 @@
+{
+  "titel": "Strukturiert",
+  "titelEn": "Structured",
+  "beschreibung": {
+    "de": "Klare Abläufe und vorhersehbare Strukturen geben Sicherheit und ermöglichen erfolgreiches Lernen.",
+    "en": "Clear processes and predictable structures provide security and enable successful learning."
+  },
+  "icon": "clipboard",
+  "farbe": "sky",
+  "veroeffentlicht": true,
+  "reihenfolge": 3
+}

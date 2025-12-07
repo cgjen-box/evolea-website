@@ -1,21 +1,92 @@
 {
-  "pageId": "homepage",
-  "de": {
-    "title": "EVOLEA - Wo Kinder im Spektrum aufblühen",
-    "subtitle": "Bildungsprogramme für Kinder mit Autismus oder ADHS",
-    "description": "EVOLEA schafft Räume für Kinder mit Autismus oder ADHS, in denen sie wachsen, lernen und ihre einzigartigen Stärken entdecken können.",
-    "heroTitle": "Wo Kinder im Spektrum aufblühen",
-    "heroSubtitle": "EVOLEA schafft Räume für Kinder mit Autismus oder ADHS, in denen sie wachsen, lernen und ihre einzigartigen Stärken entdecken können.",
-    "ctaText": "Angebote entdecken",
-    "sections": []
+  "hero": {
+    "titel": {
+      "de": "Wo Kinder im Spektrum aufblühen",
+      "en": "Where Children on the Spectrum Flourish"
+    },
+    "untertitel": {
+      "de": "EVOLEA schafft Räume für Kinder mit Autismus oder ADHS, in denen sie wachsen, lernen und ihre einzigartigen Stärken entdecken können.",
+      "en": "EVOLEA creates spaces for children with autism or ADHD where they can grow, learn, and discover their unique strengths."
+    },
+    "buttonText": {
+      "de": "Angebote entdecken",
+      "en": "Explore Programs"
+    },
+    "buttonLink": "/angebote/"
   },
-  "en": {
-    "title": "EVOLEA - Where Children on the Spectrum Flourish",
-    "subtitle": "Educational programs for children with autism or ADHD",
-    "description": "EVOLEA creates spaces for children with autism or ADHD where they can grow, learn, and discover their unique strengths.",
-    "heroTitle": "Where Children on the Spectrum Flourish",
-    "heroSubtitle": "EVOLEA creates spaces for children with autism or ADHD where they can grow, learn, and discover their unique strengths.",
-    "ctaText": "Explore Programs",
-    "sections": []
+  "angeboteSection": {
+    "titel": {
+      "de": "Unsere Angebote",
+      "en": "Our Programs"
+    },
+    "beschreibung": {
+      "de": "Pädagogische Programme, die Kinder im Spektrum dort abholen, wo sie stehen.",
+      "en": "Educational programs that meet children on the spectrum where they are."
+    }
+  },
+  "grundsaetzeSection": {
+    "titel": {
+      "de": "Pädagogisches Konzept",
+      "en": "Educational Approach"
+    },
+    "beschreibung": {
+      "de": "9 Grundsätze leiten unsere Arbeit",
+      "en": "9 principles guide our work"
+    },
+    "anzahl": 9
+  },
+  "visionSection": {
+    "titel": {
+      "de": "Unsere Vision",
+      "en": "Our Vision"
+    },
+    "text": {
+      "de": "Wir träumen von einer Welt, in der neurotypische Entwicklung nicht die einzige Norm ist - in der jedes Kind, unabhängig von seiner Art zu denken und zu lernen, die gleichen Chancen hat.",
+      "en": "We dream of a world where neurotypical development is not the only norm - where every child, regardless of how they think and learn, has equal opportunities."
+    }
+  },
+  "teamSection": {
+    "titel": {
+      "de": "Unser Team",
+      "en": "Our Team"
+    },
+    "beschreibung": {
+      "de": "Erfahrene Fachpersonen aus Psychologie, Pädagogik und Verhaltensanalyse",
+      "en": "Experienced professionals from psychology, education, and behavior analysis"
+    },
+    "buttonText": {
+      "de": "Team kennenlernen",
+      "en": "Meet the Team"
+    },
+    "anzahl": 4
+  },
+  "kontaktSection": {
+    "titel": {
+      "de": "Kontakt",
+      "en": "Contact"
+    },
+    "text": {
+      "de": "Wir freuen uns auf den Austausch mit Ihnen.",
+      "en": "We look forward to connecting with you."
+    }
+  },
+  "cta": {
+    "titel": {
+      "de": "Bereit für den ersten Schritt?",
+      "en": "Ready to take the first step?"
+    },
+    "beschreibung": {
+      "de": "Vereinbaren Sie ein unverbindliches Erstgespräch.",
+      "en": "Schedule a no-obligation initial consultation."
+    },
+    "buttonText": {
+      "de": "Kontakt aufnehmen",
+      "en": "Get in Touch"
+    },
+    "buttonLink": "/kontakt/"
+  },
+  "seo": {
+    "discriminant": false,
+    "value": {}
   }
 }

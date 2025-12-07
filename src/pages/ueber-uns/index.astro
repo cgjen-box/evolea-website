@@ -4,70 +4,25 @@ import InnerPageHero from '@components/InnerPageHero.astro';
 import PageCloser from '@components/PageCloser.astro';
 import Butterfly from '@components/Butterfly.astro';
 import Icon from '@components/Icon.astro';
+import EditLink from '@components/EditLink.astro';
 import { getLangFromUrl, useTranslations, useTranslatedPath } from '@i18n/utils';
+import { getCollection } from 'astro:content';
 
 const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
 const translatePath = useTranslatedPath(lang);
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 
-// 9 Pedagogical Principles - the foundation of EVOLEA
-const principles = [
-  {
-    iconName: 'chart' as const,
-    title: 'Evidenzbasiert',
-    description: 'Unsere Arbeit basiert auf wissenschaftlichen Erkenntnissen und bewährten Methoden der angewandten Verhaltensanalyse.',
-    color: 'magenta',
-  },
-  {
-    iconName: 'target' as const,
-    title: 'Individuell',
-    description: 'Jedes Kind wird dort abgeholt, wo es steht. Wir passen unsere Angebote an die individuellen Bedürfnisse an.',
-    color: 'coral',
-  },
-  {
-    iconName: 'gamepad' as const,
-    title: 'Spielerisch',
-    description: 'Lernen geschieht durch Spiel und positive Erfahrungen - natürlich, motivierend und freudvoll.',
-    color: 'yellow',
-  },
-  {
-    iconName: 'clipboard' as const,
-    title: 'Strukturiert',
-    description: 'Klare Abläufe und vorhersehbare Strukturen geben Sicherheit und ermöglichen erfolgreiches Lernen.',
-    color: 'sky',
-  },
-  {
-    iconName: 'handshake' as const,
-    title: 'Partizipativ',
-    description: 'Kinder werden aktiv in Entscheidungen einbezogen und ihre Stimme wird gehört und respektiert.',
-    color: 'mint',
-  },
-  {
-    iconName: 'diamond' as const,
-    title: 'Ressourcenorientiert',
-    description: 'Wir fokussieren auf Stärken und Potenziale, nicht auf Defizite. Jedes Kind hat einzigartige Fähigkeiten.',
-    color: 'purple',
-  },
-  {
-    iconName: 'people' as const,
-    title: 'Interdisziplinär',
-    description: 'Unser Team vereint Expertise aus Psychologie, Pädagogik, Therapie und Verhaltensanalyse.',
-    color: 'pink',
-  },
-  {
-    iconName: 'family' as const,
-    title: 'Familienzentriert',
-    description: 'Familien sind Partner in der Förderung. Wir arbeiten eng mit Eltern zusammen und unterstützen das ganze System.',
-    color: 'gold',
-  },
-  {
-    iconName: 'rainbow' as const,
-    title: 'Inklusiv',
-    description: 'Wir feiern Vielfalt und schaffen Räume, in denen sich alle Kinder willkommen und wertgeschätzt fühlen.',
-    color: 'teal',
-  },
-];
+// Get principles from collection, sorted by order
+const principleEntries = await getCollection('principles', ({ data }) => data.veroeffentlicht);
+const principles = principleEntries
+  .sort((a, b) => a.data.reihenfolge - b.data.reihenfolge)
+  .map((entry) => ({
+    iconName: entry.data.icon as 'chart' | 'target' | 'gamepad' | 'clipboard' | 'handshake' | 'diamond' | 'people' | 'family' | 'rainbow',
+    title: lang === 'de' ? entry.data.titel : (entry.data.titelEn || entry.data.titel),
+    description: lang === 'de' ? entry.data.beschreibung?.de : entry.data.beschreibung?.en,
+    color: entry.data.farbe,
+  }));
 
 const colorClasses: Record<string, string> = {
   magenta: 'bg-evolea-magenta/10 border-evolea-magenta',
@@ -83,6 +38,9 @@ const colorClasses: Record<string, string> = {
 ---
 
 <Base title="Über uns" description="EVOLEA ist ein gemeinnütziger Verein in Zürich. Erfahren Sie mehr über unsere Mission, Werte und pädagogischen Grundsätze für Kinder im Autismus Spektrum." transparentHeader={true}>
+  <!-- Edit Link for Keystatic CMS -->
+  <EditLink type="collection" collection="principles" label="Grundsätze bearbeiten" />
+
   <!-- Premium Hero with Prism Gradient -->
   <InnerPageHero
     title={t('nav.about')}
