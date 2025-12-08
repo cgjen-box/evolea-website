@@ -347,20 +347,31 @@ const keystaticPasswordGate = defineMiddleware(async (context, next) => {
     return next();
   }
 
+  // Helper to inject deploy button into HTML response
+  const injectDeployButton = async (response: Response): Promise<Response> => {
+    const contentType = response.headers.get('content-type');
+    if (contentType?.includes('text/html')) {
+      const html = await response.text();
+      if (html.includes('</body>')) {
+        const modifiedHtml = html.replace('</body>', deployButtonScript + '</body>');
+        // Create new headers to avoid immutability issues
+        const newHeaders = new Headers(response.headers);
+        return new Response(modifiedHtml, {
+          status: response.status,
+          statusText: response.statusText,
+          headers: newHeaders,
+        });
+      }
+    }
+    return response;
+  };
+
   // Check if password protection is enabled
   const password = import.meta.env.KEYSTATIC_ACCESS_PASSWORD;
   if (!password) {
     // No password set, but still inject deploy button
     const response = await next();
-    if (response.headers.get('content-type')?.includes('text/html')) {
-      const html = await response.text();
-      const modifiedHtml = html.replace('</body>', deployButtonScript + '</body>');
-      return new Response(modifiedHtml, {
-        status: response.status,
-        headers: response.headers,
-      });
-    }
-    return response;
+    return injectDeployButton(response);
   }
 
   // Check if already authenticated via cookie
@@ -368,15 +379,7 @@ const keystaticPasswordGate = defineMiddleware(async (context, next) => {
   if (isAuthenticated) {
     // Inject deploy button into authenticated Keystatic pages
     const response = await next();
-    if (response.headers.get('content-type')?.includes('text/html')) {
-      const html = await response.text();
-      const modifiedHtml = html.replace('</body>', deployButtonScript + '</body>');
-      return new Response(modifiedHtml, {
-        status: response.status,
-        headers: response.headers,
-      });
-    }
-    return response;
+    return injectDeployButton(response);
   }
 
   // Handle POST (password submission)
