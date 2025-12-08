@@ -1,0 +1,203 @@
+{
+  "hero": {
+    "badge": {
+      "de": "Social Skills Gruppe",
+      "en": "Social Skills Group"
+    },
+    "titel": "Mini Projekte",
+    "untertitel": {
+      "de": "Stark im Miteinander, spielerisch fürs Leben lernen",
+      "en": "Strong together, learning playfully for life"
+    },
+    "beschreibung": {
+      "de": "Geschützte Social Skills Gruppen für autistische Kinder ausserhalb der Schule – mit klarer Struktur und sichtbaren Erfolgen.",
+      "en": "Protected social skills groups for autistic children outside of school – with clear structure and visible successes."
+    },
+    "buttonText": {
+      "de": "Aktuelle Projekte",
+      "en": "Current Projects"
+    },
+    "buttonLink": "#projekte",
+    "alter": "5-8"
+  },
+  "infoKarten": [
+    {
+      "icon": "sparkle",
+      "label": { "de": "Alter", "en": "Age" },
+      "wert": { "de": "5-8 Jahre", "en": "5-8 years" }
+    },
+    {
+      "icon": "clipboard",
+      "label": { "de": "Wann", "en": "When" },
+      "wert": { "de": "Samstag, alle 2 Wochen", "en": "Saturday, every 2 weeks" }
+    },
+    {
+      "icon": "chart",
+      "label": { "de": "Dauer", "en": "Duration" },
+      "wert": { "de": "3 Stunden / Halbtag", "en": "3 hours / half day" }
+    },
+    {
+      "icon": "diamond",
+      "label": { "de": "Kosten", "en": "Cost" },
+      "wert": { "de": "CHF 125 / Halbtag", "en": "CHF 125 / half day" }
+    }
+  ],
+  "fuerWen": {
+    "titel": {
+      "de": "Für wen ist Mini Projekte?",
+      "en": "Who is Mini Projekte for?"
+    },
+    "text": {
+      "de": "Mini Projekte richtet sich an Kinder im Autismus Spektrum im Alter von 5-8 Jahren. In unseren geschützten Social Skills Gruppen entwickeln Kinder soziale Kompetenzen durch gemeinsame Projekte – ausserhalb des Schulkontexts.",
+      "en": "Mini Projekte is aimed at children on the autism spectrum aged 5-8 years. In our protected social skills groups, children develop social skills through collaborative projects – outside of school."
+    },
+    "voraussetzungenTitel": {
+      "de": "Voraussetzungen für die Teilnahme",
+      "en": "Prerequisites for participation"
+    },
+    "voraussetzungen": [
+      { "de": "Funktionelle Kommunikation", "en": "Functional communication" },
+      { "de": "Interesse an sozialem Kontakt", "en": "Interest in social contact" },
+      { "de": "Kann Anweisungen folgen", "en": "Can follow instructions" },
+      { "de": "Altersgerechte Selbstständigkeit", "en": "Age-appropriate independence" },
+      { "de": "Keine selbst- oder fremdverletzenden Verhaltensweisen", "en": "No self-harming or aggressive behaviors" }
+    ]
+  },
+  "besonderheiten": {
+    "titel": {
+      "de": "Was macht Mini Projekte besonders?",
+      "en": "What makes Mini Projekte special?"
+    },
+    "features": [
+      {
+        "icon": "target",
+        "titel": { "de": "Sichtbare Erfolge", "en": "Visible successes" },
+        "text": { "de": "Jedes Quartal schliesst mit einer Präsentation ab – Erfolge werden für alle sichtbar gemacht.", "en": "Each quarter concludes with a presentation – successes are made visible to everyone." }
+      },
+      {
+        "icon": "family",
+        "titel": { "de": "Entlastung für Eltern", "en": "Relief for parents" },
+        "text": { "de": "Während die Kinder betreut werden, haben Eltern Zeit für sich oder können sich mit anderen Familien vernetzen.", "en": "While the children are cared for, parents have time for themselves or can network with other families." }
+      },
+      {
+        "icon": "handshake",
+        "titel": { "de": "Soziales Lernen", "en": "Social learning" },
+        "text": { "de": "Teamarbeit, Kommunikation und Kooperation werden spielerisch in echten Projekten geübt.", "en": "Teamwork, communication and cooperation are practiced playfully in real projects." }
+      },
+      {
+        "icon": "sparkle",
+        "titel": { "de": "Abschlussfeier", "en": "Closing celebration" },
+        "text": { "de": "Der letzte Halbtag jedes Quartals ist eine Feier – kostenlos von EVOLEA organisiert.", "en": "The last half day of each quarter is a celebration – organized free of charge by EVOLEA." }
+      }
+    ]
+  },
+  "projekte": {
+    "titel": {
+      "de": "Aktuelle & kommende Projekte",
+      "en": "Current & upcoming projects"
+    },
+    "liste": [
+      {
+        "titel": "Mini Restaurant",
+        "beschreibung": {
+          "de": "Kochen, Servieren, Teamwork – die Kinder gestalten und betreiben ihr eigenes kleines Restaurant.",
+          "en": "Cooking, serving, teamwork – the children design and run their own little restaurant."
+        },
+        "zeitraum": {
+          "de": "Oktober - Dezember 2025",
+          "en": "October - December 2025"
+        },
+        "status": {
+          "de": "Ausgebucht",
+          "en": "Fully booked"
+        },
+        "statusFarbe": "magenta",
+        "link": "/angebote/mini-projekte/mini-restaurant/",
+        "farbe": "orange"
+      },
+      {
+        "titel": "Mini Museum",
+        "beschreibung": {
+          "de": "Kunst, Kreativität und Ausdruck – gemeinsam wird ein eigenes Museum gestaltet und eröffnet.",
+          "en": "Art, creativity and expression – together a museum of their own is designed and opened."
+        },
+        "zeitraum": {
+          "de": "Februar – April 2026",
+          "en": "February – April 2026"
+        },
+        "status": {
+          "de": "Anmeldung offen",
+          "en": "Registration open"
+        },
+        "statusFarbe": "green",
+        "link": "/angebote/mini-museum/",
+        "farbe": "purple"
+      },
+      {
+        "titel": "Mini Abenteuercamp",
+        "beschreibung": {
+          "de": "Abenteuer, Sport und Natur – ein Sommerprojekt voller Bewegung und Entdeckungen.",
+          "en": "Adventure, sports and nature – a summer project full of movement and discoveries."
+        },
+        "zeitraum": {
+          "de": "Juli 2026",
+          "en": "July 2026"
+        },
+        "status": {
+          "de": "Bald verfügbar",
+          "en": "Coming soon"
+        },
+        "statusFarbe": "orange",
+        "link": "",
+        "farbe": "green"
+      }
+    ]
+  },
+  "praktischeInfos": {
+    "titel": {
+      "de": "Praktische Informationen",
+      "en": "Practical Information"
+    },
+    "infos": [
+      {
+        "icon": "calendar",
+        "label": { "de": "Ablauf", "en": "Schedule" },
+        "wert": { "de": "3-Monats-Quartale mit 6 Halbtagen (alle 2 Wochen samstags, ca. 3 Stunden)", "en": "3-month quarters with 6 half days (every 2 weeks on Saturdays, approx. 3 hours)" }
+      },
+      {
+        "icon": "people",
+        "label": { "de": "Gruppengrösse", "en": "Group size" },
+        "wert": { "de": "4-8 Kinder pro Gruppe", "en": "4-8 children per group" }
+      },
+      {
+        "icon": "location",
+        "label": { "de": "Standort", "en": "Location" },
+        "wert": { "de": "Stapferstrasse 10, 8006 Zürich (Nähe Seilbahn Rigiblick)", "en": "Stapferstrasse 10, 8006 Zurich (near Rigiblick cable car)" }
+      },
+      {
+        "icon": "money",
+        "label": { "de": "Kosten", "en": "Cost" },
+        "wert": { "de": "CHF 125 pro Halbtag (Abschlussfeier kostenlos)", "en": "CHF 125 per half day (closing celebration free)" }
+      },
+      {
+        "icon": "mail",
+        "label": { "de": "Kontakt", "en": "Contact" },
+        "wert": { "de": "hello@evolea.ch", "en": "hello@evolea.ch" }
+      }
+    ]
+  },
+  "cta": {
+    "titel": {
+      "de": "Interesse geweckt?",
+      "en": "Interested?"
+    },
+    "beschreibung": {
+      "de": "Vereinbaren Sie ein kostenloses Kennenlerngespräch.",
+      "en": "Schedule a free introductory meeting."
+    },
+    "buttonText": {
+      "de": "Jetzt Kontakt aufnehmen",
+      "en": "Contact us now"
+    }
+  }
+}

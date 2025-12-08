@@ -4,74 +4,91 @@ import InnerPageHero from '@components/InnerPageHero.astro';
 import PageCloser from '@components/PageCloser.astro';
 import Icon from '@components/Icon.astro';
 import { getLangFromUrl, useTranslations, useTranslatedPath } from '@i18n/utils';
+import { getEntry } from 'astro:content';
 
 const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
 const translatePath = useTranslatedPath(lang);
 
-// Main programs (currently enrolling)
-const mainPrograms = [
+// Get CMS content
+const pageEntry = await getEntry('pages', 'angebote-index');
+const page = pageEntry?.data;
+
+// Helper to get bilingual text
+const getText = (obj: { de?: string; en?: string } | undefined, fallback: string = '') => {
+  if (!obj) return fallback;
+  return lang === 'de' ? (obj.de || fallback) : (obj.en || obj.de || fallback);
+};
+
+// Main programs from CMS or fallback
+const mainPrograms = page?.hauptProgramme || [
   {
-    title: 'Mini Garten',
-    desc: 'Spielerische Vorbereitung auf den Kindergarten in einer kleinen, geschützten Gruppe.',
-    iconName: 'sprout' as const,
-    color: 'green',
-    ages: '3-5',
-    href: '/angebote/mini-garten/',
-    status: 'Anmeldung offen',
+    titel: 'Mini Garten',
+    beschreibung: { de: 'Spielerische Vorbereitung auf den Kindergarten in einer kleinen, geschützten Gruppe.', en: 'Playful kindergarten preparation in a small, protected group.' },
+    icon: 'sprout',
+    farbe: 'green',
+    alter: { de: '3-5', en: '3-5' },
+    link: '/angebote/mini-garten/',
+    status: { de: 'Anmeldung offen', en: 'Registration open' },
   },
   {
-    title: 'Mini Projekte',
-    desc: 'Soziale Kompetenz durch kreative Projekte in kleinen Gruppen.',
-    iconName: 'palette' as const,
-    color: 'orange',
-    ages: '5-8',
-    href: '/angebote/mini-projekte/',
-    status: 'Anmeldung offen',
+    titel: 'Mini Projekte',
+    beschreibung: { de: 'Soziale Kompetenz durch kreative Projekte in kleinen Gruppen.', en: 'Social skills through creative projects in small groups.' },
+    icon: 'palette',
+    farbe: 'orange',
+    alter: { de: '5-8', en: '5-8' },
+    link: '/angebote/mini-projekte/',
+    status: { de: 'Anmeldung offen', en: 'Registration open' },
   },
   {
-    title: 'Mini Turnen',
-    desc: 'Bewegung, Spass und motorische Förderung in einer kleinen, verständnisvollen Gruppe.',
-    iconName: 'ball' as const,
-    color: 'sky',
-    ages: '5-8',
-    href: '/angebote/mini-turnen/',
-    status: 'Anmeldung offen',
+    titel: 'Mini Turnen',
+    beschreibung: { de: 'Bewegung, Spass und motorische Förderung in einer kleinen, verständnisvollen Gruppe.', en: 'Movement, fun and motor skill development in a small, understanding group.' },
+    icon: 'ball',
+    farbe: 'sky',
+    alter: { de: '5-8', en: '5-8' },
+    link: '/angebote/mini-turnen/',
+    status: { de: 'Anmeldung offen', en: 'Registration open' },
   },
 ];
 
-// Additional programs
-const additionalPrograms = [
+// Additional programs from CMS or fallback
+const additionalPrograms = page?.weitereProgramme || [
   {
-    title: 'EVOLEA Cafe',
-    desc: 'Austausch und Gemeinschaft für Eltern. Jeden 2. Mittwoch im Monat.',
-    iconName: 'coffee' as const,
-    color: 'coral',
-    ages: 'Eltern',
-    href: '/kontakt/',
-    status: 'Offen für alle',
+    titel: 'EVOLEA Cafe',
+    beschreibung: { de: 'Austausch und Gemeinschaft für Eltern. Jeden 2. Mittwoch im Monat.', en: 'Exchange and community for parents. Every 2nd Wednesday of the month.' },
+    icon: 'coffee',
+    farbe: 'coral',
+    alter: { de: 'Eltern', en: 'Parents' },
+    link: '/kontakt/',
+    status: { de: 'Offen für alle', en: 'Open to all' },
+    istVision: false,
   },
   {
-    title: 'Tagesschule',
-    desc: 'Sonderschule Typ A für Kinder im Spektrum. Wir arbeiten noch daran.',
-    iconName: 'school' as const,
-    color: 'purple',
-    ages: '4-12',
-    href: '/angebote/tagesschule/',
-    status: 'Vision',
-    isVision: true,
+    titel: 'Tagesschule',
+    beschreibung: { de: 'Sonderschule Typ A für Kinder im Spektrum. Wir arbeiten noch daran.', en: "Special school Type A for children on the spectrum. We're still working on it." },
+    icon: 'school',
+    farbe: 'purple',
+    alter: { de: '4-12', en: '4-12' },
+    link: '/angebote/tagesschule/',
+    status: { de: 'Vision', en: 'Vision' },
+    istVision: true,
   },
 ];
+
+// Labels
+const labels = page?.labels || {};
+const mehrErfahren = getText(labels.mehrErfahren, 'Mehr erfahren');
+const jahreLabel = getText(labels.jahre, 'Jahre');
 ---
 
-<Base title="Angebote" description="EVOLEA bietet verschiedene Förderprogramme für Kinder im Autismus Spektrum oder mit ADHS an: Mini Garten, Mini Projekte, Mini Turnen, Tagesschule und mehr." transparentHeader={true}>
+<Base title={getText(page?.hero?.titel, 'Angebote')} description="EVOLEA bietet verschiedene Förderprogramme für Kinder im Autismus Spektrum oder mit ADHS an: Mini Garten, Mini Projekte, Mini Turnen, Tagesschule und mehr." transparentHeader={true}>
   <!-- Premium Hero with Prism Gradient -->
   <InnerPageHero
-    title={t('nav.programs')}
-    subtitle="Programme, die jedes Kind dort abholen, wo es steht."
+    title={getText(page?.hero?.titel, t('nav.programs'))}
+    subtitle={getText(page?.hero?.untertitel, 'Programme, die jedes Kind dort abholen, wo es steht.')}
     breadcrumbs={[
-      { label: 'Startseite', href: translatePath('/') },
-      { label: 'Angebote' }
+      { label: lang === 'de' ? 'Startseite' : 'Home', href: translatePath('/') },
+      { label: getText(page?.hero?.titel, 'Angebote') }
     ]}
     size="md"
   />
@@ -79,9 +96,9 @@ const additionalPrograms = [
   <!-- Introduction -->
   <section class="py-12 bg-evolea-cream/30">
     <div class="container mx-auto max-w-4xl px-4 text-center">
-      <h2 class="text-2xl font-display font-bold text-evolea-purple mb-4">Unser Ansatz</h2>
+      <h2 class="text-2xl font-display font-bold text-evolea-purple mb-4">{getText(page?.intro?.titel, 'Unser Ansatz')}</h2>
       <p class="text-lg text-evolea-text-light leading-relaxed">
-        Wir bestärken Erfolge und motivieren die Kinder, neue Herausforderungen anzunehmen. Wir setzen auf wissenschaftlich fundierte Methoden, die nachweislich wirksam sind. In kleinen Gruppen mit hohem Betreuungsschlüssel schaffen wir einen geschützten Rahmen für individuelle Entwicklung.
+        {getText(page?.intro?.text, 'Wir bestärken Erfolge und motivieren die Kinder, neue Herausforderungen anzunehmen. Wir setzen auf wissenschaftlich fundierte Methoden, die nachweislich wirksam sind. In kleinen Gruppen mit hohem Betreuungsschlüssel schaffen wir einen geschützten Rahmen für individuelle Entwicklung.')}
       </p>
     </div>
   </section>
@@ -92,43 +109,43 @@ const additionalPrograms = [
       <!-- Aktuelle Angebote Header -->
       <div class="text-center mb-12">
         <span class="inline-block bg-evolea-magenta/10 text-evolea-magenta px-4 py-2 rounded-full text-sm font-semibold mb-4">
-          Aktuelle Angebote
+          {getText(page?.aktuelleAngebote?.label, 'Aktuelle Angebote')}
         </span>
         <h2 class="text-3xl font-display font-bold text-evolea-purple">
-          Jetzt anmelden
+          {getText(page?.aktuelleAngebote?.titel, 'Jetzt anmelden')}
         </h2>
       </div>
 
       <!-- Main Programs Grid - Purple Gradient Cards -->
       <div class="grid md:grid-cols-3 gap-6 mb-16">
-        {mainPrograms.map((program) => (
+        {mainPrograms.map((program: any) => (
           <a
-            href={translatePath(program.href)}
+            href={translatePath(program.link)}
             class="group block rounded-evolea-lg overflow-hidden transition-all hover:shadow-card bg-gradient-to-br from-evolea-magenta to-evolea-purple text-white"
           >
             <div class="p-6">
               <div class="flex items-center justify-between mb-4">
                 <div class="w-12 h-12 bg-white/20 rounded-full flex items-center justify-center">
-                  <Icon name={program.iconName} size="lg" gradient={false} />
+                  <Icon name={program.icon || 'sparkle'} size="lg" gradient={false} />
                 </div>
                 <span class="text-sm font-medium px-3 py-1 rounded-full bg-white/20">
-                  {program.ages} Jahre
+                  {getText(program.alter, '5-8')} {jahreLabel}
                 </span>
               </div>
               <div class="mb-2">
                 <span class="inline-flex items-center gap-1 text-xs font-semibold bg-white/30 px-2 py-1 rounded-full">
                   <Icon name="sparkle" size="xs" gradient={false} />
-                  {program.status}
+                  {getText(program.status, 'Anmeldung offen')}
                 </span>
               </div>
               <h3 class="text-xl font-display font-bold mb-2 group-hover:underline">
-                {program.title}
+                {program.titel}
               </h3>
               <p class="text-sm text-white/90 mb-4">
-                {program.desc}
+                {getText(program.beschreibung, '')}
               </p>
               <div class="flex items-center gap-2 text-sm font-medium">
-                Mehr erfahren
+                {mehrErfahren}
                 <svg class="w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
                 </svg>
@@ -141,38 +158,38 @@ const additionalPrograms = [
       <!-- Weitere Angebote Divider -->
       <div class="flex items-center gap-4 mb-8">
         <div class="flex-1 h-px bg-evolea-purple/20"></div>
-        <span class="text-sm font-semibold text-evolea-text-light uppercase tracking-wider">Weitere Angebote</span>
+        <span class="text-sm font-semibold text-evolea-text-light uppercase tracking-wider">{getText(page?.weitereAngeboteLabel, 'Weitere Angebote')}</span>
         <div class="flex-1 h-px bg-evolea-purple/20"></div>
       </div>
 
       <!-- Additional Programs Grid -->
       <div class="grid md:grid-cols-2 gap-6">
-        {additionalPrograms.map((program) => (
+        {additionalPrograms.map((program: any) => (
           <a
-            href={translatePath(program.href)}
+            href={translatePath(program.link)}
             class:list={[
               'group block rounded-evolea-lg overflow-hidden transition-all hover:shadow-card',
-              program.isVision ? 'bg-evolea-purple/5 border-2 border-dashed border-evolea-purple/30' : 'bg-white border border-evolea-purple/10',
+              program.istVision ? 'bg-evolea-purple/5 border-2 border-dashed border-evolea-purple/30' : 'bg-white border border-evolea-purple/10',
             ]}
           >
             <div class="p-6">
               <div class="flex items-center justify-between mb-4">
-                <Icon name={program.iconName} size="lg" />
+                <Icon name={program.icon || 'sparkle'} size="lg" />
                 <span class:list={[
                   'text-sm font-medium px-3 py-1 rounded-full',
-                  program.isVision ? 'bg-evolea-purple/10 text-evolea-purple' : 'bg-evolea-coral/10 text-evolea-coral',
+                  program.istVision ? 'bg-evolea-purple/10 text-evolea-purple' : 'bg-evolea-coral/10 text-evolea-coral',
                 ]}>
-                  {program.status}
+                  {getText(program.status, '')}
                 </span>
               </div>
               <h3 class="text-xl font-display font-bold text-evolea-purple mb-2 group-hover:underline">
-                {program.title}
+                {program.titel}
               </h3>
               <p class="text-sm text-evolea-text-light mb-4">
-                {program.desc}
+                {getText(program.beschreibung, '')}
               </p>
               <div class="flex items-center gap-2 text-sm font-medium text-evolea-purple">
-                Mehr erfahren
+                {mehrErfahren}
                 <svg class="w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
                 </svg>
@@ -187,9 +204,9 @@ const additionalPrograms = [
   <!-- Page Closer - Prism Gradient -->
   <PageCloser
     showCTA={true}
-    ctaTitle="Bereit für den nächsten Schritt?"
-    ctaDescription="Kontaktieren Sie uns für ein unverbindliches Kennenlerngespräch."
-    ctaButtonText="Jetzt Kontakt aufnehmen"
+    ctaTitle={getText(page?.cta?.titel, 'Bereit für den nächsten Schritt?')}
+    ctaDescription={getText(page?.cta?.beschreibung, 'Kontaktieren Sie uns für ein unverbindliches Kennenlerngespräch.')}
+    ctaButtonText={getText(page?.cta?.buttonText, 'Jetzt Kontakt aufnehmen')}
     ctaButtonHref={translatePath('/kontakt/')}
   />
 </Base>

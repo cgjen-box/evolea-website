@@ -10,45 +10,86 @@ const lang = getLangFromUrl(Astro.url);
 const translatePath = useTranslatedPath(lang);
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 
+// Get CMS content
+const pageEntry = await getEntry('pages', 'mini-projekte');
+const page = pageEntry?.data;
+
 // Get site images from CMS
 const siteImagesEntry = await getEntry('settings', 'images');
 const siteImages = siteImagesEntry?.data;
 const heroImage = siteImages?.programmeHeroes?.miniProjekte
   ? base + siteImages.programmeHeroes.miniProjekte
   : base + "/images/generated/mini-projekte-hero.png";
+
+// Helper to get bilingual text
+const getText = (obj: { de?: string; en?: string } | undefined, fallback: string = '') => {
+  if (!obj) return fallback;
+  return lang === 'de' ? (obj.de || fallback) : (obj.en || obj.de || fallback);
+};
+
+// Page content with fallbacks
+const hero = page?.hero || {};
+const infoKarten = page?.infoKarten || [];
+const fuerWen = page?.fuerWen || {};
+const besonderheiten = page?.besonderheiten || {};
+const projekte = page?.projekte || {};
+const praktischeInfos = page?.praktischeInfos || {};
+const cta = page?.cta || {};
+
+// Color mappings for projects
+const statusColors: Record<string, string> = {
+  magenta: 'bg-evolea-magenta/20 text-evolea-magenta',
+  green: 'bg-evolea-mint/20 text-evolea-green',
+  orange: 'bg-evolea-orange/20 text-evolea-orange'
+};
+const borderColors: Record<string, string> = {
+  orange: 'border-evolea-orange',
+  purple: 'border-evolea-purple',
+  green: 'border-evolea-green'
+};
+const fromColors: Record<string, string> = {
+  orange: 'from-evolea-orange/10',
+  purple: 'from-evolea-purple/10',
+  green: 'from-evolea-green/10'
+};
+const textColors: Record<string, string> = {
+  orange: 'text-evolea-orange',
+  purple: 'text-evolea-purple',
+  green: 'text-evolea-green'
+};
 ---
 
-<Base title="Mini Projekte" description="Social Skills Gruppe für Kinder im Autismus Spektrum (5-8 Jahre). Stark im Miteinander, spielerisch fürs Leben lernen.">
+<Base title={hero.titel || 'Mini Projekte'} description="Social Skills Gruppe für Kinder im Autismus Spektrum (5-8 Jahre). Stark im Miteinander, spielerisch fürs Leben lernen.">
   <!-- Hero Section -->
   <section class="relative py-20 md:py-28 bg-gradient-to-br from-evolea-orange/10 to-evolea-cream overflow-hidden">
     <FloatingShapes variant="minimal" />
     <div class="container mx-auto max-w-6xl px-4 relative z-10">
       <nav class="mb-8 text-sm text-evolea-text-light">
-        <a href={translatePath('/')} class="hover:text-evolea-purple transition-colors">Startseite</a>
+        <a href={translatePath('/')} class="hover:text-evolea-purple transition-colors">{lang === 'de' ? 'Startseite' : 'Home'}</a>
         <span class="mx-2">/</span>
-        <a href={translatePath('/angebote/')} class="hover:text-evolea-purple transition-colors">Angebote</a>
+        <a href={translatePath('/angebote/')} class="hover:text-evolea-purple transition-colors">{lang === 'de' ? 'Angebote' : 'Programs'}</a>
         <span class="mx-2">/</span>
-        <span class="text-evolea-purple font-medium">Mini Projekte</span>
+        <span class="text-evolea-purple font-medium">{hero.titel || 'Mini Projekte'}</span>
       </nav>
 
       <div class="grid lg:grid-cols-2 gap-12 items-center">
         <div>
           <div class="inline-flex items-center gap-2 bg-evolea-orange/20 text-evolea-orange px-4 py-2 rounded-full text-sm font-medium mb-6">
             <Icon name="palette" size="sm" />
-            <span>Social Skills Gruppe</span>
+            <span>{getText(hero.badge, 'Social Skills Gruppe')}</span>
           </div>
           <h1 class="text-4xl md:text-5xl lg:text-6xl font-display font-bold text-evolea-purple mb-6 leading-tight">
-            Mini Projekte
+            {hero.titel || 'Mini Projekte'}
           </h1>
           <p class="text-xl md:text-2xl text-evolea-text-light mb-4 leading-relaxed">
-            Stark im Miteinander, spielerisch fürs Leben lernen
+            {getText(hero.untertitel, 'Stark im Miteinander, spielerisch fürs Leben lernen')}
           </p>
           <p class="text-lg text-evolea-text-light mb-8">
-            Geschützte Social Skills Gruppen für autistische Kinder ausserhalb der Schule – mit klarer Struktur und sichtbaren Erfolgen.
+            {getText(hero.beschreibung, 'Geschützte Social Skills Gruppen für autistische Kinder ausserhalb der Schule – mit klarer Struktur und sichtbaren Erfolgen.')}
           </p>
           <div class="flex flex-wrap gap-4">
-            <a href="#projekte" class="btn-primary">
-              Aktuelle Projekte
+            <a href={hero.buttonLink || '#projekte'} class="btn-primary">
+              {getText(hero.buttonText, 'Aktuelle Projekte')}
               <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
               </svg>
@@ -58,12 +99,12 @@ const heroImage = siteImages?.programmeHeroes?.miniProjekte
         <div class="relative">
           <img
             src={heroImage}
-            alt="Kinder bei kreativen Projekten"
+            alt={getText(hero.untertitel, 'Kinder bei kreativen Projekten')}
             class="rounded-evolea-lg shadow-elevated w-full object-cover aspect-4/3"
           />
           <div class="absolute -bottom-4 -right-4 bg-white rounded-evolea p-4 shadow-card">
-            <div class="text-3xl font-display font-bold text-evolea-orange">5-8</div>
-            <div class="text-sm text-evolea-text-light">Jahre</div>
+            <div class="text-3xl font-display font-bold text-evolea-orange">{hero.alter || '5-8'}</div>
+            <div class="text-sm text-evolea-text-light">{lang === 'de' ? 'Jahre' : 'Years'}</div>
           </div>
         </div>
       </div>
@@ -74,26 +115,38 @@ const heroImage = siteImages?.programmeHeroes?.miniProjekte
   <section class="py-16 bg-white">
     <div class="container mx-auto max-w-6xl px-4">
       <div class="grid md:grid-cols-4 gap-6">
-        <div class="bg-evolea-cream rounded-evolea-lg p-6 text-center">
-          <div class="flex justify-center mb-3"><Icon name="sparkle" size="lg" /></div>
-          <div class="font-display font-bold text-evolea-purple text-lg">Alter</div>
-          <div class="text-evolea-text-light">5-8 Jahre</div>
-        </div>
-        <div class="bg-evolea-cream rounded-evolea-lg p-6 text-center">
-          <div class="flex justify-center mb-3"><Icon name="clipboard" size="lg" /></div>
-          <div class="font-display font-bold text-evolea-purple text-lg">Wann</div>
-          <div class="text-evolea-text-light">Samstag, alle 2 Wochen</div>
-        </div>
-        <div class="bg-evolea-cream rounded-evolea-lg p-6 text-center">
-          <div class="flex justify-center mb-3"><Icon name="chart" size="lg" /></div>
-          <div class="font-display font-bold text-evolea-purple text-lg">Dauer</div>
-          <div class="text-evolea-text-light">3 Stunden / Halbtag</div>
-        </div>
-        <div class="bg-evolea-cream rounded-evolea-lg p-6 text-center">
-          <div class="flex justify-center mb-3"><Icon name="diamond" size="lg" /></div>
-          <div class="font-display font-bold text-evolea-purple text-lg">Kosten</div>
-          <div class="text-evolea-text-light">CHF 125 / Halbtag</div>
-        </div>
+        {infoKarten.length > 0 ? (
+          infoKarten.map((karte: any) => (
+            <div class="bg-evolea-cream rounded-evolea-lg p-6 text-center">
+              <div class="flex justify-center mb-3"><Icon name={karte.icon || 'sparkle'} size="lg" /></div>
+              <div class="font-display font-bold text-evolea-purple text-lg">{getText(karte.label, '')}</div>
+              <div class="text-evolea-text-light">{getText(karte.wert, '')}</div>
+            </div>
+          ))
+        ) : (
+          <>
+            <div class="bg-evolea-cream rounded-evolea-lg p-6 text-center">
+              <div class="flex justify-center mb-3"><Icon name="sparkle" size="lg" /></div>
+              <div class="font-display font-bold text-evolea-purple text-lg">Alter</div>
+              <div class="text-evolea-text-light">5-8 Jahre</div>
+            </div>
+            <div class="bg-evolea-cream rounded-evolea-lg p-6 text-center">
+              <div class="flex justify-center mb-3"><Icon name="clipboard" size="lg" /></div>
+              <div class="font-display font-bold text-evolea-purple text-lg">Wann</div>
+              <div class="text-evolea-text-light">Samstag, alle 2 Wochen</div>
+            </div>
+            <div class="bg-evolea-cream rounded-evolea-lg p-6 text-center">
+              <div class="flex justify-center mb-3"><Icon name="chart" size="lg" /></div>
+              <div class="font-display font-bold text-evolea-purple text-lg">Dauer</div>
+              <div class="text-evolea-text-light">3 Stunden / Halbtag</div>
+            </div>
+            <div class="bg-evolea-cream rounded-evolea-lg p-6 text-center">
+              <div class="flex justify-center mb-3"><Icon name="diamond" size="lg" /></div>
+              <div class="font-display font-bold text-evolea-purple text-lg">Kosten</div>
+              <div class="text-evolea-text-light">CHF 125 / Halbtag</div>
+            </div>
+          </>
+        )}
       </div>
     </div>
   </section>
@@ -105,141 +158,211 @@ const heroImage = siteImages?.programmeHeroes?.miniProjekte
 
         <h2 class="text-3xl font-display font-bold text-evolea-purple mb-6 flex items-center gap-3">
           <span class="text-evolea-orange">●</span>
-          Für wen ist Mini Projekte?
+          {getText(fuerWen.titel, 'Für wen ist Mini Projekte?')}
         </h2>
         <p class="text-evolea-text-light mb-8 text-lg leading-relaxed">
-          Mini Projekte richtet sich an Kinder im Autismus Spektrum im Alter von <strong>5-8 Jahren</strong>. In unseren geschützten Social Skills Gruppen entwickeln Kinder soziale Kompetenzen durch gemeinsame Projekte – ausserhalb des Schulkontexts.
+          {getText(fuerWen.text, 'Mini Projekte richtet sich an Kinder im Autismus Spektrum im Alter von 5-8 Jahren. In unseren geschützten Social Skills Gruppen entwickeln Kinder soziale Kompetenzen durch gemeinsame Projekte – ausserhalb des Schulkontexts.')}
         </p>
 
         <div class="bg-evolea-orange/10 border-l-4 border-evolea-orange rounded-r-evolea p-6 mb-12">
-          <h3 class="font-display font-bold text-evolea-purple text-xl mb-2">Voraussetzungen für die Teilnahme</h3>
+          <h3 class="font-display font-bold text-evolea-purple text-xl mb-2">{getText(fuerWen.voraussetzungenTitel, 'Voraussetzungen für die Teilnahme')}</h3>
           <ul class="text-evolea-text-light mb-0 space-y-2">
-            <li>✓ Funktionelle Kommunikation</li>
-            <li>✓ Interesse an sozialem Kontakt</li>
-            <li>✓ Kann Anweisungen folgen</li>
-            <li>✓ Altersgerechte Selbstständigkeit</li>
-            <li>✓ Keine selbst- oder fremdverletzenden Verhaltensweisen</li>
+            {fuerWen.voraussetzungen?.length > 0 ? (
+              fuerWen.voraussetzungen.map((v: any) => (
+                <li>✓ {getText(v, '')}</li>
+              ))
+            ) : (
+              <>
+                <li>✓ Funktionelle Kommunikation</li>
+                <li>✓ Interesse an sozialem Kontakt</li>
+                <li>✓ Kann Anweisungen folgen</li>
+                <li>✓ Altersgerechte Selbstständigkeit</li>
+                <li>✓ Keine selbst- oder fremdverletzenden Verhaltensweisen</li>
+              </>
+            )}
           </ul>
         </div>
 
         <h2 class="text-3xl font-display font-bold text-evolea-purple mb-6 flex items-center gap-3">
           <span class="text-evolea-green">●</span>
-          Was macht Mini Projekte besonders?
+          {getText(besonderheiten.titel, 'Was macht Mini Projekte besonders?')}
         </h2>
         <div class="grid md:grid-cols-2 gap-6 mb-12">
-          <div class="bg-white border border-evolea-purple/10 rounded-evolea-lg p-6">
-            <div class="flex justify-center mb-3"><Icon name="target" size="lg" /></div>
-            <h3 class="font-display font-bold text-evolea-purple text-lg mb-2">Sichtbare Erfolge</h3>
-            <p class="text-evolea-text-light mb-0">Jedes Quartal schliesst mit einer Präsentation ab – Erfolge werden für alle sichtbar gemacht.</p>
-          </div>
-          <div class="bg-white border border-evolea-purple/10 rounded-evolea-lg p-6">
-            <div class="flex justify-center mb-3"><Icon name="family" size="lg" /></div>
-            <h3 class="font-display font-bold text-evolea-purple text-lg mb-2">Entlastung für Eltern</h3>
-            <p class="text-evolea-text-light mb-0">Während die Kinder betreut werden, haben Eltern Zeit für sich oder können sich mit anderen Familien vernetzen.</p>
-          </div>
-          <div class="bg-white border border-evolea-purple/10 rounded-evolea-lg p-6">
-            <div class="flex justify-center mb-3"><Icon name="handshake" size="lg" /></div>
-            <h3 class="font-display font-bold text-evolea-purple text-lg mb-2">Soziales Lernen</h3>
-            <p class="text-evolea-text-light mb-0">Teamarbeit, Kommunikation und Kooperation werden spielerisch in echten Projekten geübt.</p>
-          </div>
-          <div class="bg-white border border-evolea-purple/10 rounded-evolea-lg p-6">
-            <div class="flex justify-center mb-3"><Icon name="sparkle" size="lg" /></div>
-            <h3 class="font-display font-bold text-evolea-purple text-lg mb-2">Abschlussfeier</h3>
-            <p class="text-evolea-text-light mb-0">Der letzte Halbtag jedes Quartals ist eine Feier – kostenlos von EVOLEA organisiert.</p>
-          </div>
+          {besonderheiten.features?.length > 0 ? (
+            besonderheiten.features.map((feature: any) => (
+              <div class="bg-white border border-evolea-purple/10 rounded-evolea-lg p-6">
+                <div class="flex justify-center mb-3"><Icon name={feature.icon || 'sparkle'} size="lg" /></div>
+                <h3 class="font-display font-bold text-evolea-purple text-lg mb-2">{getText(feature.titel, '')}</h3>
+                <p class="text-evolea-text-light mb-0">{getText(feature.text, '')}</p>
+              </div>
+            ))
+          ) : (
+            <>
+              <div class="bg-white border border-evolea-purple/10 rounded-evolea-lg p-6">
+                <div class="flex justify-center mb-3"><Icon name="target" size="lg" /></div>
+                <h3 class="font-display font-bold text-evolea-purple text-lg mb-2">Sichtbare Erfolge</h3>
+                <p class="text-evolea-text-light mb-0">Jedes Quartal schliesst mit einer Präsentation ab – Erfolge werden für alle sichtbar gemacht.</p>
+              </div>
+              <div class="bg-white border border-evolea-purple/10 rounded-evolea-lg p-6">
+                <div class="flex justify-center mb-3"><Icon name="family" size="lg" /></div>
+                <h3 class="font-display font-bold text-evolea-purple text-lg mb-2">Entlastung für Eltern</h3>
+                <p class="text-evolea-text-light mb-0">Während die Kinder betreut werden, haben Eltern Zeit für sich oder können sich mit anderen Familien vernetzen.</p>
+              </div>
+              <div class="bg-white border border-evolea-purple/10 rounded-evolea-lg p-6">
+                <div class="flex justify-center mb-3"><Icon name="handshake" size="lg" /></div>
+                <h3 class="font-display font-bold text-evolea-purple text-lg mb-2">Soziales Lernen</h3>
+                <p class="text-evolea-text-light mb-0">Teamarbeit, Kommunikation und Kooperation werden spielerisch in echten Projekten geübt.</p>
+              </div>
+              <div class="bg-white border border-evolea-purple/10 rounded-evolea-lg p-6">
+                <div class="flex justify-center mb-3"><Icon name="sparkle" size="lg" /></div>
+                <h3 class="font-display font-bold text-evolea-purple text-lg mb-2">Abschlussfeier</h3>
+                <p class="text-evolea-text-light mb-0">Der letzte Halbtag jedes Quartals ist eine Feier – kostenlos von EVOLEA organisiert.</p>
+              </div>
+            </>
+          )}
         </div>
 
         <h2 class="text-3xl font-display font-bold text-evolea-purple mb-6 flex items-center gap-3" id="projekte">
           <span class="text-evolea-sky">●</span>
-          Aktuelle & kommende Projekte
+          {getText(projekte.titel, 'Aktuelle & kommende Projekte')}
         </h2>
 
         <div class="space-y-6 mb-12">
-          <a href={translatePath('/angebote/mini-projekte/mini-restaurant/')} class="block bg-gradient-to-r from-evolea-orange/10 to-transparent rounded-evolea-lg p-6 border-l-4 border-evolea-orange hover:shadow-card transition-all group">
-            <div class="flex items-center justify-between mb-2">
-              <div class="flex items-center gap-2 text-evolea-orange font-medium text-sm">
-                <Icon name="heart" size="sm" /> Oktober - Dezember 2025
-              </div>
-              <span class="text-xs bg-evolea-magenta/20 text-evolea-magenta px-2 py-1 rounded-full">Ausgebucht</span>
-            </div>
-            <h3 class="font-display font-bold text-evolea-purple text-xl mb-2 group-hover:text-evolea-purple-light transition-colors">Mini Restaurant</h3>
-            <p class="text-evolea-text-light mb-3">Kochen, Servieren, Teamwork – die Kinder gestalten und betreiben ihr eigenes kleines Restaurant.</p>
-            <span class="text-evolea-orange font-medium text-sm flex items-center gap-1 group-hover:gap-2 transition-all">
-              Mehr erfahren
-              <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
-              </svg>
-            </span>
-          </a>
+          {projekte.liste?.length > 0 ? (
+            projekte.liste.map((projekt: any) => (
+              projekt.link && projekt.link.length > 0 ? (
+                <a href={translatePath(projekt.link)} class={`block bg-gradient-to-r ${fromColors[projekt.farbe] || 'from-evolea-orange/10'} to-transparent rounded-evolea-lg p-6 border-l-4 ${borderColors[projekt.farbe] || 'border-evolea-orange'} hover:shadow-card transition-all group`}>
+                  <div class="flex items-center justify-between mb-2">
+                    <div class={`flex items-center gap-2 ${textColors[projekt.farbe] || 'text-evolea-orange'} font-medium text-sm`}>
+                      <Icon name="heart" size="sm" /> {getText(projekt.zeitraum, '')}
+                    </div>
+                    <span class={`text-xs ${statusColors[projekt.statusFarbe] || 'bg-evolea-mint/20 text-evolea-green'} px-2 py-1 rounded-full`}>{getText(projekt.status, '')}</span>
+                  </div>
+                  <h3 class="font-display font-bold text-evolea-purple text-xl mb-2 group-hover:text-evolea-purple-light transition-colors">{projekt.titel}</h3>
+                  <p class="text-evolea-text-light mb-3">{getText(projekt.beschreibung, '')}</p>
+                  <span class={`${textColors[projekt.farbe] || 'text-evolea-orange'} font-medium text-sm flex items-center gap-1 group-hover:gap-2 transition-all`}>
+                    {lang === 'de' ? 'Mehr erfahren' : 'Learn more'}
+                    <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                    </svg>
+                  </span>
+                </a>
+              ) : (
+                <div class={`bg-gradient-to-r ${fromColors[projekt.farbe] || 'from-evolea-green/10'} to-transparent rounded-evolea-lg p-6 border-l-4 ${borderColors[projekt.farbe] || 'border-evolea-green'}`}>
+                  <div class="flex items-center justify-between mb-2">
+                    <div class={`flex items-center gap-2 ${textColors[projekt.farbe] || 'text-evolea-green'} font-medium text-sm`}>
+                      <Icon name="heart" size="sm" /> {getText(projekt.zeitraum, '')}
+                    </div>
+                    <span class={`text-xs ${statusColors[projekt.statusFarbe] || 'bg-evolea-mint/20 text-evolea-green'} px-2 py-1 rounded-full`}>{getText(projekt.status, '')}</span>
+                  </div>
+                  <h3 class="font-display font-bold text-evolea-purple text-xl mb-2">{projekt.titel}</h3>
+                  <p class="text-evolea-text-light mb-0">{getText(projekt.beschreibung, '')}</p>
+                </div>
+              )
+            ))
+          ) : (
+            <>
+              <a href={translatePath('/angebote/mini-projekte/mini-restaurant/')} class="block bg-gradient-to-r from-evolea-orange/10 to-transparent rounded-evolea-lg p-6 border-l-4 border-evolea-orange hover:shadow-card transition-all group">
+                <div class="flex items-center justify-between mb-2">
+                  <div class="flex items-center gap-2 text-evolea-orange font-medium text-sm">
+                    <Icon name="heart" size="sm" /> Oktober - Dezember 2025
+                  </div>
+                  <span class="text-xs bg-evolea-magenta/20 text-evolea-magenta px-2 py-1 rounded-full">Ausgebucht</span>
+                </div>
+                <h3 class="font-display font-bold text-evolea-purple text-xl mb-2 group-hover:text-evolea-purple-light transition-colors">Mini Restaurant</h3>
+                <p class="text-evolea-text-light mb-3">Kochen, Servieren, Teamwork – die Kinder gestalten und betreiben ihr eigenes kleines Restaurant.</p>
+                <span class="text-evolea-orange font-medium text-sm flex items-center gap-1 group-hover:gap-2 transition-all">
+                  Mehr erfahren
+                  <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                  </svg>
+                </span>
+              </a>
 
-          <a href={translatePath('/angebote/mini-museum/')} class="block bg-gradient-to-r from-evolea-purple/10 to-transparent rounded-evolea-lg p-6 border-l-4 border-evolea-purple hover:shadow-card transition-all group">
-            <div class="flex items-center justify-between mb-2">
-              <div class="flex items-center gap-2 text-evolea-purple font-medium text-sm">
-                <Icon name="palette" size="sm" /> Februar – April 2026
-              </div>
-              <span class="text-xs bg-evolea-mint/20 text-evolea-green px-2 py-1 rounded-full">Anmeldung offen</span>
-            </div>
-            <h3 class="font-display font-bold text-evolea-purple text-xl mb-2 group-hover:text-evolea-purple-light transition-colors">Mini Museum</h3>
-            <p class="text-evolea-text-light mb-3">Kunst, Kreativität und Ausdruck – gemeinsam wird ein eigenes Museum gestaltet und eröffnet.</p>
-            <span class="text-evolea-purple font-medium text-sm flex items-center gap-1 group-hover:gap-2 transition-all">
-              Mehr erfahren
-              <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
-              </svg>
-            </span>
-          </a>
+              <a href={translatePath('/angebote/mini-museum/')} class="block bg-gradient-to-r from-evolea-purple/10 to-transparent rounded-evolea-lg p-6 border-l-4 border-evolea-purple hover:shadow-card transition-all group">
+                <div class="flex items-center justify-between mb-2">
+                  <div class="flex items-center gap-2 text-evolea-purple font-medium text-sm">
+                    <Icon name="palette" size="sm" /> Februar – April 2026
+                  </div>
+                  <span class="text-xs bg-evolea-mint/20 text-evolea-green px-2 py-1 rounded-full">Anmeldung offen</span>
+                </div>
+                <h3 class="font-display font-bold text-evolea-purple text-xl mb-2 group-hover:text-evolea-purple-light transition-colors">Mini Museum</h3>
+                <p class="text-evolea-text-light mb-3">Kunst, Kreativität und Ausdruck – gemeinsam wird ein eigenes Museum gestaltet und eröffnet.</p>
+                <span class="text-evolea-purple font-medium text-sm flex items-center gap-1 group-hover:gap-2 transition-all">
+                  Mehr erfahren
+                  <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                  </svg>
+                </span>
+              </a>
 
-          <div class="bg-gradient-to-r from-evolea-green/10 to-transparent rounded-evolea-lg p-6 border-l-4 border-evolea-green">
-            <div class="flex items-center gap-2 text-evolea-green font-medium text-sm mb-2">
-              <Icon name="leaf" size="sm" /> Juli 2026
-            </div>
-            <h3 class="font-display font-bold text-evolea-purple text-xl mb-2">Mini Abenteuercamp</h3>
-            <p class="text-evolea-text-light mb-0">Abenteuer, Sport und Natur – ein Sommerprojekt voller Bewegung und Entdeckungen.</p>
-          </div>
+              <div class="bg-gradient-to-r from-evolea-green/10 to-transparent rounded-evolea-lg p-6 border-l-4 border-evolea-green">
+                <div class="flex items-center gap-2 text-evolea-green font-medium text-sm mb-2">
+                  <Icon name="leaf" size="sm" /> Juli 2026
+                </div>
+                <h3 class="font-display font-bold text-evolea-purple text-xl mb-2">Mini Abenteuercamp</h3>
+                <p class="text-evolea-text-light mb-0">Abenteuer, Sport und Natur – ein Sommerprojekt voller Bewegung und Entdeckungen.</p>
+              </div>
+            </>
+          )}
         </div>
 
         <h2 class="text-3xl font-display font-bold text-evolea-purple mb-6 flex items-center gap-3">
           <span class="text-evolea-coral">●</span>
-          Praktische Informationen
+          {getText(praktischeInfos.titel, 'Praktische Informationen')}
         </h2>
 
         <div class="bg-evolea-purple/5 rounded-evolea-lg p-8 mb-12">
           <div class="space-y-4">
-            <div class="flex items-start gap-3">
-              <Icon name="calendar" size="sm" />
-              <div>
-                <strong class="text-evolea-purple">Ablauf</strong>
-                <p class="text-evolea-text-light mb-0">3-Monats-Quartale mit 6 Halbtagen (alle 2 Wochen samstags, ca. 3 Stunden)</p>
-              </div>
-            </div>
-            <div class="flex items-start gap-3">
-              <Icon name="people" size="sm" />
-              <div>
-                <strong class="text-evolea-purple">Gruppengrösse</strong>
-                <p class="text-evolea-text-light mb-0">4-8 Kinder pro Gruppe</p>
-              </div>
-            </div>
-            <div class="flex items-start gap-3">
-              <Icon name="location" size="sm" />
-              <div>
-                <strong class="text-evolea-purple">Standort</strong>
-                <p class="text-evolea-text-light mb-0">Stapferstrasse 10, 8006 Zürich (Nähe Seilbahn Rigiblick)</p>
-              </div>
-            </div>
-            <div class="flex items-start gap-3">
-              <Icon name="money" size="sm" />
-              <div>
-                <strong class="text-evolea-purple">Kosten</strong>
-                <p class="text-evolea-text-light mb-0">CHF 125 pro Halbtag (Abschlussfeier kostenlos)</p>
-              </div>
-            </div>
-            <div class="flex items-start gap-3">
-              <Icon name="mail" size="sm" />
-              <div>
-                <strong class="text-evolea-purple">Kontakt</strong>
-                <p class="text-evolea-text-light mb-0">hello@evolea.ch</p>
-              </div>
-            </div>
+            {praktischeInfos.infos?.length > 0 ? (
+              praktischeInfos.infos.map((info: any) => (
+                <div class="flex items-start gap-3">
+                  <Icon name={info.icon || 'calendar'} size="sm" />
+                  <div>
+                    <strong class="text-evolea-purple">{getText(info.label, '')}</strong>
+                    <p class="text-evolea-text-light mb-0">{getText(info.wert, '')}</p>
+                  </div>
+                </div>
+              ))
+            ) : (
+              <>
+                <div class="flex items-start gap-3">
+                  <Icon name="calendar" size="sm" />
+                  <div>
+                    <strong class="text-evolea-purple">Ablauf</strong>
+                    <p class="text-evolea-text-light mb-0">3-Monats-Quartale mit 6 Halbtagen (alle 2 Wochen samstags, ca. 3 Stunden)</p>
+                  </div>
+                </div>
+                <div class="flex items-start gap-3">
+                  <Icon name="people" size="sm" />
+                  <div>
+                    <strong class="text-evolea-purple">Gruppengrösse</strong>
+                    <p class="text-evolea-text-light mb-0">4-8 Kinder pro Gruppe</p>
+                  </div>
+                </div>
+                <div class="flex items-start gap-3">
+                  <Icon name="location" size="sm" />
+                  <div>
+                    <strong class="text-evolea-purple">Standort</strong>
+                    <p class="text-evolea-text-light mb-0">Stapferstrasse 10, 8006 Zürich (Nähe Seilbahn Rigiblick)</p>
+                  </div>
+                </div>
+                <div class="flex items-start gap-3">
+                  <Icon name="money" size="sm" />
+                  <div>
+                    <strong class="text-evolea-purple">Kosten</strong>
+                    <p class="text-evolea-text-light mb-0">CHF 125 pro Halbtag (Abschlussfeier kostenlos)</p>
+                  </div>
+                </div>
+                <div class="flex items-start gap-3">
+                  <Icon name="mail" size="sm" />
+                  <div>
+                    <strong class="text-evolea-purple">Kontakt</strong>
+                    <p class="text-evolea-text-light mb-0">hello@evolea.ch</p>
+                  </div>
+                </div>
+              </>
+            )}
           </div>
         </div>
 
@@ -249,9 +372,9 @@ const heroImage = siteImages?.programmeHeroes?.miniProjekte
 
   <!-- CTA Section -->
   <GradientCTA
-    title="Interesse geweckt?"
-    description="Vereinbaren Sie ein kostenloses Kennenlerngespräch."
-    buttonText="Jetzt Kontakt aufnehmen"
+    title={getText(cta.titel, 'Interesse geweckt?')}
+    description={getText(cta.beschreibung, 'Vereinbaren Sie ein kostenloses Kennenlerngespräch.')}
+    buttonText={getText(cta.buttonText, 'Jetzt Kontakt aufnehmen')}
     buttonHref={translatePath('/kontakt/')}
     variant="sunset"
   />

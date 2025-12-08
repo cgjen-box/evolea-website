@@ -10,60 +10,79 @@ const lang = getLangFromUrl(Astro.url);
 const translatePath = useTranslatedPath(lang);
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 
+// Get CMS content
+const pageEntry = await getEntry('pages', 'mini-garten');
+const page = pageEntry?.data;
+
 // Get site images from CMS
 const siteImagesEntry = await getEntry('settings', 'images');
 const siteImages = siteImagesEntry?.data;
 const heroImage = siteImages?.programmeHeroes?.miniGarten
   ? base + siteImages.programmeHeroes.miniGarten
   : base + "/images/generated/mini-garten-hero.png";
+
+// Helper to get bilingual text
+const getText = (obj: { de?: string; en?: string } | undefined, fallback: string = '') => {
+  if (!obj) return fallback;
+  return lang === 'de' ? (obj.de || fallback) : (obj.en || obj.de || fallback);
+};
+
+// Page content with fallbacks
+const hero = page?.hero || {};
+const infoKarten = page?.infoKarten || [];
+const fuerWen = page?.fuerWen || {};
+const typischerTag = page?.typischerTag || {};
+const lernziele = page?.lernziele || {};
+const anmeldung = page?.anmeldung || {};
+const cta = page?.cta || {};
 ---
 
-<Base title="Mini Garten" description="Gruppensetting zur Vorbereitung für den Kindergarten für Kinder im Autismus Spektrum (3-6 Jahre) in Zürich.">
+<Base title={hero.titel || 'Mini Garten'} description={getText(hero.untertitel, 'Gruppensetting zur Vorbereitung für den Kindergarten für Kinder im Autismus Spektrum (3-6 Jahre) in Zürich.')}>
   <!-- Hero Section -->
   <section class="relative py-20 md:py-28 bg-gradient-to-br from-evolea-green/10 to-evolea-cream overflow-hidden">
     <FloatingShapes variant="minimal" />
     <div class="container mx-auto max-w-6xl px-4 relative z-10">
       <nav class="mb-8 text-sm text-evolea-text-light">
-        <a href={translatePath('/')} class="hover:text-evolea-purple transition-colors">Startseite</a>
+        <a href={translatePath('/')} class="hover:text-evolea-purple transition-colors">{lang === 'de' ? 'Startseite' : 'Home'}</a>
         <span class="mx-2">/</span>
-        <a href={translatePath('/angebote/')} class="hover:text-evolea-purple transition-colors">Angebote</a>
+        <a href={translatePath('/angebote/')} class="hover:text-evolea-purple transition-colors">{lang === 'de' ? 'Angebote' : 'Programs'}</a>
         <span class="mx-2">/</span>
-        <span class="text-evolea-purple font-medium">Mini Garten</span>
+        <span class="text-evolea-purple font-medium">{hero.titel || 'Mini Garten'}</span>
       </nav>
 
       <div class="grid lg:grid-cols-2 gap-12 items-center">
         <div>
           <div class="inline-flex items-center gap-2 bg-evolea-green/20 text-evolea-green px-4 py-2 rounded-full text-sm font-medium mb-6">
             <Icon name="sprout" size="sm" />
-            <span>Kindergartenvorbereitung</span>
+            <span>{getText(hero.badge, 'Kindergartenvorbereitung')}</span>
           </div>
           <h1 class="text-4xl md:text-5xl lg:text-6xl font-display font-bold text-evolea-purple mb-6 leading-tight">
-            Mini Garten
+            {hero.titel || 'Mini Garten'}
           </h1>
           <p class="text-xl md:text-2xl text-evolea-text-light mb-8 leading-relaxed">
-            Gruppensetting zur Vorbereitung für den Kindergarten
+            {getText(hero.untertitel, 'Gruppensetting zur Vorbereitung für den Kindergarten')}
           </p>
           <div class="flex flex-wrap gap-4">
-            <a href="#anmeldung" class="btn-primary">
-              Jetzt anmelden
+            <a href={hero.buttonLink || '#anmeldung'} class="btn-primary">
+              {getText(hero.buttonText, 'Jetzt anmelden')}
               <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
               </svg>
             </a>
-            <a href={translatePath('/kontakt/')} class="btn-secondary">
-              Fragen? Kontaktieren Sie uns
+            <a href={hero.zweitButtonLink || translatePath('/kontakt/')} class="btn-secondary">
+              {getText(hero.zweitButtonText, 'Fragen? Kontaktieren Sie uns')}
             </a>
           </div>
         </div>
         <div class="relative">
           <img
             src={heroImage}
-            alt="Kinder lernen spielerisch im Garten"
+            alt={getText(hero.untertitel, 'Kinder lernen spielerisch im Garten')}
             class="rounded-evolea-lg shadow-elevated w-full object-cover aspect-4/3"
           />
           <div class="absolute -bottom-4 -left-4 bg-white rounded-evolea p-4 shadow-card">
-            <div class="text-3xl font-display font-bold text-evolea-green">3-6</div>
-            <div class="text-sm text-evolea-text-light">Jahre</div>
+            <div class="text-3xl font-display font-bold text-evolea-green">{hero.alter || '3-6'}</div>
+            <div class="text-sm text-evolea-text-light">{lang === 'de' ? 'Jahre' : 'Years'}</div>
           </div>
         </div>
       </div>
@@ -74,26 +93,38 @@ const heroImage = siteImages?.programmeHeroes?.miniGarten
   <section class="py-16 bg-white">
     <div class="container mx-auto max-w-6xl px-4">
       <div class="grid md:grid-cols-4 gap-6">
-        <div class="bg-evolea-cream rounded-evolea-lg p-6 text-center">
-          <div class="flex justify-center mb-3"><Icon name="sparkle" size="lg" /></div>
-          <div class="font-display font-bold text-evolea-purple text-lg">Alter</div>
-          <div class="text-evolea-text-light">3-6 Jahre</div>
-        </div>
-        <div class="bg-evolea-cream rounded-evolea-lg p-6 text-center">
-          <div class="flex justify-center mb-3"><Icon name="people" size="lg" /></div>
-          <div class="font-display font-bold text-evolea-purple text-lg">Gruppengrösse</div>
-          <div class="text-evolea-text-light">4 + 2 Kinder</div>
-        </div>
-        <div class="bg-evolea-cream rounded-evolea-lg p-6 text-center">
-          <div class="flex justify-center mb-3"><Icon name="clipboard" size="lg" /></div>
-          <div class="font-display font-bold text-evolea-purple text-lg">Wann</div>
-          <div class="text-evolea-text-light">Montag 13:30-16:30</div>
-        </div>
-        <div class="bg-evolea-cream rounded-evolea-lg p-6 text-center">
-          <div class="flex justify-center mb-3"><Icon name="target" size="lg" /></div>
-          <div class="font-display font-bold text-evolea-purple text-lg">Wo</div>
-          <div class="text-evolea-text-light">Zürich</div>
-        </div>
+        {infoKarten.length > 0 ? (
+          infoKarten.map((karte: any) => (
+            <div class="bg-evolea-cream rounded-evolea-lg p-6 text-center">
+              <div class="flex justify-center mb-3"><Icon name={karte.icon || 'sparkle'} size="lg" /></div>
+              <div class="font-display font-bold text-evolea-purple text-lg">{getText(karte.label, '')}</div>
+              <div class="text-evolea-text-light">{getText(karte.wert, '')}</div>
+            </div>
+          ))
+        ) : (
+          <>
+            <div class="bg-evolea-cream rounded-evolea-lg p-6 text-center">
+              <div class="flex justify-center mb-3"><Icon name="sparkle" size="lg" /></div>
+              <div class="font-display font-bold text-evolea-purple text-lg">Alter</div>
+              <div class="text-evolea-text-light">3-6 Jahre</div>
+            </div>
+            <div class="bg-evolea-cream rounded-evolea-lg p-6 text-center">
+              <div class="flex justify-center mb-3"><Icon name="people" size="lg" /></div>
+              <div class="font-display font-bold text-evolea-purple text-lg">Gruppengrösse</div>
+              <div class="text-evolea-text-light">4 + 2 Kinder</div>
+            </div>
+            <div class="bg-evolea-cream rounded-evolea-lg p-6 text-center">
+              <div class="flex justify-center mb-3"><Icon name="clipboard" size="lg" /></div>
+              <div class="font-display font-bold text-evolea-purple text-lg">Wann</div>
+              <div class="text-evolea-text-light">Montag 13:30-16:30</div>
+            </div>
+            <div class="bg-evolea-cream rounded-evolea-lg p-6 text-center">
+              <div class="flex justify-center mb-3"><Icon name="target" size="lg" /></div>
+              <div class="font-display font-bold text-evolea-purple text-lg">Wo</div>
+              <div class="text-evolea-text-light">Zürich</div>
+            </div>
+          </>
+        )}
       </div>
     </div>
   </section>
@@ -105,127 +136,163 @@ const heroImage = siteImages?.programmeHeroes?.miniGarten
 
         <h2 class="text-3xl font-display font-bold text-evolea-purple mb-6 flex items-center gap-3">
           <span class="text-evolea-green">●</span>
-          Für wen ist Mini Garten?
+          {getText(fuerWen.titel, 'Für wen ist Mini Garten?')}
         </h2>
         <p class="text-evolea-text-light mb-8 text-lg leading-relaxed">
-          Mini Garten richtet sich an Kinder im Autismus Spektrum im Alter von <strong>3-6 Jahren</strong>, die sich auf den Kindergarten vorbereiten. Auch neurotypische Kinder sind herzlich willkommen und bereichern die Gruppe durch natürliche soziale Interaktionen.
+          {getText(fuerWen.text, 'Mini Garten richtet sich an Kinder im Autismus Spektrum im Alter von 3-6 Jahren, die sich auf den Kindergarten vorbereiten. Auch neurotypische Kinder sind herzlich willkommen und bereichern die Gruppe durch natürliche soziale Interaktionen.')}
         </p>
 
         <div class="bg-evolea-green/10 border-l-4 border-evolea-green rounded-r-evolea p-6 mb-12">
-          <h3 class="font-display font-bold text-evolea-purple text-xl mb-2">Inklusive Gruppenstruktur</h3>
+          <h3 class="font-display font-bold text-evolea-purple text-xl mb-2">{getText(fuerWen.highlightTitel, 'Inklusive Gruppenstruktur')}</h3>
           <p class="text-evolea-text-light mb-0">
-            <strong>4 Kinder im Spektrum + 2 neurotypische Kinder + 2 Fachpersonen</strong> – diese bewährte Zusammensetzung ermöglicht intensive Betreuung und natürliche Peer-Interaktionen.
+            {getText(fuerWen.highlightText, '4 Kinder im Spektrum + 2 neurotypische Kinder + 2 Fachpersonen – diese bewährte Zusammensetzung ermöglicht intensive Betreuung und natürliche Peer-Interaktionen.')}
           </p>
         </div>
 
         <h2 class="text-3xl font-display font-bold text-evolea-purple mb-6 flex items-center gap-3">
           <span class="text-evolea-orange">●</span>
-          Ein typischer Nachmittag
+          {getText(typischerTag.titel, 'Ein typischer Nachmittag')}
         </h2>
         <p class="text-evolea-text-light mb-6 text-lg leading-relaxed">
-          Unsere Nachmittage sind bewusst strukturiert und ahmen den Kindergartenalltag nach. Mit visuellen Ablaufplänen und klaren Routinen schaffen wir Sicherheit und Vorhersehbarkeit.
+          {getText(typischerTag.text, 'Unsere Nachmittage sind bewusst strukturiert und ahmen den Kindergartenalltag nach. Mit visuellen Ablaufplänen und klaren Routinen schaffen wir Sicherheit und Vorhersehbarkeit.')}
         </p>
 
         <div class="grid md:grid-cols-2 gap-4 mb-12">
-          <div class="bg-white border border-evolea-purple/10 rounded-evolea p-4 flex items-center gap-4">
-            <Icon name="handshake" size="md" />
-            <span class="text-evolea-text">Begrüssungskreis</span>
-          </div>
-          <div class="bg-white border border-evolea-purple/10 rounded-evolea p-4 flex items-center gap-4">
-            <Icon name="clipboard" size="md" />
-            <span class="text-evolea-text">Tischaktivitäten</span>
-          </div>
-          <div class="bg-white border border-evolea-purple/10 rounded-evolea p-4 flex items-center gap-4">
-            <Icon name="gamepad" size="md" />
-            <span class="text-evolea-text">Gruppenspiele</span>
-          </div>
-          <div class="bg-white border border-evolea-purple/10 rounded-evolea p-4 flex items-center gap-4">
-            <Icon name="book" size="md" />
-            <span class="text-evolea-text">Geschichtenzeit</span>
-          </div>
-          <div class="bg-white border border-evolea-purple/10 rounded-evolea p-4 flex items-center gap-4">
-            <Icon name="palette" size="md" />
-            <span class="text-evolea-text">Basteln</span>
-          </div>
-          <div class="bg-white border border-evolea-purple/10 rounded-evolea p-4 flex items-center gap-4">
-            <Icon name="sparkle" size="md" />
-            <span class="text-evolea-text">Freies Spiel</span>
-          </div>
+          {typischerTag.aktivitaeten?.length > 0 ? (
+            typischerTag.aktivitaeten.map((aktivitaet: any) => (
+              <div class="bg-white border border-evolea-purple/10 rounded-evolea p-4 flex items-center gap-4">
+                <Icon name={aktivitaet.icon || 'sparkle'} size="md" />
+                <span class="text-evolea-text">{getText(aktivitaet.name, '')}</span>
+              </div>
+            ))
+          ) : (
+            <>
+              <div class="bg-white border border-evolea-purple/10 rounded-evolea p-4 flex items-center gap-4">
+                <Icon name="handshake" size="md" />
+                <span class="text-evolea-text">Begrüssungskreis</span>
+              </div>
+              <div class="bg-white border border-evolea-purple/10 rounded-evolea p-4 flex items-center gap-4">
+                <Icon name="clipboard" size="md" />
+                <span class="text-evolea-text">Tischaktivitäten</span>
+              </div>
+              <div class="bg-white border border-evolea-purple/10 rounded-evolea p-4 flex items-center gap-4">
+                <Icon name="gamepad" size="md" />
+                <span class="text-evolea-text">Gruppenspiele</span>
+              </div>
+              <div class="bg-white border border-evolea-purple/10 rounded-evolea p-4 flex items-center gap-4">
+                <Icon name="book" size="md" />
+                <span class="text-evolea-text">Geschichtenzeit</span>
+              </div>
+              <div class="bg-white border border-evolea-purple/10 rounded-evolea p-4 flex items-center gap-4">
+                <Icon name="palette" size="md" />
+                <span class="text-evolea-text">Basteln</span>
+              </div>
+              <div class="bg-white border border-evolea-purple/10 rounded-evolea p-4 flex items-center gap-4">
+                <Icon name="sparkle" size="md" />
+                <span class="text-evolea-text">Freies Spiel</span>
+              </div>
+            </>
+          )}
         </div>
 
         <h2 class="text-3xl font-display font-bold text-evolea-purple mb-6 flex items-center gap-3">
           <span class="text-evolea-sky">●</span>
-          Lernziele
+          {getText(lernziele.titel, 'Lernziele')}
         </h2>
         <p class="text-evolea-text-light mb-6 text-lg leading-relaxed">
-          Gemeinsam mit den Eltern entwickeln wir individuelle Lernziele für jedes Kind. Typische Bereiche sind:
+          {getText(lernziele.text, 'Gemeinsam mit den Eltern entwickeln wir individuelle Lernziele für jedes Kind. Typische Bereiche sind:')}
         </p>
         <ul class="space-y-3 mb-12">
-          <li class="flex items-start gap-3 text-evolea-text-light">
-            <span class="text-evolea-green mt-1">✓</span>
-            <span><strong>Kommunikation</strong> – Wünsche ausdrücken, auf Ansprache reagieren</span>
-          </li>
-          <li class="flex items-start gap-3 text-evolea-text-light">
-            <span class="text-evolea-green mt-1">✓</span>
-            <span><strong>Instruktionen folgen</strong> – Gruppenanweisungen verstehen und umsetzen</span>
-          </li>
-          <li class="flex items-start gap-3 text-evolea-text-light">
-            <span class="text-evolea-green mt-1">✓</span>
-            <span><strong>Imitation</strong> – Von Gleichaltrigen und Erwachsenen lernen</span>
-          </li>
-          <li class="flex items-start gap-3 text-evolea-text-light">
-            <span class="text-evolea-green mt-1">✓</span>
-            <span><strong>Zuhören</strong> – Aufmerksamkeit in der Gruppe</span>
-          </li>
-          <li class="flex items-start gap-3 text-evolea-text-light">
-            <span class="text-evolea-green mt-1">✓</span>
-            <span><strong>Abwechseln</strong> – Warten und Teilen üben</span>
-          </li>
-          <li class="flex items-start gap-3 text-evolea-text-light">
-            <span class="text-evolea-green mt-1">✓</span>
-            <span><strong>Übergänge</strong> – Flexibel zwischen Aktivitäten wechseln</span>
-          </li>
+          {lernziele.ziele?.length > 0 ? (
+            lernziele.ziele.map((ziel: any) => (
+              <li class="flex items-start gap-3 text-evolea-text-light">
+                <span class="text-evolea-green mt-1">✓</span>
+                <span><strong>{getText(ziel.titel, '')}</strong> – {getText(ziel.beschreibung, '')}</span>
+              </li>
+            ))
+          ) : (
+            <>
+              <li class="flex items-start gap-3 text-evolea-text-light">
+                <span class="text-evolea-green mt-1">✓</span>
+                <span><strong>Kommunikation</strong> – Wünsche ausdrücken, auf Ansprache reagieren</span>
+              </li>
+              <li class="flex items-start gap-3 text-evolea-text-light">
+                <span class="text-evolea-green mt-1">✓</span>
+                <span><strong>Instruktionen folgen</strong> – Gruppenanweisungen verstehen und umsetzen</span>
+              </li>
+              <li class="flex items-start gap-3 text-evolea-text-light">
+                <span class="text-evolea-green mt-1">✓</span>
+                <span><strong>Imitation</strong> – Von Gleichaltrigen und Erwachsenen lernen</span>
+              </li>
+              <li class="flex items-start gap-3 text-evolea-text-light">
+                <span class="text-evolea-green mt-1">✓</span>
+                <span><strong>Zuhören</strong> – Aufmerksamkeit in der Gruppe</span>
+              </li>
+              <li class="flex items-start gap-3 text-evolea-text-light">
+                <span class="text-evolea-green mt-1">✓</span>
+                <span><strong>Abwechseln</strong> – Warten und Teilen üben</span>
+              </li>
+              <li class="flex items-start gap-3 text-evolea-text-light">
+                <span class="text-evolea-green mt-1">✓</span>
+                <span><strong>Übergänge</strong> – Flexibel zwischen Aktivitäten wechseln</span>
+              </li>
+            </>
+          )}
         </ul>
 
         <h2 class="text-3xl font-display font-bold text-evolea-purple mb-6 flex items-center gap-3" id="anmeldung">
           <span class="text-evolea-coral">●</span>
-          Anmeldung & Ablauf
+          {getText(anmeldung.titel, 'Anmeldung & Ablauf')}
         </h2>
         <p class="text-evolea-text-light mb-6 text-lg leading-relaxed">
-          Die Aufnahme erfolgt nach einem persönlichen Kennenlerngespräch und einer Einschätzung Ihres Kindes. Wir nehmen uns Zeit, um sicherzustellen, dass Mini Garten das richtige Angebot für Ihre Familie ist.
+          {getText(anmeldung.text, 'Die Aufnahme erfolgt nach einem persönlichen Kennenlerngespräch und einer Einschätzung Ihres Kindes. Wir nehmen uns Zeit, um sicherzustellen, dass Mini Garten das richtige Angebot für Ihre Familie ist.')}
         </p>
 
         <div class="bg-evolea-purple/5 rounded-evolea-lg p-8 mb-12">
-          <h3 class="font-display font-bold text-evolea-purple text-xl mb-4">Praktische Informationen</h3>
+          <h3 class="font-display font-bold text-evolea-purple text-xl mb-4">{getText(anmeldung.infoTitel, 'Praktische Informationen')}</h3>
           <div class="space-y-4">
-            <div class="flex items-start gap-3">
-              <Icon name="target" size="sm" />
-              <div>
-                <strong class="text-evolea-purple">Standort</strong>
-                <p class="text-evolea-text-light mb-0">Stapferstrasse 10, 8006 Zürich (Nähe Seilbahn Rigiblick)</p>
-              </div>
-            </div>
-            <div class="flex items-start gap-3">
-              <Icon name="clipboard" size="sm" />
-              <div>
-                <strong class="text-evolea-purple">Zeiten</strong>
-                <p class="text-evolea-text-light mb-0">Montagnachmittag, 13:30–16:30 Uhr (ab September, ausserhalb Schulferien)</p>
-              </div>
-            </div>
-            <div class="flex items-start gap-3">
-              <Icon name="running" size="sm" />
-              <div>
-                <strong class="text-evolea-purple">Transport</strong>
-                <p class="text-evolea-text-light mb-0">Unterstützung beim Transport auf Anfrage möglich</p>
-              </div>
-            </div>
-            <div class="flex items-start gap-3">
-              <Icon name="heart" size="sm" />
-              <div>
-                <strong class="text-evolea-purple">Kontakt</strong>
-                <p class="text-evolea-text-light mb-0">hello@evolea.ch</p>
-              </div>
-            </div>
+            {anmeldung.infos?.length > 0 ? (
+              anmeldung.infos.map((info: any) => (
+                <div class="flex items-start gap-3">
+                  <Icon name={info.icon || 'target'} size="sm" />
+                  <div>
+                    <strong class="text-evolea-purple">{getText(info.label, '')}</strong>
+                    <p class="text-evolea-text-light mb-0">{getText(info.wert, '')}</p>
+                  </div>
+                </div>
+              ))
+            ) : (
+              <>
+                <div class="flex items-start gap-3">
+                  <Icon name="target" size="sm" />
+                  <div>
+                    <strong class="text-evolea-purple">Standort</strong>
+                    <p class="text-evolea-text-light mb-0">Stapferstrasse 10, 8006 Zürich (Nähe Seilbahn Rigiblick)</p>
+                  </div>
+                </div>
+                <div class="flex items-start gap-3">
+                  <Icon name="clipboard" size="sm" />
+                  <div>
+                    <strong class="text-evolea-purple">Zeiten</strong>
+                    <p class="text-evolea-text-light mb-0">Montagnachmittag, 13:30–16:30 Uhr (ab September, ausserhalb Schulferien)</p>
+                  </div>
+                </div>
+                <div class="flex items-start gap-3">
+                  <Icon name="running" size="sm" />
+                  <div>
+                    <strong class="text-evolea-purple">Transport</strong>
+                    <p class="text-evolea-text-light mb-0">Unterstützung beim Transport auf Anfrage möglich</p>
+                  </div>
+                </div>
+                <div class="flex items-start gap-3">
+                  <Icon name="heart" size="sm" />
+                  <div>
+                    <strong class="text-evolea-purple">Kontakt</strong>
+                    <p class="text-evolea-text-light mb-0">hello@evolea.ch</p>
+                  </div>
+                </div>
+              </>
+            )}
           </div>
         </div>
 
@@ -235,9 +302,9 @@ const heroImage = siteImages?.programmeHeroes?.miniGarten
 
   <!-- CTA Section -->
   <GradientCTA
-    title="Bereit für den nächsten Schritt?"
-    description="Kontaktieren Sie uns für ein unverbindliches Kennenlerngespräch."
-    buttonText="Jetzt Kontakt aufnehmen"
+    title={getText(cta.titel, 'Bereit für den nächsten Schritt?')}
+    description={getText(cta.beschreibung, 'Kontaktieren Sie uns für ein unverbindliches Kennenlerngespräch.')}
+    buttonText={getText(cta.buttonText, 'Jetzt Kontakt aufnehmen')}
     buttonHref={translatePath('/kontakt/')}
     variant="calm"
   />

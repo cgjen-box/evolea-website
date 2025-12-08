@@ -1,0 +1,183 @@
+{
+  "hero": {
+    "badge": {
+      "de": "Inklusives Sportangebot",
+      "en": "Inclusive Sports Program"
+    },
+    "titel": "Mini Turnen",
+    "untertitel": {
+      "de": "Spiel und Spass stehen im Fokus",
+      "en": "Play and fun are the focus"
+    },
+    "beschreibung": {
+      "de": "Ein sicherer, klar strukturierter Rahmen für Kinder, die in regulären Freizeitangeboten oft überfordert sind. Polysportiv und bewegungsfreudig.",
+      "en": "A safe, clearly structured environment for children who are often overwhelmed in regular recreational activities. Multi-sport and movement-focused."
+    },
+    "buttonText": {
+      "de": "Jetzt anmelden",
+      "en": "Register now"
+    },
+    "buttonLink": "#anmeldung",
+    "zweitButtonText": {
+      "de": "Kostenlose Beratung",
+      "en": "Free consultation"
+    },
+    "zweitButtonLink": "/kontakt/",
+    "alter": "5-8"
+  },
+  "infoKarten": [
+    {
+      "icon": "sparkle",
+      "label": { "de": "Alter", "en": "Age" },
+      "wert": { "de": "5-8 Jahre", "en": "5-8 years" }
+    },
+    {
+      "icon": "clipboard",
+      "label": { "de": "Wann", "en": "When" },
+      "wert": { "de": "Mittwoch 18:00-19:30", "en": "Wednesday 18:00-19:30" }
+    },
+    {
+      "icon": "chart",
+      "label": { "de": "Start", "en": "Start" },
+      "wert": { "de": "Januar 2025", "en": "January 2025" }
+    },
+    {
+      "icon": "target",
+      "label": { "de": "Wo", "en": "Where" },
+      "wert": { "de": "Wallisellen", "en": "Wallisellen" }
+    }
+  ],
+  "fuerWen": {
+    "titel": {
+      "de": "Für wen ist Mini Turnen?",
+      "en": "Who is Mini Turnen for?"
+    },
+    "text": {
+      "de": "Mini Turnen richtet sich an Kinder im Autismus Spektrum oder mit ADHS im Alter von 5-8 Jahren. Das Angebot ist ideal für Kinder, die Freude an Bewegung haben, aber in regulären Sportvereinen oft überfordert sind.",
+      "en": "Mini Turnen is aimed at children on the autism spectrum or with ADHD aged 5-8 years. The program is ideal for children who enjoy movement but are often overwhelmed in regular sports clubs."
+    },
+    "voraussetzungenTitel": {
+      "de": "Voraussetzungen für die Teilnahme",
+      "en": "Prerequisites for participation"
+    },
+    "voraussetzungen": [
+      { "de": "Funktionelle Kommunikation", "en": "Functional communication" },
+      { "de": "Interesse an sozialem Kontakt und Sport", "en": "Interest in social contact and sports" },
+      { "de": "Kann Anweisungen und Regeln folgen", "en": "Can follow instructions and rules" },
+      { "de": "Altersgerechte Selbstständigkeit", "en": "Age-appropriate independence" },
+      { "de": "Keine selbst- oder fremdverletzenden Verhaltensweisen", "en": "No self-harming or aggressive behaviors" }
+    ]
+  },
+  "training": {
+    "titel": {
+      "de": "Was trainieren wir?",
+      "en": "What do we train?"
+    },
+    "text": {
+      "de": "Die Lektionen sind polysportiv gestaltet – wir bieten vielfältige Bewegungserfahrungen in einem strukturierten, sicheren Rahmen.",
+      "en": "The lessons are multi-sport – we offer diverse movement experiences in a structured, safe environment."
+    },
+    "aktivitaeten": [
+      {
+        "icon": "running",
+        "titel": { "de": "Laufen & Rennen", "en": "Running & Racing" },
+        "beschreibung": { "de": "Koordination und Ausdauer", "en": "Coordination and endurance" }
+      },
+      {
+        "icon": "leaf",
+        "titel": { "de": "Klettern", "en": "Climbing" },
+        "beschreibung": { "de": "Kraft und Mut", "en": "Strength and courage" }
+      },
+      {
+        "icon": "target",
+        "titel": { "de": "Balance", "en": "Balance" },
+        "beschreibung": { "de": "Gleichgewicht und Körpergefühl", "en": "Balance and body awareness" }
+      },
+      {
+        "icon": "ball",
+        "titel": { "de": "Ballspiele", "en": "Ball games" },
+        "beschreibung": { "de": "Teamwork und Reaktion", "en": "Teamwork and reaction" }
+      },
+      {
+        "icon": "gymnast",
+        "titel": { "de": "Turnen", "en": "Gymnastics" },
+        "beschreibung": { "de": "Beweglichkeit und Stärke", "en": "Flexibility and strength" }
+      },
+      {
+        "icon": "handshake",
+        "titel": { "de": "Feinmotorik", "en": "Fine motor skills" },
+        "beschreibung": { "de": "Geschicklichkeit", "en": "Dexterity" }
+      }
+    ]
+  },
+  "vorteile": {
+    "titel": {
+      "de": "Warum Mini Turnen?",
+      "en": "Why Mini Turnen?"
+    },
+    "liste": [
+      {
+        "icon": "sparkle",
+        "titel": { "de": "Selbstvertrauen aufbauen", "en": "Build self-confidence" },
+        "text": { "de": "Durch Bewegungserfolge wächst das Selbstbewusstsein.", "en": "Self-confidence grows through movement successes." }
+      },
+      {
+        "icon": "clipboard",
+        "titel": { "de": "Klare Strukturen", "en": "Clear structures" },
+        "text": { "de": "Vorhersehbare Abläufe und Routinen geben Sicherheit.", "en": "Predictable processes and routines provide security." }
+      },
+      {
+        "icon": "heart",
+        "titel": { "de": "Freude an Bewegung", "en": "Joy in movement" },
+        "text": { "de": "Positive Erfahrungen mit Sport und Gemeinschaft.", "en": "Positive experiences with sports and community." }
+      },
+      {
+        "icon": "people",
+        "titel": { "de": "Zugehörigkeit erleben", "en": "Experience belonging" },
+        "text": { "de": "Teil einer Gruppe sein und gemeinsam Spass haben.", "en": "Being part of a group and having fun together." }
+      }
+    ]
+  },
+  "praktischeInfos": {
+    "titel": {
+      "de": "Praktische Informationen",
+      "en": "Practical Information"
+    },
+    "infos": [
+      {
+        "icon": "calendar",
+        "label": { "de": "Zeiten", "en": "Times" },
+        "wert": { "de": "Jeden Mittwoch während der Schulzeit, 18:00–19:30 Uhr (Treffpunkt 15 Min. vorher)", "en": "Every Wednesday during school term, 18:00–19:30 (meeting point 15 min. before)" }
+      },
+      {
+        "icon": "calendar",
+        "label": { "de": "Startdatum", "en": "Start date" },
+        "wert": { "de": "Januar 2025", "en": "January 2025" }
+      },
+      {
+        "icon": "location",
+        "label": { "de": "Standort", "en": "Location" },
+        "wert": { "de": "Turnhalle Unten, Schulhaus Mösli, Im Mösli 2, 8304 Wallisellen", "en": "Lower Gym, Mösli School, Im Mösli 2, 8304 Wallisellen" }
+      },
+      {
+        "icon": "mail",
+        "label": { "de": "Kontakt", "en": "Contact" },
+        "wert": { "de": "hello@evolea.ch – Kostenlose Erstberatung möglich", "en": "hello@evolea.ch – Free initial consultation available" }
+      }
+    ]
+  },
+  "cta": {
+    "titel": {
+      "de": "Bewegung macht Freude!",
+      "en": "Movement brings joy!"
+    },
+    "beschreibung": {
+      "de": "Kontaktieren Sie uns für ein unverbindliches Gespräch.",
+      "en": "Contact us for a no-obligation conversation."
+    },
+    "buttonText": {
+      "de": "Jetzt Kontakt aufnehmen",
+      "en": "Contact us now"
+    }
+  }
+}

@@ -1,0 +1,168 @@
+{
+  "hero": {
+    "badge": {
+      "de": "Kindergartenvorbereitung",
+      "en": "Kindergarten Preparation"
+    },
+    "titel": "Mini Garten",
+    "untertitel": {
+      "de": "Gruppensetting zur Vorbereitung für den Kindergarten",
+      "en": "Group setting for kindergarten preparation"
+    },
+    "buttonText": {
+      "de": "Jetzt anmelden",
+      "en": "Register now"
+    },
+    "buttonLink": "#anmeldung",
+    "zweitButtonText": {
+      "de": "Fragen? Kontaktieren Sie uns",
+      "en": "Questions? Contact us"
+    },
+    "zweitButtonLink": "/kontakt/",
+    "alter": "3-6"
+  },
+  "infoKarten": [
+    {
+      "icon": "sparkle",
+      "label": { "de": "Alter", "en": "Age" },
+      "wert": { "de": "3-6 Jahre", "en": "3-6 years" }
+    },
+    {
+      "icon": "people",
+      "label": { "de": "Gruppengrösse", "en": "Group size" },
+      "wert": { "de": "4 + 2 Kinder", "en": "4 + 2 children" }
+    },
+    {
+      "icon": "clipboard",
+      "label": { "de": "Wann", "en": "When" },
+      "wert": { "de": "Montag 13:30-16:30", "en": "Monday 13:30-16:30" }
+    },
+    {
+      "icon": "target",
+      "label": { "de": "Wo", "en": "Where" },
+      "wert": { "de": "Zürich", "en": "Zurich" }
+    }
+  ],
+  "fuerWen": {
+    "titel": {
+      "de": "Für wen ist Mini Garten?",
+      "en": "Who is Mini Garten for?"
+    },
+    "text": {
+      "de": "Mini Garten richtet sich an Kinder im Autismus Spektrum im Alter von 3-6 Jahren, die sich auf den Kindergarten vorbereiten. Auch neurotypische Kinder sind herzlich willkommen und bereichern die Gruppe durch natürliche soziale Interaktionen.",
+      "en": "Mini Garten is aimed at children on the autism spectrum aged 3-6 years who are preparing for kindergarten. Neurotypical children are also welcome and enrich the group through natural social interactions."
+    },
+    "highlightTitel": {
+      "de": "Inklusive Gruppenstruktur",
+      "en": "Inclusive Group Structure"
+    },
+    "highlightText": {
+      "de": "4 Kinder im Spektrum + 2 neurotypische Kinder + 2 Fachpersonen – diese bewährte Zusammensetzung ermöglicht intensive Betreuung und natürliche Peer-Interaktionen.",
+      "en": "4 children on the spectrum + 2 neurotypical children + 2 specialists – this proven composition enables intensive care and natural peer interactions."
+    }
+  },
+  "typischerTag": {
+    "titel": {
+      "de": "Ein typischer Nachmittag",
+      "en": "A typical afternoon"
+    },
+    "text": {
+      "de": "Unsere Nachmittage sind bewusst strukturiert und ahmen den Kindergartenalltag nach. Mit visuellen Ablaufplänen und klaren Routinen schaffen wir Sicherheit und Vorhersehbarkeit.",
+      "en": "Our afternoons are deliberately structured and mimic kindergarten daily life. With visual schedules and clear routines, we create security and predictability."
+    },
+    "aktivitaeten": [
+      { "icon": "handshake", "name": { "de": "Begrüssungskreis", "en": "Welcome circle" } },
+      { "icon": "clipboard", "name": { "de": "Tischaktivitäten", "en": "Table activities" } },
+      { "icon": "gamepad", "name": { "de": "Gruppenspiele", "en": "Group games" } },
+      { "icon": "book", "name": { "de": "Geschichtenzeit", "en": "Story time" } },
+      { "icon": "palette", "name": { "de": "Basteln", "en": "Crafts" } },
+      { "icon": "sparkle", "name": { "de": "Freies Spiel", "en": "Free play" } }
+    ]
+  },
+  "lernziele": {
+    "titel": {
+      "de": "Lernziele",
+      "en": "Learning Goals"
+    },
+    "text": {
+      "de": "Gemeinsam mit den Eltern entwickeln wir individuelle Lernziele für jedes Kind. Typische Bereiche sind:",
+      "en": "Together with parents, we develop individual learning goals for each child. Typical areas are:"
+    },
+    "ziele": [
+      {
+        "titel": { "de": "Kommunikation", "en": "Communication" },
+        "beschreibung": { "de": "Wünsche ausdrücken, auf Ansprache reagieren", "en": "Expressing wishes, responding to speech" }
+      },
+      {
+        "titel": { "de": "Instruktionen folgen", "en": "Following instructions" },
+        "beschreibung": { "de": "Gruppenanweisungen verstehen und umsetzen", "en": "Understanding and implementing group instructions" }
+      },
+      {
+        "titel": { "de": "Imitation", "en": "Imitation" },
+        "beschreibung": { "de": "Von Gleichaltrigen und Erwachsenen lernen", "en": "Learning from peers and adults" }
+      },
+      {
+        "titel": { "de": "Zuhören", "en": "Listening" },
+        "beschreibung": { "de": "Aufmerksamkeit in der Gruppe", "en": "Attention in the group" }
+      },
+      {
+        "titel": { "de": "Abwechseln", "en": "Taking turns" },
+        "beschreibung": { "de": "Warten und Teilen üben", "en": "Practice waiting and sharing" }
+      },
+      {
+        "titel": { "de": "Übergänge", "en": "Transitions" },
+        "beschreibung": { "de": "Flexibel zwischen Aktivitäten wechseln", "en": "Flexibly switch between activities" }
+      }
+    ]
+  },
+  "anmeldung": {
+    "titel": {
+      "de": "Anmeldung & Ablauf",
+      "en": "Registration & Process"
+    },
+    "text": {
+      "de": "Die Aufnahme erfolgt nach einem persönlichen Kennenlerngespräch und einer Einschätzung Ihres Kindes. Wir nehmen uns Zeit, um sicherzustellen, dass Mini Garten das richtige Angebot für Ihre Familie ist.",
+      "en": "Admission takes place after a personal introductory meeting and an assessment of your child. We take the time to ensure that Mini Garten is the right program for your family."
+    },
+    "infoTitel": {
+      "de": "Praktische Informationen",
+      "en": "Practical Information"
+    },
+    "infos": [
+      {
+        "icon": "target",
+        "label": { "de": "Standort", "en": "Location" },
+        "wert": { "de": "Stapferstrasse 10, 8006 Zürich (Nähe Seilbahn Rigiblick)", "en": "Stapferstrasse 10, 8006 Zurich (near Rigiblick cable car)" }
+      },
+      {
+        "icon": "clipboard",
+        "label": { "de": "Zeiten", "en": "Times" },
+        "wert": { "de": "Montagnachmittag, 13:30–16:30 Uhr (ab September, ausserhalb Schulferien)", "en": "Monday afternoon, 13:30–16:30 (from September, outside school holidays)" }
+      },
+      {
+        "icon": "running",
+        "label": { "de": "Transport", "en": "Transport" },
+        "wert": { "de": "Unterstützung beim Transport auf Anfrage möglich", "en": "Transport support available on request" }
+      },
+      {
+        "icon": "heart",
+        "label": { "de": "Kontakt", "en": "Contact" },
+        "wert": { "de": "hello@evolea.ch", "en": "hello@evolea.ch" }
+      }
+    ]
+  },
+  "cta": {
+    "titel": {
+      "de": "Bereit für den nächsten Schritt?",
+      "en": "Ready for the next step?"
+    },
+    "beschreibung": {
+      "de": "Kontaktieren Sie uns für ein unverbindliches Kennenlerngespräch.",
+      "en": "Contact us for a no-obligation introductory meeting."
+    },
+    "buttonText": {
+      "de": "Jetzt Kontakt aufnehmen",
+      "en": "Contact us now"
+    }
+  }
+}
