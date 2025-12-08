@@ -1,11 +1,225 @@
 import { defineMiddleware, sequence } from 'astro:middleware';
 
+const CLOUDFLARE_DEPLOY_HOOK = 'https://api.cloudflare.com/client/v4/pages/webhooks/deploy_hooks/3e0b6230-6965-46cf-a7a2-176969101e48';
+
+// Deploy API handler
+const deployHandler = defineMiddleware(async (context, next) => {
+  const { url, cookies, request } = context;
+
+  // Handle deploy API
+  if (url.pathname === '/api/deploy' && request.method === 'POST') {
+    const isAuthenticated = cookies.get('keystatic_access')?.value === 'granted';
+
+    if (!isAuthenticated) {
+      return new Response(JSON.stringify({ error: 'Unauthorized' }), {
+        status: 401,
+        headers: { 'Content-Type': 'application/json' },
+      });
+    }
+
+    try {
+      const response = await fetch(CLOUDFLARE_DEPLOY_HOOK, { method: 'POST' });
+      const data = await response.json();
+
+      if (data.success) {
+        return new Response(JSON.stringify({
+          success: true,
+          message: 'Deployment gestartet! Die Änderungen sind in 1-2 Minuten live.',
+          deployId: data.result?.id
+        }), {
+          status: 200,
+          headers: { 'Content-Type': 'application/json' },
+        });
+      } else {
+        return new Response(JSON.stringify({
+          success: false,
+          error: 'Cloudflare deployment failed'
+        }), {
+          status: 500,
+          headers: { 'Content-Type': 'application/json' },
+        });
+      }
+    } catch (error) {
+      return new Response(JSON.stringify({
+        success: false,
+        error: 'Failed to trigger deployment'
+      }), {
+        status: 500,
+        headers: { 'Content-Type': 'application/json' },
+      });
+    }
+  }
+
+  // Handle deploy page
+  if (url.pathname === '/keystatic/deploy') {
+    const isAuthenticated = cookies.get('keystatic_access')?.value === 'granted';
+
+    if (!isAuthenticated) {
+      return context.redirect('/keystatic/');
+    }
+
+    const deployPageHtml = `<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>EVOLEA CMS - Deploy</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: #f8f9fa;
+      min-height: 100vh;
+      padding: 2rem;
+    }
+    .container { max-width: 600px; margin: 0 auto; }
+    .card {
+      background: white;
+      border-radius: 1rem;
+      padding: 2rem;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+    }
+    .header {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+      padding-bottom: 1.5rem;
+      border-bottom: 1px solid #e5e5e5;
+    }
+    .back-link {
+      color: #DD48E0;
+      text-decoration: none;
+      font-size: 0.9rem;
+    }
+    .back-link:hover { text-decoration: underline; }
+    h1 { font-size: 1.5rem; color: #2D2A32; font-weight: 600; }
+    .description { color: #5C5762; margin-bottom: 2rem; line-height: 1.6; }
+    .deploy-btn {
+      width: 100%;
+      padding: 1rem 2rem;
+      background: linear-gradient(135deg, #DD48E0 0%, #BA53AD 100%);
+      color: white;
+      border: none;
+      border-radius: 0.75rem;
+      font-size: 1.1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: transform 0.2s, box-shadow 0.2s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+    }
+    .deploy-btn:hover:not(:disabled) {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 25px -5px rgba(221, 72, 224, 0.4);
+    }
+    .deploy-btn:disabled { opacity: 0.7; cursor: not-allowed; }
+    .status {
+      margin-top: 1.5rem;
+      padding: 1rem;
+      border-radius: 0.5rem;
+      display: none;
+    }
+    .status.success { display: block; background: #d4edda; color: #155724; border: 1px solid #c3e6cb; }
+    .status.error { display: block; background: #f8d7da; color: #721c24; border: 1px solid #f5c6cb; }
+    .status.loading { display: block; background: #fff3cd; color: #856404; border: 1px solid #ffeaa7; }
+    .spinner {
+      display: inline-block;
+      width: 20px;
+      height: 20px;
+      border: 2px solid white;
+      border-top-color: transparent;
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    .info-box {
+      background: #f0f9ff;
+      border: 1px solid #bae6fd;
+      border-radius: 0.5rem;
+      padding: 1rem;
+      margin-top: 1.5rem;
+      font-size: 0.9rem;
+      color: #0369a1;
+    }
+    .info-box strong { display: block; margin-bottom: 0.25rem; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="card">
+      <div class="header">
+        <a href="/keystatic/" class="back-link">← Zurück zum CMS</a>
+      </div>
+      <h1>Deploy to Live</h1>
+      <p class="description">
+        Nachdem du Änderungen im CMS gespeichert hast, klicke hier um sie auf der
+        Live-Website zu veröffentlichen. Der Deploy dauert ca. 1-2 Minuten.
+      </p>
+      <button class="deploy-btn" id="deployBtn" onclick="triggerDeploy()">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M12 19V5M5 12l7-7 7 7"/>
+        </svg>
+        Deploy to Live
+      </button>
+      <div class="status" id="status"></div>
+      <div class="info-box">
+        <strong>Hinweis:</strong>
+        GitHub Pages wird automatisch aktualisiert. Dieser Button ist nur für die
+        Cloudflare-Version (evolea-website.pages.dev) notwendig.
+      </div>
+    </div>
+  </div>
+  <script>
+    async function triggerDeploy() {
+      const btn = document.getElementById('deployBtn');
+      const status = document.getElementById('status');
+      btn.disabled = true;
+      btn.innerHTML = '<span class="spinner"></span> Deploying...';
+      status.className = 'status loading';
+      status.textContent = 'Deployment wird gestartet...';
+      try {
+        const response = await fetch('/api/deploy', { method: 'POST', credentials: 'include' });
+        const data = await response.json();
+        if (data.success) {
+          status.className = 'status success';
+          status.innerHTML = '✓ ' + data.message;
+          btn.innerHTML = '✓ Deployed!';
+          setTimeout(() => {
+            btn.disabled = false;
+            btn.innerHTML = '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 19V5M5 12l7-7 7 7"/></svg> Deploy to Live';
+          }, 5000);
+        } else {
+          throw new Error(data.error || 'Deployment failed');
+        }
+      } catch (error) {
+        status.className = 'status error';
+        status.textContent = '✗ Fehler: ' + error.message;
+        btn.disabled = false;
+        btn.innerHTML = '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 19V5M5 12l7-7 7 7"/></svg> Deploy to Live';
+      }
+    }
+  </script>
+</body>
+</html>`;
+
+    return new Response(deployPageHtml, {
+      status: 200,
+      headers: { 'Content-Type': 'text/html; charset=utf-8' },
+    });
+  }
+
+  return next();
+});
+
 // Password gate middleware for Keystatic admin
 const keystaticPasswordGate = defineMiddleware(async (context, next) => {
   const { url, cookies, request } = context;
 
-  // Only apply to /keystatic routes
-  if (!url.pathname.startsWith('/keystatic')) {
+  // Only apply to /keystatic routes (but not /keystatic/deploy which is handled above)
+  if (!url.pathname.startsWith('/keystatic') || url.pathname === '/keystatic/deploy') {
     return next();
   }
 
@@ -168,4 +382,4 @@ const keystaticPasswordGate = defineMiddleware(async (context, next) => {
   });
 });
 
-export const onRequest = sequence(keystaticPasswordGate);
+export const onRequest = sequence(deployHandler, keystaticPasswordGate);
