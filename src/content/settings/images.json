@@ -1,17 +1,31 @@
 {
-  "hero": {
-    "poster": null
+  "startseite": {
+    "videoPoster": null,
+    "ogImage": null
   },
-  "programme": {
+  "programmeHeroes": {
     "miniGarten": null,
     "miniProjekte": null,
     "miniTurnen": null,
     "miniMuseum": null,
-    "miniRestaurant": null,
+    "miniRestaurantPoster": null,
     "tagesschule": null
   },
+  "programmeKarten": {
+    "miniGarten": null,
+    "miniProjekte": null,
+    "miniTurnen": null,
+    "tagesschule": null,
+    "fallback": null
+  },
   "ueberUns": {
-    "bild1": null,
-    "bild2": null
+    "mission": null,
+    "childrenPlaying1": null,
+    "childrenPlaying2": null
+  },
+  "logos": {
+    "butterfly": null,
+    "butterflyWhite": null,
+    "full": null
   }
 }

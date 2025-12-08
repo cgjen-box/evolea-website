@@ -586,83 +586,170 @@ export default config({
     }),
 
     // =========================================================================
-    // SITE IMAGES SINGLETON
+    // SITE IMAGES & VIDEOS SINGLETON
     // =========================================================================
     siteImages: singleton({
-      label: 'Bilder verwalten',
+      label: 'Bilder & Videos',
       path: 'src/content/settings/images',
       format: { data: 'json' },
       schema: {
-        hero: fields.object(
+        // ===========================================
+        // STARTSEITE / HOMEPAGE
+        // ===========================================
+        startseite: fields.object(
           {
-            poster: fields.image({
-              label: 'Hero Poster (Startseite)',
-              description: 'Das Standbild das angezeigt wird bevor das Video lädt. Empfohlen: 1920x1080px',
+            videoPoster: fields.image({
+              label: 'Video Poster (Startseite)',
+              description: 'Standbild vor Video-Start. Empfohlen: 1920x1080px',
+              directory: 'public/images',
+              publicPath: '/images/',
+            }),
+            ogImage: fields.image({
+              label: 'Social Media Vorschaubild',
+              description: 'Wird bei Links auf Facebook/WhatsApp etc. angezeigt. Empfohlen: 1200x630px',
               directory: 'public/images',
               publicPath: '/images/',
             }),
           },
-          { label: 'Hero Bilder' }
+          { label: 'Startseite' }
         ),
 
-        programme: fields.object(
+        // ===========================================
+        // PROGRAMME / ANGEBOTE HEROES
+        // ===========================================
+        programmeHeroes: fields.object(
           {
             miniGarten: fields.image({
-              label: 'Mini Garten',
-              description: 'Bild für Mini Garten Programm',
+              label: 'Mini Garten Hero',
+              description: 'Hero-Bild für Mini Garten Seite',
+              directory: 'public/images/generated',
+              publicPath: '/images/generated/',
+            }),
+            miniProjekte: fields.image({
+              label: 'Mini Projekte Hero',
+              description: 'Hero-Bild für Mini Projekte Seite',
+              directory: 'public/images/generated',
+              publicPath: '/images/generated/',
+            }),
+            miniTurnen: fields.image({
+              label: 'Mini Turnen Hero',
+              description: 'Hero-Bild für Mini Turnen Seite',
+              directory: 'public/images/generated',
+              publicPath: '/images/generated/',
+            }),
+            miniMuseum: fields.image({
+              label: 'Mini Museum Hero',
+              description: 'Hero-Bild für Mini Museum Seite',
+              directory: 'public/images/generated',
+              publicPath: '/images/generated/',
+            }),
+            miniRestaurantPoster: fields.image({
+              label: 'Mini Restaurant Video Poster',
+              description: 'Standbild für Mini Restaurant Video. Empfohlen: 1920x1080px',
+              directory: 'public/images',
+              publicPath: '/images/',
+            }),
+            tagesschule: fields.image({
+              label: 'Tagesschule Hero',
+              description: 'Hero-Bild für Tagesschule Seite',
+              directory: 'public/images/generated',
+              publicPath: '/images/generated/',
+            }),
+          },
+          { label: 'Programm Hero-Bilder' }
+        ),
+
+        // ===========================================
+        // ANGEBOTE ÜBERSICHT KARTEN
+        // ===========================================
+        programmeKarten: fields.object(
+          {
+            miniGarten: fields.image({
+              label: 'Mini Garten Karte',
+              description: 'Kartenbild für Angebote-Übersicht',
               directory: 'public/images/programs',
               publicPath: '/images/programs/',
             }),
             miniProjekte: fields.image({
-              label: 'Mini Projekte',
-              description: 'Bild für Mini Projekte Programm',
+              label: 'Mini Projekte Karte',
+              description: 'Kartenbild für Angebote-Übersicht',
               directory: 'public/images/programs',
               publicPath: '/images/programs/',
             }),
             miniTurnen: fields.image({
-              label: 'Mini Turnen',
-              description: 'Bild für Mini Turnen Programm',
-              directory: 'public/images/programs',
-              publicPath: '/images/programs/',
-            }),
-            miniMuseum: fields.image({
-              label: 'Mini Museum',
-              description: 'Bild für Mini Museum Programm',
-              directory: 'public/images/programs',
-              publicPath: '/images/programs/',
-            }),
-            miniRestaurant: fields.image({
-              label: 'Mini Restaurant',
-              description: 'Bild für Mini Restaurant Programm',
+              label: 'Mini Turnen Karte',
+              description: 'Kartenbild für Angebote-Übersicht',
               directory: 'public/images/programs',
               publicPath: '/images/programs/',
             }),
             tagesschule: fields.image({
-              label: 'Tagesschule',
-              description: 'Bild für Tagesschule Programm',
+              label: 'Tagesschule Karte',
+              description: 'Kartenbild für Angebote-Übersicht',
+              directory: 'public/images/programs',
+              publicPath: '/images/programs/',
+            }),
+            fallback: fields.image({
+              label: 'Standard Kartenbild',
+              description: 'Fallback wenn kein spezifisches Bild',
               directory: 'public/images/programs',
               publicPath: '/images/programs/',
             }),
           },
-          { label: 'Programm-Bilder' }
+          { label: 'Programm Kartenbilder' }
         ),
 
+        // ===========================================
+        // ÜBER UNS SEITE
+        // ===========================================
         ueberUns: fields.object(
           {
-            bild1: fields.image({
-              label: 'Über uns Bild 1',
-              description: 'Erstes Bild auf der Über uns Seite',
+            mission: fields.image({
+              label: 'Mission Bild',
+              description: 'Bild im Mission-Bereich',
               directory: 'public/images/about',
               publicPath: '/images/about/',
             }),
-            bild2: fields.image({
-              label: 'Über uns Bild 2',
-              description: 'Zweites Bild auf der Über uns Seite',
+            childrenPlaying1: fields.image({
+              label: 'Kinder spielen 1',
+              description: 'Erstes Aktivitätsbild',
+              directory: 'public/images/about',
+              publicPath: '/images/about/',
+            }),
+            childrenPlaying2: fields.image({
+              label: 'Kinder spielen 2',
+              description: 'Zweites Aktivitätsbild',
               directory: 'public/images/about',
               publicPath: '/images/about/',
             }),
           },
           { label: 'Über uns Bilder' }
+        ),
+
+        // ===========================================
+        // LOGOS
+        // ===========================================
+        logos: fields.object(
+          {
+            butterfly: fields.image({
+              label: 'Schmetterling Logo',
+              description: 'EVOLEA Schmetterling (farbig)',
+              directory: 'public/images/logo',
+              publicPath: '/images/logo/',
+            }),
+            butterflyWhite: fields.image({
+              label: 'Schmetterling Logo (weiss)',
+              description: 'EVOLEA Schmetterling für dunkle Hintergründe',
+              directory: 'public/images/logo',
+              publicPath: '/images/logo/',
+            }),
+            full: fields.image({
+              label: 'Vollständiges Logo',
+              description: 'EVOLEA Logo mit Text',
+              directory: 'public/images/logo',
+              publicPath: '/images/logo/',
+            }),
+          },
+          { label: 'Logos' }
         ),
       },
     }),
