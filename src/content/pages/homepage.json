@@ -15,13 +15,205 @@
     "buttonLink": "/angebote/"
   },
   "angeboteSection": {
+    "label": {
+      "de": "Angebote",
+      "en": "Programs"
+    },
     "titel": {
       "de": "Unsere Angebote",
       "en": "Our Programs"
     },
-    "beschreibung": {
-      "de": "Pädagogische Programme, die Kinder im Spektrum dort abholen, wo sie stehen.",
-      "en": "Educational programs that meet children on the spectrum where they are."
+    "intro1": {
+      "de": "Wir bieten Förderangebote für Kinder im Autismus Spektrum oder mit ADHS an.",
+      "en": "We offer support programs for children on the autism spectrum or with ADHD."
+    },
+    "intro2": {
+      "de": "Wir arbeiten inklusiv, individuell und mit den neusten wissenschaftlichen Erkenntnissen. Unsere Angebote umfassen:",
+      "en": "We work inclusively, individually and with the latest scientific knowledge. Our programs include:"
+    },
+    "listItems": [
+      {
+        "de": "Mini Projekte: Social Skills Gruppe für Kinder im Spektrum",
+        "en": "Mini Projects: Social skills group for children on the spectrum"
+      },
+      {
+        "de": "Mini Garten: Vorbereitung für den Kindergarten",
+        "en": "Mini Garden: Kindergarten preparation"
+      },
+      {
+        "de": "Beratung und Unterstützung Schulen",
+        "en": "School consultation and support"
+      }
+    ],
+    "outro": {
+      "de": "Unsere Angebote werden in Zukunft stets erweitert.",
+      "en": "Our programs are constantly being expanded."
+    },
+    "funding": {
+      "de": "Als Trägerschaft fungiert der EVOLEA Verein, welcher von Eltern, Unternehmen und gemeinnützigen Stiftungen finanziert wird.",
+      "en": "EVOLEA is a non-profit association funded by parents, companies and charitable foundations."
+    },
+    "weitereAngeboteLabel": {
+      "de": "Weitere Angebote",
+      "en": "More Programs"
+    }
+  },
+  "angeboteCards": {
+    "miniTurnen": {
+      "status": {
+        "de": "Anmeldung offen",
+        "en": "Registration open"
+      },
+      "titel": {
+        "de": "Mini Turnen",
+        "en": "Mini Sports"
+      },
+      "beschreibung": {
+        "de": "Bewegung, Spass und motorische Förderung in einer kleinen, verständnisvollen Gruppe.",
+        "en": "Movement, fun and motor skill development in a small, understanding group."
+      },
+      "startDatum": {
+        "de": "Start: Januar 2025",
+        "en": "Start: January 2025"
+      },
+      "zeit": {
+        "de": "Mittwochs 18:30",
+        "en": "Wednesdays 18:30"
+      },
+      "alter": {
+        "de": "5–8 Jahre",
+        "en": "Ages 5–8"
+      },
+      "buttonText": {
+        "de": "Mehr →",
+        "en": "More →"
+      }
+    },
+    "miniMuseum": {
+      "status": {
+        "de": "Anmeldung offen",
+        "en": "Registration open"
+      },
+      "titel": {
+        "de": "Mini Museum",
+        "en": "Mini Museum"
+      },
+      "beschreibung": {
+        "de": "Kreative Kunstprojekte und gemeinsame Ausstellungen. Soziale Kompetenz durch Schaffen.",
+        "en": "Creative art projects and exhibitions together. Social skills through creating."
+      },
+      "startDatum": {
+        "de": "Start: Februar 2026",
+        "en": "Start: February 2026"
+      },
+      "zeit": {
+        "de": "Samstag 09:00, ca. jede 2. Woche",
+        "en": "Saturdays 09:00, approx. every 2 weeks"
+      },
+      "alter": {
+        "de": "5–8 Jahre",
+        "en": "Ages 5–8"
+      },
+      "buttonText": {
+        "de": "Mehr →",
+        "en": "More →"
+      }
+    },
+    "miniGarten": {
+      "status": {
+        "de": "Anmeldung offen",
+        "en": "Registration open"
+      },
+      "titel": {
+        "de": "Mini Garten",
+        "en": "Mini Garden"
+      },
+      "beschreibung": {
+        "de": "Spielerische Vorbereitung auf den Kindergarten in einer kleinen, geschützten Gruppe.",
+        "en": "Playful kindergarten preparation in a small, protected group."
+      },
+      "startDatum": {
+        "de": "Laufend",
+        "en": "Ongoing"
+      },
+      "zeit": {
+        "de": "Montag 13:00–17:00",
+        "en": "Monday 13:00–17:00"
+      },
+      "alter": {
+        "de": "3–5 Jahre",
+        "en": "Ages 3–5"
+      },
+      "buttonText": {
+        "de": "Mehr →",
+        "en": "More →"
+      }
+    },
+    "miniRestaurant": {
+      "status": {
+        "de": "Läuft · Keine Anmeldung",
+        "en": "Running · No registration"
+      },
+      "titel": {
+        "de": "Mini Restaurant",
+        "en": "Mini Restaurant"
+      },
+      "beschreibung": {
+        "de": "Soziale Kompetenz durch gemeinsames Kochen und Restaurantspiel.",
+        "en": "Social skills through cooking together and restaurant play."
+      },
+      "detail": {
+        "de": "Woche 8 von 10",
+        "en": "Week 8 of 10"
+      },
+      "buttonText": {
+        "de": "Für Teilnehmer",
+        "en": "For Participants"
+      }
+    },
+    "evoleaCafe": {
+      "status": {
+        "de": "Offen für alle",
+        "en": "Open to all"
+      },
+      "titel": {
+        "de": "EVOLEA Cafe",
+        "en": "EVOLEA Cafe"
+      },
+      "beschreibung": {
+        "de": "Austausch und Gemeinschaft für Eltern. Jeden 2. Mittwoch im Monat um 20:00 Uhr.",
+        "en": "Exchange and community for parents. Every 2nd Wednesday of the month at 20:00."
+      },
+      "detail": {
+        "de": "Keine Anmeldung nötig",
+        "en": "No registration required"
+      },
+      "buttonText": {
+        "de": "Mehr erfahren",
+        "en": "Learn more"
+      }
+    },
+    "tagesschule": {
+      "status": {
+        "de": "Vision",
+        "en": "Vision"
+      },
+      "titel": {
+        "de": "Tagessonderschule",
+        "en": "Day School"
+      },
+      "beschreibung": {
+        "de": "Sonderschule Typ A für Kinder im Spektrum. Wir arbeiten noch daran.",
+        "en": "Special school Type A for children on the spectrum. We're still working on it."
+      },
+      "detail": {
+        "de": "Langfristige Vision",
+        "en": "Long-term vision"
+      },
+      "buttonText": {
+        "de": "Mehr erfahren",
+        "en": "Learn more"
+      }
     }
   },
   "grundsaetzeSection": {
@@ -66,7 +258,7 @@
       "en": "Contact"
     },
     "text": {
-      "de": "Wir freuen uns auf den Austausch mit Euch. ",
+      "de": "Wir freuen uns auf den Austausch mit Euch.",
       "en": "We look forward to connecting with you."
     }
   },

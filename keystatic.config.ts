@@ -274,10 +274,95 @@ export default config({
 
         angeboteSection: fields.object(
           {
+            label: bilingualText('Label', 'Label', { description: 'z.B. "Angebote"' }),
             titel: bilingualText('Titel', 'Title'),
-            beschreibung: bilingualText('Beschreibung', 'Description'),
+            intro1: bilingualText('Intro Absatz 1', 'Intro Paragraph 1', { multiline: true }),
+            intro2: bilingualText('Intro Absatz 2', 'Intro Paragraph 2', { multiline: true }),
+            listItems: fields.array(
+              bilingualText('Listenpunkt', 'List Item'),
+              {
+                label: 'Angebots-Liste',
+                itemLabel: (props) => (props.fields.de.value as string) || 'Neuer Punkt',
+              }
+            ),
+            outro: bilingualText('Outro', 'Outro', { multiline: true }),
+            funding: bilingualText('Finanzierung', 'Funding', { multiline: true }),
+            weitereAngeboteLabel: bilingualText('Weitere Angebote Label', 'More Programs Label'),
           },
-          { label: 'Angebote-Sektion' }
+          { label: 'Angebote-Sektion Einleitung' }
+        ),
+
+        // Individual program cards
+        angeboteCards: fields.object(
+          {
+            miniTurnen: fields.object(
+              {
+                status: bilingualText('Status Badge', 'Status Badge'),
+                titel: bilingualText('Titel', 'Title'),
+                beschreibung: bilingualText('Beschreibung', 'Description', { multiline: true }),
+                startDatum: bilingualText('Start Datum', 'Start Date'),
+                zeit: bilingualText('Zeit', 'Time'),
+                alter: bilingualText('Alter', 'Age'),
+                buttonText: bilingualText('Button Text', 'Button Text'),
+              },
+              { label: 'Mini Turnen' }
+            ),
+            miniMuseum: fields.object(
+              {
+                status: bilingualText('Status Badge', 'Status Badge'),
+                titel: bilingualText('Titel', 'Title'),
+                beschreibung: bilingualText('Beschreibung', 'Description', { multiline: true }),
+                startDatum: bilingualText('Start Datum', 'Start Date'),
+                zeit: bilingualText('Zeit', 'Time'),
+                alter: bilingualText('Alter', 'Age'),
+                buttonText: bilingualText('Button Text', 'Button Text'),
+              },
+              { label: 'Mini Museum' }
+            ),
+            miniGarten: fields.object(
+              {
+                status: bilingualText('Status Badge', 'Status Badge'),
+                titel: bilingualText('Titel', 'Title'),
+                beschreibung: bilingualText('Beschreibung', 'Description', { multiline: true }),
+                startDatum: bilingualText('Start Datum', 'Start Date'),
+                zeit: bilingualText('Zeit', 'Time'),
+                alter: bilingualText('Alter', 'Age'),
+                buttonText: bilingualText('Button Text', 'Button Text'),
+              },
+              { label: 'Mini Garten' }
+            ),
+            miniRestaurant: fields.object(
+              {
+                status: bilingualText('Status Badge', 'Status Badge'),
+                titel: bilingualText('Titel', 'Title'),
+                beschreibung: bilingualText('Beschreibung', 'Description', { multiline: true }),
+                detail: bilingualText('Detail', 'Detail'),
+                buttonText: bilingualText('Button Text', 'Button Text'),
+              },
+              { label: 'Mini Restaurant' }
+            ),
+            evoleaCafe: fields.object(
+              {
+                status: bilingualText('Status Badge', 'Status Badge'),
+                titel: bilingualText('Titel', 'Title'),
+                beschreibung: bilingualText('Beschreibung', 'Description', { multiline: true }),
+                detail: bilingualText('Detail', 'Detail'),
+                buttonText: bilingualText('Button Text', 'Button Text'),
+              },
+              { label: 'EVOLEA Cafe' }
+            ),
+            tagesschule: fields.object(
+              {
+                status: bilingualText('Status Badge', 'Status Badge'),
+                titel: bilingualText('Titel', 'Title'),
+                beschreibung: bilingualText('Beschreibung', 'Description', { multiline: true }),
+                detail: bilingualText('Detail', 'Detail'),
+                buttonText: bilingualText('Button Text', 'Button Text'),
+              },
+              { label: 'Tagesschule' }
+            ),
+          },
+          { label: 'Angebote Karten' }
         ),
 
         grundsaetzeSection: fields.object(
