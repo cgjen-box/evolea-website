@@ -65,6 +65,7 @@ const iconOptions = [
 
 const colorOptions = [
   { label: 'Magenta', value: 'magenta' },
+  { label: 'Orange', value: 'orange' },
   { label: 'Coral', value: 'coral' },
   { label: 'Gelb', value: 'yellow' },
   { label: 'Himmelblau', value: 'sky' },
