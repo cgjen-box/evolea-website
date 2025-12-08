@@ -7,12 +7,28 @@
  *
  * Design per EVOLEA-ANGEBOTE-CLAUDE-CODEv6.md
  * BRAND COMPLIANCE: All emojis replaced with SVG icons per Brand Guide v3.0
+ * CMS: All text content is editable via Keystatic
  */
 import { getLangFromUrl, useTranslatedPath } from '@i18n/utils';
+import { getEntry } from 'astro:content';
 import Icon from './Icon.astro';
 
 const lang = getLangFromUrl(Astro.url);
 const translatePath = useTranslatedPath(lang);
+
+// Get homepage data from CMS
+const homepageEntry = await getEntry('pages', 'homepage');
+const homepage = homepageEntry?.data;
+
+// Helper to get bilingual text
+const getText = (obj: { de?: string; en?: string } | undefined, fallback: string = '') => {
+  if (!obj) return fallback;
+  return lang === 'de' ? (obj.de || fallback) : (obj.en || obj.de || fallback);
+};
+
+// Section intro content
+const section = homepage?.angeboteSection;
+const cards = homepage?.angeboteCards;
 ---
 
 <section class="angebote-section-v3" id="angebote">
@@ -20,18 +36,24 @@ const translatePath = useTranslatedPath(lang);
 
     <!-- Header -->
     <header class="angebote-header-v3" data-animate="header">
-      <span class="angebote-label-v3">Angebote</span>
-      <h2 class="angebote-title-v3">Unsere Angebote</h2>
+      <span class="angebote-label-v3">{getText(section?.label, 'Angebote')}</span>
+      <h2 class="angebote-title-v3">{getText(section?.titel, 'Unsere Angebote')}</h2>
       <div class="angebote-description-v3">
-        <p>Wir bieten Förderangebote für Kinder im Autismus Spektrum oder mit ADHS an.</p>
-        <p>Wir arbeiten inklusiv, individuell und mit den neusten wissenschaftlichen Erkenntnissen. Unsere Angebote umfassen:</p>
+        <p>{getText(section?.intro1, 'Wir bieten Förderangebote für Kinder im Autismus Spektrum oder mit ADHS an.')}</p>
+        <p>{getText(section?.intro2, 'Wir arbeiten inklusiv, individuell und mit den neusten wissenschaftlichen Erkenntnissen. Unsere Angebote umfassen:')}</p>
         <ul class="angebote-list-v3">
-          <li>Mini Projekte: Social Skills Gruppe für Kinder im Spektrum</li>
-          <li>Mini Garten: Vorbereitung für den Kindergarten</li>
-          <li>Beratung und Unterstützung Schulen</li>
+          {section?.listItems?.map((item: { de?: string; en?: string }) => (
+            <li>{getText(item, '')}</li>
+          )) || (
+            <>
+              <li>Mini Projekte: Social Skills Gruppe für Kinder im Spektrum</li>
+              <li>Mini Garten: Vorbereitung für den Kindergarten</li>
+              <li>Beratung und Unterstützung Schulen</li>
+            </>
+          )}
         </ul>
-        <p>Unsere Angebote werden in Zukunft stets erweitert.</p>
-        <p class="angebote-funding-v3">Als Trägerschaft fungiert der EVOLEA Verein, welcher von Eltern, Unternehmen und gemeinnützigen Stiftungen finanziert wird.</p>
+        <p>{getText(section?.outro, 'Unsere Angebote werden in Zukunft stets erweitert.')}</p>
+        <p class="angebote-funding-v3">{getText(section?.funding, 'Als Trägerschaft fungiert der EVOLEA Verein, welcher von Eltern, Unternehmen und gemeinnützigen Stiftungen finanziert wird.')}</p>
       </div>
     </header>
 
@@ -42,20 +64,20 @@ const translatePath = useTranslatedPath(lang);
       <article class="angebot-card-v3 card-open-v3" data-animate="card" data-delay="0">
         <div class="status-badge-v3 badge-open-v3">
           <Icon name="sparkle" size="xs" class="badge-icon-white" gradient={false} />
-          <span>Anmeldung offen</span>
+          <span>{getText(cards?.miniTurnen?.status, 'Anmeldung offen')}</span>
         </div>
         <div class="angebot-icon-v3"><Icon name="ball" size="lg" class="icon-white" gradient={false} /></div>
-        <h3 class="angebot-title-v3">Mini Turnen</h3>
+        <h3 class="angebot-title-v3">{getText(cards?.miniTurnen?.titel, 'Mini Turnen')}</h3>
         <p class="angebot-description-v3">
-          Bewegung, Spass und motorische Förderung in einer kleinen, verständnisvollen Gruppe.
+          {getText(cards?.miniTurnen?.beschreibung, 'Bewegung, Spass und motorische Förderung in einer kleinen, verständnisvollen Gruppe.')}
         </p>
         <div class="angebot-meta-v3">
-          <span class="meta-item-v3"><Icon name="calendar" size="xs" class="meta-icon-white" gradient={false} /> Start: Januar 2025</span>
-          <span class="meta-item-v3"><Icon name="clock" size="xs" class="meta-icon-white" gradient={false} /> Mittwochs 18:30</span>
-          <span class="meta-item-v3"><Icon name="child" size="xs" class="meta-icon-white" gradient={false} /> 5–8 Jahre</span>
+          <span class="meta-item-v3"><Icon name="calendar" size="xs" class="meta-icon-white" gradient={false} /> {getText(cards?.miniTurnen?.startDatum, 'Start: Januar 2025')}</span>
+          <span class="meta-item-v3"><Icon name="clock" size="xs" class="meta-icon-white" gradient={false} /> {getText(cards?.miniTurnen?.zeit, 'Mittwochs 18:30')}</span>
+          <span class="meta-item-v3"><Icon name="child" size="xs" class="meta-icon-white" gradient={false} /> {getText(cards?.miniTurnen?.alter, '5–8 Jahre')}</span>
         </div>
         <div class="angebot-actions-v3">
-          <a href={translatePath('/angebote/mini-turnen/')} class="btn-angebot-primary-v3">Mehr →</a>
+          <a href={translatePath('/angebote/mini-turnen/')} class="btn-angebot-primary-v3">{getText(cards?.miniTurnen?.buttonText, 'Mehr →')}</a>
         </div>
       </article>
 
@@ -63,20 +85,20 @@ const translatePath = useTranslatedPath(lang);
       <article class="angebot-card-v3 card-open-v3" data-animate="card" data-delay="1">
         <div class="status-badge-v3 badge-open-v3">
           <Icon name="sparkle" size="xs" class="badge-icon-white" gradient={false} />
-          <span>Anmeldung offen</span>
+          <span>{getText(cards?.miniMuseum?.status, 'Anmeldung offen')}</span>
         </div>
         <div class="angebot-icon-v3"><Icon name="museum" size="lg" class="icon-white" gradient={false} /></div>
-        <h3 class="angebot-title-v3">Mini Museum</h3>
+        <h3 class="angebot-title-v3">{getText(cards?.miniMuseum?.titel, 'Mini Museum')}</h3>
         <p class="angebot-description-v3">
-          Kreative Kunstprojekte und gemeinsame Ausstellungen. Soziale Kompetenz durch Schaffen.
+          {getText(cards?.miniMuseum?.beschreibung, 'Kreative Kunstprojekte und gemeinsame Ausstellungen. Soziale Kompetenz durch Schaffen.')}
         </p>
         <div class="angebot-meta-v3">
-          <span class="meta-item-v3"><Icon name="calendar" size="xs" class="meta-icon-white" gradient={false} /> Start: Februar 2026</span>
-          <span class="meta-item-v3"><Icon name="clock" size="xs" class="meta-icon-white" gradient={false} /> Samstag 09:00, ca. jede 2. Woche</span>
-          <span class="meta-item-v3"><Icon name="child" size="xs" class="meta-icon-white" gradient={false} /> 5–8 Jahre</span>
+          <span class="meta-item-v3"><Icon name="calendar" size="xs" class="meta-icon-white" gradient={false} /> {getText(cards?.miniMuseum?.startDatum, 'Start: Februar 2026')}</span>
+          <span class="meta-item-v3"><Icon name="clock" size="xs" class="meta-icon-white" gradient={false} /> {getText(cards?.miniMuseum?.zeit, 'Samstag 09:00, ca. jede 2. Woche')}</span>
+          <span class="meta-item-v3"><Icon name="child" size="xs" class="meta-icon-white" gradient={false} /> {getText(cards?.miniMuseum?.alter, '5–8 Jahre')}</span>
         </div>
         <div class="angebot-actions-v3">
-          <a href={translatePath('/angebote/mini-museum/')} class="btn-angebot-primary-v3">Mehr →</a>
+          <a href={translatePath('/angebote/mini-museum/')} class="btn-angebot-primary-v3">{getText(cards?.miniMuseum?.buttonText, 'Mehr →')}</a>
         </div>
       </article>
 
@@ -84,20 +106,20 @@ const translatePath = useTranslatedPath(lang);
       <article class="angebot-card-v3 card-open-v3" data-animate="card" data-delay="2">
         <div class="status-badge-v3 badge-open-v3">
           <Icon name="sparkle" size="xs" class="badge-icon-white" gradient={false} />
-          <span>Anmeldung offen</span>
+          <span>{getText(cards?.miniGarten?.status, 'Anmeldung offen')}</span>
         </div>
         <div class="angebot-icon-v3"><Icon name="sprout" size="lg" class="icon-white" gradient={false} /></div>
-        <h3 class="angebot-title-v3">Mini Garten</h3>
+        <h3 class="angebot-title-v3">{getText(cards?.miniGarten?.titel, 'Mini Garten')}</h3>
         <p class="angebot-description-v3">
-          Spielerische Vorbereitung auf den Kindergarten in einer kleinen, geschützten Gruppe.
+          {getText(cards?.miniGarten?.beschreibung, 'Spielerische Vorbereitung auf den Kindergarten in einer kleinen, geschützten Gruppe.')}
         </p>
         <div class="angebot-meta-v3">
-          <span class="meta-item-v3"><Icon name="calendar" size="xs" class="meta-icon-white" gradient={false} /> Laufend</span>
-          <span class="meta-item-v3"><Icon name="clock" size="xs" class="meta-icon-white" gradient={false} /> Montag 13:00–17:00</span>
-          <span class="meta-item-v3"><Icon name="child" size="xs" class="meta-icon-white" gradient={false} /> 3–5 Jahre</span>
+          <span class="meta-item-v3"><Icon name="calendar" size="xs" class="meta-icon-white" gradient={false} /> {getText(cards?.miniGarten?.startDatum, 'Laufend')}</span>
+          <span class="meta-item-v3"><Icon name="clock" size="xs" class="meta-icon-white" gradient={false} /> {getText(cards?.miniGarten?.zeit, 'Montag 13:00–17:00')}</span>
+          <span class="meta-item-v3"><Icon name="child" size="xs" class="meta-icon-white" gradient={false} /> {getText(cards?.miniGarten?.alter, '3–5 Jahre')}</span>
         </div>
         <div class="angebot-actions-v3">
-          <a href={translatePath('/angebote/mini-garten/')} class="btn-angebot-primary-v3">Mehr →</a>
+          <a href={translatePath('/angebote/mini-garten/')} class="btn-angebot-primary-v3">{getText(cards?.miniGarten?.buttonText, 'Mehr →')}</a>
         </div>
       </article>
 
@@ -106,7 +128,7 @@ const translatePath = useTranslatedPath(lang);
     <!-- Divider -->
     <div class="angebote-divider-v3">
       <div class="angebote-divider-line-v3"></div>
-      <span class="angebote-divider-text-v3">Weitere Angebote</span>
+      <span class="angebote-divider-text-v3">{getText(section?.weitereAngeboteLabel, 'Weitere Angebote')}</span>
       <div class="angebote-divider-line-v3"></div>
     </div>
 
@@ -117,16 +139,16 @@ const translatePath = useTranslatedPath(lang);
       <article class="angebot-card-v3 card-ongoing-v3" data-animate="card" data-delay="3">
         <div class="status-badge-v3 badge-ongoing-v3">
           <Icon name="fire" size="xs" class="badge-icon-grey" />
-          <span>Läuft · Keine Anmeldung</span>
+          <span>{getText(cards?.miniRestaurant?.status, 'Läuft · Keine Anmeldung')}</span>
         </div>
         <div class="angebot-icon-small-v3"><Icon name="cooking" size="md" /></div>
-        <h3 class="angebot-title-small-v3">Mini Restaurant</h3>
+        <h3 class="angebot-title-small-v3">{getText(cards?.miniRestaurant?.titel, 'Mini Restaurant')}</h3>
         <p class="angebot-description-small-v3">
-          Soziale Kompetenz durch gemeinsames Kochen und Restaurantspiel.
+          {getText(cards?.miniRestaurant?.beschreibung, 'Soziale Kompetenz durch gemeinsames Kochen und Restaurantspiel.')}
         </p>
-        <div class="angebot-detail-v3">Woche 8 von 10</div>
+        <div class="angebot-detail-v3">{getText(cards?.miniRestaurant?.detail, 'Woche 8 von 10')}</div>
         <div class="angebot-actions-v3">
-          <a href={translatePath('/angebote/mini-projekte/mini-restaurant/')} class="btn-angebot-info-v3">Für Teilnehmer</a>
+          <a href={translatePath('/angebote/mini-projekte/mini-restaurant/')} class="btn-angebot-info-v3">{getText(cards?.miniRestaurant?.buttonText, 'Für Teilnehmer')}</a>
         </div>
       </article>
 
@@ -134,16 +156,16 @@ const translatePath = useTranslatedPath(lang);
       <article class="angebot-card-v3 card-ongoing-v3" data-animate="card" data-delay="4">
         <div class="status-badge-v3 badge-ongoing-v3">
           <Icon name="coffee" size="xs" class="badge-icon-grey" />
-          <span>Offen für alle</span>
+          <span>{getText(cards?.evoleaCafe?.status, 'Offen für alle')}</span>
         </div>
         <div class="angebot-icon-small-v3"><Icon name="coffee" size="md" /></div>
-        <h3 class="angebot-title-small-v3">EVOLEA Cafe</h3>
+        <h3 class="angebot-title-small-v3">{getText(cards?.evoleaCafe?.titel, 'EVOLEA Cafe')}</h3>
         <p class="angebot-description-small-v3">
-          Austausch und Gemeinschaft für Eltern. Jeden 2. Mittwoch im Monat um 20:00 Uhr.
+          {getText(cards?.evoleaCafe?.beschreibung, 'Austausch und Gemeinschaft für Eltern. Jeden 2. Mittwoch im Monat um 20:00 Uhr.')}
         </p>
-        <div class="angebot-detail-v3">Keine Anmeldung nötig</div>
+        <div class="angebot-detail-v3">{getText(cards?.evoleaCafe?.detail, 'Keine Anmeldung nötig')}</div>
         <div class="angebot-actions-v3">
-          <a href={translatePath('/kontakt/')} class="btn-angebot-info-v3">Mehr erfahren</a>
+          <a href={translatePath('/kontakt/')} class="btn-angebot-info-v3">{getText(cards?.evoleaCafe?.buttonText, 'Mehr erfahren')}</a>
         </div>
       </article>
 
@@ -151,16 +173,16 @@ const translatePath = useTranslatedPath(lang);
       <article class="angebot-card-v3 card-coming-v3" data-animate="card" data-delay="5">
         <div class="status-badge-v3 badge-coming-v3">
           <Icon name="rocket" size="xs" class="badge-icon-purple" />
-          <span>Vision</span>
+          <span>{getText(cards?.tagesschule?.status, 'Vision')}</span>
         </div>
         <div class="angebot-icon-small-v3"><Icon name="school" size="md" /></div>
-        <h3 class="angebot-title-small-v3">Tagessonderschule</h3>
+        <h3 class="angebot-title-small-v3">{getText(cards?.tagesschule?.titel, 'Tagessonderschule')}</h3>
         <p class="angebot-description-small-v3">
-          Sonderschule Typ A für Kinder im Spektrum. Wir arbeiten noch daran.
+          {getText(cards?.tagesschule?.beschreibung, 'Sonderschule Typ A für Kinder im Spektrum. Wir arbeiten noch daran.')}
         </p>
-        <div class="angebot-detail-coming-v3"><Icon name="calendar" size="xs" class="detail-icon-purple" /> Langfristige Vision</div>
+        <div class="angebot-detail-coming-v3"><Icon name="calendar" size="xs" class="detail-icon-purple" /> {getText(cards?.tagesschule?.detail, 'Langfristige Vision')}</div>
         <div class="angebot-actions-v3">
-          <a href={translatePath('/angebote/tagesschule/')} class="btn-angebot-notify-v3">Mehr erfahren</a>
+          <a href={translatePath('/angebote/tagesschule/')} class="btn-angebot-notify-v3">{getText(cards?.tagesschule?.buttonText, 'Mehr erfahren')}</a>
         </div>
       </article>
 
