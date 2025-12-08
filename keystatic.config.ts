@@ -94,6 +94,7 @@ export default config({
     navigation: {
       Inhalte: ['blog', 'team', 'principles'],
       Seiten: ['homepage', 'about', 'contact'],
+      Medien: ['siteImages'],
       Einstellungen: ['siteSettings'],
     },
   },
@@ -580,6 +581,88 @@ export default config({
             impressumText: bilingualText('Impressum-Link', 'Imprint Link'),
           },
           { label: 'Footer' }
+        ),
+      },
+    }),
+
+    // =========================================================================
+    // SITE IMAGES SINGLETON
+    // =========================================================================
+    siteImages: singleton({
+      label: 'Bilder verwalten',
+      path: 'src/content/settings/images',
+      format: { data: 'json' },
+      schema: {
+        hero: fields.object(
+          {
+            poster: fields.image({
+              label: 'Hero Poster (Startseite)',
+              description: 'Das Standbild das angezeigt wird bevor das Video lädt. Empfohlen: 1920x1080px',
+              directory: 'public/images',
+              publicPath: '/images/',
+            }),
+          },
+          { label: 'Hero Bilder' }
+        ),
+
+        programme: fields.object(
+          {
+            miniGarten: fields.image({
+              label: 'Mini Garten',
+              description: 'Bild für Mini Garten Programm',
+              directory: 'public/images/programs',
+              publicPath: '/images/programs/',
+            }),
+            miniProjekte: fields.image({
+              label: 'Mini Projekte',
+              description: 'Bild für Mini Projekte Programm',
+              directory: 'public/images/programs',
+              publicPath: '/images/programs/',
+            }),
+            miniTurnen: fields.image({
+              label: 'Mini Turnen',
+              description: 'Bild für Mini Turnen Programm',
+              directory: 'public/images/programs',
+              publicPath: '/images/programs/',
+            }),
+            miniMuseum: fields.image({
+              label: 'Mini Museum',
+              description: 'Bild für Mini Museum Programm',
+              directory: 'public/images/programs',
+              publicPath: '/images/programs/',
+            }),
+            miniRestaurant: fields.image({
+              label: 'Mini Restaurant',
+              description: 'Bild für Mini Restaurant Programm',
+              directory: 'public/images/programs',
+              publicPath: '/images/programs/',
+            }),
+            tagesschule: fields.image({
+              label: 'Tagesschule',
+              description: 'Bild für Tagesschule Programm',
+              directory: 'public/images/programs',
+              publicPath: '/images/programs/',
+            }),
+          },
+          { label: 'Programm-Bilder' }
+        ),
+
+        ueberUns: fields.object(
+          {
+            bild1: fields.image({
+              label: 'Über uns Bild 1',
+              description: 'Erstes Bild auf der Über uns Seite',
+              directory: 'public/images/about',
+              publicPath: '/images/about/',
+            }),
+            bild2: fields.image({
+              label: 'Über uns Bild 2',
+              description: 'Zweites Bild auf der Über uns Seite',
+              directory: 'public/images/about',
+              publicPath: '/images/about/',
+            }),
+          },
+          { label: 'Über uns Bilder' }
         ),
       },
     }),
