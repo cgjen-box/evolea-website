@@ -167,15 +167,22 @@ export const onRequest = defineMiddleware(async (context, next) => {
 
     try {
       const html = await response.text();
-      if (html.includes('</head>')) {
-        // Inject script in head for early loading
-        const modifiedHtml = html.replace('</head>', deployScript + '</head>');
-        return new Response(modifiedHtml, {
-          status: response.status,
-          statusText: response.statusText,
-          headers: new Headers(response.headers),
-        });
+      // Inject script at end of document (Keystatic doesn't have traditional </head>)
+      // Look for </astro-island> or end of document
+      let modifiedHtml = html;
+      if (html.includes('</astro-island>')) {
+        modifiedHtml = html.replace('</astro-island>', '</astro-island>' + deployScript);
+      } else if (html.includes('</body>')) {
+        modifiedHtml = html.replace('</body>', deployScript + '</body>');
+      } else {
+        // Append to end of document
+        modifiedHtml = html + deployScript;
       }
+      return new Response(modifiedHtml, {
+        status: response.status,
+        statusText: response.statusText,
+        headers: new Headers(response.headers),
+      });
     } catch {
       // If anything fails, return original - need to re-fetch since body was consumed
     }
