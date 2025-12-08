@@ -600,7 +600,7 @@ export default config({
           {
             videoPoster: fields.image({
               label: 'Video Poster (Startseite)',
-              description: 'Standbild vor Video-Start. Empfohlen: 1920x1080px',
+              description: 'Standbild vor Video-Start. Empfohlen: 1920x1080px. Aktuell: /images/hero-poster.jpg',
               directory: 'public/images',
               publicPath: '/images/',
             }),
@@ -621,37 +621,37 @@ export default config({
           {
             miniGarten: fields.image({
               label: 'Mini Garten Hero',
-              description: 'Hero-Bild für Mini Garten Seite',
+              description: 'Hero-Bild für Mini Garten Seite. Aktuell: /images/generated/mini-garten-hero.png',
               directory: 'public/images/generated',
               publicPath: '/images/generated/',
             }),
             miniProjekte: fields.image({
               label: 'Mini Projekte Hero',
-              description: 'Hero-Bild für Mini Projekte Seite',
+              description: 'Hero-Bild für Mini Projekte Seite. Aktuell: /images/generated/mini-projekte-hero.png',
               directory: 'public/images/generated',
               publicPath: '/images/generated/',
             }),
             miniTurnen: fields.image({
               label: 'Mini Turnen Hero',
-              description: 'Hero-Bild für Mini Turnen Seite',
+              description: 'Hero-Bild für Mini Turnen Seite. Aktuell: /images/generated/mini-turnen-hero.png',
               directory: 'public/images/generated',
               publicPath: '/images/generated/',
             }),
             miniMuseum: fields.image({
               label: 'Mini Museum Hero',
-              description: 'Hero-Bild für Mini Museum Seite',
+              description: 'Hero-Bild für Mini Museum Seite (nutzt CSS-Gradient als Standard)',
               directory: 'public/images/generated',
               publicPath: '/images/generated/',
             }),
             miniRestaurantPoster: fields.image({
               label: 'Mini Restaurant Video Poster',
-              description: 'Standbild für Mini Restaurant Video. Empfohlen: 1920x1080px',
+              description: 'Standbild für Mini Restaurant Video. Aktuell: /images/mini-restaurant-poster.jpg',
               directory: 'public/images',
               publicPath: '/images/',
             }),
             tagesschule: fields.image({
               label: 'Tagesschule Hero',
-              description: 'Hero-Bild für Tagesschule Seite',
+              description: 'Hero-Bild für Tagesschule Seite. Aktuell: /images/generated/tagesschule-hero.png',
               directory: 'public/images/generated',
               publicPath: '/images/generated/',
             }),
@@ -705,19 +705,19 @@ export default config({
           {
             mission: fields.image({
               label: 'Mission Bild',
-              description: 'Bild im Mission-Bereich',
+              description: 'Bild im Mission-Bereich. Aktuell: /images/about/children-playing-1.jpg',
               directory: 'public/images/about',
               publicPath: '/images/about/',
             }),
             childrenPlaying1: fields.image({
               label: 'Kinder spielen 1',
-              description: 'Erstes Aktivitätsbild',
+              description: 'Erstes Aktivitätsbild. Aktuell: /images/about/children-playing-1.jpg',
               directory: 'public/images/about',
               publicPath: '/images/about/',
             }),
             childrenPlaying2: fields.image({
               label: 'Kinder spielen 2',
-              description: 'Zweites Aktivitätsbild',
+              description: 'Zweites Aktivitätsbild. Aktuell: /images/about/children-playing-2.jpg',
               directory: 'public/images/about',
               publicPath: '/images/about/',
             }),
