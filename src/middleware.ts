@@ -155,7 +155,7 @@ export const onRequest = defineMiddleware(async (context, next) => {
     return next();
   }
 
-  // Get the response from Keystatic
+  // Get the response from Keystatic - clone it so we can read body
   const response = await next();
 
   // Only modify HTML responses
@@ -164,9 +164,12 @@ export const onRequest = defineMiddleware(async (context, next) => {
     return response;
   }
 
+  // Clone before reading to preserve the original
+  const clonedResponse = response.clone();
+
   // Read the HTML and inject the deploy button
   try {
-    const html = await response.text();
+    const html = await clonedResponse.text();
     if (html.includes('</body>')) {
       const modifiedHtml = html.replace('</body>', deployButtonScript + '</body>');
       return new Response(modifiedHtml, {
