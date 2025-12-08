@@ -1,17 +1,17 @@
 {
   "hero": {
-    "poster": "/images/hero-poster.jpg"
+    "poster": null
   },
   "programme": {
-    "miniGarten": "/images/programs/garden.jpg",
-    "miniProjekte": "/images/programs/projects.jpg",
-    "miniTurnen": "/images/programs/sports.png",
+    "miniGarten": null,
+    "miniProjekte": null,
+    "miniTurnen": null,
     "miniMuseum": null,
-    "miniRestaurant": "/images/mini-restaurant-poster.jpg",
-    "tagesschule": "/images/programs/tagesschule.jpg"
+    "miniRestaurant": null,
+    "tagesschule": null
   },
   "ueberUns": {
-    "bild1": "/images/about/children-playing-1.jpg",
-    "bild2": "/images/about/children-playing-2.jpg"
+    "bild1": null,
+    "bild2": null
   }
 }
