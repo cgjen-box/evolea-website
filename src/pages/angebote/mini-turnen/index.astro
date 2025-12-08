@@ -10,63 +10,82 @@ const lang = getLangFromUrl(Astro.url);
 const translatePath = useTranslatedPath(lang);
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 
+// Get CMS content
+const pageEntry = await getEntry('pages', 'mini-turnen');
+const page = pageEntry?.data;
+
 // Get site images from CMS
 const siteImagesEntry = await getEntry('settings', 'images');
 const siteImages = siteImagesEntry?.data;
 const heroImage = siteImages?.programmeHeroes?.miniTurnen
   ? base + siteImages.programmeHeroes.miniTurnen
   : base + "/images/generated/mini-turnen-hero.png";
+
+// Helper to get bilingual text
+const getText = (obj: { de?: string; en?: string } | undefined, fallback: string = '') => {
+  if (!obj) return fallback;
+  return lang === 'de' ? (obj.de || fallback) : (obj.en || obj.de || fallback);
+};
+
+// Page content with fallbacks
+const hero = page?.hero || {};
+const infoKarten = page?.infoKarten || [];
+const fuerWen = page?.fuerWen || {};
+const training = page?.training || {};
+const vorteile = page?.vorteile || {};
+const praktischeInfos = page?.praktischeInfos || {};
+const cta = page?.cta || {};
 ---
 
-<Base title="Mini Turnen" description="Inklusives Sportangebot für Kinder im Autismus Spektrum oder mit ADHS (5-8 Jahre). Spiel und Spass in strukturiertem Rahmen.">
+<Base title={hero.titel || 'Mini Turnen'} description="Inklusives Sportangebot für Kinder im Autismus Spektrum oder mit ADHS (5-8 Jahre). Spiel und Spass in strukturiertem Rahmen.">
   <!-- Hero Section -->
   <section class="relative py-20 md:py-28 bg-gradient-to-br from-evolea-sky/10 to-evolea-cream overflow-hidden">
     <FloatingShapes variant="minimal" />
     <div class="container mx-auto max-w-6xl px-4 relative z-10">
       <nav class="mb-8 text-sm text-evolea-text-light">
-        <a href={translatePath('/')} class="hover:text-evolea-purple transition-colors">Startseite</a>
+        <a href={translatePath('/')} class="hover:text-evolea-purple transition-colors">{lang === 'de' ? 'Startseite' : 'Home'}</a>
         <span class="mx-2">/</span>
-        <a href={translatePath('/angebote/')} class="hover:text-evolea-purple transition-colors">Angebote</a>
+        <a href={translatePath('/angebote/')} class="hover:text-evolea-purple transition-colors">{lang === 'de' ? 'Angebote' : 'Programs'}</a>
         <span class="mx-2">/</span>
-        <span class="text-evolea-purple font-medium">Mini Turnen</span>
+        <span class="text-evolea-purple font-medium">{hero.titel || 'Mini Turnen'}</span>
       </nav>
 
       <div class="grid lg:grid-cols-2 gap-12 items-center">
         <div>
           <div class="inline-flex items-center gap-2 bg-evolea-sky/20 text-evolea-sky px-4 py-2 rounded-full text-sm font-medium mb-6">
             <Icon name="ball" size="sm" />
-            <span>Inklusives Sportangebot</span>
+            <span>{getText(hero.badge, 'Inklusives Sportangebot')}</span>
           </div>
           <h1 class="text-4xl md:text-5xl lg:text-6xl font-display font-bold text-evolea-purple mb-6 leading-tight">
-            Mini Turnen
+            {hero.titel || 'Mini Turnen'}
           </h1>
           <p class="text-xl md:text-2xl text-evolea-text-light mb-4 leading-relaxed">
-            Spiel und Spass stehen im Fokus
+            {getText(hero.untertitel, 'Spiel und Spass stehen im Fokus')}
           </p>
           <p class="text-lg text-evolea-text-light mb-8">
-            Ein sicherer, klar strukturierter Rahmen für Kinder, die in regulären Freizeitangeboten oft überfordert sind. Polysportiv und bewegungsfreudig.
+            {getText(hero.beschreibung, 'Ein sicherer, klar strukturierter Rahmen für Kinder, die in regulären Freizeitangeboten oft überfordert sind. Polysportiv und bewegungsfreudig.')}
           </p>
           <div class="flex flex-wrap gap-4">
-            <a href="#anmeldung" class="btn-primary">
-              Jetzt anmelden
+            <a href={hero.buttonLink || '#anmeldung'} class="btn-primary">
+              {getText(hero.buttonText, 'Jetzt anmelden')}
               <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
               </svg>
             </a>
-            <a href={translatePath('/kontakt/')} class="btn-secondary">
-              Kostenlose Beratung
+            <a href={hero.zweitButtonLink || translatePath('/kontakt/')} class="btn-secondary">
+              {getText(hero.zweitButtonText, 'Kostenlose Beratung')}
             </a>
           </div>
         </div>
         <div class="relative">
           <img
             src={heroImage}
-            alt="Kinder beim Sport und Turnen"
+            alt={getText(hero.untertitel, 'Kinder beim Sport und Turnen')}
             class="rounded-evolea-lg shadow-elevated w-full object-cover aspect-4/3"
           />
           <div class="absolute -bottom-4 -left-4 bg-white rounded-evolea p-4 shadow-card">
-            <div class="text-3xl font-display font-bold text-evolea-sky">5-8</div>
-            <div class="text-sm text-evolea-text-light">Jahre</div>
+            <div class="text-3xl font-display font-bold text-evolea-sky">{hero.alter || '5-8'}</div>
+            <div class="text-sm text-evolea-text-light">{lang === 'de' ? 'Jahre' : 'Years'}</div>
           </div>
         </div>
       </div>
@@ -77,26 +96,38 @@ const heroImage = siteImages?.programmeHeroes?.miniTurnen
   <section class="py-16 bg-white">
     <div class="container mx-auto max-w-6xl px-4">
       <div class="grid md:grid-cols-4 gap-6">
-        <div class="bg-evolea-cream rounded-evolea-lg p-6 text-center">
-          <div class="flex justify-center mb-3"><Icon name="sparkle" size="lg" /></div>
-          <div class="font-display font-bold text-evolea-purple text-lg">Alter</div>
-          <div class="text-evolea-text-light">5-8 Jahre</div>
-        </div>
-        <div class="bg-evolea-cream rounded-evolea-lg p-6 text-center">
-          <div class="flex justify-center mb-3"><Icon name="clipboard" size="lg" /></div>
-          <div class="font-display font-bold text-evolea-purple text-lg">Wann</div>
-          <div class="text-evolea-text-light">Mittwoch 18:00-19:30</div>
-        </div>
-        <div class="bg-evolea-cream rounded-evolea-lg p-6 text-center">
-          <div class="flex justify-center mb-3"><Icon name="chart" size="lg" /></div>
-          <div class="font-display font-bold text-evolea-purple text-lg">Start</div>
-          <div class="text-evolea-text-light">Januar 2025</div>
-        </div>
-        <div class="bg-evolea-cream rounded-evolea-lg p-6 text-center">
-          <div class="flex justify-center mb-3"><Icon name="target" size="lg" /></div>
-          <div class="font-display font-bold text-evolea-purple text-lg">Wo</div>
-          <div class="text-evolea-text-light">Wallisellen</div>
-        </div>
+        {infoKarten.length > 0 ? (
+          infoKarten.map((karte: any) => (
+            <div class="bg-evolea-cream rounded-evolea-lg p-6 text-center">
+              <div class="flex justify-center mb-3"><Icon name={karte.icon || 'sparkle'} size="lg" /></div>
+              <div class="font-display font-bold text-evolea-purple text-lg">{getText(karte.label, '')}</div>
+              <div class="text-evolea-text-light">{getText(karte.wert, '')}</div>
+            </div>
+          ))
+        ) : (
+          <>
+            <div class="bg-evolea-cream rounded-evolea-lg p-6 text-center">
+              <div class="flex justify-center mb-3"><Icon name="sparkle" size="lg" /></div>
+              <div class="font-display font-bold text-evolea-purple text-lg">Alter</div>
+              <div class="text-evolea-text-light">5-8 Jahre</div>
+            </div>
+            <div class="bg-evolea-cream rounded-evolea-lg p-6 text-center">
+              <div class="flex justify-center mb-3"><Icon name="clipboard" size="lg" /></div>
+              <div class="font-display font-bold text-evolea-purple text-lg">Wann</div>
+              <div class="text-evolea-text-light">Mittwoch 18:00-19:30</div>
+            </div>
+            <div class="bg-evolea-cream rounded-evolea-lg p-6 text-center">
+              <div class="flex justify-center mb-3"><Icon name="chart" size="lg" /></div>
+              <div class="font-display font-bold text-evolea-purple text-lg">Start</div>
+              <div class="text-evolea-text-light">Januar 2025</div>
+            </div>
+            <div class="bg-evolea-cream rounded-evolea-lg p-6 text-center">
+              <div class="flex justify-center mb-3"><Icon name="target" size="lg" /></div>
+              <div class="font-display font-bold text-evolea-purple text-lg">Wo</div>
+              <div class="text-evolea-text-light">Wallisellen</div>
+            </div>
+          </>
+        )}
       </div>
     </div>
   </section>
@@ -108,134 +139,182 @@ const heroImage = siteImages?.programmeHeroes?.miniTurnen
 
         <h2 class="text-3xl font-display font-bold text-evolea-purple mb-6 flex items-center gap-3">
           <span class="text-evolea-sky">●</span>
-          Für wen ist Mini Turnen?
+          {getText(fuerWen.titel, 'Für wen ist Mini Turnen?')}
         </h2>
         <p class="text-evolea-text-light mb-8 text-lg leading-relaxed">
-          Mini Turnen richtet sich an Kinder im Autismus Spektrum oder mit ADHS im Alter von <strong>5-8 Jahren</strong>. Das Angebot ist ideal für Kinder, die Freude an Bewegung haben, aber in regulären Sportvereinen oft überfordert sind.
+          {getText(fuerWen.text, 'Mini Turnen richtet sich an Kinder im Autismus Spektrum oder mit ADHS im Alter von 5-8 Jahren. Das Angebot ist ideal für Kinder, die Freude an Bewegung haben, aber in regulären Sportvereinen oft überfordert sind.')}
         </p>
 
         <div class="bg-evolea-sky/10 border-l-4 border-evolea-sky rounded-r-evolea p-6 mb-12">
-          <h3 class="font-display font-bold text-evolea-purple text-xl mb-2">Voraussetzungen für die Teilnahme</h3>
+          <h3 class="font-display font-bold text-evolea-purple text-xl mb-2">{getText(fuerWen.voraussetzungenTitel, 'Voraussetzungen für die Teilnahme')}</h3>
           <ul class="text-evolea-text-light mb-0 space-y-2">
-            <li>✓ Funktionelle Kommunikation</li>
-            <li>✓ Interesse an sozialem Kontakt und Sport</li>
-            <li>✓ Kann Anweisungen und Regeln folgen</li>
-            <li>✓ Altersgerechte Selbstständigkeit</li>
-            <li>✓ Keine selbst- oder fremdverletzenden Verhaltensweisen</li>
+            {fuerWen.voraussetzungen?.length > 0 ? (
+              fuerWen.voraussetzungen.map((v: any) => (
+                <li>✓ {getText(v, '')}</li>
+              ))
+            ) : (
+              <>
+                <li>✓ Funktionelle Kommunikation</li>
+                <li>✓ Interesse an sozialem Kontakt und Sport</li>
+                <li>✓ Kann Anweisungen und Regeln folgen</li>
+                <li>✓ Altersgerechte Selbstständigkeit</li>
+                <li>✓ Keine selbst- oder fremdverletzenden Verhaltensweisen</li>
+              </>
+            )}
           </ul>
         </div>
 
         <h2 class="text-3xl font-display font-bold text-evolea-purple mb-6 flex items-center gap-3">
           <span class="text-evolea-green">●</span>
-          Was trainieren wir?
+          {getText(training.titel, 'Was trainieren wir?')}
         </h2>
         <p class="text-evolea-text-light mb-6 text-lg leading-relaxed">
-          Die Lektionen sind polysportiv gestaltet – wir bieten vielfältige Bewegungserfahrungen in einem strukturierten, sicheren Rahmen.
+          {getText(training.text, 'Die Lektionen sind polysportiv gestaltet – wir bieten vielfältige Bewegungserfahrungen in einem strukturierten, sicheren Rahmen.')}
         </p>
 
         <div class="grid md:grid-cols-3 gap-4 mb-12">
-          <div class="bg-white border border-evolea-purple/10 rounded-evolea-lg p-6 text-center">
-            <div class="flex justify-center mb-3"><Icon name="running" size="lg" /></div>
-            <h3 class="font-display font-bold text-evolea-purple text-lg mb-2">Laufen & Rennen</h3>
-            <p class="text-evolea-text-light text-sm mb-0">Koordination und Ausdauer</p>
-          </div>
-          <div class="bg-white border border-evolea-purple/10 rounded-evolea-lg p-6 text-center">
-            <div class="flex justify-center mb-3"><Icon name="leaf" size="lg" /></div>
-            <h3 class="font-display font-bold text-evolea-purple text-lg mb-2">Klettern</h3>
-            <p class="text-evolea-text-light text-sm mb-0">Kraft und Mut</p>
-          </div>
-          <div class="bg-white border border-evolea-purple/10 rounded-evolea-lg p-6 text-center">
-            <div class="flex justify-center mb-3"><Icon name="target" size="lg" /></div>
-            <h3 class="font-display font-bold text-evolea-purple text-lg mb-2">Balance</h3>
-            <p class="text-evolea-text-light text-sm mb-0">Gleichgewicht und Körpergefühl</p>
-          </div>
-          <div class="bg-white border border-evolea-purple/10 rounded-evolea-lg p-6 text-center">
-            <div class="flex justify-center mb-3"><Icon name="ball" size="lg" /></div>
-            <h3 class="font-display font-bold text-evolea-purple text-lg mb-2">Ballspiele</h3>
-            <p class="text-evolea-text-light text-sm mb-0">Teamwork und Reaktion</p>
-          </div>
-          <div class="bg-white border border-evolea-purple/10 rounded-evolea-lg p-6 text-center">
-            <div class="flex justify-center mb-3"><Icon name="gymnast" size="lg" /></div>
-            <h3 class="font-display font-bold text-evolea-purple text-lg mb-2">Turnen</h3>
-            <p class="text-evolea-text-light text-sm mb-0">Beweglichkeit und Stärke</p>
-          </div>
-          <div class="bg-white border border-evolea-purple/10 rounded-evolea-lg p-6 text-center">
-            <div class="flex justify-center mb-3"><Icon name="handshake" size="lg" /></div>
-            <h3 class="font-display font-bold text-evolea-purple text-lg mb-2">Feinmotorik</h3>
-            <p class="text-evolea-text-light text-sm mb-0">Geschicklichkeit</p>
-          </div>
+          {training.aktivitaeten?.length > 0 ? (
+            training.aktivitaeten.map((aktivitaet: any) => (
+              <div class="bg-white border border-evolea-purple/10 rounded-evolea-lg p-6 text-center">
+                <div class="flex justify-center mb-3"><Icon name={aktivitaet.icon || 'running'} size="lg" /></div>
+                <h3 class="font-display font-bold text-evolea-purple text-lg mb-2">{getText(aktivitaet.titel, '')}</h3>
+                <p class="text-evolea-text-light text-sm mb-0">{getText(aktivitaet.beschreibung, '')}</p>
+              </div>
+            ))
+          ) : (
+            <>
+              <div class="bg-white border border-evolea-purple/10 rounded-evolea-lg p-6 text-center">
+                <div class="flex justify-center mb-3"><Icon name="running" size="lg" /></div>
+                <h3 class="font-display font-bold text-evolea-purple text-lg mb-2">Laufen & Rennen</h3>
+                <p class="text-evolea-text-light text-sm mb-0">Koordination und Ausdauer</p>
+              </div>
+              <div class="bg-white border border-evolea-purple/10 rounded-evolea-lg p-6 text-center">
+                <div class="flex justify-center mb-3"><Icon name="leaf" size="lg" /></div>
+                <h3 class="font-display font-bold text-evolea-purple text-lg mb-2">Klettern</h3>
+                <p class="text-evolea-text-light text-sm mb-0">Kraft und Mut</p>
+              </div>
+              <div class="bg-white border border-evolea-purple/10 rounded-evolea-lg p-6 text-center">
+                <div class="flex justify-center mb-3"><Icon name="target" size="lg" /></div>
+                <h3 class="font-display font-bold text-evolea-purple text-lg mb-2">Balance</h3>
+                <p class="text-evolea-text-light text-sm mb-0">Gleichgewicht und Körpergefühl</p>
+              </div>
+              <div class="bg-white border border-evolea-purple/10 rounded-evolea-lg p-6 text-center">
+                <div class="flex justify-center mb-3"><Icon name="ball" size="lg" /></div>
+                <h3 class="font-display font-bold text-evolea-purple text-lg mb-2">Ballspiele</h3>
+                <p class="text-evolea-text-light text-sm mb-0">Teamwork und Reaktion</p>
+              </div>
+              <div class="bg-white border border-evolea-purple/10 rounded-evolea-lg p-6 text-center">
+                <div class="flex justify-center mb-3"><Icon name="gymnast" size="lg" /></div>
+                <h3 class="font-display font-bold text-evolea-purple text-lg mb-2">Turnen</h3>
+                <p class="text-evolea-text-light text-sm mb-0">Beweglichkeit und Stärke</p>
+              </div>
+              <div class="bg-white border border-evolea-purple/10 rounded-evolea-lg p-6 text-center">
+                <div class="flex justify-center mb-3"><Icon name="handshake" size="lg" /></div>
+                <h3 class="font-display font-bold text-evolea-purple text-lg mb-2">Feinmotorik</h3>
+                <p class="text-evolea-text-light text-sm mb-0">Geschicklichkeit</p>
+              </div>
+            </>
+          )}
         </div>
 
         <h2 class="text-3xl font-display font-bold text-evolea-purple mb-6 flex items-center gap-3">
           <span class="text-evolea-orange">●</span>
-          Warum Mini Turnen?
+          {getText(vorteile.titel, 'Warum Mini Turnen?')}
         </h2>
         <div class="space-y-4 mb-12">
-          <div class="flex items-start gap-4 p-4 bg-evolea-cream/50 rounded-evolea">
-            <div class="flex-shrink-0"><Icon name="sparkle" size="lg" /></div>
-            <div>
-              <h4 class="font-display font-bold text-evolea-purple">Selbstvertrauen aufbauen</h4>
-              <p class="text-evolea-text-light mb-0">Durch Bewegungserfolge wächst das Selbstbewusstsein.</p>
-            </div>
-          </div>
-          <div class="flex items-start gap-4 p-4 bg-evolea-cream/50 rounded-evolea">
-            <div class="flex-shrink-0"><Icon name="clipboard" size="lg" /></div>
-            <div>
-              <h4 class="font-display font-bold text-evolea-purple">Klare Strukturen</h4>
-              <p class="text-evolea-text-light mb-0">Vorhersehbare Abläufe und Routinen geben Sicherheit.</p>
-            </div>
-          </div>
-          <div class="flex items-start gap-4 p-4 bg-evolea-cream/50 rounded-evolea">
-            <div class="flex-shrink-0"><Icon name="heart" size="lg" /></div>
-            <div>
-              <h4 class="font-display font-bold text-evolea-purple">Freude an Bewegung</h4>
-              <p class="text-evolea-text-light mb-0">Positive Erfahrungen mit Sport und Gemeinschaft.</p>
-            </div>
-          </div>
-          <div class="flex items-start gap-4 p-4 bg-evolea-cream/50 rounded-evolea">
-            <div class="flex-shrink-0"><Icon name="people" size="lg" /></div>
-            <div>
-              <h4 class="font-display font-bold text-evolea-purple">Zugehörigkeit erleben</h4>
-              <p class="text-evolea-text-light mb-0">Teil einer Gruppe sein und gemeinsam Spass haben.</p>
-            </div>
-          </div>
+          {vorteile.liste?.length > 0 ? (
+            vorteile.liste.map((vorteil: any) => (
+              <div class="flex items-start gap-4 p-4 bg-evolea-cream/50 rounded-evolea">
+                <div class="flex-shrink-0"><Icon name={vorteil.icon || 'sparkle'} size="lg" /></div>
+                <div>
+                  <h4 class="font-display font-bold text-evolea-purple">{getText(vorteil.titel, '')}</h4>
+                  <p class="text-evolea-text-light mb-0">{getText(vorteil.text, '')}</p>
+                </div>
+              </div>
+            ))
+          ) : (
+            <>
+              <div class="flex items-start gap-4 p-4 bg-evolea-cream/50 rounded-evolea">
+                <div class="flex-shrink-0"><Icon name="sparkle" size="lg" /></div>
+                <div>
+                  <h4 class="font-display font-bold text-evolea-purple">Selbstvertrauen aufbauen</h4>
+                  <p class="text-evolea-text-light mb-0">Durch Bewegungserfolge wächst das Selbstbewusstsein.</p>
+                </div>
+              </div>
+              <div class="flex items-start gap-4 p-4 bg-evolea-cream/50 rounded-evolea">
+                <div class="flex-shrink-0"><Icon name="clipboard" size="lg" /></div>
+                <div>
+                  <h4 class="font-display font-bold text-evolea-purple">Klare Strukturen</h4>
+                  <p class="text-evolea-text-light mb-0">Vorhersehbare Abläufe und Routinen geben Sicherheit.</p>
+                </div>
+              </div>
+              <div class="flex items-start gap-4 p-4 bg-evolea-cream/50 rounded-evolea">
+                <div class="flex-shrink-0"><Icon name="heart" size="lg" /></div>
+                <div>
+                  <h4 class="font-display font-bold text-evolea-purple">Freude an Bewegung</h4>
+                  <p class="text-evolea-text-light mb-0">Positive Erfahrungen mit Sport und Gemeinschaft.</p>
+                </div>
+              </div>
+              <div class="flex items-start gap-4 p-4 bg-evolea-cream/50 rounded-evolea">
+                <div class="flex-shrink-0"><Icon name="people" size="lg" /></div>
+                <div>
+                  <h4 class="font-display font-bold text-evolea-purple">Zugehörigkeit erleben</h4>
+                  <p class="text-evolea-text-light mb-0">Teil einer Gruppe sein und gemeinsam Spass haben.</p>
+                </div>
+              </div>
+            </>
+          )}
         </div>
 
         <h2 class="text-3xl font-display font-bold text-evolea-purple mb-6 flex items-center gap-3" id="anmeldung">
           <span class="text-evolea-coral">●</span>
-          Praktische Informationen
+          {getText(praktischeInfos.titel, 'Praktische Informationen')}
         </h2>
 
         <div class="bg-evolea-purple/5 rounded-evolea-lg p-8 mb-12">
           <div class="space-y-4">
-            <div class="flex items-start gap-3">
-              <Icon name="calendar" size="sm" />
-              <div>
-                <strong class="text-evolea-purple">Zeiten</strong>
-                <p class="text-evolea-text-light mb-0">Jeden Mittwoch während der Schulzeit, 18:00–19:30 Uhr (Treffpunkt 15 Min. vorher)</p>
-              </div>
-            </div>
-            <div class="flex items-start gap-3">
-              <Icon name="calendar" size="sm" />
-              <div>
-                <strong class="text-evolea-purple">Startdatum</strong>
-                <p class="text-evolea-text-light mb-0">Januar 2025</p>
-              </div>
-            </div>
-            <div class="flex items-start gap-3">
-              <Icon name="location" size="sm" />
-              <div>
-                <strong class="text-evolea-purple">Standort</strong>
-                <p class="text-evolea-text-light mb-0">Turnhalle Unten, Schulhaus Mösli, Im Mösli 2, 8304 Wallisellen</p>
-              </div>
-            </div>
-            <div class="flex items-start gap-3">
-              <Icon name="mail" size="sm" />
-              <div>
-                <strong class="text-evolea-purple">Kontakt</strong>
-                <p class="text-evolea-text-light mb-0">hello@evolea.ch – Kostenlose Erstberatung möglich</p>
-              </div>
-            </div>
+            {praktischeInfos.infos?.length > 0 ? (
+              praktischeInfos.infos.map((info: any) => (
+                <div class="flex items-start gap-3">
+                  <Icon name={info.icon || 'calendar'} size="sm" />
+                  <div>
+                    <strong class="text-evolea-purple">{getText(info.label, '')}</strong>
+                    <p class="text-evolea-text-light mb-0">{getText(info.wert, '')}</p>
+                  </div>
+                </div>
+              ))
+            ) : (
+              <>
+                <div class="flex items-start gap-3">
+                  <Icon name="calendar" size="sm" />
+                  <div>
+                    <strong class="text-evolea-purple">Zeiten</strong>
+                    <p class="text-evolea-text-light mb-0">Jeden Mittwoch während der Schulzeit, 18:00–19:30 Uhr (Treffpunkt 15 Min. vorher)</p>
+                  </div>
+                </div>
+                <div class="flex items-start gap-3">
+                  <Icon name="calendar" size="sm" />
+                  <div>
+                    <strong class="text-evolea-purple">Startdatum</strong>
+                    <p class="text-evolea-text-light mb-0">Januar 2025</p>
+                  </div>
+                </div>
+                <div class="flex items-start gap-3">
+                  <Icon name="location" size="sm" />
+                  <div>
+                    <strong class="text-evolea-purple">Standort</strong>
+                    <p class="text-evolea-text-light mb-0">Turnhalle Unten, Schulhaus Mösli, Im Mösli 2, 8304 Wallisellen</p>
+                  </div>
+                </div>
+                <div class="flex items-start gap-3">
+                  <Icon name="mail" size="sm" />
+                  <div>
+                    <strong class="text-evolea-purple">Kontakt</strong>
+                    <p class="text-evolea-text-light mb-0">hello@evolea.ch – Kostenlose Erstberatung möglich</p>
+                  </div>
+                </div>
+              </>
+            )}
           </div>
         </div>
 
@@ -245,9 +324,9 @@ const heroImage = siteImages?.programmeHeroes?.miniTurnen
 
   <!-- CTA Section -->
   <GradientCTA
-    title="Bewegung macht Freude!"
-    description="Kontaktieren Sie uns für ein unverbindliches Gespräch."
-    buttonText="Jetzt Kontakt aufnehmen"
+    title={getText(cta.titel, 'Bewegung macht Freude!')}
+    description={getText(cta.beschreibung, 'Kontaktieren Sie uns für ein unverbindliches Gespräch.')}
+    buttonText={getText(cta.buttonText, 'Jetzt Kontakt aufnehmen')}
     buttonHref={translatePath('/kontakt/')}
     variant="calm"
   />

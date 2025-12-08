@@ -94,6 +94,7 @@ export default config({
     navigation: {
       Inhalte: ['blog', 'team', 'principles'],
       Seiten: ['homepage', 'about', 'contact'],
+      Programme: ['angeboteIndex', 'miniGarten', 'miniProjekte', 'miniTurnen', 'tagesschule'],
       Medien: ['siteImages'],
       Einstellungen: ['siteSettings'],
     },
@@ -835,6 +836,653 @@ export default config({
             }),
           },
           { label: 'Logos' }
+        ),
+      },
+    }),
+
+    // =========================================================================
+    // ANGEBOTE INDEX SINGLETON
+    // =========================================================================
+    angeboteIndex: singleton({
+      label: 'Angebote Übersicht',
+      path: 'src/content/pages/angebote-index',
+      format: { data: 'json' },
+      schema: {
+        hero: fields.object(
+          {
+            titel: bilingualText('Titel', 'Title'),
+            untertitel: bilingualText('Untertitel', 'Subtitle'),
+          },
+          { label: 'Hero-Bereich' }
+        ),
+
+        intro: fields.object(
+          {
+            titel: bilingualText('Titel', 'Title'),
+            text: bilingualText('Text', 'Text', { multiline: true }),
+          },
+          { label: 'Einführung (Unser Ansatz)' }
+        ),
+
+        aktuelleAngebote: fields.object(
+          {
+            label: bilingualText('Label', 'Label', { description: 'z.B. "Aktuelle Angebote"' }),
+            titel: bilingualText('Titel', 'Title', { description: 'z.B. "Jetzt anmelden"' }),
+          },
+          { label: 'Aktuelle Angebote Überschrift' }
+        ),
+
+        hauptProgramme: fields.array(
+          fields.object({
+            titel: fields.text({ label: 'Titel' }),
+            beschreibung: bilingualText('Beschreibung', 'Description'),
+            icon: fields.select({
+              label: 'Icon',
+              options: iconOptions,
+              defaultValue: 'sparkle',
+            }),
+            farbe: fields.select({
+              label: 'Farbe',
+              options: colorOptions,
+              defaultValue: 'green',
+            }),
+            alter: bilingualText('Altersgruppe', 'Age Group', { description: 'z.B. "3-5"' }),
+            link: fields.text({ label: 'Link', description: 'z.B. "/angebote/mini-garten/"' }),
+            status: bilingualText('Status', 'Status', { description: 'z.B. "Anmeldung offen"' }),
+          }),
+          {
+            label: 'Hauptprogramme (farbige Karten)',
+            description: 'Programme mit offener Anmeldung',
+            itemLabel: (props) => props.fields.titel.value || 'Neues Programm',
+          }
+        ),
+
+        weitereAngeboteLabel: bilingualText('Weitere Angebote Label', 'More Programs Label'),
+
+        weitereProgramme: fields.array(
+          fields.object({
+            titel: fields.text({ label: 'Titel' }),
+            beschreibung: bilingualText('Beschreibung', 'Description'),
+            icon: fields.select({
+              label: 'Icon',
+              options: iconOptions,
+              defaultValue: 'sparkle',
+            }),
+            farbe: fields.select({
+              label: 'Farbe',
+              options: colorOptions,
+              defaultValue: 'purple',
+            }),
+            alter: bilingualText('Zielgruppe', 'Target Group', { description: 'z.B. "Eltern" oder "4-12"' }),
+            link: fields.text({ label: 'Link' }),
+            status: bilingualText('Status', 'Status'),
+            istVision: fields.checkbox({
+              label: 'Ist Vision/Zukunft',
+              description: 'Aktivieren für Programme die noch in Planung sind',
+              defaultValue: false,
+            }),
+          }),
+          {
+            label: 'Weitere Programme',
+            description: 'Zusätzliche Angebote wie EVOLEA Café, Tagesschule etc.',
+            itemLabel: (props) => props.fields.titel.value || 'Neues Programm',
+          }
+        ),
+
+        cta: fields.object(
+          {
+            titel: bilingualText('Titel', 'Title'),
+            beschreibung: bilingualText('Beschreibung', 'Description'),
+            buttonText: bilingualText('Button Text', 'Button Text'),
+          },
+          { label: 'Call-to-Action (unten)' }
+        ),
+
+        labels: fields.object(
+          {
+            mehrErfahren: bilingualText('Mehr erfahren', 'Learn more'),
+            jahre: bilingualText('Jahre', 'Years', { description: 'Text nach Alter, z.B. "Jahre"' }),
+          },
+          { label: 'Wiederkehrende Texte' }
+        ),
+      },
+    }),
+
+    // =========================================================================
+    // MINI GARTEN SINGLETON
+    // =========================================================================
+    miniGarten: singleton({
+      label: 'Mini Garten',
+      path: 'src/content/pages/mini-garten',
+      format: { data: 'json' },
+      schema: {
+        // --- HERO ---
+        hero: fields.object(
+          {
+            badge: bilingualText('Badge', 'Badge', { description: 'z.B. "Kindergartenvorbereitung"' }),
+            titel: fields.text({ label: 'Titel', defaultValue: 'Mini Garten' }),
+            untertitel: bilingualText('Untertitel', 'Subtitle'),
+            buttonText: bilingualText('Button Text', 'Button Text'),
+            buttonLink: fields.text({ label: 'Button Link', defaultValue: '#anmeldung' }),
+            zweitButtonText: bilingualText('Zweiter Button', 'Second Button'),
+            zweitButtonLink: fields.text({ label: 'Zweiter Button Link' }),
+            alter: fields.text({ label: 'Altersanzeige', description: 'z.B. "3-6"' }),
+          },
+          { label: 'Hero-Bereich' }
+        ),
+
+        // --- INFO KARTEN ---
+        infoKarten: fields.array(
+          fields.object({
+            icon: fields.select({ label: 'Icon', options: iconOptions, defaultValue: 'sparkle' }),
+            label: bilingualText('Label', 'Label'),
+            wert: bilingualText('Wert', 'Value'),
+          }),
+          {
+            label: 'Info-Karten (4 Stück)',
+            description: 'Die 4 Karten unter dem Hero (Alter, Gruppengrösse, Wann, Wo)',
+            itemLabel: (props) => props.fields.label.fields.de.value as string || 'Neue Karte',
+          }
+        ),
+
+        // --- FÜR WEN ---
+        fuerWen: fields.object(
+          {
+            titel: bilingualText('Titel', 'Title'),
+            text: bilingualText('Text', 'Text', { multiline: true }),
+            highlightTitel: bilingualText('Highlight Titel', 'Highlight Title'),
+            highlightText: bilingualText('Highlight Text', 'Highlight Text', { multiline: true }),
+          },
+          { label: 'Für wen ist Mini Garten?' }
+        ),
+
+        // --- TYPISCHER NACHMITTAG ---
+        typischerTag: fields.object(
+          {
+            titel: bilingualText('Titel', 'Title'),
+            text: bilingualText('Text', 'Text', { multiline: true }),
+            aktivitaeten: fields.array(
+              fields.object({
+                icon: fields.select({ label: 'Icon', options: iconOptions, defaultValue: 'sparkle' }),
+                name: bilingualText('Name', 'Name'),
+              }),
+              {
+                label: 'Aktivitäten',
+                itemLabel: (props) => props.fields.name.fields.de.value as string || 'Neue Aktivität',
+              }
+            ),
+          },
+          { label: 'Ein typischer Nachmittag' }
+        ),
+
+        // --- LERNZIELE ---
+        lernziele: fields.object(
+          {
+            titel: bilingualText('Titel', 'Title'),
+            text: bilingualText('Text', 'Text', { multiline: true }),
+            ziele: fields.array(
+              fields.object({
+                titel: bilingualText('Titel', 'Title'),
+                beschreibung: bilingualText('Beschreibung', 'Description'),
+              }),
+              {
+                label: 'Lernziele Liste',
+                itemLabel: (props) => props.fields.titel.fields.de.value as string || 'Neues Ziel',
+              }
+            ),
+          },
+          { label: 'Lernziele' }
+        ),
+
+        // --- ANMELDUNG ---
+        anmeldung: fields.object(
+          {
+            titel: bilingualText('Titel', 'Title'),
+            text: bilingualText('Text', 'Text', { multiline: true }),
+            infoTitel: bilingualText('Info-Box Titel', 'Info Box Title'),
+            infos: fields.array(
+              fields.object({
+                icon: fields.select({ label: 'Icon', options: iconOptions, defaultValue: 'target' }),
+                label: bilingualText('Label', 'Label'),
+                wert: bilingualText('Wert', 'Value'),
+              }),
+              {
+                label: 'Praktische Infos',
+                itemLabel: (props) => props.fields.label.fields.de.value as string || 'Neue Info',
+              }
+            ),
+          },
+          { label: 'Anmeldung & Ablauf' }
+        ),
+
+        // --- CTA ---
+        cta: fields.object(
+          {
+            titel: bilingualText('Titel', 'Title'),
+            beschreibung: bilingualText('Beschreibung', 'Description'),
+            buttonText: bilingualText('Button Text', 'Button Text'),
+          },
+          { label: 'Call-to-Action (unten)' }
+        ),
+      },
+    }),
+
+    // =========================================================================
+    // MINI PROJEKTE SINGLETON
+    // =========================================================================
+    miniProjekte: singleton({
+      label: 'Mini Projekte',
+      path: 'src/content/pages/mini-projekte',
+      format: { data: 'json' },
+      schema: {
+        // --- HERO ---
+        hero: fields.object(
+          {
+            badge: bilingualText('Badge', 'Badge', { description: 'z.B. "Social Skills Gruppe"' }),
+            titel: fields.text({ label: 'Titel', defaultValue: 'Mini Projekte' }),
+            untertitel: bilingualText('Untertitel', 'Subtitle'),
+            beschreibung: bilingualText('Beschreibung', 'Description', { multiline: true }),
+            buttonText: bilingualText('Button Text', 'Button Text'),
+            buttonLink: fields.text({ label: 'Button Link', defaultValue: '#projekte' }),
+            alter: fields.text({ label: 'Altersanzeige', description: 'z.B. "5-8"' }),
+          },
+          { label: 'Hero-Bereich' }
+        ),
+
+        // --- INFO KARTEN ---
+        infoKarten: fields.array(
+          fields.object({
+            icon: fields.select({ label: 'Icon', options: iconOptions, defaultValue: 'sparkle' }),
+            label: bilingualText('Label', 'Label'),
+            wert: bilingualText('Wert', 'Value'),
+          }),
+          {
+            label: 'Info-Karten (4 Stück)',
+            itemLabel: (props) => props.fields.label.fields.de.value as string || 'Neue Karte',
+          }
+        ),
+
+        // --- FÜR WEN ---
+        fuerWen: fields.object(
+          {
+            titel: bilingualText('Titel', 'Title'),
+            text: bilingualText('Text', 'Text', { multiline: true }),
+            voraussetzungenTitel: bilingualText('Voraussetzungen Titel', 'Prerequisites Title'),
+            voraussetzungen: fields.array(
+              bilingualText('Voraussetzung', 'Prerequisite'),
+              {
+                label: 'Voraussetzungen Liste',
+                itemLabel: (props) => props.fields.de.value as string || 'Neue Voraussetzung',
+              }
+            ),
+          },
+          { label: 'Für wen ist Mini Projekte?' }
+        ),
+
+        // --- WAS MACHT BESONDERS ---
+        besonderheiten: fields.object(
+          {
+            titel: bilingualText('Titel', 'Title'),
+            features: fields.array(
+              fields.object({
+                icon: fields.select({ label: 'Icon', options: iconOptions, defaultValue: 'sparkle' }),
+                titel: bilingualText('Titel', 'Title'),
+                text: bilingualText('Text', 'Text', { multiline: true }),
+              }),
+              {
+                label: 'Besonderheiten',
+                itemLabel: (props) => props.fields.titel.fields.de.value as string || 'Neue Besonderheit',
+              }
+            ),
+          },
+          { label: 'Was macht Mini Projekte besonders?' }
+        ),
+
+        // --- AKTUELLE PROJEKTE ---
+        projekte: fields.object(
+          {
+            titel: bilingualText('Titel', 'Title'),
+            liste: fields.array(
+              fields.object({
+                titel: fields.text({ label: 'Titel' }),
+                beschreibung: bilingualText('Beschreibung', 'Description', { multiline: true }),
+                zeitraum: bilingualText('Zeitraum', 'Period', { description: 'z.B. "Oktober - Dezember 2025"' }),
+                status: bilingualText('Status', 'Status', { description: 'z.B. "Ausgebucht" oder "Anmeldung offen"' }),
+                statusFarbe: fields.select({
+                  label: 'Status Farbe',
+                  options: [
+                    { label: 'Magenta (ausgebucht)', value: 'magenta' },
+                    { label: 'Grün (offen)', value: 'green' },
+                    { label: 'Orange (bald)', value: 'orange' },
+                  ],
+                  defaultValue: 'green',
+                }),
+                link: fields.text({ label: 'Link (optional)', description: 'Falls eigene Seite vorhanden' }),
+                farbe: fields.select({ label: 'Karten-Farbe', options: colorOptions, defaultValue: 'orange' }),
+              }),
+              {
+                label: 'Projekte Liste',
+                itemLabel: (props) => props.fields.titel.value || 'Neues Projekt',
+              }
+            ),
+          },
+          { label: 'Aktuelle & kommende Projekte' }
+        ),
+
+        // --- PRAKTISCHE INFOS ---
+        praktischeInfos: fields.object(
+          {
+            titel: bilingualText('Titel', 'Title'),
+            infos: fields.array(
+              fields.object({
+                icon: fields.select({ label: 'Icon', options: iconOptions, defaultValue: 'target' }),
+                label: bilingualText('Label', 'Label'),
+                wert: bilingualText('Wert', 'Value'),
+              }),
+              {
+                label: 'Infos Liste',
+                itemLabel: (props) => props.fields.label.fields.de.value as string || 'Neue Info',
+              }
+            ),
+          },
+          { label: 'Praktische Informationen' }
+        ),
+
+        // --- CTA ---
+        cta: fields.object(
+          {
+            titel: bilingualText('Titel', 'Title'),
+            beschreibung: bilingualText('Beschreibung', 'Description'),
+            buttonText: bilingualText('Button Text', 'Button Text'),
+          },
+          { label: 'Call-to-Action (unten)' }
+        ),
+      },
+    }),
+
+    // =========================================================================
+    // MINI TURNEN SINGLETON
+    // =========================================================================
+    miniTurnen: singleton({
+      label: 'Mini Turnen',
+      path: 'src/content/pages/mini-turnen',
+      format: { data: 'json' },
+      schema: {
+        // --- HERO ---
+        hero: fields.object(
+          {
+            badge: bilingualText('Badge', 'Badge', { description: 'z.B. "Inklusives Sportangebot"' }),
+            titel: fields.text({ label: 'Titel', defaultValue: 'Mini Turnen' }),
+            untertitel: bilingualText('Untertitel', 'Subtitle'),
+            beschreibung: bilingualText('Beschreibung', 'Description', { multiline: true }),
+            buttonText: bilingualText('Button Text', 'Button Text'),
+            buttonLink: fields.text({ label: 'Button Link', defaultValue: '#anmeldung' }),
+            zweitButtonText: bilingualText('Zweiter Button', 'Second Button'),
+            zweitButtonLink: fields.text({ label: 'Zweiter Button Link' }),
+            alter: fields.text({ label: 'Altersanzeige', description: 'z.B. "5-8"' }),
+          },
+          { label: 'Hero-Bereich' }
+        ),
+
+        // --- INFO KARTEN ---
+        infoKarten: fields.array(
+          fields.object({
+            icon: fields.select({ label: 'Icon', options: iconOptions, defaultValue: 'sparkle' }),
+            label: bilingualText('Label', 'Label'),
+            wert: bilingualText('Wert', 'Value'),
+          }),
+          {
+            label: 'Info-Karten (4 Stück)',
+            itemLabel: (props) => props.fields.label.fields.de.value as string || 'Neue Karte',
+          }
+        ),
+
+        // --- FÜR WEN ---
+        fuerWen: fields.object(
+          {
+            titel: bilingualText('Titel', 'Title'),
+            text: bilingualText('Text', 'Text', { multiline: true }),
+            voraussetzungenTitel: bilingualText('Voraussetzungen Titel', 'Prerequisites Title'),
+            voraussetzungen: fields.array(
+              bilingualText('Voraussetzung', 'Prerequisite'),
+              {
+                label: 'Voraussetzungen Liste',
+                itemLabel: (props) => props.fields.de.value as string || 'Neue Voraussetzung',
+              }
+            ),
+          },
+          { label: 'Für wen ist Mini Turnen?' }
+        ),
+
+        // --- WAS TRAINIEREN WIR ---
+        training: fields.object(
+          {
+            titel: bilingualText('Titel', 'Title'),
+            text: bilingualText('Text', 'Text', { multiline: true }),
+            aktivitaeten: fields.array(
+              fields.object({
+                icon: fields.select({ label: 'Icon', options: iconOptions, defaultValue: 'running' }),
+                titel: bilingualText('Titel', 'Title'),
+                beschreibung: bilingualText('Beschreibung', 'Description'),
+              }),
+              {
+                label: 'Trainings-Aktivitäten',
+                itemLabel: (props) => props.fields.titel.fields.de.value as string || 'Neue Aktivität',
+              }
+            ),
+          },
+          { label: 'Was trainieren wir?' }
+        ),
+
+        // --- WARUM MINI TURNEN ---
+        vorteile: fields.object(
+          {
+            titel: bilingualText('Titel', 'Title'),
+            liste: fields.array(
+              fields.object({
+                icon: fields.select({ label: 'Icon', options: iconOptions, defaultValue: 'sparkle' }),
+                titel: bilingualText('Titel', 'Title'),
+                text: bilingualText('Text', 'Text'),
+              }),
+              {
+                label: 'Vorteile Liste',
+                itemLabel: (props) => props.fields.titel.fields.de.value as string || 'Neuer Vorteil',
+              }
+            ),
+          },
+          { label: 'Warum Mini Turnen?' }
+        ),
+
+        // --- PRAKTISCHE INFOS ---
+        praktischeInfos: fields.object(
+          {
+            titel: bilingualText('Titel', 'Title'),
+            infos: fields.array(
+              fields.object({
+                icon: fields.select({ label: 'Icon', options: iconOptions, defaultValue: 'target' }),
+                label: bilingualText('Label', 'Label'),
+                wert: bilingualText('Wert', 'Value'),
+              }),
+              {
+                label: 'Infos Liste',
+                itemLabel: (props) => props.fields.label.fields.de.value as string || 'Neue Info',
+              }
+            ),
+          },
+          { label: 'Praktische Informationen' }
+        ),
+
+        // --- CTA ---
+        cta: fields.object(
+          {
+            titel: bilingualText('Titel', 'Title'),
+            beschreibung: bilingualText('Beschreibung', 'Description'),
+            buttonText: bilingualText('Button Text', 'Button Text'),
+          },
+          { label: 'Call-to-Action (unten)' }
+        ),
+      },
+    }),
+
+    // =========================================================================
+    // TAGESSCHULE SINGLETON
+    // =========================================================================
+    tagesschule: singleton({
+      label: 'Tagesschule',
+      path: 'src/content/pages/tagesschule',
+      format: { data: 'json' },
+      schema: {
+        // --- HERO ---
+        hero: fields.object(
+          {
+            badge: bilingualText('Badge', 'Badge'),
+            titel: fields.text({ label: 'Titel', defaultValue: 'Tagesschule' }),
+            untertitel: bilingualText('Untertitel', 'Subtitle', { multiline: true }),
+            buttonText: bilingualText('Button Text', 'Button Text'),
+            buttonLink: fields.text({ label: 'Button Link', defaultValue: '#interesse' }),
+            zweitButtonText: bilingualText('Zweiter Button', 'Second Button'),
+            zweitButtonLink: fields.text({ label: 'Zweiter Button Link' }),
+            alter: fields.text({ label: 'Altersanzeige', description: 'z.B. "6-12"' }),
+          },
+          { label: 'Hero-Bereich' }
+        ),
+
+        // --- STATUS BANNER ---
+        statusBanner: fields.object(
+          {
+            aktiv: fields.checkbox({ label: 'Banner anzeigen', defaultValue: true }),
+            text: bilingualText('Banner Text', 'Banner Text'),
+          },
+          { label: 'Status-Banner (lila Leiste)' }
+        ),
+
+        // --- INFO KARTEN ---
+        infoKarten: fields.array(
+          fields.object({
+            label: bilingualText('Label', 'Label'),
+            wert: bilingualText('Wert', 'Value'),
+          }),
+          {
+            label: 'Info-Karten (4 Stück)',
+            itemLabel: (props) => props.fields.label.fields.de.value as string || 'Neue Karte',
+          }
+        ),
+
+        // --- WAS IST TAGESSCHULE ---
+        wasIst: fields.object(
+          {
+            titel: bilingualText('Titel', 'Title'),
+            text: bilingualText('Text', 'Text', { multiline: true }),
+            konzeptTitel: bilingualText('Konzept Titel', 'Concept Title'),
+            konzeptText: bilingualText('Konzept Text', 'Concept Text', { multiline: true }),
+          },
+          { label: 'Was ist die EVOLEA Tagesschule?' }
+        ),
+
+        // --- FÜR WEN ---
+        fuerWen: fields.object(
+          {
+            titel: bilingualText('Titel', 'Title'),
+            text: bilingualText('Text', 'Text', { multiline: true }),
+            kriterien: fields.array(
+              bilingualText('Kriterium', 'Criterion'),
+              {
+                label: 'Zielgruppen-Kriterien',
+                itemLabel: (props) => props.fields.de.value as string || 'Neues Kriterium',
+              }
+            ),
+          },
+          { label: 'Für wen ist die Tagesschule?' }
+        ),
+
+        // --- UNSER ANSATZ ---
+        ansatz: fields.object(
+          {
+            titel: bilingualText('Titel', 'Title'),
+            text: bilingualText('Text', 'Text', { multiline: true }),
+            features: fields.array(
+              fields.object({
+                titel: bilingualText('Titel', 'Title'),
+                text: bilingualText('Text', 'Text'),
+              }),
+              {
+                label: 'Ansatz-Features',
+                itemLabel: (props) => props.fields.titel.fields.de.value as string || 'Neues Feature',
+              }
+            ),
+          },
+          { label: 'Unser Ansatz' }
+        ),
+
+        // --- TYPISCHER TAG ---
+        typischerTag: fields.object(
+          {
+            titel: bilingualText('Titel', 'Title'),
+            text: bilingualText('Text', 'Text', { multiline: true }),
+            ablauf: fields.array(
+              fields.object({
+                zeit: fields.text({ label: 'Zeit', description: 'z.B. "08:30"' }),
+                aktivitaet: bilingualText('Aktivität', 'Activity'),
+              }),
+              {
+                label: 'Tagesablauf',
+                itemLabel: (props) => `${props.fields.zeit.value} - ${props.fields.aktivitaet.fields.de.value}` || 'Neuer Eintrag',
+              }
+            ),
+          },
+          { label: 'Ein typischer Tag' }
+        ),
+
+        // --- INTERESSE ANMELDEN ---
+        interesse: fields.object(
+          {
+            titel: bilingualText('Titel', 'Title'),
+            text: bilingualText('Text', 'Text', { multiline: true }),
+            schritteTitel: bilingualText('Schritte Titel', 'Steps Title'),
+            schritte: fields.array(
+              fields.object({
+                titel: bilingualText('Titel', 'Title'),
+                text: bilingualText('Text', 'Text'),
+              }),
+              {
+                label: 'Nächste Schritte',
+                itemLabel: (props) => props.fields.titel.fields.de.value as string || 'Neuer Schritt',
+              }
+            ),
+            kontaktTitel: bilingualText('Kontakt Titel', 'Contact Title'),
+            kontaktText: bilingualText('Kontakt Text', 'Contact Text', { multiline: true }),
+          },
+          { label: 'Interesse anmelden' }
+        ),
+
+        // --- WEITERE ANGEBOTE ---
+        weitereAngebote: fields.object(
+          {
+            titel: bilingualText('Titel', 'Title'),
+            angebote: fields.array(
+              fields.object({
+                titel: fields.text({ label: 'Titel' }),
+                beschreibung: bilingualText('Beschreibung', 'Description'),
+                link: fields.text({ label: 'Link' }),
+                farbe: fields.select({ label: 'Farbe', options: colorOptions, defaultValue: 'green' }),
+              }),
+              {
+                label: 'Verlinkte Angebote',
+                itemLabel: (props) => props.fields.titel.value || 'Neues Angebot',
+              }
+            ),
+          },
+          { label: 'Weitere Angebote (unten)' }
+        ),
+
+        // --- CTA ---
+        cta: fields.object(
+          {
+            titel: bilingualText('Titel', 'Title'),
+            beschreibung: bilingualText('Beschreibung', 'Description'),
+            buttonText: bilingualText('Button Text', 'Button Text'),
+          },
+          { label: 'Call-to-Action (unten)' }
         ),
       },
     }),

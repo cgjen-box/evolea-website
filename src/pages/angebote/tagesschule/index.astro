@@ -2,6 +2,7 @@
 import Base from '@layouts/Base.astro';
 import FloatingShapes from '@components/FloatingShapes.astro';
 import GradientCTA from '@components/GradientCTA.astro';
+import Icon from '@components/Icon.astro';
 import { getLangFromUrl, useTranslatedPath } from '@i18n/utils';
 import { getEntry } from 'astro:content';
 
@@ -9,62 +10,82 @@ const lang = getLangFromUrl(Astro.url);
 const translatePath = useTranslatedPath(lang);
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 
+// Get CMS content
+const pageEntry = await getEntry('pages', 'tagesschule');
+const page = pageEntry?.data;
+
 // Get site images from CMS
 const siteImagesEntry = await getEntry('settings', 'images');
 const siteImages = siteImagesEntry?.data;
 const heroImage = siteImages?.programmeHeroes?.tagesschule
   ? base + siteImages.programmeHeroes.tagesschule
   : base + "/images/generated/tagesschule-hero.png";
+
+// Helper to get bilingual text
+const getText = (obj: { de?: string; en?: string } | undefined, fallback: string = '') => {
+  if (!obj) return fallback;
+  return lang === 'de' ? (obj.de || fallback) : (obj.en || obj.de || fallback);
+};
+
+// Page content with fallbacks
+const hero = page?.hero || {};
+const statusBanner = page?.statusBanner || { aktiv: true };
+const infoKarten = page?.infoKarten || [];
+const wasIst = page?.wasIst || {};
+const fuerWen = page?.fuerWen || {};
+const ansatz = page?.ansatz || {};
+const typischerTag = page?.typischerTag || {};
+const interesse = page?.interesse || {};
+const weitereAngebote = page?.weitereAngebote || {};
+const cta = page?.cta || {};
 ---
 
-<Base title="Tagesschule" description="Strukturiertes Tagesschulprogramm mit individueller Förderung für Kinder im Autismus Spektrum in Zürich.">
+<Base title={hero.titel || 'Tagesschule'} description="Strukturiertes Tagesschulprogramm mit individueller Förderung für Kinder im Autismus Spektrum in Zürich.">
   <!-- Hero Section -->
   <section class="relative py-20 md:py-28 bg-gradient-to-br from-evolea-purple/10 to-evolea-cream overflow-hidden">
     <FloatingShapes variant="minimal" />
     <div class="container mx-auto max-w-6xl px-4 relative z-10">
       <nav class="mb-8 text-sm text-evolea-text-light">
-        <a href={translatePath('/')} class="hover:text-evolea-purple transition-colors">Startseite</a>
+        <a href={translatePath('/')} class="hover:text-evolea-purple transition-colors">{lang === 'de' ? 'Startseite' : 'Home'}</a>
         <span class="mx-2">/</span>
-        <a href={translatePath('/angebote/')} class="hover:text-evolea-purple transition-colors">Angebote</a>
+        <a href={translatePath('/angebote/')} class="hover:text-evolea-purple transition-colors">{lang === 'de' ? 'Angebote' : 'Programs'}</a>
         <span class="mx-2">/</span>
-        <span class="text-evolea-purple font-medium">Tagesschule</span>
+        <span class="text-evolea-purple font-medium">{hero.titel || 'Tagesschule'}</span>
       </nav>
 
       <div class="grid lg:grid-cols-2 gap-12 items-center">
         <div>
           <div class="inline-flex items-center gap-2 bg-evolea-purple/20 text-evolea-purple px-4 py-2 rounded-full text-sm font-medium mb-6">
-            <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
-            </svg>
-            <span>Tagesstruktur mit Lernförderung</span>
+            <Icon name="book" size="sm" />
+            <span>{getText(hero.badge, 'Tagesstruktur mit Lernförderung')}</span>
           </div>
           <h1 class="text-4xl md:text-5xl lg:text-6xl font-display font-bold text-evolea-purple mb-6 leading-tight">
-            Tagesschule
+            {hero.titel || 'Tagesschule'}
           </h1>
           <p class="text-xl md:text-2xl text-evolea-text-light mb-8 leading-relaxed">
-            Strukturierte Tagesbetreuung mit individueller Förderung für Kinder im Spektrum
+            {getText(hero.untertitel, 'Strukturierte Tagesbetreuung mit individueller Förderung für Kinder im Spektrum')}
           </p>
           <div class="flex flex-wrap gap-4">
-            <a href="#interesse" class="btn-primary">
-              Interesse anmelden
+            <a href={hero.buttonLink || '#interesse'} class="btn-primary">
+              {getText(hero.buttonText, 'Interesse anmelden')}
               <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
               </svg>
             </a>
-            <a href={translatePath('/kontakt/')} class="btn-secondary">
-              Fragen? Kontaktieren Sie uns
+            <a href={hero.zweitButtonLink || translatePath('/kontakt/')} class="btn-secondary">
+              {getText(hero.zweitButtonText, 'Fragen? Kontaktieren Sie uns')}
             </a>
           </div>
         </div>
         <div class="relative">
           <img
             src={heroImage}
-            alt="Kinder in strukturierter Lernumgebung"
+            alt={getText(hero.untertitel, 'Kinder in strukturierter Lernumgebung')}
             class="rounded-evolea-lg shadow-elevated w-full object-cover aspect-4/3"
           />
           <div class="absolute -bottom-4 -left-4 bg-white rounded-evolea p-4 shadow-card">
-            <div class="text-3xl font-display font-bold text-evolea-purple">6-12</div>
-            <div class="text-sm text-evolea-text-light">Jahre</div>
+            <div class="text-3xl font-display font-bold text-evolea-purple">{hero.alter || '6-12'}</div>
+            <div class="text-sm text-evolea-text-light">{lang === 'de' ? 'Jahre' : 'Years'}</div>
           </div>
         </div>
       </div>
@@ -72,50 +93,53 @@ const heroImage = siteImages?.programmeHeroes?.tagesschule
   </section>
 
   <!-- Status Banner -->
-  <section class="bg-evolea-purple text-white py-6">
-    <div class="container mx-auto max-w-6xl px-4">
-      <div class="flex items-center justify-center gap-4">
-        <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-        </svg>
-        <span class="text-lg">Dieses Programm befindet sich in der Aufbauphase - Interessensanmeldungen sind willkommen</span>
+  {statusBanner.aktiv && (
+    <section class="bg-evolea-purple text-white py-6">
+      <div class="container mx-auto max-w-6xl px-4">
+        <div class="flex items-center justify-center gap-4">
+          <Icon name="sparkle" size="md" />
+          <span class="text-lg">{getText(statusBanner.text, 'Dieses Programm befindet sich in der Aufbauphase - Interessensanmeldungen sind willkommen')}</span>
+        </div>
       </div>
-    </div>
-  </section>
+    </section>
+  )}
 
   <!-- Key Info Cards -->
   <section class="py-16 bg-white">
     <div class="container mx-auto max-w-6xl px-4">
       <div class="grid md:grid-cols-4 gap-6">
-        <div class="bg-evolea-cream rounded-evolea-lg p-6 text-center">
-          <svg class="w-8 h-8 mx-auto mb-3 text-evolea-purple" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
-          </svg>
-          <div class="font-display font-bold text-evolea-purple text-lg">Alter</div>
-          <div class="text-evolea-text-light">6-12 Jahre</div>
-        </div>
-        <div class="bg-evolea-cream rounded-evolea-lg p-6 text-center">
-          <svg class="w-8 h-8 mx-auto mb-3 text-evolea-purple" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z" />
-          </svg>
-          <div class="font-display font-bold text-evolea-purple text-lg">Betreuung</div>
-          <div class="text-evolea-text-light">Kleine Gruppen</div>
-        </div>
-        <div class="bg-evolea-cream rounded-evolea-lg p-6 text-center">
-          <svg class="w-8 h-8 mx-auto mb-3 text-evolea-purple" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-          </svg>
-          <div class="font-display font-bold text-evolea-purple text-lg">Zeiten</div>
-          <div class="text-evolea-text-light">Ganztags</div>
-        </div>
-        <div class="bg-evolea-cream rounded-evolea-lg p-6 text-center">
-          <svg class="w-8 h-8 mx-auto mb-3 text-evolea-purple" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
-          </svg>
-          <div class="font-display font-bold text-evolea-purple text-lg">Wo</div>
-          <div class="text-evolea-text-light">Zürich</div>
-        </div>
+        {infoKarten.length > 0 ? (
+          infoKarten.map((karte: any) => (
+            <div class="bg-evolea-cream rounded-evolea-lg p-6 text-center">
+              <Icon name="sparkle" size="lg" />
+              <div class="font-display font-bold text-evolea-purple text-lg mt-3">{getText(karte.label, '')}</div>
+              <div class="text-evolea-text-light">{getText(karte.wert, '')}</div>
+            </div>
+          ))
+        ) : (
+          <>
+            <div class="bg-evolea-cream rounded-evolea-lg p-6 text-center">
+              <Icon name="sparkle" size="lg" />
+              <div class="font-display font-bold text-evolea-purple text-lg mt-3">Alter</div>
+              <div class="text-evolea-text-light">6-12 Jahre</div>
+            </div>
+            <div class="bg-evolea-cream rounded-evolea-lg p-6 text-center">
+              <Icon name="people" size="lg" />
+              <div class="font-display font-bold text-evolea-purple text-lg mt-3">Betreuung</div>
+              <div class="text-evolea-text-light">Kleine Gruppen</div>
+            </div>
+            <div class="bg-evolea-cream rounded-evolea-lg p-6 text-center">
+              <Icon name="clipboard" size="lg" />
+              <div class="font-display font-bold text-evolea-purple text-lg mt-3">Zeiten</div>
+              <div class="text-evolea-text-light">Ganztags</div>
+            </div>
+            <div class="bg-evolea-cream rounded-evolea-lg p-6 text-center">
+              <Icon name="target" size="lg" />
+              <div class="font-display font-bold text-evolea-purple text-lg mt-3">Wo</div>
+              <div class="text-evolea-text-light">Zürich</div>
+            </div>
+          </>
+        )}
       </div>
     </div>
   </section>
@@ -126,219 +150,220 @@ const heroImage = siteImages?.programmeHeroes?.tagesschule
       <div class="prose prose-lg max-w-none">
 
         <h2 class="text-3xl font-display font-bold text-evolea-purple mb-6 flex items-center gap-3">
-          <span class="text-evolea-green">*</span>
-          Was ist die EVOLEA Tagesschule?
+          <span class="text-evolea-green">●</span>
+          {getText(wasIst.titel, 'Was ist die EVOLEA Tagesschule?')}
         </h2>
         <p class="text-evolea-text-light mb-8 text-lg leading-relaxed">
-          Die EVOLEA Tagesschule bietet eine strukturierte Tagesbetreuung mit integrierter Lernförderung für Kinder im Autismus Spektrum. In kleinen Gruppen mit hohem Betreuungsschlüssel schaffen wir einen geschützten Rahmen, der individuelles Lernen und soziale Entwicklung ermöglicht.
+          {getText(wasIst.text, 'Die EVOLEA Tagesschule bietet eine strukturierte Tagesbetreuung mit integrierter Lernförderung für Kinder im Autismus Spektrum. In kleinen Gruppen mit hohem Betreuungsschlüssel schaffen wir einen geschützten Rahmen, der individuelles Lernen und soziale Entwicklung ermöglicht.')}
         </p>
 
         <div class="bg-evolea-purple/5 border-l-4 border-evolea-purple rounded-r-evolea p-6 mb-12">
-          <h3 class="font-display font-bold text-evolea-purple text-xl mb-2">Unser Konzept</h3>
+          <h3 class="font-display font-bold text-evolea-purple text-xl mb-2">{getText(wasIst.konzeptTitel, 'Unser Konzept')}</h3>
           <p class="text-evolea-text-light mb-0">
-            <strong>Evidenzbasierte Methoden + Individuelle Förderpläne + Strukturierter Tagesablauf</strong> - Diese Kombination ermöglicht es jedem Kind, in seinem eigenen Tempo zu lernen und seine Stärken zu entfalten.
+            {getText(wasIst.konzeptText, 'Evidenzbasierte Methoden + Individuelle Förderpläne + Strukturierter Tagesablauf - Diese Kombination ermöglicht es jedem Kind, in seinem eigenen Tempo zu lernen und seine Stärken zu entfalten.')}
           </p>
         </div>
 
         <h2 class="text-3xl font-display font-bold text-evolea-purple mb-6 flex items-center gap-3">
-          <span class="text-evolea-orange">*</span>
-          Für wen ist die Tagesschule?
+          <span class="text-evolea-orange">●</span>
+          {getText(fuerWen.titel, 'Für wen ist die Tagesschule?')}
         </h2>
         <p class="text-evolea-text-light mb-6 text-lg leading-relaxed">
-          Unser Angebot richtet sich an Kinder im Alter von <strong>6-12 Jahren</strong>, die:
+          {getText(fuerWen.text, 'Unser Angebot richtet sich an Kinder im Alter von 6-12 Jahren, die:')}
         </p>
         <ul class="space-y-3 mb-12">
-          <li class="flex items-start gap-3 text-evolea-text-light">
-            <span class="text-evolea-green mt-1">-</span>
-            <span>Im Autismus Spektrum diagnostiziert sind oder eine ADHS-Diagnose haben</span>
-          </li>
-          <li class="flex items-start gap-3 text-evolea-text-light">
-            <span class="text-evolea-green mt-1">-</span>
-            <span>Von einer kleineren Lernumgebung mit intensiver Betreuung profitieren</span>
-          </li>
-          <li class="flex items-start gap-3 text-evolea-text-light">
-            <span class="text-evolea-green mt-1">-</span>
-            <span>Einen strukturierten, vorhersehbaren Tagesablauf benötigen</span>
-          </li>
-          <li class="flex items-start gap-3 text-evolea-text-light">
-            <span class="text-evolea-green mt-1">-</span>
-            <span>In der Regelschule zusätzliche Unterstützung brauchen</span>
-          </li>
+          {fuerWen.kriterien?.length > 0 ? (
+            fuerWen.kriterien.map((k: any) => (
+              <li class="flex items-start gap-3 text-evolea-text-light">
+                <span class="text-evolea-green mt-1">●</span>
+                <span>{getText(k, '')}</span>
+              </li>
+            ))
+          ) : (
+            <>
+              <li class="flex items-start gap-3 text-evolea-text-light">
+                <span class="text-evolea-green mt-1">●</span>
+                <span>Im Autismus Spektrum diagnostiziert sind oder eine ADHS-Diagnose haben</span>
+              </li>
+              <li class="flex items-start gap-3 text-evolea-text-light">
+                <span class="text-evolea-green mt-1">●</span>
+                <span>Von einer kleineren Lernumgebung mit intensiver Betreuung profitieren</span>
+              </li>
+              <li class="flex items-start gap-3 text-evolea-text-light">
+                <span class="text-evolea-green mt-1">●</span>
+                <span>Einen strukturierten, vorhersehbaren Tagesablauf benötigen</span>
+              </li>
+              <li class="flex items-start gap-3 text-evolea-text-light">
+                <span class="text-evolea-green mt-1">●</span>
+                <span>In der Regelschule zusätzliche Unterstützung brauchen</span>
+              </li>
+            </>
+          )}
         </ul>
 
         <h2 class="text-3xl font-display font-bold text-evolea-purple mb-6 flex items-center gap-3">
-          <span class="text-evolea-sky">*</span>
-          Unser Ansatz
+          <span class="text-evolea-sky">●</span>
+          {getText(ansatz.titel, 'Unser Ansatz')}
         </h2>
         <p class="text-evolea-text-light mb-6 text-lg leading-relaxed">
-          Die EVOLEA Tagesschule basiert auf bewährten, evidenzbasierten Methoden und verbindet strukturiertes Lernen mit individueller Förderung.
+          {getText(ansatz.text, 'Die EVOLEA Tagesschule basiert auf bewährten, evidenzbasierten Methoden und verbindet strukturiertes Lernen mit individueller Förderung.')}
         </p>
 
         <div class="grid md:grid-cols-2 gap-4 mb-12">
-          <div class="bg-white border border-evolea-purple/10 rounded-evolea p-4 flex items-start gap-4">
-            <span class="text-evolea-purple text-xl mt-1">
-              <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01" />
-              </svg>
-            </span>
-            <div>
-              <strong class="text-evolea-purple">Individuelle Lernpläne</strong>
-              <p class="text-sm text-evolea-text-light mb-0">Auf jedes Kind abgestimmte Ziele und Aktivitäten</p>
-            </div>
-          </div>
-          <div class="bg-white border border-evolea-purple/10 rounded-evolea p-4 flex items-start gap-4">
-            <span class="text-evolea-purple text-xl mt-1">
-              <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 5a1 1 0 011-1h14a1 1 0 011 1v2a1 1 0 01-1 1H5a1 1 0 01-1-1V5zM4 13a1 1 0 011-1h6a1 1 0 011 1v6a1 1 0 01-1 1H5a1 1 0 01-1-1v-6zM16 13a1 1 0 011-1h2a1 1 0 011 1v6a1 1 0 01-1 1h-2a1 1 0 01-1-1v-6z" />
-              </svg>
-            </span>
-            <div>
-              <strong class="text-evolea-purple">Visuelle Strukturen</strong>
-              <p class="text-sm text-evolea-text-light mb-0">Klare Ablaufpläne und visuelle Unterstützung</p>
-            </div>
-          </div>
-          <div class="bg-white border border-evolea-purple/10 rounded-evolea p-4 flex items-start gap-4">
-            <span class="text-evolea-purple text-xl mt-1">
-              <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z" />
-              </svg>
-            </span>
-            <div>
-              <strong class="text-evolea-purple">Kleine Gruppen</strong>
-              <p class="text-sm text-evolea-text-light mb-0">Hoher Betreuungsschlüssel für optimale Förderung</p>
-            </div>
-          </div>
-          <div class="bg-white border border-evolea-purple/10 rounded-evolea p-4 flex items-start gap-4">
-            <span class="text-evolea-purple text-xl mt-1">
-              <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.828 14.828a4 4 0 01-5.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-              </svg>
-            </span>
-            <div>
-              <strong class="text-evolea-purple">Positive Verstärkung</strong>
-              <p class="text-sm text-evolea-text-light mb-0">Motivation durch Erfolge und Anerkennung</p>
-            </div>
-          </div>
-          <div class="bg-white border border-evolea-purple/10 rounded-evolea p-4 flex items-start gap-4">
-            <span class="text-evolea-purple text-xl mt-1">
-              <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
-              </svg>
-            </span>
-            <div>
-              <strong class="text-evolea-purple">Akademische Förderung</strong>
-              <p class="text-sm text-evolea-text-light mb-0">Angepasster Lehrplan für schulische Inhalte</p>
-            </div>
-          </div>
-          <div class="bg-white border border-evolea-purple/10 rounded-evolea p-4 flex items-start gap-4">
-            <span class="text-evolea-purple text-xl mt-1">
-              <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
-              </svg>
-            </span>
-            <div>
-              <strong class="text-evolea-purple">Soziale Kompetenz</strong>
-              <p class="text-sm text-evolea-text-light mb-0">Gezielte Förderung sozialer Fähigkeiten</p>
-            </div>
-          </div>
+          {ansatz.features?.length > 0 ? (
+            ansatz.features.map((feature: any) => (
+              <div class="bg-white border border-evolea-purple/10 rounded-evolea p-4">
+                <strong class="text-evolea-purple">{getText(feature.titel, '')}</strong>
+                <p class="text-sm text-evolea-text-light mb-0">{getText(feature.text, '')}</p>
+              </div>
+            ))
+          ) : (
+            <>
+              <div class="bg-white border border-evolea-purple/10 rounded-evolea p-4">
+                <strong class="text-evolea-purple">Individuelle Lernpläne</strong>
+                <p class="text-sm text-evolea-text-light mb-0">Auf jedes Kind abgestimmte Ziele und Aktivitäten</p>
+              </div>
+              <div class="bg-white border border-evolea-purple/10 rounded-evolea p-4">
+                <strong class="text-evolea-purple">Visuelle Strukturen</strong>
+                <p class="text-sm text-evolea-text-light mb-0">Klare Ablaufpläne und visuelle Unterstützung</p>
+              </div>
+              <div class="bg-white border border-evolea-purple/10 rounded-evolea p-4">
+                <strong class="text-evolea-purple">Kleine Gruppen</strong>
+                <p class="text-sm text-evolea-text-light mb-0">Hoher Betreuungsschlüssel für optimale Förderung</p>
+              </div>
+              <div class="bg-white border border-evolea-purple/10 rounded-evolea p-4">
+                <strong class="text-evolea-purple">Positive Verstärkung</strong>
+                <p class="text-sm text-evolea-text-light mb-0">Motivation durch Erfolge und Anerkennung</p>
+              </div>
+              <div class="bg-white border border-evolea-purple/10 rounded-evolea p-4">
+                <strong class="text-evolea-purple">Akademische Förderung</strong>
+                <p class="text-sm text-evolea-text-light mb-0">Angepasster Lehrplan für schulische Inhalte</p>
+              </div>
+              <div class="bg-white border border-evolea-purple/10 rounded-evolea p-4">
+                <strong class="text-evolea-purple">Soziale Kompetenz</strong>
+                <p class="text-sm text-evolea-text-light mb-0">Gezielte Förderung sozialer Fähigkeiten</p>
+              </div>
+            </>
+          )}
         </div>
 
         <h2 class="text-3xl font-display font-bold text-evolea-purple mb-6 flex items-center gap-3">
-          <span class="text-evolea-coral">*</span>
-          Ein typischer Tag
+          <span class="text-evolea-coral">●</span>
+          {getText(typischerTag.titel, 'Ein typischer Tag')}
         </h2>
         <p class="text-evolea-text-light mb-6 text-lg leading-relaxed">
-          Unser strukturierter Tagesablauf bietet Sicherheit und Vorhersehbarkeit, während er gleichzeitig Raum für individuelle Bedürfnisse lässt.
+          {getText(typischerTag.text, 'Unser strukturierter Tagesablauf bietet Sicherheit und Vorhersehbarkeit, während er gleichzeitig Raum für individuelle Bedürfnisse lässt.')}
         </p>
 
         <div class="bg-evolea-cream rounded-evolea-lg p-8 mb-12">
           <div class="space-y-4">
-            <div class="flex items-center gap-4 pb-4 border-b border-evolea-purple/10">
-              <span class="text-evolea-purple font-mono font-bold w-16">08:30</span>
-              <span class="text-evolea-text">Ankommen und Morgenritual</span>
-            </div>
-            <div class="flex items-center gap-4 pb-4 border-b border-evolea-purple/10">
-              <span class="text-evolea-purple font-mono font-bold w-16">09:00</span>
-              <span class="text-evolea-text">Individuelles Lernen (Block 1)</span>
-            </div>
-            <div class="flex items-center gap-4 pb-4 border-b border-evolea-purple/10">
-              <span class="text-evolea-purple font-mono font-bold w-16">10:30</span>
-              <span class="text-evolea-text">Pause und Bewegung</span>
-            </div>
-            <div class="flex items-center gap-4 pb-4 border-b border-evolea-purple/10">
-              <span class="text-evolea-purple font-mono font-bold w-16">11:00</span>
-              <span class="text-evolea-text">Gruppenaktivitäten</span>
-            </div>
-            <div class="flex items-center gap-4 pb-4 border-b border-evolea-purple/10">
-              <span class="text-evolea-purple font-mono font-bold w-16">12:00</span>
-              <span class="text-evolea-text">Mittagessen und Erholung</span>
-            </div>
-            <div class="flex items-center gap-4 pb-4 border-b border-evolea-purple/10">
-              <span class="text-evolea-purple font-mono font-bold w-16">13:30</span>
-              <span class="text-evolea-text">Individuelles Lernen (Block 2)</span>
-            </div>
-            <div class="flex items-center gap-4 pb-4 border-b border-evolea-purple/10">
-              <span class="text-evolea-purple font-mono font-bold w-16">15:00</span>
-              <span class="text-evolea-text">Kreative und praktische Aktivitäten</span>
-            </div>
-            <div class="flex items-center gap-4">
-              <span class="text-evolea-purple font-mono font-bold w-16">16:00</span>
-              <span class="text-evolea-text">Tagesabschluss und Abholen</span>
-            </div>
+            {typischerTag.ablauf?.length > 0 ? (
+              typischerTag.ablauf.map((eintrag: any, idx: number, arr: any[]) => (
+                <div class:list={["flex items-center gap-4", idx < arr.length - 1 ? "pb-4 border-b border-evolea-purple/10" : ""]}>
+                  <span class="text-evolea-purple font-mono font-bold w-16">{eintrag.zeit}</span>
+                  <span class="text-evolea-text">{getText(eintrag.aktivitaet, '')}</span>
+                </div>
+              ))
+            ) : (
+              <>
+                <div class="flex items-center gap-4 pb-4 border-b border-evolea-purple/10">
+                  <span class="text-evolea-purple font-mono font-bold w-16">08:30</span>
+                  <span class="text-evolea-text">Ankommen und Morgenritual</span>
+                </div>
+                <div class="flex items-center gap-4 pb-4 border-b border-evolea-purple/10">
+                  <span class="text-evolea-purple font-mono font-bold w-16">09:00</span>
+                  <span class="text-evolea-text">Individuelles Lernen (Block 1)</span>
+                </div>
+                <div class="flex items-center gap-4 pb-4 border-b border-evolea-purple/10">
+                  <span class="text-evolea-purple font-mono font-bold w-16">10:30</span>
+                  <span class="text-evolea-text">Pause und Bewegung</span>
+                </div>
+                <div class="flex items-center gap-4 pb-4 border-b border-evolea-purple/10">
+                  <span class="text-evolea-purple font-mono font-bold w-16">11:00</span>
+                  <span class="text-evolea-text">Gruppenaktivitäten</span>
+                </div>
+                <div class="flex items-center gap-4 pb-4 border-b border-evolea-purple/10">
+                  <span class="text-evolea-purple font-mono font-bold w-16">12:00</span>
+                  <span class="text-evolea-text">Mittagessen und Erholung</span>
+                </div>
+                <div class="flex items-center gap-4 pb-4 border-b border-evolea-purple/10">
+                  <span class="text-evolea-purple font-mono font-bold w-16">13:30</span>
+                  <span class="text-evolea-text">Individuelles Lernen (Block 2)</span>
+                </div>
+                <div class="flex items-center gap-4 pb-4 border-b border-evolea-purple/10">
+                  <span class="text-evolea-purple font-mono font-bold w-16">15:00</span>
+                  <span class="text-evolea-text">Kreative und praktische Aktivitäten</span>
+                </div>
+                <div class="flex items-center gap-4">
+                  <span class="text-evolea-purple font-mono font-bold w-16">16:00</span>
+                  <span class="text-evolea-text">Tagesabschluss und Abholen</span>
+                </div>
+              </>
+            )}
           </div>
         </div>
 
         <h2 class="text-3xl font-display font-bold text-evolea-purple mb-6 flex items-center gap-3" id="interesse">
-          <span class="text-evolea-mint">*</span>
-          Interesse anmelden
+          <span class="text-evolea-mint">●</span>
+          {getText(interesse.titel, 'Interesse anmelden')}
         </h2>
         <p class="text-evolea-text-light mb-6 text-lg leading-relaxed">
-          Die EVOLEA Tagesschule befindet sich derzeit in der Aufbauphase. Wir sammeln Interessensbekundungen von Familien, um das Programm optimal auf die Bedürfnisse der Kinder auszurichten.
+          {getText(interesse.text, 'Die EVOLEA Tagesschule befindet sich derzeit in der Aufbauphase. Wir sammeln Interessensbekundungen von Familien, um das Programm optimal auf die Bedürfnisse der Kinder auszurichten.')}
         </p>
 
         <div class="bg-evolea-purple/5 rounded-evolea-lg p-8 mb-12">
-          <h3 class="font-display font-bold text-evolea-purple text-xl mb-4">So geht es weiter</h3>
+          <h3 class="font-display font-bold text-evolea-purple text-xl mb-4">{getText(interesse.schritteTitel, 'So geht es weiter')}</h3>
           <div class="space-y-4">
-            <div class="flex items-start gap-3">
-              <span class="bg-evolea-purple text-white rounded-full w-6 h-6 flex items-center justify-center text-sm font-bold shrink-0">1</span>
-              <div>
-                <strong class="text-evolea-purple">Interesse bekunden</strong>
-                <p class="text-evolea-text-light mb-0">Kontaktieren Sie uns per E-Mail oder über unser Kontaktformular.</p>
-              </div>
-            </div>
-            <div class="flex items-start gap-3">
-              <span class="bg-evolea-purple text-white rounded-full w-6 h-6 flex items-center justify-center text-sm font-bold shrink-0">2</span>
-              <div>
-                <strong class="text-evolea-purple">Unverbindliches Gespräch</strong>
-                <p class="text-evolea-text-light mb-0">Wir laden Sie zu einem Kennenlerngespräch ein, um Ihre Bedürfnisse zu verstehen.</p>
-              </div>
-            </div>
-            <div class="flex items-start gap-3">
-              <span class="bg-evolea-purple text-white rounded-full w-6 h-6 flex items-center justify-center text-sm font-bold shrink-0">3</span>
-              <div>
-                <strong class="text-evolea-purple">Informiert bleiben</strong>
-                <p class="text-evolea-text-light mb-0">Wir halten Sie über den Aufbau und den geplanten Start auf dem Laufenden.</p>
-              </div>
-            </div>
+            {interesse.schritte?.length > 0 ? (
+              interesse.schritte.map((schritt: any, idx: number) => (
+                <div class="flex items-start gap-3">
+                  <span class="bg-evolea-purple text-white rounded-full w-6 h-6 flex items-center justify-center text-sm font-bold shrink-0">{idx + 1}</span>
+                  <div>
+                    <strong class="text-evolea-purple">{getText(schritt.titel, '')}</strong>
+                    <p class="text-evolea-text-light mb-0">{getText(schritt.text, '')}</p>
+                  </div>
+                </div>
+              ))
+            ) : (
+              <>
+                <div class="flex items-start gap-3">
+                  <span class="bg-evolea-purple text-white rounded-full w-6 h-6 flex items-center justify-center text-sm font-bold shrink-0">1</span>
+                  <div>
+                    <strong class="text-evolea-purple">Interesse bekunden</strong>
+                    <p class="text-evolea-text-light mb-0">Kontaktieren Sie uns per E-Mail oder über unser Kontaktformular.</p>
+                  </div>
+                </div>
+                <div class="flex items-start gap-3">
+                  <span class="bg-evolea-purple text-white rounded-full w-6 h-6 flex items-center justify-center text-sm font-bold shrink-0">2</span>
+                  <div>
+                    <strong class="text-evolea-purple">Unverbindliches Gespräch</strong>
+                    <p class="text-evolea-text-light mb-0">Wir laden Sie zu einem Kennenlerngespräch ein, um Ihre Bedürfnisse zu verstehen.</p>
+                  </div>
+                </div>
+                <div class="flex items-start gap-3">
+                  <span class="bg-evolea-purple text-white rounded-full w-6 h-6 flex items-center justify-center text-sm font-bold shrink-0">3</span>
+                  <div>
+                    <strong class="text-evolea-purple">Informiert bleiben</strong>
+                    <p class="text-evolea-text-light mb-0">Wir halten Sie über den Aufbau und den geplanten Start auf dem Laufenden.</p>
+                  </div>
+                </div>
+              </>
+            )}
           </div>
         </div>
 
         <div class="bg-evolea-green/10 border-l-4 border-evolea-green rounded-r-evolea p-6 mb-12">
-          <h3 class="font-display font-bold text-evolea-purple text-xl mb-2">Kontakt aufnehmen</h3>
+          <h3 class="font-display font-bold text-evolea-purple text-xl mb-2">{getText(interesse.kontaktTitel, 'Kontakt aufnehmen')}</h3>
           <p class="text-evolea-text-light mb-4">
-            Haben Sie Fragen oder möchten Sie Ihr Interesse anmelden? Wir freuen uns auf Ihre Nachricht.
+            {getText(interesse.kontaktText, 'Haben Sie Fragen oder möchten Sie Ihr Interesse anmelden? Wir freuen uns auf Ihre Nachricht.')}
           </p>
           <div class="flex flex-wrap gap-4">
             <a href={translatePath('/kontakt/')} class="inline-flex items-center gap-2 text-evolea-purple font-medium hover:underline">
-              <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
-              </svg>
+              <Icon name="mail" size="sm" />
               hello@evolea.ch
             </a>
             <a href="https://wa.me/41789591974" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 text-evolea-green font-medium hover:underline">
-              <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
-                <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
-              </svg>
+              <Icon name="heart" size="sm" />
               WhatsApp
             </a>
           </div>
@@ -351,50 +376,52 @@ const heroImage = siteImages?.programmeHeroes?.tagesschule
   <!-- Related Programs -->
   <section class="py-16 bg-white">
     <div class="container mx-auto max-w-6xl px-4">
-      <h2 class="text-3xl font-display font-bold text-evolea-purple mb-8 text-center">Weitere Angebote</h2>
+      <h2 class="text-3xl font-display font-bold text-evolea-purple mb-8 text-center">{getText(weitereAngebote.titel, 'Weitere Angebote')}</h2>
       <div class="grid md:grid-cols-3 gap-6">
-        <a href={translatePath('/angebote/mini-garten/')} class="group bg-evolea-cream rounded-evolea-lg p-6 hover:shadow-card transition-shadow">
-          <div class="flex items-center gap-3 mb-4">
-            <span class="bg-evolea-green/20 text-evolea-green p-2 rounded-evolea">
-              <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z" />
-              </svg>
-            </span>
-            <h3 class="font-display font-bold text-evolea-purple group-hover:text-evolea-purple-light transition-colors">Mini Garten</h3>
-          </div>
-          <p class="text-sm text-evolea-text-light">Kindergartenvorbereitung für 3-6 Jahre</p>
-        </a>
-        <a href={translatePath('/angebote/mini-projekte/')} class="group bg-evolea-cream rounded-evolea-lg p-6 hover:shadow-card transition-shadow">
-          <div class="flex items-center gap-3 mb-4">
-            <span class="bg-evolea-orange/20 text-evolea-orange p-2 rounded-evolea">
-              <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zm0 0h12a2 2 0 002-2v-4a2 2 0 00-2-2h-2.343M11 7.343l1.657-1.657a2 2 0 012.828 0l2.829 2.829a2 2 0 010 2.828l-8.486 8.485M7 17h.01" />
-              </svg>
-            </span>
-            <h3 class="font-display font-bold text-evolea-purple group-hover:text-evolea-purple-light transition-colors">Mini Projekte</h3>
-          </div>
-          <p class="text-sm text-evolea-text-light">Soziale Kompetenzen für 5-8 Jahre</p>
-        </a>
-        <a href={translatePath('/angebote/mini-turnen/')} class="group bg-evolea-cream rounded-evolea-lg p-6 hover:shadow-card transition-shadow">
-          <div class="flex items-center gap-3 mb-4">
-            <span class="bg-evolea-sky/20 text-evolea-sky p-2 rounded-evolea">
-              <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.828 14.828a4 4 0 01-5.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-              </svg>
-            </span>
-            <h3 class="font-display font-bold text-evolea-purple group-hover:text-evolea-purple-light transition-colors">Mini Turnen</h3>
-          </div>
-          <p class="text-sm text-evolea-text-light">Bewegung und Spass für 5-8 Jahre</p>
-        </a>
+        {weitereAngebote.angebote?.length > 0 ? (
+          weitereAngebote.angebote.map((angebot: any) => (
+            <a href={translatePath(angebot.link)} class="group bg-evolea-cream rounded-evolea-lg p-6 hover:shadow-card transition-shadow">
+              <div class="flex items-center gap-3 mb-4">
+                <Icon name="sprout" size="lg" />
+                <h3 class="font-display font-bold text-evolea-purple group-hover:text-evolea-purple-light transition-colors">{angebot.titel}</h3>
+              </div>
+              <p class="text-sm text-evolea-text-light">{getText(angebot.beschreibung, '')}</p>
+            </a>
+          ))
+        ) : (
+          <>
+            <a href={translatePath('/angebote/mini-garten/')} class="group bg-evolea-cream rounded-evolea-lg p-6 hover:shadow-card transition-shadow">
+              <div class="flex items-center gap-3 mb-4">
+                <Icon name="sprout" size="lg" />
+                <h3 class="font-display font-bold text-evolea-purple group-hover:text-evolea-purple-light transition-colors">Mini Garten</h3>
+              </div>
+              <p class="text-sm text-evolea-text-light">Kindergartenvorbereitung für 3-6 Jahre</p>
+            </a>
+            <a href={translatePath('/angebote/mini-projekte/')} class="group bg-evolea-cream rounded-evolea-lg p-6 hover:shadow-card transition-shadow">
+              <div class="flex items-center gap-3 mb-4">
+                <Icon name="palette" size="lg" />
+                <h3 class="font-display font-bold text-evolea-purple group-hover:text-evolea-purple-light transition-colors">Mini Projekte</h3>
+              </div>
+              <p class="text-sm text-evolea-text-light">Soziale Kompetenzen für 5-8 Jahre</p>
+            </a>
+            <a href={translatePath('/angebote/mini-turnen/')} class="group bg-evolea-cream rounded-evolea-lg p-6 hover:shadow-card transition-shadow">
+              <div class="flex items-center gap-3 mb-4">
+                <Icon name="ball" size="lg" />
+                <h3 class="font-display font-bold text-evolea-purple group-hover:text-evolea-purple-light transition-colors">Mini Turnen</h3>
+              </div>
+              <p class="text-sm text-evolea-text-light">Bewegung und Spass für 5-8 Jahre</p>
+            </a>
+          </>
+        )}
       </div>
     </div>
   </section>
 
   <!-- CTA Section -->
   <GradientCTA
-    title="Fragen zur Tagesschule?"
-    description="Kontaktieren Sie uns für ein unverbindliches Gespräch über das Tagesschul-Programm."
-    buttonText="Jetzt Kontakt aufnehmen"
+    title={getText(cta.titel, 'Fragen zur Tagesschule?')}
+    description={getText(cta.beschreibung, 'Kontaktieren Sie uns für ein unverbindliches Gespräch über das Tagesschul-Programm.')}
+    buttonText={getText(cta.buttonText, 'Jetzt Kontakt aufnehmen')}
     buttonHref={translatePath('/kontakt/')}
     variant="calm"
   />
