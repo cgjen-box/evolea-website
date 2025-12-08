@@ -22,6 +22,10 @@ const homepage = homepageEntry?.data;
 const siteSettingsEntry = await getEntry('settings', 'site');
 const siteSettings = siteSettingsEntry?.data;
 
+// Get site images from CMS
+const siteImagesEntry = await getEntry('settings', 'images');
+const siteImages = siteImagesEntry?.data;
+
 // Get principles from collection
 const principleEntries = await getCollection('principles', ({ data }) => data.veroeffentlicht);
 const principles = principleEntries
@@ -74,7 +78,7 @@ const colorClasses: Record<string, string> = {
     title={getText(homepage?.hero?.titel, "Wo Kinder sich im Spektrum entfalten")}
     subtitle={getText(homepage?.hero?.untertitel, "Unsere Bildungsangebote schaffen Räume, damit sich Kinder im Spektrum entfalten können.")}
     videoSrc={base + "/videos/hero-mobile.mp4"}
-    posterSrc={base + "/images/hero-poster.jpg"}
+    posterSrc={siteImages?.startseite?.videoPoster ? base + siteImages.startseite.videoPoster : base + "/images/hero-poster.jpg"}
   />
 
   <!-- Angebote Section V3 - "Unsere Angebote" -->

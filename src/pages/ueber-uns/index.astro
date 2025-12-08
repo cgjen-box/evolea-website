@@ -17,6 +17,10 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 const aboutEntry = await getEntry('pages', 'about');
 const about = aboutEntry?.data;
 
+// Get site images from CMS
+const siteImagesEntry = await getEntry('settings', 'images');
+const siteImages = siteImagesEntry?.data;
+
 // Helper to get bilingual text
 const getText = (obj: { de?: string; en?: string } | undefined, fallback: string = '') => {
   if (!obj) return fallback;
@@ -93,7 +97,7 @@ const colorClasses: Record<string, string> = {
           <div class="relative">
             <div class="aspect-square rounded-evolea-lg overflow-hidden shadow-elevated">
               <img
-                src={base + (about?.mission?.bild || "/images/about/children-playing-1.jpg")}
+                src={siteImages?.ueberUns?.mission ? base + siteImages.ueberUns.mission : base + (about?.mission?.bild || "/images/about/children-playing-1.jpg")}
                 alt={getText(about?.mission?.bildAlt, 'Kinder beim gemeinsamen Spielen')}
                 class="w-full h-full object-cover"
                 loading="lazy"

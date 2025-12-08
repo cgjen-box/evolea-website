@@ -3,10 +3,18 @@ import Base from '@layouts/Base.astro';
 import FloatingShapes from '@components/FloatingShapes.astro';
 import GradientCTA from '@components/GradientCTA.astro';
 import { getLangFromUrl, useTranslatedPath } from '@i18n/utils';
+import { getEntry } from 'astro:content';
 
 const lang = getLangFromUrl(Astro.url);
 const translatePath = useTranslatedPath(lang);
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+
+// Get site images from CMS
+const siteImagesEntry = await getEntry('settings', 'images');
+const siteImages = siteImagesEntry?.data;
+const heroImage = siteImages?.programmeHeroes?.tagesschule
+  ? base + siteImages.programmeHeroes.tagesschule
+  : base + "/images/generated/tagesschule-hero.png";
 ---
 
 <Base title="Tagesschule" description="Strukturiertes Tagesschulprogramm mit individueller Förderung für Kinder im Autismus Spektrum in Zürich.">
@@ -50,7 +58,7 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
         </div>
         <div class="relative">
           <img
-            src={base + "/images/generated/tagesschule-hero.png"}
+            src={heroImage}
             alt="Kinder in strukturierter Lernumgebung"
             class="rounded-evolea-lg shadow-elevated w-full object-cover aspect-4/3"
           />
