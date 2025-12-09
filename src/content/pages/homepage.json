@@ -41,18 +41,15 @@
         "en": "Mini Garden: Kindergarten preparation"
       },
       {
-        "de": "Beratung und Unterstützung Schulen",
-        "en": "School consultation and support"
+        "de": "Mini Turnen: Erste Schritte im Vereinssport",
+        "en": "Mini Turnen: First steps in team sports"
       }
     ],
     "outro": {
       "de": "Unsere Angebote werden in Zukunft stets erweitert.",
       "en": "Our programs are constantly being expanded."
     },
-    "funding": {
-      "de": "Als Trägerschaft fungiert der EVOLEA Verein, welcher von Eltern, Unternehmen und gemeinnützigen Stiftungen finanziert wird.",
-      "en": "EVOLEA is a non-profit association funded by parents, companies and charitable foundations."
-    },
+    "funding": {},
     "weitereAngeboteLabel": {
       "de": "Weitere Angebote",
       "en": "More Programs"
