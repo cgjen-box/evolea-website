@@ -53,7 +53,9 @@ const cards = homepage?.angeboteCards;
           )}
         </ul>
         <p>{getText(section?.outro, 'Unsere Angebote werden in Zukunft stets erweitert.')}</p>
-        <p class="angebote-funding-v3">{getText(section?.funding, 'Als Trägerschaft fungiert der EVOLEA Verein, welcher von Eltern, Unternehmen und gemeinnützigen Stiftungen finanziert wird.')}</p>
+        {getText(section?.funding) && (
+          <p class="angebote-funding-v3">{getText(section?.funding)}</p>
+        )}
       </div>
     </header>
 
