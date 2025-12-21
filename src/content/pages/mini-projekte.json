@@ -1,7 +1,7 @@
 {
   "hero": {
     "badge": {
-      "de": "Social Skills Gruppe",
+      "de": "Social Skills Gruppe QA",
       "en": "Social Skills Group"
     },
     "titel": "Mini Projekte",
@@ -23,23 +23,47 @@
   "infoKarten": [
     {
       "icon": "sparkle",
-      "label": { "de": "Alter", "en": "Age" },
-      "wert": { "de": "5-8 Jahre", "en": "5-8 years" }
+      "label": {
+        "de": "Alter",
+        "en": "Age"
+      },
+      "wert": {
+        "de": "5-8 Jahre",
+        "en": "5-8 years"
+      }
     },
     {
       "icon": "clipboard",
-      "label": { "de": "Wann", "en": "When" },
-      "wert": { "de": "Samstag, alle 2 Wochen", "en": "Saturday, every 2 weeks" }
+      "label": {
+        "de": "Wann",
+        "en": "When"
+      },
+      "wert": {
+        "de": "Samstag, alle 2 Wochen",
+        "en": "Saturday, every 2 weeks"
+      }
     },
     {
       "icon": "chart",
-      "label": { "de": "Dauer", "en": "Duration" },
-      "wert": { "de": "3 Stunden / Halbtag", "en": "3 hours / half day" }
+      "label": {
+        "de": "Dauer",
+        "en": "Duration"
+      },
+      "wert": {
+        "de": "3 Stunden / Halbtag",
+        "en": "3 hours / half day"
+      }
     },
     {
       "icon": "diamond",
-      "label": { "de": "Kosten", "en": "Cost" },
-      "wert": { "de": "CHF 125 / Halbtag", "en": "CHF 125 / half day" }
+      "label": {
+        "de": "Kosten",
+        "en": "Cost"
+      },
+      "wert": {
+        "de": "CHF 125 / Halbtag",
+        "en": "CHF 125 / half day"
+      }
     }
   ],
   "fuerWen": {
@@ -56,11 +80,26 @@
       "en": "Prerequisites for participation"
     },
     "voraussetzungen": [
-      { "de": "Funktionelle Kommunikation", "en": "Functional communication" },
-      { "de": "Interesse an sozialem Kontakt", "en": "Interest in social contact" },
-      { "de": "Kann Anweisungen folgen", "en": "Can follow instructions" },
-      { "de": "Altersgerechte Selbstständigkeit", "en": "Age-appropriate independence" },
-      { "de": "Keine selbst- oder fremdverletzenden Verhaltensweisen", "en": "No self-harming or aggressive behaviors" }
+      {
+        "de": "Funktionelle Kommunikation",
+        "en": "Functional communication"
+      },
+      {
+        "de": "Interesse an sozialem Kontakt",
+        "en": "Interest in social contact"
+      },
+      {
+        "de": "Kann Anweisungen folgen",
+        "en": "Can follow instructions"
+      },
+      {
+        "de": "Altersgerechte Selbstständigkeit",
+        "en": "Age-appropriate independence"
+      },
+      {
+        "de": "Keine selbst- oder fremdverletzenden Verhaltensweisen",
+        "en": "No self-harming or aggressive behaviors"
+      }
     ]
   },
   "besonderheiten": {
@@ -71,23 +110,47 @@
     "features": [
       {
         "icon": "target",
-        "titel": { "de": "Sichtbare Erfolge", "en": "Visible successes" },
-        "text": { "de": "Jedes Quartal schliesst mit einer Präsentation ab – Erfolge werden für alle sichtbar gemacht.", "en": "Each quarter concludes with a presentation – successes are made visible to everyone." }
+        "titel": {
+          "de": "Sichtbare Erfolge",
+          "en": "Visible successes"
+        },
+        "text": {
+          "de": "Jedes Quartal schliesst mit einer Präsentation ab – Erfolge werden für alle sichtbar gemacht.",
+          "en": "Each quarter concludes with a presentation – successes are made visible to everyone."
+        }
       },
       {
         "icon": "family",
-        "titel": { "de": "Entlastung für Eltern", "en": "Relief for parents" },
-        "text": { "de": "Während die Kinder betreut werden, haben Eltern Zeit für sich oder können sich mit anderen Familien vernetzen.", "en": "While the children are cared for, parents have time for themselves or can network with other families." }
+        "titel": {
+          "de": "Entlastung für Eltern",
+          "en": "Relief for parents"
+        },
+        "text": {
+          "de": "Während die Kinder betreut werden, haben Eltern Zeit für sich oder können sich mit anderen Familien vernetzen.",
+          "en": "While the children are cared for, parents have time for themselves or can network with other families."
+        }
       },
       {
         "icon": "handshake",
-        "titel": { "de": "Soziales Lernen", "en": "Social learning" },
-        "text": { "de": "Teamarbeit, Kommunikation und Kooperation werden spielerisch in echten Projekten geübt.", "en": "Teamwork, communication and cooperation are practiced playfully in real projects." }
+        "titel": {
+          "de": "Soziales Lernen",
+          "en": "Social learning"
+        },
+        "text": {
+          "de": "Teamarbeit, Kommunikation und Kooperation werden spielerisch in echten Projekten geübt.",
+          "en": "Teamwork, communication and cooperation are practiced playfully in real projects."
+        }
       },
       {
         "icon": "sparkle",
-        "titel": { "de": "Abschlussfeier", "en": "Closing celebration" },
-        "text": { "de": "Der letzte Halbtag jedes Quartals ist eine Feier – kostenlos von EVOLEA organisiert.", "en": "The last half day of each quarter is a celebration – organized free of charge by EVOLEA." }
+        "titel": {
+          "de": "Abschlussfeier",
+          "en": "Closing celebration"
+        },
+        "text": {
+          "de": "Der letzte Halbtag jedes Quartals ist eine Feier – kostenlos von EVOLEA organisiert.",
+          "en": "The last half day of each quarter is a celebration – organized free of charge by EVOLEA."
+        }
       }
     ]
   },
@@ -148,7 +211,6 @@
           "en": "Coming soon"
         },
         "statusFarbe": "orange",
-        "link": "",
         "farbe": "green"
       }
     ]
@@ -161,28 +223,58 @@
     "infos": [
       {
         "icon": "calendar",
-        "label": { "de": "Ablauf", "en": "Schedule" },
-        "wert": { "de": "3-Monats-Quartale mit 6 Halbtagen (alle 2 Wochen samstags, ca. 3 Stunden)", "en": "3-month quarters with 6 half days (every 2 weeks on Saturdays, approx. 3 hours)" }
+        "label": {
+          "de": "Ablauf",
+          "en": "Schedule"
+        },
+        "wert": {
+          "de": "3-Monats-Quartale mit 6 Halbtagen (alle 2 Wochen samstags, ca. 3 Stunden)",
+          "en": "3-month quarters with 6 half days (every 2 weeks on Saturdays, approx. 3 hours)"
+        }
       },
       {
         "icon": "people",
-        "label": { "de": "Gruppengrösse", "en": "Group size" },
-        "wert": { "de": "4-8 Kinder pro Gruppe", "en": "4-8 children per group" }
+        "label": {
+          "de": "Gruppengrösse",
+          "en": "Group size"
+        },
+        "wert": {
+          "de": "4-8 Kinder pro Gruppe",
+          "en": "4-8 children per group"
+        }
       },
       {
         "icon": "location",
-        "label": { "de": "Standort", "en": "Location" },
-        "wert": { "de": "Stapferstrasse 10, 8006 Zürich (Nähe Seilbahn Rigiblick)", "en": "Stapferstrasse 10, 8006 Zurich (near Rigiblick cable car)" }
+        "label": {
+          "de": "Standort",
+          "en": "Location"
+        },
+        "wert": {
+          "de": "Stapferstrasse 10, 8006 Zürich (Nähe Seilbahn Rigiblick)",
+          "en": "Stapferstrasse 10, 8006 Zurich (near Rigiblick cable car)"
+        }
       },
       {
         "icon": "money",
-        "label": { "de": "Kosten", "en": "Cost" },
-        "wert": { "de": "CHF 125 pro Halbtag (Abschlussfeier kostenlos)", "en": "CHF 125 per half day (closing celebration free)" }
+        "label": {
+          "de": "Kosten",
+          "en": "Cost"
+        },
+        "wert": {
+          "de": "CHF 125 pro Halbtag (Abschlussfeier kostenlos)",
+          "en": "CHF 125 per half day (closing celebration free)"
+        }
       },
       {
         "icon": "mail",
-        "label": { "de": "Kontakt", "en": "Contact" },
-        "wert": { "de": "hello@evolea.ch", "en": "hello@evolea.ch" }
+        "label": {
+          "de": "Kontakt",
+          "en": "Contact"
+        },
+        "wert": {
+          "de": "hello@evolea.ch",
+          "en": "hello@evolea.ch"
+        }
       }
     ]
   },
