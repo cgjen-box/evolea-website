@@ -18,7 +18,7 @@
       "de": "Fragen? Kontaktieren Sie uns",
       "en": "Questions? Contact us"
     },
-    "zweitButtonLink": "/kontakt/",
+    "zweitButtonLink": "/kontakt/?qa=1",
     "alter": "3-6"
   },
   "infoKarten": [
