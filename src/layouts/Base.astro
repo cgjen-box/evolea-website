@@ -1,5 +1,6 @@
 ---
 import { getLangFromUrl, getLanguageAlternates } from '@i18n/utils';
+import { getEntry } from 'astro:content';
 import Header from '@components/Header.astro';
 import Footer from '@components/Footer.astro';
 
@@ -28,6 +29,9 @@ const {
   image = '/images/og-default.jpg',
   transparentHeader = false,
 } = Astro.props;
+
+const siteSettingsEntry = await getEntry('settings', 'site');
+const siteSettings = siteSettingsEntry?.data;
 
 const lang = getLangFromUrl(Astro.url);
 const alternates = getLanguageAlternates(Astro.url);
@@ -94,13 +98,13 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
       {lang === 'de' ? 'Zum Hauptinhalt springen' : 'Skip to main content'}
     </a>
 
-    <Header transparent={transparentHeader} />
+    <Header transparent={transparentHeader} siteSettings={siteSettings} />
 
     <main id="main-content" class:list={['flex-1', { 'pt-0': transparentHeader, 'pt-[72px]': !transparentHeader }]}>
       <slot />
     </main>
 
-    <Footer />
+    <Footer siteSettings={siteSettings} />
 
     <!-- Scroll reveal script -->
     <script>
