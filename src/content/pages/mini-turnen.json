@@ -22,7 +22,7 @@
       "de": "Kostenlose Beratung",
       "en": "Free consultation"
     },
-    "zweitButtonLink": "/kontakt/",
+    "zweitButtonLink": "/kontakt/?qa=1",
     "alter": "5-8"
   },
   "infoKarten": [
