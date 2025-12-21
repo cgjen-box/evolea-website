@@ -1,7 +1,7 @@
 {
   "hero": {
     "badge": {
-      "de": "Kindergartenvorbereitung",
+      "de": "Kindergartenvorbereitung QA",
       "en": "Kindergarten Preparation"
     },
     "titel": "Mini Garten",
@@ -24,23 +24,47 @@
   "infoKarten": [
     {
       "icon": "sparkle",
-      "label": { "de": "Alter", "en": "Age" },
-      "wert": { "de": "3-6 Jahre", "en": "3-6 years" }
+      "label": {
+        "de": "Alter",
+        "en": "Age"
+      },
+      "wert": {
+        "de": "3-6 Jahre",
+        "en": "3-6 years"
+      }
     },
     {
       "icon": "people",
-      "label": { "de": "Gruppengrösse", "en": "Group size" },
-      "wert": { "de": "4 + 2 Kinder", "en": "4 + 2 children" }
+      "label": {
+        "de": "Gruppengrösse",
+        "en": "Group size"
+      },
+      "wert": {
+        "de": "4 + 2 Kinder",
+        "en": "4 + 2 children"
+      }
     },
     {
       "icon": "clipboard",
-      "label": { "de": "Wann", "en": "When" },
-      "wert": { "de": "Montag 13:30-16:30", "en": "Monday 13:30-16:30" }
+      "label": {
+        "de": "Wann",
+        "en": "When"
+      },
+      "wert": {
+        "de": "Montag 13:30-16:30",
+        "en": "Monday 13:30-16:30"
+      }
     },
     {
       "icon": "target",
-      "label": { "de": "Wo", "en": "Where" },
-      "wert": { "de": "Zürich", "en": "Zurich" }
+      "label": {
+        "de": "Wo",
+        "en": "Where"
+      },
+      "wert": {
+        "de": "Zürich",
+        "en": "Zurich"
+      }
     }
   ],
   "fuerWen": {
@@ -71,12 +95,48 @@
       "en": "Our afternoons are deliberately structured and mimic kindergarten daily life. With visual schedules and clear routines, we create security and predictability."
     },
     "aktivitaeten": [
-      { "icon": "handshake", "name": { "de": "Begrüssungskreis", "en": "Welcome circle" } },
-      { "icon": "clipboard", "name": { "de": "Tischaktivitäten", "en": "Table activities" } },
-      { "icon": "gamepad", "name": { "de": "Gruppenspiele", "en": "Group games" } },
-      { "icon": "book", "name": { "de": "Geschichtenzeit", "en": "Story time" } },
-      { "icon": "palette", "name": { "de": "Basteln", "en": "Crafts" } },
-      { "icon": "sparkle", "name": { "de": "Freies Spiel", "en": "Free play" } }
+      {
+        "icon": "handshake",
+        "name": {
+          "de": "Begrüssungskreis",
+          "en": "Welcome circle"
+        }
+      },
+      {
+        "icon": "clipboard",
+        "name": {
+          "de": "Tischaktivitäten",
+          "en": "Table activities"
+        }
+      },
+      {
+        "icon": "gamepad",
+        "name": {
+          "de": "Gruppenspiele",
+          "en": "Group games"
+        }
+      },
+      {
+        "icon": "book",
+        "name": {
+          "de": "Geschichtenzeit",
+          "en": "Story time"
+        }
+      },
+      {
+        "icon": "palette",
+        "name": {
+          "de": "Basteln",
+          "en": "Crafts"
+        }
+      },
+      {
+        "icon": "sparkle",
+        "name": {
+          "de": "Freies Spiel",
+          "en": "Free play"
+        }
+      }
     ]
   },
   "lernziele": {
@@ -90,28 +150,64 @@
     },
     "ziele": [
       {
-        "titel": { "de": "Kommunikation", "en": "Communication" },
-        "beschreibung": { "de": "Wünsche ausdrücken, auf Ansprache reagieren", "en": "Expressing wishes, responding to speech" }
+        "titel": {
+          "de": "Kommunikation",
+          "en": "Communication"
+        },
+        "beschreibung": {
+          "de": "Wünsche ausdrücken, auf Ansprache reagieren",
+          "en": "Expressing wishes, responding to speech"
+        }
       },
       {
-        "titel": { "de": "Instruktionen folgen", "en": "Following instructions" },
-        "beschreibung": { "de": "Gruppenanweisungen verstehen und umsetzen", "en": "Understanding and implementing group instructions" }
+        "titel": {
+          "de": "Instruktionen folgen",
+          "en": "Following instructions"
+        },
+        "beschreibung": {
+          "de": "Gruppenanweisungen verstehen und umsetzen",
+          "en": "Understanding and implementing group instructions"
+        }
       },
       {
-        "titel": { "de": "Imitation", "en": "Imitation" },
-        "beschreibung": { "de": "Von Gleichaltrigen und Erwachsenen lernen", "en": "Learning from peers and adults" }
+        "titel": {
+          "de": "Imitation",
+          "en": "Imitation"
+        },
+        "beschreibung": {
+          "de": "Von Gleichaltrigen und Erwachsenen lernen",
+          "en": "Learning from peers and adults"
+        }
       },
       {
-        "titel": { "de": "Zuhören", "en": "Listening" },
-        "beschreibung": { "de": "Aufmerksamkeit in der Gruppe", "en": "Attention in the group" }
+        "titel": {
+          "de": "Zuhören",
+          "en": "Listening"
+        },
+        "beschreibung": {
+          "de": "Aufmerksamkeit in der Gruppe",
+          "en": "Attention in the group"
+        }
       },
       {
-        "titel": { "de": "Abwechseln", "en": "Taking turns" },
-        "beschreibung": { "de": "Warten und Teilen üben", "en": "Practice waiting and sharing" }
+        "titel": {
+          "de": "Abwechseln",
+          "en": "Taking turns"
+        },
+        "beschreibung": {
+          "de": "Warten und Teilen üben",
+          "en": "Practice waiting and sharing"
+        }
       },
       {
-        "titel": { "de": "Übergänge", "en": "Transitions" },
-        "beschreibung": { "de": "Flexibel zwischen Aktivitäten wechseln", "en": "Flexibly switch between activities" }
+        "titel": {
+          "de": "Übergänge",
+          "en": "Transitions"
+        },
+        "beschreibung": {
+          "de": "Flexibel zwischen Aktivitäten wechseln",
+          "en": "Flexibly switch between activities"
+        }
       }
     ]
   },
@@ -131,23 +227,47 @@
     "infos": [
       {
         "icon": "target",
-        "label": { "de": "Standort", "en": "Location" },
-        "wert": { "de": "Stapferstrasse 10, 8006 Zürich (Nähe Seilbahn Rigiblick)", "en": "Stapferstrasse 10, 8006 Zurich (near Rigiblick cable car)" }
+        "label": {
+          "de": "Standort",
+          "en": "Location"
+        },
+        "wert": {
+          "de": "Stapferstrasse 10, 8006 Zürich (Nähe Seilbahn Rigiblick)",
+          "en": "Stapferstrasse 10, 8006 Zurich (near Rigiblick cable car)"
+        }
       },
       {
         "icon": "clipboard",
-        "label": { "de": "Zeiten", "en": "Times" },
-        "wert": { "de": "Montagnachmittag, 13:30–16:30 Uhr (ab September, ausserhalb Schulferien)", "en": "Monday afternoon, 13:30–16:30 (from September, outside school holidays)" }
+        "label": {
+          "de": "Zeiten",
+          "en": "Times"
+        },
+        "wert": {
+          "de": "Montagnachmittag, 13:30–16:30 Uhr (ab September, ausserhalb Schulferien)",
+          "en": "Monday afternoon, 13:30–16:30 (from September, outside school holidays)"
+        }
       },
       {
         "icon": "running",
-        "label": { "de": "Transport", "en": "Transport" },
-        "wert": { "de": "Unterstützung beim Transport auf Anfrage möglich", "en": "Transport support available on request" }
+        "label": {
+          "de": "Transport",
+          "en": "Transport"
+        },
+        "wert": {
+          "de": "Unterstützung beim Transport auf Anfrage möglich",
+          "en": "Transport support available on request"
+        }
       },
       {
         "icon": "heart",
-        "label": { "de": "Kontakt", "en": "Contact" },
-        "wert": { "de": "hello@evolea.ch", "en": "hello@evolea.ch" }
+        "label": {
+          "de": "Kontakt",
+          "en": "Contact"
+        },
+        "wert": {
+          "de": "hello@evolea.ch",
+          "en": "hello@evolea.ch"
+        }
       }
     ]
   },
