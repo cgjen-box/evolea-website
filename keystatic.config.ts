@@ -222,6 +222,11 @@ export default config({
         linkedin: fields.url({
           label: 'LinkedIn Profil',
         }),
+        leitetProgramme: fields.array(fields.text({ label: 'Programm' }), {
+          label: 'Leitet Programme',
+          description: 'Optional: Programme die diese Person leitet',
+          itemLabel: (props) => props.value || 'Neues Programm',
+        }),
         ...statusFields,
       },
     }),

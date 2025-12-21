@@ -190,6 +190,102 @@ const checkValidationBanners = async (page, label) => {
   }
 };
 
+const checkFieldInteractivity = async (page, label, options = {}) => {
+  const { allowEmpty = false } = options;
+  const stats = await page.evaluate(() => {
+    const controls = Array.from(
+      document.querySelectorAll('input, textarea, select')
+    );
+    const visibleControls = controls.filter((el) => {
+      if (el.tagName === 'INPUT' && el.type === 'hidden') {
+        return el.type === 'file';
+      }
+      return true;
+    });
+
+    const disabled = visibleControls.filter((el) => el.disabled).length;
+    const readonly = visibleControls.filter((el) => el.readOnly).length;
+    const textInputs = visibleControls.filter(
+      (el) =>
+        el.tagName === 'INPUT' &&
+        !['checkbox', 'radio', 'file'].includes(el.type)
+    ).length;
+    const textareas = visibleControls.filter((el) => el.tagName === 'TEXTAREA').length;
+    const selects = visibleControls.filter((el) => el.tagName === 'SELECT').length;
+    const checkboxes = visibleControls.filter(
+      (el) => el.tagName === 'INPUT' && el.type === 'checkbox'
+    ).length;
+    const fileInputs = visibleControls.filter(
+      (el) => el.tagName === 'INPUT' && el.type === 'file'
+    ).length;
+    const comboboxes = document.querySelectorAll('[role="combobox"]').length;
+    const uploadButtons = Array.from(
+      document.querySelectorAll('button, [role="button"]')
+    ).filter((el) => /upload|hochladen|choose file|datei/i.test(el.textContent || '')).length;
+
+    return {
+      total: visibleControls.length,
+      disabled,
+      readonly,
+      textInputs,
+      textareas,
+      selects,
+      checkboxes,
+      fileInputs,
+      comboboxes,
+      uploadButtons,
+    };
+  });
+
+  addCheck(`${label} field stats`, 'info', stats);
+
+  if (stats.disabled > 0) {
+    addWarning(`${label} disabled fields`, { count: stats.disabled });
+  }
+
+  if (!allowEmpty && stats.total === 0 && stats.uploadButtons === 0 && stats.fileInputs === 0) {
+    addWarning(`${label} field presence`, { message: 'No editable fields detected.' });
+  }
+
+  const focused = await page.evaluate(() => {
+    const el = document.querySelector(
+      'input:not([type="hidden"]):not([disabled]), textarea:not([disabled]), [role="combobox"]'
+    );
+    if (!el) return false;
+    el.focus();
+    return document.activeElement === el;
+  });
+
+  if (!focused && !allowEmpty) {
+    addWarning(`${label} focus`, { message: 'Unable to focus first input.' });
+  } else {
+    addCheck(`${label} focus`, 'pass', {});
+  }
+
+  const combo = page.locator('[role="combobox"]').first();
+  if (await combo.isVisible().catch(() => false)) {
+    try {
+      await combo.click();
+      await page.waitForSelector('[role="listbox"]', { timeout: 3000 });
+      await page.keyboard.press('Escape');
+      addCheck(`${label} combobox`, 'pass', {});
+    } catch (error) {
+      addWarning(`${label} combobox`, { message: error.message });
+    }
+  }
+
+  const checkbox = page.locator('input[type="checkbox"]').first();
+  if (await checkbox.isVisible().catch(() => false)) {
+    try {
+      await checkbox.click();
+      await checkbox.click();
+      addCheck(`${label} checkbox toggle`, 'pass', {});
+    } catch (error) {
+      addWarning(`${label} checkbox toggle`, { message: error.message });
+    }
+  }
+};
+
 const fetchJson = async (url) => {
   const response = await fetch(url, {
     headers: { 'User-Agent': 'cms-qa' },
@@ -280,16 +376,36 @@ const runCmsSmoke = async (page) => {
     { name: 'Tagesschule', path: '/singleton/tagesschule' },
     { name: 'Site Images', path: '/singleton/siteImages' },
     { name: 'Site Settings', path: '/singleton/siteSettings' },
-    { name: 'Blog', path: '/collection/blog' },
-    { name: 'Team', path: '/collection/team' },
-    { name: 'Principles', path: '/collection/principles' },
+    { name: 'Blog', path: '/collection/blog', collection: 'blog' },
+    { name: 'Team', path: '/collection/team', collection: 'team' },
+    { name: 'Principles', path: '/collection/principles', collection: 'principles' },
   ];
 
   for (const item of cmsPages) {
     const url = `${cmsRoot}${item.path}`;
     await navigateWithDiagnostics(page, `CMS ${item.name}`, url, 'body');
     await checkValidationBanners(page, `CMS ${item.name}`);
+    await checkFieldInteractivity(page, `CMS ${item.name}`, {
+      allowEmpty: Boolean(item.collection),
+    });
     await screenshotPage(page, `cms-${item.name.replace(/\s+/g, '-').toLowerCase()}`);
+
+    if (item.collection) {
+      const rowLocator = page.getByRole('row');
+      const rowCount = await rowLocator.count();
+      if (rowCount > 1) {
+        await rowLocator.nth(1).click();
+        await page.waitForTimeout(1500);
+        await checkValidationBanners(page, `CMS ${item.name} item`);
+        await checkFieldInteractivity(page, `CMS ${item.name} item`);
+        await screenshotPage(page, `cms-${item.collection}-item`);
+        await page.goto(url, { waitUntil: 'domcontentloaded', timeout: TIMEOUT });
+      } else {
+        addWarning(`CMS ${item.name} item`, {
+          message: 'No collection item link found to test fields.',
+        });
+      }
+    }
   }
 
   const siteSettingsUrl = `${cmsRoot}/singleton/siteSettings`;
