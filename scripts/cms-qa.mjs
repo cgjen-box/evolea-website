@@ -10,6 +10,20 @@ const OUTPUT_DIR = process.env.OUTPUT_DIR || 'artifacts/cms-qa';
 const TIMEOUT = 60000;
 const FIELD_CHECK_LIMIT = Number.parseInt(process.env.FIELD_CHECK_LIMIT || '0', 10);
 const SKIP_COMMIT = /^(1|true|yes)$/i.test(process.env.CMS_QA_NO_COMMIT || '');
+const PER_FIELD_COMMITS = /^(1|true|yes)$/i.test(process.env.CMS_QA_PER_FIELD || '');
+const FIELD_START = Number.parseInt(process.env.CMS_QA_FIELD_START || '0', 10);
+const FIELD_COUNT = Number.parseInt(process.env.CMS_QA_FIELD_COUNT || '0', 10);
+const SKIP_SCREENSHOTS =
+  /^(1|true|yes)$/i.test(process.env.CMS_QA_NO_SCREENSHOTS || '') || PER_FIELD_COMMITS;
+const SKIP_SITE_CHECKS =
+  /^(1|true|yes)$/i.test(process.env.CMS_QA_NO_SITE || '') || PER_FIELD_COMMITS;
+const QA_UPLOAD_FILE =
+  process.env.CMS_QA_UPLOAD_FILE ||
+  path.join(process.cwd(), 'public', 'images', 'logo', 'evolea-logo.png');
+const FIELD_QUERY =
+  'input, textarea, select, [role="combobox"], [contenteditable="true"]';
+
+let globalFieldIndex = 0;
 
 const viewports = [
   { name: 'desktop', width: 1440, height: 900 },
@@ -150,6 +164,9 @@ const checkBrokenImages = async (page, label) => {
 };
 
 const screenshotPage = async (page, name) => {
+  if (SKIP_SCREENSHOTS) {
+    return;
+  }
   const shotsDir = path.join(OUTPUT_DIR, 'screenshots');
   ensureDir(shotsDir);
 
@@ -375,6 +392,549 @@ const checkFieldsEditable = async (page, label, stats, options = {}) => {
   }
 };
 
+const sanitizeLabel = (value) => {
+  if (!value) return '';
+  return value.replace(/[^\x20-\x7E]/g, '').trim();
+};
+
+const buildCommitMessage = (prefix, pageName, field) => {
+  const label =
+    sanitizeLabel(field.label) ||
+    sanitizeLabel(field.ariaLabel) ||
+    sanitizeLabel(field.name) ||
+    sanitizeLabel(field.placeholder) ||
+    `${field.tagName}${field.type ? `-${field.type}` : ''}`;
+  const page = sanitizeLabel(pageName).replace(/\s+/g, '-');
+  const message = `${prefix}: ${page} ${label}`.trim();
+  return message.slice(0, 72);
+};
+
+const collectFieldCandidates = async (page) => {
+  return page.evaluate((query) => {
+    const nodes = Array.from(document.querySelectorAll(query));
+    const results = [];
+
+    const getLabel = (el) => {
+      const id = el.getAttribute('id');
+      if (id) {
+        const labelEl = document.querySelector(`label[for="${CSS.escape(id)}"]`);
+        if (labelEl?.innerText) return labelEl.innerText.trim();
+      }
+      const parentLabel = el.closest('label');
+      if (parentLabel?.innerText) return parentLabel.innerText.trim();
+      return '';
+    };
+
+    nodes.forEach((el, rawIndex) => {
+      const tagName = el.tagName.toLowerCase();
+      const type = el.getAttribute('type') || '';
+      const role = el.getAttribute('role') || '';
+      const isContentEditable = el.isContentEditable;
+      if (tagName === 'input' && type === 'hidden') return;
+      const inMain = el.closest('main, [role="main"]');
+      if (!inMain) return;
+
+      const style = window.getComputedStyle(el);
+      const rect = el.getBoundingClientRect();
+      const visible =
+        (rect.width > 0 && rect.height > 0 && style.visibility !== 'hidden' && style.display !== 'none') ||
+        (tagName === 'input' && type === 'file');
+      if (!visible) return;
+
+      const disabled = el.disabled || el.getAttribute('aria-disabled') === 'true';
+      const readOnly = el.readOnly || el.getAttribute('aria-readonly') === 'true';
+      const name = el.getAttribute('name') || '';
+      const id = el.getAttribute('id') || '';
+      const ariaLabel = el.getAttribute('aria-label') || '';
+      const placeholder = el.getAttribute('placeholder') || '';
+      const label = getLabel(el);
+
+      const combined = `${label} ${ariaLabel} ${placeholder} ${name}`.toLowerCase();
+      if (combined.includes('search')) return;
+
+      results.push({
+        rawIndex,
+        tagName,
+        type,
+        role,
+        isContentEditable,
+        disabled,
+        readOnly,
+        name,
+        id,
+        ariaLabel,
+        placeholder,
+        label,
+      });
+    });
+
+    return results;
+  }, FIELD_QUERY);
+};
+
+const getFieldLocator = (page, field) => page.locator(FIELD_QUERY).nth(field.rawIndex);
+
+const resolvePublicFilePath = (assetPath) => {
+  if (!assetPath || typeof assetPath !== 'string') return null;
+  const cleaned = assetPath.replace(/^\/+/, '');
+  return path.join(process.cwd(), 'public', cleaned);
+};
+
+const findAssetPathInText = (text) => {
+  if (!text) return '';
+  const match = text.match(/\/(?:images|videos|uploads|files)\/[^\s)]+/i);
+  return match ? match[0] : '';
+};
+
+const getFileFieldAssetPath = async (locator) => {
+  return locator.evaluate((el) => {
+    const root =
+      el.closest('[data-ks-field]') ||
+      el.closest('[role="group"]') ||
+      el.closest('fieldset') ||
+      el.parentElement;
+    const text = root?.innerText || '';
+    const match = text.match(/\/(?:images|videos|uploads|files)\/[^\s)]+/i);
+    return match ? match[0] : '';
+  });
+};
+
+const openComboboxListbox = async (page, locator) => {
+  const listbox = page.locator('[role="listbox"]').last();
+
+  await locator.click({ force: true });
+  if (await listbox.isVisible().catch(() => false)) {
+    return listbox;
+  }
+
+  await locator.focus();
+  await page.keyboard.press('ArrowDown');
+  if (await listbox.isVisible().catch(() => false)) {
+    return listbox;
+  }
+
+  const handle = await locator.evaluateHandle(
+    (el) => el.closest('[aria-haspopup="listbox"]') || el.parentElement
+  );
+  const elementHandle = handle.asElement();
+  if (elementHandle) {
+    await elementHandle.click({ force: true });
+  }
+
+  await listbox.waitFor({ state: 'visible', timeout: 5000 });
+  return listbox;
+};
+
+const setComboboxValue = async (page, locator, desired) => {
+  const listbox = await openComboboxListbox(page, locator);
+  const options = listbox.locator('[role="option"]');
+  const count = await options.count();
+  const desiredNorm = String(desired || '').trim();
+
+  for (let i = 0; i < count; i += 1) {
+    const option = options.nth(i);
+    const text = (await option.innerText()).trim();
+    if (text === desiredNorm || text.includes(desiredNorm) || desiredNorm.includes(text)) {
+      await option.click();
+      return text;
+    }
+  }
+
+  if (count > 0) {
+    const fallback = options.first();
+    const text = (await fallback.innerText()).trim();
+    await fallback.click();
+    return text;
+  }
+
+  throw new Error('No combobox options found.');
+};
+
+const chooseNextComboboxValue = async (page, locator, current) => {
+  const listbox = await openComboboxListbox(page, locator);
+  const options = listbox.locator('[role="option"]');
+  const count = await options.count();
+  const currentNorm = String(current || '').trim();
+  let fallback = '';
+
+  for (let i = 0; i < count; i += 1) {
+    const option = options.nth(i);
+    const text = (await option.innerText()).trim();
+    if (!fallback) fallback = text;
+    if (
+      text &&
+      text !== currentNorm &&
+      !text.includes(currentNorm) &&
+      !currentNorm.includes(text)
+    ) {
+      await option.click();
+      return text;
+    }
+  }
+
+  if (fallback) {
+    await options.first().click();
+    return fallback;
+  }
+
+  throw new Error('No combobox options found.');
+};
+
+const mutateFieldValue = async (page, locator, field) => {
+  await locator.scrollIntoViewIfNeeded().catch(() => {});
+
+  if (field.disabled || field.readOnly) {
+    return { skipped: true, reason: 'disabled_or_readonly' };
+  }
+
+  if (field.tagName === 'input' && field.type === 'checkbox') {
+    const original = await locator.isChecked();
+    await locator.click({ force: true });
+    return { original, mutated: !original, mode: 'checkbox' };
+  }
+
+  if (field.tagName === 'input' && field.type === 'radio') {
+    return { skipped: true, reason: 'radio_not_supported' };
+  }
+
+  if (field.tagName === 'input' && field.type === 'file') {
+    const original = await getFileFieldAssetPath(locator);
+    const qaFile = path.resolve(QA_UPLOAD_FILE);
+    if (!fs.existsSync(qaFile)) {
+      return { skipped: true, reason: 'qa_upload_missing', original };
+    }
+    if (original) {
+      const originalPath = resolvePublicFilePath(original);
+      if (!originalPath || !fs.existsSync(originalPath)) {
+        return { skipped: true, reason: 'original_file_missing', original };
+      }
+    }
+    await locator.setInputFiles(qaFile);
+    return {
+      original,
+      mutated: path.basename(qaFile),
+      mode: 'file',
+      originalLocalPath: original ? resolvePublicFilePath(original) : null,
+    };
+  }
+
+  if (field.role === 'combobox') {
+    const original = await locator.inputValue();
+    await chooseNextComboboxValue(page, locator, original);
+    const mutated = await locator.inputValue();
+    return { original, mutated, mode: 'combobox' };
+  }
+
+  if (field.tagName === 'select') {
+    const original = await locator.inputValue();
+    const options = await locator.evaluate((el) =>
+      Array.from(el.options).map((option) => option.value)
+    );
+    const mutated = options.find((value) => value && value !== original);
+    if (!mutated) {
+      return { skipped: true, reason: 'no_select_options', original };
+    }
+    await locator.selectOption(mutated);
+    return { original, mutated, mode: 'select' };
+  }
+
+  if (field.isContentEditable) {
+    const original = await locator.evaluate((el) => el.innerText || '');
+    const mutated = original.includes(' QA') ? original.replace(/ QA$/i, '') : `${original} QA`.trim();
+    await locator.click({ force: true });
+    await page.keyboard.press('Control+A');
+    await page.keyboard.type(mutated || 'QA content');
+    return { original, mutated: mutated || 'QA content', mode: 'contenteditable' };
+  }
+
+  if (field.tagName === 'textarea' || field.tagName === 'input') {
+    const original = await locator.inputValue();
+    const label = `${field.label} ${field.name} ${field.placeholder}`.toLowerCase();
+
+    if (field.type === 'number' || label.includes('reihenfolge')) {
+      const numberValue = Number.parseFloat(original);
+      const mutated = Number.isFinite(numberValue) ? String(numberValue + 1) : '1';
+      await locator.fill(mutated);
+      return { original, mutated, mode: 'number' };
+    }
+
+    if (field.type === 'date' || label.includes('datum')) {
+      const dateValue = original ? new Date(original) : new Date();
+      dateValue.setDate(dateValue.getDate() + 1);
+      const mutated = dateValue.toISOString().slice(0, 10);
+      await locator.fill(mutated);
+      return { original, mutated, mode: 'date' };
+    }
+
+    if (field.type === 'time') {
+      const mutated = original.startsWith('12:') ? '13:00' : '12:00';
+      await locator.fill(mutated);
+      return { original, mutated, mode: 'time' };
+    }
+
+    if (field.type === 'email' || label.includes('email')) {
+      const mutated = original
+        ? original.replace(/@/, '+qa@')
+        : 'qa@example.com';
+      await locator.fill(mutated);
+      return { original, mutated, mode: 'email' };
+    }
+
+    if (field.type === 'url' || label.includes('http') || label.includes('link') || label.includes('url')) {
+      const mutated = original
+        ? (original.includes('qa=1') ? original.replace(/[?&]qa=1/, '') : `${original}${original.includes('?') ? '&' : '?'}qa=1`)
+        : 'https://example.com/qa';
+      await locator.fill(mutated);
+      return { original, mutated, mode: 'url' };
+    }
+
+    if (field.type === 'tel' || label.includes('telefon')) {
+      const mutated = original || '+41 79 000 00 00';
+      await locator.fill(mutated);
+      return { original, mutated, mode: 'tel' };
+    }
+
+    if (label.includes('slug')) {
+      const mutated = original
+        ? (original.endsWith('-qa') ? original.replace(/-qa$/, '') : `${original}-qa`)
+        : 'qa-test';
+      await locator.fill(mutated);
+      return { original, mutated, mode: 'slug' };
+    }
+
+    const mutated = original.includes(' QA') ? original.replace(/ QA$/i, '') : `${original} QA`.trim();
+    await locator.fill(mutated || 'QA');
+    return { original, mutated: mutated || 'QA', mode: 'text' };
+  }
+
+  return { skipped: true, reason: 'unsupported_field' };
+};
+
+const applyFieldValue = async (page, locator, field, target) => {
+  await locator.scrollIntoViewIfNeeded().catch(() => {});
+
+  if (field.tagName === 'input' && field.type === 'checkbox') {
+    const current = await locator.isChecked();
+    if (current !== target) {
+      await locator.click({ force: true });
+    }
+    return;
+  }
+
+  if (field.tagName === 'input' && field.type === 'file') {
+    if (!target) {
+      await locator.setInputFiles([]);
+      return;
+    }
+    await locator.setInputFiles(target);
+    return;
+  }
+
+  if (field.role === 'combobox') {
+    await setComboboxValue(page, locator, target);
+    return;
+  }
+
+  if (field.tagName === 'select') {
+    await locator.selectOption(target);
+    return;
+  }
+
+  if (field.isContentEditable) {
+    await locator.click({ force: true });
+    await page.keyboard.press('Control+A');
+    await page.keyboard.type(target || '');
+    return;
+  }
+
+  await locator.fill(String(target ?? ''));
+};
+
+const readFieldValue = async (locator, field) => {
+  if (field.tagName === 'input' && field.type === 'checkbox') {
+    return locator.isChecked();
+  }
+
+  if (field.tagName === 'input' && field.type === 'file') {
+    return getFileFieldAssetPath(locator);
+  }
+
+  if (field.isContentEditable) {
+    return locator.evaluate((el) => el.innerText || '');
+  }
+
+  return locator.inputValue();
+};
+
+const runFieldCommitChecks = async (page, pageName) => {
+  if (SKIP_COMMIT) {
+    addError('CMS per-field commits', { message: 'CMS_QA_NO_COMMIT is set.' });
+    return;
+  }
+
+  const fields = await collectFieldCandidates(page);
+  const rangeEnd = FIELD_COUNT > 0 ? FIELD_START + FIELD_COUNT : null;
+  const qaFilePath = path.resolve(QA_UPLOAD_FILE);
+
+  for (const field of fields) {
+    const currentIndex = globalFieldIndex;
+    globalFieldIndex += 1;
+
+    if (currentIndex < FIELD_START) continue;
+    if (rangeEnd !== null && currentIndex >= rangeEnd) {
+      addCheck('CMS per-field range', 'info', { reached: currentIndex, rangeEnd });
+      break;
+    }
+
+    const locator = getFieldLocator(page, field);
+    let mutation;
+
+    try {
+      mutation = await mutateFieldValue(page, locator, field);
+    } catch (error) {
+      addError(`${pageName} field mutate`, {
+        index: currentIndex,
+        label: field.label || field.name || field.placeholder || field.tagName,
+        message: error.message,
+      });
+      continue;
+    }
+
+    if (mutation?.skipped) {
+      addWarning(`${pageName} field skipped`, {
+        index: currentIndex,
+        label: field.label || field.name || field.placeholder || field.tagName,
+        reason: mutation.reason,
+      });
+      report.progress = { lastFieldIndex: currentIndex };
+      writeReport();
+      continue;
+    }
+
+    const commitMessage = buildCommitMessage('QA field set', pageName, field);
+    const commitResult = await commitIfPossible(page, commitMessage);
+    if (!commitResult.ok) {
+      addError(`${pageName} field commit`, {
+        index: currentIndex,
+        label: field.label || field.name || field.placeholder || field.tagName,
+        reason: commitResult.reason,
+      });
+      report.progress = { lastFieldIndex: currentIndex };
+      writeReport();
+      continue;
+    }
+
+    await page.waitForTimeout(1500);
+    await page.reload({ waitUntil: 'domcontentloaded', timeout: TIMEOUT });
+    await page.waitForTimeout(1000);
+
+    const verifyLocator = getFieldLocator(page, field);
+    const updatedValue = await readFieldValue(verifyLocator, field);
+
+    if (field.tagName === 'input' && field.type === 'file') {
+      const expectedName = mutation.mutated;
+      if (!updatedValue || !String(updatedValue).includes(expectedName)) {
+        addError(`${pageName} field verify`, {
+          index: currentIndex,
+          label: field.label || field.name || field.placeholder || field.tagName,
+          expected: expectedName,
+          actual: updatedValue,
+        });
+      } else {
+        addCheck(`${pageName} field verify`, 'pass', { index: currentIndex });
+      }
+    } else if (updatedValue !== mutation.mutated) {
+      addError(`${pageName} field verify`, {
+        index: currentIndex,
+        label: field.label || field.name || field.placeholder || field.tagName,
+        expected: mutation.mutated,
+        actual: updatedValue,
+      });
+    } else {
+      addCheck(`${pageName} field verify`, 'pass', { index: currentIndex });
+    }
+
+    const revertMessage = buildCommitMessage('QA field revert', pageName, field);
+    const revertLocator = getFieldLocator(page, field);
+
+    try {
+      if (field.tagName === 'input' && field.type === 'file') {
+        if (mutation.original) {
+          await applyFieldValue(page, revertLocator, field, mutation.originalLocalPath);
+        } else {
+          await applyFieldValue(page, revertLocator, field, null);
+        }
+      } else {
+        await applyFieldValue(page, revertLocator, field, mutation.original);
+      }
+    } catch (error) {
+      addError(`${pageName} field revert`, {
+        index: currentIndex,
+        label: field.label || field.name || field.placeholder || field.tagName,
+        message: error.message,
+      });
+      continue;
+    }
+
+    const revertResult = await commitIfPossible(page, revertMessage);
+    if (!revertResult.ok) {
+      addError(`${pageName} field revert`, {
+        index: currentIndex,
+        label: field.label || field.name || field.placeholder || field.tagName,
+        reason: revertResult.reason,
+      });
+      report.progress = { lastFieldIndex: currentIndex };
+      writeReport();
+      continue;
+    }
+
+    await page.waitForTimeout(1500);
+    await page.reload({ waitUntil: 'domcontentloaded', timeout: TIMEOUT });
+    await page.waitForTimeout(1000);
+
+    const revertedValue = await readFieldValue(getFieldLocator(page, field), field);
+    if (field.tagName === 'input' && field.type === 'file') {
+      const expectedOriginal = mutation.original || '';
+      if (expectedOriginal && revertedValue !== expectedOriginal) {
+        addError(`${pageName} field revert verify`, {
+          index: currentIndex,
+          label: field.label || field.name || field.placeholder || field.tagName,
+          expected: expectedOriginal,
+          actual: revertedValue,
+        });
+      } else if (!expectedOriginal && revertedValue) {
+        addError(`${pageName} field revert verify`, {
+          index: currentIndex,
+          label: field.label || field.name || field.placeholder || field.tagName,
+          expected: '(empty)',
+          actual: revertedValue,
+        });
+      } else {
+        addCheck(`${pageName} field revert verify`, 'pass', { index: currentIndex });
+      }
+    } else if (revertedValue !== mutation.original) {
+      addError(`${pageName} field revert verify`, {
+        index: currentIndex,
+        label: field.label || field.name || field.placeholder || field.tagName,
+        expected: mutation.original,
+        actual: revertedValue,
+      });
+    } else {
+      addCheck(`${pageName} field revert verify`, 'pass', { index: currentIndex });
+    }
+
+    report.progress = { lastFieldIndex: currentIndex };
+    writeReport();
+  }
+
+  if (!fs.existsSync(qaFilePath)) {
+    addWarning('CMS QA upload file', {
+      message: 'QA upload file not found.',
+      path: qaFilePath,
+    });
+  }
+};
+
 const fetchJson = async (url) => {
   const response = await fetch(url, {
     headers: { 'User-Agent': 'cms-qa' },
@@ -453,6 +1013,13 @@ const runCmsSmoke = async (page) => {
     return false;
   }
 
+  if (PER_FIELD_COMMITS && SKIP_COMMIT) {
+    addError('CMS per-field commits', {
+      message: 'CMS_QA_PER_FIELD requires commits but CMS_QA_NO_COMMIT is set.',
+    });
+    return false;
+  }
+
   const cmsPages = [
     { name: 'Startseite', path: '/singleton/homepage' },
     { name: 'About', path: '/singleton/about' },
@@ -485,6 +1052,9 @@ const runCmsSmoke = async (page) => {
     await checkFieldsEditable(page, `CMS ${item.name}`, stats, {
       allowEmpty: Boolean(item.collection) || Boolean(item.allowEmpty),
     });
+    if (PER_FIELD_COMMITS && !item.collection) {
+      await runFieldCommitChecks(page, `CMS ${item.name}`);
+    }
     await screenshotPage(page, `cms-${item.name.replace(/\s+/g, '-').toLowerCase()}`);
 
     if (item.collection) {
@@ -496,6 +1066,9 @@ const runCmsSmoke = async (page) => {
         await checkValidationBanners(page, `CMS ${item.name} item`);
         const itemStats = await checkFieldInteractivity(page, `CMS ${item.name} item`);
         await checkFieldsEditable(page, `CMS ${item.name} item`, itemStats);
+        if (PER_FIELD_COMMITS) {
+          await runFieldCommitChecks(page, `CMS ${item.name} item`);
+        }
         await screenshotPage(page, `cms-${item.collection}-item`);
         await page.goto(url, { waitUntil: 'domcontentloaded', timeout: TIMEOUT });
       } else {
@@ -504,6 +1077,10 @@ const runCmsSmoke = async (page) => {
         });
       }
     }
+  }
+
+  if (PER_FIELD_COMMITS) {
+    return true;
   }
 
   const siteSettingsUrl = `${cmsRoot}/singleton/siteSettings`;
@@ -630,7 +1207,7 @@ const main = async () => {
     const cmsPage = await context.newPage();
     const cmsOk = await runCmsSmoke(cmsPage);
     await cmsPage.close();
-    if (cmsOk) {
+    if (cmsOk && !SKIP_SITE_CHECKS) {
       await runSiteChecks(context);
     }
   } catch (error) {
