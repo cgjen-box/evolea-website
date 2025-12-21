@@ -1,7 +1,7 @@
 {
   "hero": {
     "badge": {
-      "de": "Tagesstruktur mit Lernförderung",
+      "de": "Tagesstruktur mit Lernförderung QA",
       "en": "Day structure with learning support"
     },
     "titel": "Tagesschule",
@@ -30,20 +30,44 @@
   },
   "infoKarten": [
     {
-      "label": { "de": "Alter", "en": "Age" },
-      "wert": { "de": "6-12 Jahre", "en": "6-12 years" }
+      "label": {
+        "de": "Alter",
+        "en": "Age"
+      },
+      "wert": {
+        "de": "6-12 Jahre",
+        "en": "6-12 years"
+      }
     },
     {
-      "label": { "de": "Betreuung", "en": "Care" },
-      "wert": { "de": "Kleine Gruppen", "en": "Small groups" }
+      "label": {
+        "de": "Betreuung",
+        "en": "Care"
+      },
+      "wert": {
+        "de": "Kleine Gruppen",
+        "en": "Small groups"
+      }
     },
     {
-      "label": { "de": "Zeiten", "en": "Times" },
-      "wert": { "de": "Ganztags", "en": "Full day" }
+      "label": {
+        "de": "Zeiten",
+        "en": "Times"
+      },
+      "wert": {
+        "de": "Ganztags",
+        "en": "Full day"
+      }
     },
     {
-      "label": { "de": "Wo", "en": "Where" },
-      "wert": { "de": "Zürich", "en": "Zurich" }
+      "label": {
+        "de": "Wo",
+        "en": "Where"
+      },
+      "wert": {
+        "de": "Zürich",
+        "en": "Zurich"
+      }
     }
   ],
   "wasIst": {
@@ -74,10 +98,22 @@
       "en": "Our program is aimed at children aged 6-12 who:"
     },
     "kriterien": [
-      { "de": "Im Autismus Spektrum diagnostiziert sind oder eine ADHS-Diagnose haben", "en": "Are diagnosed on the autism spectrum or have an ADHD diagnosis" },
-      { "de": "Von einer kleineren Lernumgebung mit intensiver Betreuung profitieren", "en": "Benefit from a smaller learning environment with intensive care" },
-      { "de": "Einen strukturierten, vorhersehbaren Tagesablauf benötigen", "en": "Need a structured, predictable daily routine" },
-      { "de": "In der Regelschule zusätzliche Unterstützung brauchen", "en": "Need additional support in regular school" }
+      {
+        "de": "Im Autismus Spektrum diagnostiziert sind oder eine ADHS-Diagnose haben",
+        "en": "Are diagnosed on the autism spectrum or have an ADHD diagnosis"
+      },
+      {
+        "de": "Von einer kleineren Lernumgebung mit intensiver Betreuung profitieren",
+        "en": "Benefit from a smaller learning environment with intensive care"
+      },
+      {
+        "de": "Einen strukturierten, vorhersehbaren Tagesablauf benötigen",
+        "en": "Need a structured, predictable daily routine"
+      },
+      {
+        "de": "In der Regelschule zusätzliche Unterstützung brauchen",
+        "en": "Need additional support in regular school"
+      }
     ]
   },
   "ansatz": {
@@ -91,28 +127,64 @@
     },
     "features": [
       {
-        "titel": { "de": "Individuelle Lernpläne", "en": "Individual learning plans" },
-        "text": { "de": "Auf jedes Kind abgestimmte Ziele und Aktivitäten", "en": "Goals and activities tailored to each child" }
+        "titel": {
+          "de": "Individuelle Lernpläne",
+          "en": "Individual learning plans"
+        },
+        "text": {
+          "de": "Auf jedes Kind abgestimmte Ziele und Aktivitäten",
+          "en": "Goals and activities tailored to each child"
+        }
       },
       {
-        "titel": { "de": "Visuelle Strukturen", "en": "Visual structures" },
-        "text": { "de": "Klare Ablaufpläne und visuelle Unterstützung", "en": "Clear schedules and visual support" }
+        "titel": {
+          "de": "Visuelle Strukturen",
+          "en": "Visual structures"
+        },
+        "text": {
+          "de": "Klare Ablaufpläne und visuelle Unterstützung",
+          "en": "Clear schedules and visual support"
+        }
       },
       {
-        "titel": { "de": "Kleine Gruppen", "en": "Small groups" },
-        "text": { "de": "Hoher Betreuungsschlüssel für optimale Förderung", "en": "High staff-to-child ratio for optimal support" }
+        "titel": {
+          "de": "Kleine Gruppen",
+          "en": "Small groups"
+        },
+        "text": {
+          "de": "Hoher Betreuungsschlüssel für optimale Förderung",
+          "en": "High staff-to-child ratio for optimal support"
+        }
       },
       {
-        "titel": { "de": "Positive Verstärkung", "en": "Positive reinforcement" },
-        "text": { "de": "Motivation durch Erfolge und Anerkennung", "en": "Motivation through successes and recognition" }
+        "titel": {
+          "de": "Positive Verstärkung",
+          "en": "Positive reinforcement"
+        },
+        "text": {
+          "de": "Motivation durch Erfolge und Anerkennung",
+          "en": "Motivation through successes and recognition"
+        }
       },
       {
-        "titel": { "de": "Akademische Förderung", "en": "Academic support" },
-        "text": { "de": "Angepasster Lehrplan für schulische Inhalte", "en": "Adapted curriculum for academic content" }
+        "titel": {
+          "de": "Akademische Förderung",
+          "en": "Academic support"
+        },
+        "text": {
+          "de": "Angepasster Lehrplan für schulische Inhalte",
+          "en": "Adapted curriculum for academic content"
+        }
       },
       {
-        "titel": { "de": "Soziale Kompetenz", "en": "Social skills" },
-        "text": { "de": "Gezielte Förderung sozialer Fähigkeiten", "en": "Targeted promotion of social skills" }
+        "titel": {
+          "de": "Soziale Kompetenz",
+          "en": "Social skills"
+        },
+        "text": {
+          "de": "Gezielte Förderung sozialer Fähigkeiten",
+          "en": "Targeted promotion of social skills"
+        }
       }
     ]
   },
@@ -126,14 +198,62 @@
       "en": "Our structured daily routine provides security and predictability while leaving room for individual needs."
     },
     "ablauf": [
-      { "zeit": "08:30", "aktivitaet": { "de": "Ankommen und Morgenritual", "en": "Arrival and morning ritual" } },
-      { "zeit": "09:00", "aktivitaet": { "de": "Individuelles Lernen (Block 1)", "en": "Individual learning (Block 1)" } },
-      { "zeit": "10:30", "aktivitaet": { "de": "Pause und Bewegung", "en": "Break and movement" } },
-      { "zeit": "11:00", "aktivitaet": { "de": "Gruppenaktivitäten", "en": "Group activities" } },
-      { "zeit": "12:00", "aktivitaet": { "de": "Mittagessen und Erholung", "en": "Lunch and rest" } },
-      { "zeit": "13:30", "aktivitaet": { "de": "Individuelles Lernen (Block 2)", "en": "Individual learning (Block 2)" } },
-      { "zeit": "15:00", "aktivitaet": { "de": "Kreative und praktische Aktivitäten", "en": "Creative and practical activities" } },
-      { "zeit": "16:00", "aktivitaet": { "de": "Tagesabschluss und Abholen", "en": "Day closing and pickup" } }
+      {
+        "zeit": "08:30",
+        "aktivitaet": {
+          "de": "Ankommen und Morgenritual",
+          "en": "Arrival and morning ritual"
+        }
+      },
+      {
+        "zeit": "09:00",
+        "aktivitaet": {
+          "de": "Individuelles Lernen (Block 1)",
+          "en": "Individual learning (Block 1)"
+        }
+      },
+      {
+        "zeit": "10:30",
+        "aktivitaet": {
+          "de": "Pause und Bewegung",
+          "en": "Break and movement"
+        }
+      },
+      {
+        "zeit": "11:00",
+        "aktivitaet": {
+          "de": "Gruppenaktivitäten",
+          "en": "Group activities"
+        }
+      },
+      {
+        "zeit": "12:00",
+        "aktivitaet": {
+          "de": "Mittagessen und Erholung",
+          "en": "Lunch and rest"
+        }
+      },
+      {
+        "zeit": "13:30",
+        "aktivitaet": {
+          "de": "Individuelles Lernen (Block 2)",
+          "en": "Individual learning (Block 2)"
+        }
+      },
+      {
+        "zeit": "15:00",
+        "aktivitaet": {
+          "de": "Kreative und praktische Aktivitäten",
+          "en": "Creative and practical activities"
+        }
+      },
+      {
+        "zeit": "16:00",
+        "aktivitaet": {
+          "de": "Tagesabschluss und Abholen",
+          "en": "Day closing and pickup"
+        }
+      }
     ]
   },
   "interesse": {
@@ -151,16 +271,34 @@
     },
     "schritte": [
       {
-        "titel": { "de": "Interesse bekunden", "en": "Express interest" },
-        "text": { "de": "Kontaktieren Sie uns per E-Mail oder über unser Kontaktformular.", "en": "Contact us by email or through our contact form." }
+        "titel": {
+          "de": "Interesse bekunden",
+          "en": "Express interest"
+        },
+        "text": {
+          "de": "Kontaktieren Sie uns per E-Mail oder über unser Kontaktformular.",
+          "en": "Contact us by email or through our contact form."
+        }
       },
       {
-        "titel": { "de": "Unverbindliches Gespräch", "en": "No-obligation conversation" },
-        "text": { "de": "Wir laden Sie zu einem Kennenlerngespräch ein, um Ihre Bedürfnisse zu verstehen.", "en": "We invite you to an introductory meeting to understand your needs." }
+        "titel": {
+          "de": "Unverbindliches Gespräch",
+          "en": "No-obligation conversation"
+        },
+        "text": {
+          "de": "Wir laden Sie zu einem Kennenlerngespräch ein, um Ihre Bedürfnisse zu verstehen.",
+          "en": "We invite you to an introductory meeting to understand your needs."
+        }
       },
       {
-        "titel": { "de": "Informiert bleiben", "en": "Stay informed" },
-        "text": { "de": "Wir halten Sie über den Aufbau und den geplanten Start auf dem Laufenden.", "en": "We keep you updated on the development and planned start." }
+        "titel": {
+          "de": "Informiert bleiben",
+          "en": "Stay informed"
+        },
+        "text": {
+          "de": "Wir halten Sie über den Aufbau und den geplanten Start auf dem Laufenden.",
+          "en": "We keep you updated on the development and planned start."
+        }
       }
     ],
     "kontaktTitel": {
@@ -180,19 +318,28 @@
     "angebote": [
       {
         "titel": "Mini Garten",
-        "beschreibung": { "de": "Kindergartenvorbereitung für 3-6 Jahre", "en": "Kindergarten preparation for ages 3-6" },
+        "beschreibung": {
+          "de": "Kindergartenvorbereitung für 3-6 Jahre",
+          "en": "Kindergarten preparation for ages 3-6"
+        },
         "link": "/angebote/mini-garten/",
         "farbe": "green"
       },
       {
         "titel": "Mini Projekte",
-        "beschreibung": { "de": "Soziale Kompetenzen für 5-8 Jahre", "en": "Social skills for ages 5-8" },
+        "beschreibung": {
+          "de": "Soziale Kompetenzen für 5-8 Jahre",
+          "en": "Social skills for ages 5-8"
+        },
         "link": "/angebote/mini-projekte/",
         "farbe": "orange"
       },
       {
         "titel": "Mini Turnen",
-        "beschreibung": { "de": "Bewegung und Spass für 5-8 Jahre", "en": "Movement and fun for ages 5-8" },
+        "beschreibung": {
+          "de": "Bewegung und Spass für 5-8 Jahre",
+          "en": "Movement and fun for ages 5-8"
+        },
         "link": "/angebote/mini-turnen/",
         "farbe": "sky"
       }
