@@ -2,9 +2,43 @@
 import { getLangFromUrl, useTranslations, useTranslatedPath } from '@i18n/utils';
 import Butterfly from './Butterfly.astro';
 
+interface Props {
+  siteSettings?: {
+    footer?: {
+      tagline?: { de?: string; en?: string };
+      copyright?: string;
+      datenschutzText?: { de?: string; en?: string };
+      impressumText?: { de?: string; en?: string };
+    };
+    kontakt?: {
+      email?: string;
+    };
+    social?: {
+      instagram?: string;
+    };
+  };
+}
+
+const { siteSettings } = Astro.props;
+
 const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
 const translatePath = useTranslatedPath(lang);
+
+const getText = (obj: { de?: string; en?: string } | undefined, fallback: string) => {
+  if (!obj) return fallback;
+  return lang === 'de' ? (obj.de || fallback) : (obj.en || obj.de || fallback);
+};
+
+const footerTagline = getText(siteSettings?.footer?.tagline, t('footer.tagline'));
+const footerPrivacy = getText(siteSettings?.footer?.datenschutzText, t('footer.privacy'));
+const footerImpressum = getText(siteSettings?.footer?.impressumText, t('footer.imprint'));
+const footerCopyright =
+  lang === 'de'
+    ? siteSettings?.footer?.copyright || t('footer.copyright')
+    : t('footer.copyright');
+const email = siteSettings?.kontakt?.email || t('contact.email');
+const instagramUrl = siteSettings?.social?.instagram || 'https://www.instagram.com/evolea.verein/';
 ---
 
 <footer class="relative text-white overflow-hidden footer-gradient">
@@ -39,7 +73,7 @@ const translatePath = useTranslatedPath(lang);
             </span>
           </a>
           <p class="text-white/80 max-w-md leading-relaxed mb-6">
-            {t('footer.tagline')}
+            {footerTagline}
           </p>
 
           <!-- Spectrum line decoration -->
@@ -48,7 +82,7 @@ const translatePath = useTranslatedPath(lang);
           <!-- Social links -->
           <div class="flex gap-4">
             <a
-              href="https://www.instagram.com/evolea.verein/"
+              href={instagramUrl}
               target="_blank"
               rel="noopener noreferrer"
               class="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-white/20 transition-colors"
@@ -59,7 +93,7 @@ const translatePath = useTranslatedPath(lang);
               </svg>
             </a>
             <a
-              href="mailto:hello@evolea.ch"
+              href={`mailto:${email}`}
               class="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-white/20 transition-colors"
               aria-label="Email"
             >
@@ -108,7 +142,7 @@ const translatePath = useTranslatedPath(lang);
                 <svg class="w-5 h-5 text-evolea-orange" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
                 </svg>
-                <span>{t('contact.email')}</span>
+              <span>{email}</span>
               </a>
             </li>
           </ul>
@@ -130,14 +164,14 @@ const translatePath = useTranslatedPath(lang);
       <div class="pt-8 border-t border-white/10">
         <div class="flex flex-col md:flex-row justify-between items-center gap-4">
           <p class="text-white/60 text-sm">
-            {t('footer.copyright')}
+            {footerCopyright}
           </p>
           <div class="flex gap-6 text-sm">
             <a href={translatePath('/datenschutz/')} class="text-white/60 hover:text-white transition-colors">
-              {t('footer.privacy')}
+              {footerPrivacy}
             </a>
             <a href={translatePath('/impressum/')} class="text-white/60 hover:text-white transition-colors">
-              {t('footer.imprint')}
+              {footerImpressum}
             </a>
           </div>
         </div>

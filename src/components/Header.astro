@@ -5,13 +5,42 @@ import Butterfly from './Butterfly.astro';
 
 interface Props {
   transparent?: boolean;
+  siteSettings?: {
+    navigation?: {
+      de?: {
+        home?: string;
+        programs?: string;
+        about?: string;
+        team?: string;
+        blog?: string;
+        contact?: string;
+      };
+      en?: {
+        home?: string;
+        programs?: string;
+        about?: string;
+        team?: string;
+        blog?: string;
+        contact?: string;
+      };
+    };
+  };
 }
 
-const { transparent = false } = Astro.props;
+const { transparent = false, siteSettings } = Astro.props;
 
 const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
 const translatePath = useTranslatedPath(lang);
+
+const navLabels = siteSettings?.navigation?.[lang] || {};
+const navLabelMap: Record<string, string | undefined> = {
+  'nav.programs': navLabels.programs,
+  'nav.about': navLabels.about,
+  'nav.team': navLabels.team,
+  'nav.blog': navLabels.blog,
+  'nav.contact': navLabels.contact,
+};
 
 const navItems = [
   { key: 'nav.programs', href: '/angebote/' },
@@ -58,7 +87,7 @@ const navItems = [
               isActive && transparent && 'nav-link-active-light',
             ]}
           >
-            {t(key)}
+            {navLabelMap[key] || t(key)}
           </a>
         );
       })}
@@ -126,7 +155,7 @@ const navItems = [
           class="mobile-nav-link py-4 text-2xl sm:text-3xl font-display font-bold text-white/90 hover:text-white transition-colors"
           style={`animation-delay: ${index * 0.05}s`}
         >
-          {t(key)}
+          {navLabelMap[key] || t(key)}
         </a>
       ))}
     </nav>
