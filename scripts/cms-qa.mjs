@@ -8,6 +8,7 @@ const SITE_BASE = process.env.SITE_BASE || 'https://evolea-website.pages.dev';
 const GH_REPO = process.env.GH_REPO || 'cgjen-box/evolea-website';
 const OUTPUT_DIR = process.env.OUTPUT_DIR || 'artifacts/cms-qa';
 const TIMEOUT = 60000;
+const FIELD_CHECK_LIMIT = Number.parseInt(process.env.FIELD_CHECK_LIMIT || '0', 10);
 
 const viewports = [
   { name: 'desktop', width: 1440, height: 900 },
@@ -66,12 +67,20 @@ const attachDiagnostics = (page, diagnostics) => {
     }
   };
   const onPageError = (error) => {
-    diagnostics.pageErrors.push({ message: error.message });
+    const message = error.message || '';
+    if (/A listener indicated an asynchronous response/i.test(message)) {
+      return;
+    }
+    diagnostics.pageErrors.push({ message });
   };
   const onRequestFailed = (request) => {
+    const failureText = request.failure()?.errorText || 'unknown';
+    if (failureText === 'net::ERR_ABORTED' && request.resourceType() === 'media') {
+      return;
+    }
     diagnostics.requestFailures.push({
       url: request.url(),
-      failure: request.failure()?.errorText || 'unknown',
+      failure: failureText,
     });
   };
 
@@ -144,10 +153,18 @@ const screenshotPage = async (page, name) => {
   ensureDir(shotsDir);
 
   for (const vp of viewports) {
-    await page.setViewportSize({ width: vp.width, height: vp.height });
-    await page.waitForTimeout(1200);
-    const filePath = path.join(shotsDir, `${name}-${vp.name}.png`);
-    await page.screenshot({ path: filePath, fullPage: true });
+    try {
+      if (page.isClosed()) {
+        addWarning(`${name} screenshot`, { message: 'Page closed before screenshot.' });
+        return;
+      }
+      await page.setViewportSize({ width: vp.width, height: vp.height });
+      await page.waitForTimeout(1200);
+      const filePath = path.join(shotsDir, `${name}-${vp.name}.png`);
+      await page.screenshot({ path: filePath, fullPage: true });
+    } catch (error) {
+      addWarning(`${name} screenshot`, { message: error.message });
+    }
   }
 };
 
@@ -219,9 +236,6 @@ const checkFieldInteractivity = async (page, label, options = {}) => {
       (el) => el.tagName === 'INPUT' && el.type === 'file'
     ).length;
     const comboboxes = document.querySelectorAll('[role="combobox"]').length;
-    const uploadButtons = Array.from(
-      document.querySelectorAll('button, [role="button"]')
-    ).filter((el) => /upload|hochladen|choose file|datei/i.test(el.textContent || '')).length;
 
     return {
       total: visibleControls.length,
@@ -233,9 +247,17 @@ const checkFieldInteractivity = async (page, label, options = {}) => {
       checkboxes,
       fileInputs,
       comboboxes,
-      uploadButtons,
+      uploadButtons: 0,
     };
   });
+
+  const uploadButtonCount = await page
+    .getByRole('button', { name: /choose file|datei|upload|hochladen|file/i })
+    .count()
+    .catch(() => 0);
+  const fileInputCount = await page.locator('input[type="file"]').count().catch(() => 0);
+  stats.uploadButtons = Math.max(stats.uploadButtons, uploadButtonCount);
+  stats.fileInputs = Math.max(stats.fileInputs, fileInputCount);
 
   addCheck(`${label} field stats`, 'info', stats);
 
@@ -247,19 +269,26 @@ const checkFieldInteractivity = async (page, label, options = {}) => {
     addWarning(`${label} field presence`, { message: 'No editable fields detected.' });
   }
 
-  const focused = await page.evaluate(() => {
-    const el = document.querySelector(
-      'input:not([type="hidden"]):not([disabled]), textarea:not([disabled]), [role="combobox"]'
-    );
-    if (!el) return false;
-    el.focus();
-    return document.activeElement === el;
-  });
+  const shouldCheckFocus = stats.total > 0 || stats.comboboxes > 0;
+  if (stats.total === 0 && stats.uploadButtons > 0) {
+    addCheck(`${label} upload-only`, 'pass', { uploadButtons: stats.uploadButtons });
+  }
 
-  if (!focused && !allowEmpty) {
-    addWarning(`${label} focus`, { message: 'Unable to focus first input.' });
-  } else {
-    addCheck(`${label} focus`, 'pass', {});
+  if (shouldCheckFocus) {
+    const focused = await page.evaluate(() => {
+      const el = document.querySelector(
+        'input:not([type="hidden"]):not([disabled]), textarea:not([disabled]), [role="combobox"]'
+      );
+      if (!el) return false;
+      el.focus();
+      return document.activeElement === el;
+    });
+
+    if (!focused && !allowEmpty) {
+      addWarning(`${label} focus`, { message: 'Unable to focus first input.' });
+    } else {
+      addCheck(`${label} focus`, 'pass', {});
+    }
   }
 
   const combo = page.locator('[role="combobox"]').first();
@@ -283,6 +312,65 @@ const checkFieldInteractivity = async (page, label, options = {}) => {
     } catch (error) {
       addWarning(`${label} checkbox toggle`, { message: error.message });
     }
+  }
+
+  return stats;
+};
+
+const checkFieldsEditable = async (page, label, stats, options = {}) => {
+  const { allowEmpty = false, limit = FIELD_CHECK_LIMIT } = options;
+  if (!stats || stats.total === 0) {
+    if (!allowEmpty && stats?.uploadButtons === 0 && stats?.fileInputs === 0) {
+      addWarning(`${label} editable fields`, { message: 'No inputs to verify.' });
+    }
+    return;
+  }
+
+  const locator = page.locator('input, textarea, select');
+  const total = await locator.count();
+  const failures = [];
+  let tested = 0;
+
+  for (let i = 0; i < total; i += 1) {
+    if (limit > 0 && tested >= limit) break;
+    const element = locator.nth(i);
+    const info = await element.evaluate((node) => {
+      const tagName = node.tagName.toLowerCase();
+      const type = node.getAttribute('type') || '';
+      const name = node.getAttribute('name') || '';
+      const id = node.getAttribute('id') || '';
+      const ariaLabel = node.getAttribute('aria-label') || '';
+      let label = '';
+      if (id) {
+        const labelNode = document.querySelector(`label[for="${CSS.escape(id)}"]`);
+        label = labelNode?.textContent?.trim() || '';
+      }
+      return { tagName, type, name, id, ariaLabel, label };
+    });
+
+    if (info.tagName === 'input' && info.type === 'hidden') continue;
+    const visible = await element.isVisible().catch(() => false);
+    if (!visible) continue;
+
+    await element.scrollIntoViewIfNeeded().catch(() => {});
+    const useEnabled =
+      info.tagName === 'select' ||
+      (info.tagName === 'input' &&
+        ['checkbox', 'radio', 'file'].includes(info.type));
+    const editable = useEnabled
+      ? await element.isEnabled().catch(() => false)
+      : await element.isEditable().catch(() => false);
+    tested += 1;
+    if (!editable) {
+      failures.push(info);
+      if (failures.length >= 10) break;
+    }
+  }
+
+  addCheck(`${label} editable field count`, 'info', { tested, failed: failures.length, limit });
+
+  if (failures.length > 0) {
+    addError(`${label} non-editable fields`, { sample: failures });
   }
 };
 
@@ -351,7 +439,6 @@ const commitIfPossible = async (page, message) => {
 const runCmsSmoke = async (page) => {
   const cmsRoot = CMS_BASE.replace(/\/$/, '');
   const mainBefore = await getLatestCommitSha('main');
-  const keystaticBefore = await getLatestCommitSha('keystatic/main');
   await navigateWithDiagnostics(
     page,
     'CMS home',
@@ -374,7 +461,13 @@ const runCmsSmoke = async (page) => {
     { name: 'Mini Projekte', path: '/singleton/miniProjekte' },
     { name: 'Mini Turnen', path: '/singleton/miniTurnen' },
     { name: 'Tagesschule', path: '/singleton/tagesschule' },
-    { name: 'Site Images', path: '/singleton/siteImages' },
+    {
+      name: 'Site Images',
+      path: '/singleton/siteImages',
+      waitFor:
+        'button:has-text("Choose file"), button:has-text("Datei"), input[type="file"]',
+      allowEmpty: true,
+    },
     { name: 'Site Settings', path: '/singleton/siteSettings' },
     { name: 'Blog', path: '/collection/blog', collection: 'blog' },
     { name: 'Team', path: '/collection/team', collection: 'team' },
@@ -383,10 +476,13 @@ const runCmsSmoke = async (page) => {
 
   for (const item of cmsPages) {
     const url = `${cmsRoot}${item.path}`;
-    await navigateWithDiagnostics(page, `CMS ${item.name}`, url, 'body');
+    await navigateWithDiagnostics(page, `CMS ${item.name}`, url, item.waitFor || 'body');
     await checkValidationBanners(page, `CMS ${item.name}`);
-    await checkFieldInteractivity(page, `CMS ${item.name}`, {
-      allowEmpty: Boolean(item.collection),
+    const stats = await checkFieldInteractivity(page, `CMS ${item.name}`, {
+      allowEmpty: Boolean(item.collection) || Boolean(item.allowEmpty),
+    });
+    await checkFieldsEditable(page, `CMS ${item.name}`, stats, {
+      allowEmpty: Boolean(item.collection) || Boolean(item.allowEmpty),
     });
     await screenshotPage(page, `cms-${item.name.replace(/\s+/g, '-').toLowerCase()}`);
 
@@ -397,7 +493,8 @@ const runCmsSmoke = async (page) => {
         await rowLocator.nth(1).click();
         await page.waitForTimeout(1500);
         await checkValidationBanners(page, `CMS ${item.name} item`);
-        await checkFieldInteractivity(page, `CMS ${item.name} item`);
+        const itemStats = await checkFieldInteractivity(page, `CMS ${item.name} item`);
+        await checkFieldsEditable(page, `CMS ${item.name} item`, itemStats);
         await screenshotPage(page, `cms-${item.collection}-item`);
         await page.goto(url, { waitUntil: 'domcontentloaded', timeout: TIMEOUT });
       } else {
@@ -470,28 +567,20 @@ const runCmsSmoke = async (page) => {
   await waitForText(page, siteHome, original, 'Footer tagline revert');
 
   const mainAfter = await getLatestCommitSha('main');
-  const keystaticAfter = await getLatestCommitSha('keystatic/main');
   if (mainBefore && mainAfter && mainBefore !== mainAfter) {
     addCheck('GitHub commit on main', 'pass', { before: mainBefore, after: mainAfter });
-  } else if (keystaticBefore && keystaticAfter && keystaticBefore !== keystaticAfter) {
-    addCheck('GitHub commit on keystatic/main', 'pass', {
-      before: keystaticBefore,
-      after: keystaticAfter,
-    });
   } else {
     addWarning('GitHub commit check', {
-      message: 'No new commit detected on main or keystatic/main.',
+      message: 'No new commit detected on main.',
       mainBefore,
       mainAfter,
-      keystaticBefore,
-      keystaticAfter,
     });
   }
 
   return true;
 };
 
-const runSiteChecks = async (page) => {
+const runSiteChecks = async (context) => {
   const pages = [
     { name: 'Home', path: '/' },
     { name: 'About', path: '/ueber-uns/' },
@@ -509,30 +598,40 @@ const runSiteChecks = async (page) => {
   ];
 
   for (const item of pages) {
+    const page = await context.newPage();
     const url = `${SITE_BASE.replace(/\/$/, '')}${item.path}`;
-    await navigateWithDiagnostics(page, item.name, url, 'body');
-    await checkBrokenImages(page, item.name);
-    await checkA11yBasics(page, item.name);
-    await screenshotPage(page, item.name.replace(/\s+/g, '-').toLowerCase());
+    try {
+      await navigateWithDiagnostics(page, item.name, url, 'body');
+      await checkBrokenImages(page, item.name);
+      await checkA11yBasics(page, item.name);
+      await screenshotPage(page, item.name.replace(/\s+/g, '-').toLowerCase());
+    } catch (error) {
+      addError(`${item.name} checks`, { message: error.message });
+    } finally {
+      await page.close().catch(() => {});
+    }
   }
 };
 
 const main = async () => {
   ensureDir(OUTPUT_DIR);
   const browser = await chromium.connectOverCDP('http://127.0.0.1:9222');
-  const context = browser.contexts()[0] || (await browser.newContext());
-  const page = await context.newPage();
-
+  const existingContext = browser.contexts()[0] || null;
+  const context = existingContext || (await browser.newContext());
   try {
-    const cmsOk = await runCmsSmoke(page);
+    const cmsPage = await context.newPage();
+    const cmsOk = await runCmsSmoke(cmsPage);
+    await cmsPage.close();
     if (cmsOk) {
-      await runSiteChecks(page);
+      await runSiteChecks(context);
     }
   } catch (error) {
     addError('fatal', { message: error.message });
   } finally {
     writeReport();
-    await page.close();
+    if (!existingContext) {
+      await context.close();
+    }
     await browser.close();
   }
 };
