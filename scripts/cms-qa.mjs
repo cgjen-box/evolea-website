@@ -9,6 +9,7 @@ const GH_REPO = process.env.GH_REPO || 'cgjen-box/evolea-website';
 const OUTPUT_DIR = process.env.OUTPUT_DIR || 'artifacts/cms-qa';
 const TIMEOUT = 60000;
 const FIELD_CHECK_LIMIT = Number.parseInt(process.env.FIELD_CHECK_LIMIT || '0', 10);
+const SKIP_COMMIT = /^(1|true|yes)$/i.test(process.env.CMS_QA_NO_COMMIT || '');
 
 const viewports = [
   { name: 'desktop', width: 1440, height: 900 },
@@ -512,6 +513,13 @@ const runCmsSmoke = async (page) => {
     addWarning('CMS Site Settings edit', {
       message: 'Tagline (DE) field not found; skip edit test.',
     });
+    return true;
+  }
+
+  if (SKIP_COMMIT) {
+    addCheck('CMS Site Settings save', 'info', { skipped: true, reason: 'CMS_QA_NO_COMMIT' });
+    addCheck('CMS Site Settings revert', 'info', { skipped: true, reason: 'CMS_QA_NO_COMMIT' });
+    addCheck('GitHub commit check', 'info', { skipped: true, reason: 'CMS_QA_NO_COMMIT' });
     return true;
   }
 
