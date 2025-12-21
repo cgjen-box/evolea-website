@@ -1,7 +1,7 @@
 {
   "hero": {
     "titel": {
-      "de": "Über uns",
+      "de": "Über uns QA",
       "en": "About Us"
     },
     "untertitel": {
@@ -26,7 +26,7 @@
       "de": "Wir glauben an die Stärken jedes Kindes. Nicht Defizite stehen im Vordergrund, sondern die einzigartigen Fähigkeiten und Potenziale, die jedes Kind mitbringt.",
       "en": "We believe in the strengths of every child. We don't focus on deficits, but on the unique abilities and potential that each child brings."
     },
-    "bild": "/images/about/children-playing-1.jpg",
+    "bild": "/images/about/mission/bild.jpg",
     "bildAlt": {
       "de": "Kinder beim gemeinsamen Spielen",
       "en": "Children playing together"
