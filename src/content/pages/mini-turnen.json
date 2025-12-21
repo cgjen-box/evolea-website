@@ -1,7 +1,7 @@
 {
   "hero": {
     "badge": {
-      "de": "Inklusives Sportangebot",
+      "de": "Inklusives Sportangebot QA",
       "en": "Inclusive Sports Program"
     },
     "titel": "Mini Turnen",
@@ -28,23 +28,47 @@
   "infoKarten": [
     {
       "icon": "sparkle",
-      "label": { "de": "Alter", "en": "Age" },
-      "wert": { "de": "5-8 Jahre", "en": "5-8 years" }
+      "label": {
+        "de": "Alter",
+        "en": "Age"
+      },
+      "wert": {
+        "de": "5-8 Jahre",
+        "en": "5-8 years"
+      }
     },
     {
       "icon": "clipboard",
-      "label": { "de": "Wann", "en": "When" },
-      "wert": { "de": "Mittwoch 18:00-19:30", "en": "Wednesday 18:00-19:30" }
+      "label": {
+        "de": "Wann",
+        "en": "When"
+      },
+      "wert": {
+        "de": "Mittwoch 18:00-19:30",
+        "en": "Wednesday 18:00-19:30"
+      }
     },
     {
       "icon": "chart",
-      "label": { "de": "Start", "en": "Start" },
-      "wert": { "de": "Januar 2025", "en": "January 2025" }
+      "label": {
+        "de": "Start",
+        "en": "Start"
+      },
+      "wert": {
+        "de": "Januar 2025",
+        "en": "January 2025"
+      }
     },
     {
       "icon": "target",
-      "label": { "de": "Wo", "en": "Where" },
-      "wert": { "de": "Wallisellen", "en": "Wallisellen" }
+      "label": {
+        "de": "Wo",
+        "en": "Where"
+      },
+      "wert": {
+        "de": "Wallisellen",
+        "en": "Wallisellen"
+      }
     }
   ],
   "fuerWen": {
@@ -61,11 +85,26 @@
       "en": "Prerequisites for participation"
     },
     "voraussetzungen": [
-      { "de": "Funktionelle Kommunikation", "en": "Functional communication" },
-      { "de": "Interesse an sozialem Kontakt und Sport", "en": "Interest in social contact and sports" },
-      { "de": "Kann Anweisungen und Regeln folgen", "en": "Can follow instructions and rules" },
-      { "de": "Altersgerechte Selbstständigkeit", "en": "Age-appropriate independence" },
-      { "de": "Keine selbst- oder fremdverletzenden Verhaltensweisen", "en": "No self-harming or aggressive behaviors" }
+      {
+        "de": "Funktionelle Kommunikation",
+        "en": "Functional communication"
+      },
+      {
+        "de": "Interesse an sozialem Kontakt und Sport",
+        "en": "Interest in social contact and sports"
+      },
+      {
+        "de": "Kann Anweisungen und Regeln folgen",
+        "en": "Can follow instructions and rules"
+      },
+      {
+        "de": "Altersgerechte Selbstständigkeit",
+        "en": "Age-appropriate independence"
+      },
+      {
+        "de": "Keine selbst- oder fremdverletzenden Verhaltensweisen",
+        "en": "No self-harming or aggressive behaviors"
+      }
     ]
   },
   "training": {
@@ -80,33 +119,69 @@
     "aktivitaeten": [
       {
         "icon": "running",
-        "titel": { "de": "Laufen & Rennen", "en": "Running & Racing" },
-        "beschreibung": { "de": "Koordination und Ausdauer", "en": "Coordination and endurance" }
+        "titel": {
+          "de": "Laufen & Rennen",
+          "en": "Running & Racing"
+        },
+        "beschreibung": {
+          "de": "Koordination und Ausdauer",
+          "en": "Coordination and endurance"
+        }
       },
       {
         "icon": "leaf",
-        "titel": { "de": "Klettern", "en": "Climbing" },
-        "beschreibung": { "de": "Kraft und Mut", "en": "Strength and courage" }
+        "titel": {
+          "de": "Klettern",
+          "en": "Climbing"
+        },
+        "beschreibung": {
+          "de": "Kraft und Mut",
+          "en": "Strength and courage"
+        }
       },
       {
         "icon": "target",
-        "titel": { "de": "Balance", "en": "Balance" },
-        "beschreibung": { "de": "Gleichgewicht und Körpergefühl", "en": "Balance and body awareness" }
+        "titel": {
+          "de": "Balance",
+          "en": "Balance"
+        },
+        "beschreibung": {
+          "de": "Gleichgewicht und Körpergefühl",
+          "en": "Balance and body awareness"
+        }
       },
       {
         "icon": "ball",
-        "titel": { "de": "Ballspiele", "en": "Ball games" },
-        "beschreibung": { "de": "Teamwork und Reaktion", "en": "Teamwork and reaction" }
+        "titel": {
+          "de": "Ballspiele",
+          "en": "Ball games"
+        },
+        "beschreibung": {
+          "de": "Teamwork und Reaktion",
+          "en": "Teamwork and reaction"
+        }
       },
       {
         "icon": "gymnast",
-        "titel": { "de": "Turnen", "en": "Gymnastics" },
-        "beschreibung": { "de": "Beweglichkeit und Stärke", "en": "Flexibility and strength" }
+        "titel": {
+          "de": "Turnen",
+          "en": "Gymnastics"
+        },
+        "beschreibung": {
+          "de": "Beweglichkeit und Stärke",
+          "en": "Flexibility and strength"
+        }
       },
       {
         "icon": "handshake",
-        "titel": { "de": "Feinmotorik", "en": "Fine motor skills" },
-        "beschreibung": { "de": "Geschicklichkeit", "en": "Dexterity" }
+        "titel": {
+          "de": "Feinmotorik",
+          "en": "Fine motor skills"
+        },
+        "beschreibung": {
+          "de": "Geschicklichkeit",
+          "en": "Dexterity"
+        }
       }
     ]
   },
@@ -118,23 +193,47 @@
     "liste": [
       {
         "icon": "sparkle",
-        "titel": { "de": "Selbstvertrauen aufbauen", "en": "Build self-confidence" },
-        "text": { "de": "Durch Bewegungserfolge wächst das Selbstbewusstsein.", "en": "Self-confidence grows through movement successes." }
+        "titel": {
+          "de": "Selbstvertrauen aufbauen",
+          "en": "Build self-confidence"
+        },
+        "text": {
+          "de": "Durch Bewegungserfolge wächst das Selbstbewusstsein.",
+          "en": "Self-confidence grows through movement successes."
+        }
       },
       {
         "icon": "clipboard",
-        "titel": { "de": "Klare Strukturen", "en": "Clear structures" },
-        "text": { "de": "Vorhersehbare Abläufe und Routinen geben Sicherheit.", "en": "Predictable processes and routines provide security." }
+        "titel": {
+          "de": "Klare Strukturen",
+          "en": "Clear structures"
+        },
+        "text": {
+          "de": "Vorhersehbare Abläufe und Routinen geben Sicherheit.",
+          "en": "Predictable processes and routines provide security."
+        }
       },
       {
         "icon": "heart",
-        "titel": { "de": "Freude an Bewegung", "en": "Joy in movement" },
-        "text": { "de": "Positive Erfahrungen mit Sport und Gemeinschaft.", "en": "Positive experiences with sports and community." }
+        "titel": {
+          "de": "Freude an Bewegung",
+          "en": "Joy in movement"
+        },
+        "text": {
+          "de": "Positive Erfahrungen mit Sport und Gemeinschaft.",
+          "en": "Positive experiences with sports and community."
+        }
       },
       {
         "icon": "people",
-        "titel": { "de": "Zugehörigkeit erleben", "en": "Experience belonging" },
-        "text": { "de": "Teil einer Gruppe sein und gemeinsam Spass haben.", "en": "Being part of a group and having fun together." }
+        "titel": {
+          "de": "Zugehörigkeit erleben",
+          "en": "Experience belonging"
+        },
+        "text": {
+          "de": "Teil einer Gruppe sein und gemeinsam Spass haben.",
+          "en": "Being part of a group and having fun together."
+        }
       }
     ]
   },
@@ -146,23 +245,47 @@
     "infos": [
       {
         "icon": "calendar",
-        "label": { "de": "Zeiten", "en": "Times" },
-        "wert": { "de": "Jeden Mittwoch während der Schulzeit, 18:00–19:30 Uhr (Treffpunkt 15 Min. vorher)", "en": "Every Wednesday during school term, 18:00–19:30 (meeting point 15 min. before)" }
+        "label": {
+          "de": "Zeiten",
+          "en": "Times"
+        },
+        "wert": {
+          "de": "Jeden Mittwoch während der Schulzeit, 18:00–19:30 Uhr (Treffpunkt 15 Min. vorher)",
+          "en": "Every Wednesday during school term, 18:00–19:30 (meeting point 15 min. before)"
+        }
       },
       {
         "icon": "calendar",
-        "label": { "de": "Startdatum", "en": "Start date" },
-        "wert": { "de": "Januar 2025", "en": "January 2025" }
+        "label": {
+          "de": "Startdatum",
+          "en": "Start date"
+        },
+        "wert": {
+          "de": "Januar 2025",
+          "en": "January 2025"
+        }
       },
       {
         "icon": "location",
-        "label": { "de": "Standort", "en": "Location" },
-        "wert": { "de": "Turnhalle Unten, Schulhaus Mösli, Im Mösli 2, 8304 Wallisellen", "en": "Lower Gym, Mösli School, Im Mösli 2, 8304 Wallisellen" }
+        "label": {
+          "de": "Standort",
+          "en": "Location"
+        },
+        "wert": {
+          "de": "Turnhalle Unten, Schulhaus Mösli, Im Mösli 2, 8304 Wallisellen",
+          "en": "Lower Gym, Mösli School, Im Mösli 2, 8304 Wallisellen"
+        }
       },
       {
         "icon": "mail",
-        "label": { "de": "Kontakt", "en": "Contact" },
-        "wert": { "de": "hello@evolea.ch – Kostenlose Erstberatung möglich", "en": "hello@evolea.ch – Free initial consultation available" }
+        "label": {
+          "de": "Kontakt",
+          "en": "Contact"
+        },
+        "wert": {
+          "de": "hello@evolea.ch – Kostenlose Erstberatung möglich",
+          "en": "hello@evolea.ch – Free initial consultation available"
+        }
       }
     ]
   },
