@@ -139,6 +139,6 @@
       "de": "Kontakt aufnehmen QA",
       "en": "Get in Touch"
     },
-    "buttonLink": "/kontakt/"
+    "buttonLink": "/kontakt/?qa=1"
   }
 }
