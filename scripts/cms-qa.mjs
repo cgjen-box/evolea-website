@@ -313,9 +313,16 @@ const checkFieldInteractivity = async (page, label, options = {}) => {
 
   if (shouldCheckFocus) {
     const focused = await page.evaluate(() => {
-      const el = document.querySelector(
-        'input:not([type="hidden"]):not([disabled]), textarea:not([disabled]), [role="combobox"]'
-      );
+      const selectors =
+        'input:not([type="hidden"]):not([disabled]), textarea:not([disabled]), [role="combobox"]';
+      const candidates = Array.from(document.querySelectorAll(selectors));
+      const isVisible = (node) => {
+        const style = window.getComputedStyle(node);
+        if (style.display === 'none' || style.visibility === 'hidden') return false;
+        const rect = node.getBoundingClientRect();
+        return rect.width > 0 && rect.height > 0;
+      };
+      const el = candidates.find(isVisible);
       if (!el) return false;
       el.focus();
       return document.activeElement === el;
