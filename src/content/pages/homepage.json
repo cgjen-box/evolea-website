@@ -12,7 +12,7 @@
       "de": "Angebote entdecken",
       "en": "Explore Programs"
     },
-    "buttonLink": "/angebote/?qa=1"
+    "buttonLink": "/angebote/"
   },
   "angeboteSection": {
     "label": {
