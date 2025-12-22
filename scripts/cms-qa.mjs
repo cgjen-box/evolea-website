@@ -1029,9 +1029,10 @@ const commitIfPossible = async (page, message) => {
       .getByRole('button', { name: /commit|save/i })
       .first();
     await commitButton.click();
+    await commitInput.waitFor({ state: 'hidden', timeout: 10000 }).catch(() => {});
   }
 
-  await page.waitForTimeout(2000);
+  await page.waitForTimeout(6000);
   return { ok: true };
 };
 

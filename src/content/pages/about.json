@@ -53,7 +53,7 @@
     },
     "titel": {
       "de": "Kinder im Spektrum und ihre Familien",
-      "en": "Children on the spectrum and their families QA"
+      "en": "Children on the spectrum and their families"
     },
     "gruppen": [
       {
@@ -95,7 +95,7 @@
     ],
     "hinweis": {
       "de": "Wir verwenden den Begriff \"Kinder im Spektrum\" respektvoll und identitätsbejahend.",
-      "en": "We use the term \"children on the spectrum\" respectfully and in an identity-affirming way. QA"
+      "en": "We use the term \"children on the spectrum\" respectfully and in an identity-affirming way."
     }
   },
   "verein": {
@@ -109,34 +109,34 @@
     },
     "text1": {
       "de": "EVOLEA wurde von einem Team aus Fachpersonen und betroffenen Eltern gegründet, die eine Lücke im Angebot für Kinder im Spektrum sahen.",
-      "en": "EVOLEA was founded by a team of professionals and affected parents who saw a gap in services for children on the spectrum. QA"
+      "en": "EVOLEA was founded by a team of professionals and affected parents who saw a gap in services for children on the spectrum."
     },
     "text2": {
-      "de": "Als Verein sind wir nicht gewinnorientiert. Alle Einnahmen fliessen direkt in die Qualität unserer Programme und die Weiterbildung unseres Teams. QA",
+      "de": "Als Verein sind wir nicht gewinnorientiert. Alle Einnahmen fliessen direkt in die Qualität unserer Programme und die Weiterbildung unseres Teams.",
       "en": "As an association, we are not profit-oriented. All income flows directly into the quality of our programs and the training of our team."
     },
     "kartenTitel": {
-      "de": "Der Verein QA",
+      "de": "Der Verein",
       "en": "The Association"
     },
     "kartenText": {
       "de": "EVOLEA Verein ist ein gemeinnütziger Verein mit Sitz in Zürich. Wir sind politisch und konfessionell unabhängig. Der Name EVOLEA verbindet Evolution (Entwicklung) mit LEA (Lernen, Erleben, Aufblühen) - ein Sinnbild für die transformative Reise, die jedes Kind bei uns erleben kann.",
       "en": "EVOLEA Association is a non-profit based in Zurich. We are politically and religiously independent. The name EVOLEA combines Evolution with LEA (Learn, Experience, Flourish) - a symbol for the transformative journey every child can experience with us."
     },
-    "gruendung": "2025 QA",
-    "standort": "Zürich QA"
+    "gruendung": "2025",
+    "standort": "Zürich"
   },
   "cta": {
     "titel": {
-      "de": "Bereit für den nächsten Schritt? QA",
-      "en": "Ready for the next step? QA"
+      "de": "Bereit für den nächsten Schritt?",
+      "en": "Ready for the next step?"
     },
     "beschreibung": {
       "de": "Wir freuen uns darauf, Sie und Ihr Kind kennenzulernen.",
       "en": "We look forward to meeting you and your child."
     },
     "buttonText": {
-      "de": "Kontakt aufnehmen QA",
+      "de": "Kontakt aufnehmen",
       "en": "Get in Touch"
     },
     "buttonLink": "/kontakt/"
