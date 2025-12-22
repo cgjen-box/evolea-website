@@ -225,6 +225,25 @@ const checkValidationBanners = async (page, label) => {
   }
 };
 
+const waitForUploadControls = async (page, label, timeoutMs = 45000) => {
+  const deadline = Date.now() + timeoutMs;
+  while (Date.now() < deadline) {
+    const uploadButtons = await page
+      .getByRole('button', { name: /choose file|datei|upload|hochladen|file/i })
+      .count()
+      .catch(() => 0);
+    const fileInputs = await page.locator('input[type="file"]').count().catch(() => 0);
+    if (uploadButtons > 0 || fileInputs > 0) {
+      return { uploadButtons, fileInputs };
+    }
+    await page.waitForTimeout(2000);
+  }
+  addWarning(`${label} upload controls`, {
+    message: 'Upload controls not detected before timeout.',
+  });
+  return { uploadButtons: 0, fileInputs: 0 };
+};
+
 const checkFieldInteractivity = async (page, label, options = {}) => {
   const { allowEmpty = false } = options;
   const stats = await page.evaluate(() => {
@@ -961,21 +980,33 @@ const getLatestCommitSha = async (branch) => {
 
 const waitForText = async (page, url, expected, label) => {
   const deadline = Date.now() + 240000;
+  let lastError = null;
   while (Date.now() < deadline) {
-    await page.goto(url, { waitUntil: 'domcontentloaded', timeout: TIMEOUT });
-    const hasText = await page.evaluate((text) => {
-      return document.body?.innerText?.includes(text);
-    }, expected);
-    if (hasText) {
-      addCheck(`${label} deployment`, 'pass', { expected });
-      return true;
+    try {
+      const cacheBustedUrl = url.includes('?')
+        ? `${url}&_qa=${Date.now()}`
+        : `${url}?_qa=${Date.now()}`;
+      await page.goto(cacheBustedUrl, { waitUntil: 'domcontentloaded', timeout: TIMEOUT });
+      const hasText = await page.evaluate((text) => {
+        return document.body?.innerText?.includes(text);
+      }, expected);
+      if (hasText) {
+        addCheck(`${label} deployment`, 'pass', { expected });
+        return true;
+      }
+    } catch (error) {
+      lastError = error;
     }
     await page.waitForTimeout(15000);
   }
-  addError(`${label} deployment`, {
+  const details = {
     message: 'Expected text not found before timeout.',
     expected,
-  });
+  };
+  if (lastError?.message) {
+    details.lastError = lastError.message;
+  }
+  addError(`${label} deployment`, details);
   return false;
 };
 
@@ -1034,8 +1065,6 @@ const runCmsSmoke = async (page) => {
     {
       name: 'Site Images',
       path: '/singleton/siteImages',
-      waitFor:
-        'button:has-text("Choose file"), button:has-text("Datei"), input[type="file"]',
       allowEmpty: true,
     },
     { name: 'Site Settings', path: '/singleton/siteSettings' },
@@ -1048,9 +1077,21 @@ const runCmsSmoke = async (page) => {
     const url = `${cmsRoot}${item.path}`;
     await navigateWithDiagnostics(page, `CMS ${item.name}`, url, item.waitFor || 'body');
     await checkValidationBanners(page, `CMS ${item.name}`);
+    if (item.name === 'Site Images') {
+      await waitForUploadControls(page, `CMS ${item.name}`);
+    }
     const stats = await checkFieldInteractivity(page, `CMS ${item.name}`, {
       allowEmpty: Boolean(item.collection) || Boolean(item.allowEmpty),
     });
+    if (
+      item.name === 'Site Images' &&
+      stats.uploadButtons === 0 &&
+      stats.fileInputs === 0
+    ) {
+      addError('CMS Site Images upload controls', {
+        message: 'No upload buttons or file inputs detected.',
+      });
+    }
     await checkFieldsEditable(page, `CMS ${item.name}`, stats, {
       allowEmpty: Boolean(item.collection) || Boolean(item.allowEmpty),
     });
