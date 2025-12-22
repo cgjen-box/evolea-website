@@ -27,6 +27,11 @@ const { Content } = await post.render();
 const lang = getLangFromUrl(Astro.url);
 const translatePath = useTranslatedPath(lang);
 
+const tags = Array.isArray(post.data.tags) ? post.data.tags : [];
+const pubDate =
+  post.data.pubDate instanceof Date ? post.data.pubDate : new Date(post.data.pubDate);
+const hasValidPubDate = !Number.isNaN(pubDate.getTime());
+
 function formatDate(date: Date): string {
   return date.toLocaleDateString('de-CH', {
     year: 'numeric',
@@ -37,9 +42,12 @@ function formatDate(date: Date): string {
 
 // Get related posts (same tags, excluding current)
 const allPosts = await getCollection('blog');
+const getTags = (entry: CollectionEntry<'blog'>) =>
+  Array.isArray(entry.data.tags) ? entry.data.tags : [];
+
 const relatedPosts = allPosts
   .filter(p => p.slug !== post.slug)
-  .filter(p => p.data.tags.some(tag => post.data.tags.includes(tag)))
+  .filter(p => getTags(p).some(tag => tags.includes(tag)))
   .slice(0, 2);
 ---
 
@@ -57,7 +65,7 @@ const relatedPosts = allPosts
       </nav>
 
       <div class="flex flex-wrap gap-2 mb-6">
-        {post.data.tags.map((tag) => (
+        {tags.map((tag) => (
           <span class="text-sm bg-evolea-purple/10 text-evolea-purple px-3 py-1 rounded-full">{tag}</span>
         ))}
       </div>
@@ -68,10 +76,14 @@ const relatedPosts = allPosts
 
       <div class="flex items-center gap-4 text-evolea-text-light">
         <span class="font-medium">{post.data.author}</span>
-        <span>|</span>
-        <time datetime={post.data.pubDate.toISOString()}>
-          {formatDate(post.data.pubDate)}
-        </time>
+        {hasValidPubDate && (
+          <>
+            <span>|</span>
+            <time datetime={pubDate.toISOString()}>
+              {formatDate(pubDate)}
+            </time>
+          </>
+        )}
       </div>
     </div>
   </section>
