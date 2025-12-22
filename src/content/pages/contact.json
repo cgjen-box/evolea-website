@@ -17,7 +17,7 @@
     "email": "hello@evolea.ch",
     "telefon": "+41 78 959 19 74",
     "whatsapp": "https://wa.me/41789591974",
-    "instagram": "@evolea.verein",
+    "instagram": "@evolea.verein QA",
     "instagramUrl": "https://www.instagram.com/evolea.verein/?qa=1"
   },
   "adresse": {
@@ -27,7 +27,7 @@
     "land": "Schweiz",
     "hinweis": {
       "de": "Nähe Seilbahn Rigiblick",
-      "en": "Near Rigiblick cable car QA"
+      "en": "Near Rigiblick cable car"
     }
   },
   "erstgespraech": {
