@@ -21,11 +21,21 @@ export async function getStaticPaths() {
 
 type Props = CollectionEntry<'blog'>;
 
-const post = Astro.props;
-const { Content } = await post.render();
-
+const allPosts = await getCollection('blog');
 const lang = getLangFromUrl(Astro.url);
 const translatePath = useTranslatedPath(lang);
+const slugParam = Array.isArray(Astro.params.slug)
+  ? Astro.params.slug.join('/')
+  : Astro.params.slug;
+const post =
+  (Astro.props && (Astro.props as Props).slug ? (Astro.props as Props) : null) ??
+  allPosts.find((entry) => entry.slug === slugParam);
+
+if (!post) {
+  return Astro.redirect(translatePath('/blog/'));
+}
+
+const { Content } = await post.render();
 
 const tags = Array.isArray(post.data.tags) ? post.data.tags : [];
 const pubDate =
@@ -41,7 +51,6 @@ function formatDate(date: Date): string {
 }
 
 // Get related posts (same tags, excluding current)
-const allPosts = await getCollection('blog');
 const getTags = (entry: CollectionEntry<'blog'>) =>
   Array.isArray(entry.data.tags) ? entry.data.tags : [];
 
