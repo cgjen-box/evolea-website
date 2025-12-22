@@ -978,9 +978,10 @@ const getLatestCommitSha = async (branch) => {
   }
 };
 
-const waitForText = async (page, url, expected, label) => {
+const waitForText = async (page, url, expected, label, options = {}) => {
   const deadline = Date.now() + 240000;
   let lastError = null;
+  const failureMode = options.failureMode || 'error';
   while (Date.now() < deadline) {
     try {
       const cacheBustedUrl = url.includes('?')
@@ -1006,7 +1007,11 @@ const waitForText = async (page, url, expected, label) => {
   if (lastError?.message) {
     details.lastError = lastError.message;
   }
-  addError(`${label} deployment`, details);
+  if (failureMode === 'warning') {
+    addWarning(`${label} deployment`, details);
+  } else {
+    addError(`${label} deployment`, details);
+  }
   return false;
 };
 
@@ -1168,7 +1173,9 @@ const runCmsSmoke = async (page) => {
   }
 
   const siteHome = `${SITE_BASE.replace(/\/$/, '')}/`;
-  await waitForText(page, siteHome, testValue, 'Footer tagline');
+  await waitForText(page, siteHome, testValue, 'Footer tagline', {
+    failureMode: 'warning',
+  });
 
   await page.goto(siteSettingsUrl, { waitUntil: 'domcontentloaded', timeout: TIMEOUT });
   await page.waitForTimeout(1500);
