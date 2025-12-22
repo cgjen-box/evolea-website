@@ -7,6 +7,6 @@
   },
   "icon": "chart",
   "farbe": "magenta",
-  "veroeffentlicht": false,
+  "veroeffentlicht": true,
   "reihenfolge": 0
 }
