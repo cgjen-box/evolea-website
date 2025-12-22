@@ -9,6 +9,8 @@ import { getLangFromUrl, useTranslatedPath } from '@i18n/utils';
 // Base URL for GitHub Pages deployment
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 
+export const prerender = true;
+
 export async function getStaticPaths() {
   const posts = await getCollection('blog');
   return posts.map((post) => ({
