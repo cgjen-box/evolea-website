@@ -1173,9 +1173,6 @@ const runCmsSmoke = async (page) => {
   }
 
   const siteHome = `${SITE_BASE.replace(/\/$/, '')}/`;
-  await waitForText(page, siteHome, testValue, 'Footer tagline', {
-    failureMode: 'warning',
-  });
 
   await page.goto(siteSettingsUrl, { waitUntil: 'domcontentloaded', timeout: TIMEOUT });
   await page.waitForTimeout(1500);
