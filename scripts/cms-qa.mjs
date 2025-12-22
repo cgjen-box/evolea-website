@@ -651,19 +651,21 @@ const mutateFieldValue = async (page, locator, field) => {
     const original = await locator.inputValue();
     const label = `${field.label} ${field.name} ${field.placeholder}`.toLowerCase();
 
-    if (field.type === 'number' || label.includes('reihenfolge')) {
+    if (field.type === 'number' || label.includes('reihenfolge') || label.includes('anzahl')) {
       const numberValue = Number.parseFloat(original);
       const mutated = Number.isFinite(numberValue) ? String(numberValue + 1) : '1';
       await locator.fill(mutated);
       return { original, mutated, mode: 'number' };
     }
 
-    if (field.type === 'date' || label.includes('datum')) {
+    if (field.type === 'date' || field.type === 'datetime-local' || label.includes('datum')) {
       const dateValue = original ? new Date(original) : new Date();
-      dateValue.setDate(dateValue.getDate() + 1);
-      const mutated = dateValue.toISOString().slice(0, 10);
-      await locator.fill(mutated);
-      return { original, mutated, mode: 'date' };
+      if (!Number.isNaN(dateValue.getTime())) {
+        dateValue.setDate(dateValue.getDate() + 1);
+        const mutated = dateValue.toISOString().slice(0, 10);
+        await locator.fill(mutated);
+        return { original, mutated, mode: 'date' };
+      }
     }
 
     if (field.type === 'time') {
