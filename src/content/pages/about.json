@@ -121,14 +121,14 @@
     },
     "kartenText": {
       "de": "EVOLEA Verein ist ein gemeinnütziger Verein mit Sitz in Zürich. Wir sind politisch und konfessionell unabhängig. Der Name EVOLEA verbindet Evolution (Entwicklung) mit LEA (Lernen, Erleben, Aufblühen) - ein Sinnbild für die transformative Reise, die jedes Kind bei uns erleben kann.",
-      "en": "EVOLEA Association is a non-profit based in Zurich. We are politically and religiously independent. The name EVOLEA combines Evolution with LEA (Learn, Experience, Flourish) - a symbol for the transformative journey every child can experience with us."
+      "en": "EVOLEA Association is a non-profit based in Zurich. We are politically and religiously independent. The name EVOLEA combines Evolution with LEA (Learn, Experience, Flourish) - a symbol for the transformative journey every child can experience with us. QA"
     },
     "gruendung": "2025",
     "standort": "Zürich"
   },
   "cta": {
     "titel": {
-      "de": "Bereit für den nächsten Schritt? QA",
+      "de": "Bereit für den nächsten Schritt?",
       "en": "Ready for the next step?"
     },
     "beschreibung": {
