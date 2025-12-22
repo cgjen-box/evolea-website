@@ -23,7 +23,7 @@
   "adresse": {
     "strasse": "Stapferstrasse 10",
     "plz": "8006",
-    "ort": "Zürich",
+    "ort": "Zürich QA",
     "land": "Schweiz",
     "hinweis": {
       "de": "Nähe Seilbahn Rigiblick",
@@ -43,7 +43,7 @@
   "formular": {
     "titel": {
       "de": "Anfrage senden",
-      "en": "Send Inquiry QA"
+      "en": "Send Inquiry"
     },
     "formspreeId": "xpznqrjk",
     "betreffs": [
