@@ -152,7 +152,7 @@
     },
     "miniRestaurant": {
       "status": {
-        "de": "Läuft · Keine Anmeldung QA",
+        "de": "Läuft · Keine Anmeldung",
         "en": "Running · No registration"
       },
       "titel": {
