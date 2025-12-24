@@ -40,6 +40,7 @@ Location: `.claude/todo/EVOLEA-BRAND-GUIDE-V3.md`
 | Coral | #FF7E5D | Energy, warm accents |
 | Sky Blue | #5DADE2 | Trust, calm |
 | Blush | #EF8EAE | Soft pink accents |
+| Gold | #E8B86D | Donate button, donation CTAs |
 
 **Neutrals:**
 | Name | Hex | Usage |
@@ -180,6 +181,30 @@ const t = useTranslations(lang);
 3. **Mini Turnen** - Sports/gymnastics group (ages 5-8)
 4. **B+U Schulberatung** - School consultation
 
+## Donation Page
+
+### Routes (Special i18n Mapping)
+- German: `/spenden/`
+- English: `/en/donate/`
+
+The language switcher automatically maps between these different paths. This is configured in `src/i18n/utils.ts` via `routeMappings`.
+
+### Bank Details (DO NOT MODIFY)
+```
+Account Holder: EVOLEA Verein
+Bank: UBS Switzerland AG
+IBAN: CH90 0023 0230 9206 9201 G
+BIC/SWIFT: UBSWCHZH80A
+```
+
+### Components
+- `FooterDonationCTA.astro` - Gold gradient CTA shown before footer on all pages
+- Use `hideFooterCTA={true}` prop on Base layout to hide on donate pages
+
+### Navigation
+- Gold "Spenden" button (#E8B86D) appears in both desktop and mobile navigation
+- Positioned between language picker and contact CTA
+
 ## Testing Checklist
 - [ ] Lighthouse accessibility score >= 90
 - [ ] Mobile responsive (test 375px, 768px, 1024px)
@@ -190,6 +215,9 @@ const t = useTranslations(lang);
 - [ ] No emojis on any page (SVG icons only)
 - [ ] Mobile menu has solid background
 - [ ] All text readable on gradients
+- [ ] Donate page language switcher works (/spenden/ ↔ /en/donate/)
+- [ ] FooterDonationCTA appears on all pages except donate pages
+- [ ] Gold Spenden button visible in navigation
 
 ## Deployment
 
