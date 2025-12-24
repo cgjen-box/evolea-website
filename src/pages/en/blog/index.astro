@@ -1,0 +1,138 @@
+﻿---
+import Base from '@layouts/Base.astro';
+import InnerPageHero from '@components/InnerPageHero.astro';
+import { getCollection } from 'astro:content';
+import { getLangFromUrl, useTranslations, useTranslatedPath } from '@i18n/utils';
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+const translatePath = useTranslatedPath(lang);
+
+// Base URL for GitHub Pages deployment
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+
+const posts = (await getCollection('blogEn')).sort(
+  (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
+);
+
+const featuredPosts = posts.filter((post) => post.data.featured);
+
+function formatDate(date: Date): string {
+  return date.toLocaleDateString('en-CH', {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
+  });
+}
+---
+
+<Base title="Blog" description="News, tips and insights about EVOLEA and supporting children on the spectrum." transparentHeader={true}>
+  <!-- Premium Hero with Prism Gradient -->
+  <InnerPageHero
+    title={t('nav.blog')}
+    subtitle="News, tips and insights about EVOLEA and supporting children on the spectrum."
+    breadcrumbs={[
+      { label: 'Home', href: translatePath('/') },
+      { label: 'Blog' },
+    ]}
+    size="md"
+  />
+
+  <!-- Featured Posts -->
+  {featuredPosts.length > 0 && (
+    <section class="py-16 bg-white">
+      <div class="container mx-auto max-w-6xl px-4">
+        <h2 class="text-2xl font-display font-bold text-evolea-purple mb-8">Featured Articles</h2>
+        <div class="grid md:grid-cols-2 gap-8">
+          {featuredPosts.map((post) => (
+            <a href={translatePath(`/blog/${post.slug}/`)} class="group block bg-evolea-cream rounded-evolea-lg overflow-hidden hover:shadow-card transition-shadow">
+              <div class="blog-card-image h-48 relative overflow-hidden">
+                {post.data.image ? (
+                  <img
+                    src={`${base}${post.data.image}`}
+                    alt={post.data.title}
+                    class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                    loading="lazy"
+                  />
+                ) : (
+                  <div class="w-full h-full" style="background: linear-gradient(118deg, #7BEDD5 0%, #FFE066 21%, #FFFFFF 48%, #E97BF1 81%, #CD87F8 100%);"></div>
+                )}
+                <div class="absolute bottom-2 right-2 opacity-40">
+                  <svg class="w-8 h-8" viewBox="0 0 100 100">
+                    <path d="M48 50 C35 25, 5 20, 10 45 C5 70, 35 75, 48 55 Z M52 50 C65 25, 95 20, 90 45 C95 70, 65 75, 52 55 Z" fill="white"/>
+                  </svg>
+                </div>
+              </div>
+              <div class="p-6">
+                <div class="flex flex-wrap gap-2 mb-4">
+                  {post.data.tags.slice(0, 2).map((tag) => (
+                    <span class="text-xs bg-evolea-purple/10 text-evolea-purple px-2 py-1 rounded-full">{tag}</span>
+                  ))}
+                </div>
+                <h3 class="text-xl font-display font-bold text-evolea-purple mb-3 group-hover:text-evolea-purple-light transition-colors">
+                  {post.data.title}
+                </h3>
+                <p class="text-evolea-text-light mb-4 line-clamp-2">
+                  {post.data.description}
+                </p>
+                <div class="flex items-center justify-between text-sm text-evolea-text-light">
+                  <span>{post.data.author}</span>
+                  <time datetime={post.data.pubDate.toISOString()}>
+                    {formatDate(post.data.pubDate)}
+                  </time>
+                </div>
+              </div>
+            </a>
+          ))}
+        </div>
+      </div>
+    </section>
+  )}
+
+  <!-- All Posts -->
+  <section class="py-16 bg-evolea-cream/30">
+    <div class="container mx-auto max-w-6xl px-4">
+      <h2 class="text-2xl font-display font-bold text-evolea-purple mb-8">All Articles</h2>
+      {posts.length === 0 ? (
+        <div class="bg-white rounded-evolea-lg p-8 text-center text-evolea-text-light">
+          No articles published yet.
+        </div>
+      ) : (
+        <div class="grid md:grid-cols-3 gap-6">
+          {posts.map((post) => (
+            <a href={translatePath(`/blog/${post.slug}/`)} class="group block bg-white rounded-evolea-lg overflow-hidden hover:shadow-card transition-shadow">
+              <div class="blog-card-image h-40 relative overflow-hidden">
+                {post.data.image ? (
+                  <img
+                    src={`${base}${post.data.image}`}
+                    alt={post.data.title}
+                    class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                    loading="lazy"
+                  />
+                ) : (
+                  <div class="w-full h-full" style="background: linear-gradient(118deg, #7BEDD5 0%, #FFE066 21%, #FFFFFF 48%, #E97BF1 81%, #CD87F8 100%);"></div>
+                )}
+              </div>
+              <div class="p-6">
+                <div class="flex flex-wrap gap-2 mb-3">
+                  {post.data.tags.slice(0, 2).map((tag) => (
+                    <span class="text-xs bg-evolea-purple/10 text-evolea-purple px-2 py-1 rounded-full">{tag}</span>
+                  ))}
+                </div>
+                <h3 class="text-lg font-display font-bold text-evolea-purple mb-2 group-hover:text-evolea-purple-light transition-colors line-clamp-2">
+                  {post.data.title}
+                </h3>
+                <p class="text-sm text-evolea-text-light mb-4 line-clamp-2">
+                  {post.data.description}
+                </p>
+                <time class="text-xs text-evolea-text-light" datetime={post.data.pubDate.toISOString()}>
+                  {formatDate(post.data.pubDate)}
+                </time>
+              </div>
+            </a>
+          ))}
+        </div>
+      )}
+    </div>
+  </section>
+</Base>

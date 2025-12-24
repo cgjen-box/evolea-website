@@ -1,0 +1,328 @@
+{
+  "seo": {
+    "title": {
+      "de": "EVOLEA Cafe | Austausch fuer Eltern",
+      "en": "EVOLEA Cafe | Parent Community"
+    },
+    "description": {
+      "de": "Jeden 2. Mittwoch treffen sich Eltern von Kindern im Spektrum zum Austausch. Keine Anmeldung noetig. Einfach vorbeikommen.",
+      "en": "Every 2nd Wednesday, parents of children on the spectrum meet for exchange. No registration needed. Just drop by."
+    }
+  },
+  "hero": {
+    "badge": {
+      "de": "Offen fuer alle",
+      "en": "Open to Everyone"
+    },
+    "titel": {
+      "de": "EVOLEA Cafe",
+      "en": "EVOLEA Cafe"
+    },
+    "tagline": {
+      "de": "Ein Abend fuer Eltern. Ohne Kinder. Ohne Programm. Ohne Anmeldung.",
+      "en": "An evening for parents. Without children. Without agenda. Without registration."
+    }
+  },
+  "about": {
+    "titel": {
+      "de": "Einfach reden. Einfach zuhoeren.",
+      "en": "Simply talk. Simply listen."
+    },
+    "abschnitte": [
+      {
+        "de": "Manchmal braucht man jemanden, der versteht. Nicht erklaert. Nicht bewertet. Einfach versteht.",
+        "en": "Sometimes you need someone who understands. Who doesn't explain. Who doesn't judge. Just understands."
+      },
+      {
+        "de": "Das EVOLEA Cafe ist ein geschuetzter Raum fuer Eltern von Kindern im Spektrum. Hier treffen Sie andere, die aehnliche Wege gehen. Kein Vortrag, keine Agenda - nur Kaffee, Gespraeche und Gemeinschaft.",
+        "en": "The EVOLEA Cafe is a safe space for parents of children on the spectrum. Here you meet others walking similar paths. No lectures, no agenda - just coffee, conversations, and community."
+      }
+    ],
+    "hinweis": {
+      "de": "(Und ja, es gibt auch Tee. Und manchmal Kuchen.)",
+      "en": "(And yes, there's also tea. And sometimes cake.)"
+    }
+  },
+  "aboutCards": [
+    {
+      "icon": "people",
+      "text": {
+        "de": "Austausch unter Eltern",
+        "en": "Parent Exchange"
+      }
+    },
+    {
+      "icon": "handshake",
+      "text": {
+        "de": "Erfahrungen teilen",
+        "en": "Share Experiences"
+      }
+    },
+    {
+      "icon": "sparkle",
+      "text": {
+        "de": "Tipps & Ressourcen",
+        "en": "Tips & Resources"
+      }
+    },
+    {
+      "icon": "heart",
+      "text": {
+        "de": "Gemeinschaft finden",
+        "en": "Find Community"
+      }
+    }
+  ],
+  "schedule": {
+    "titel": {
+      "de": "Wann & Wo",
+      "en": "When & Where"
+    },
+    "cards": [
+      {
+        "icon": "calendar",
+        "titel": {
+          "de": "Jeden 2. Mittwoch",
+          "en": "Every 2nd Wednesday"
+        },
+        "text": {
+          "de": "im Monat",
+          "en": "of the month"
+        },
+        "variant": "primary"
+      },
+      {
+        "icon": "clock",
+        "titel": {
+          "de": "20:00 Uhr",
+          "en": "8:00 PM"
+        },
+        "text": {
+          "de": "Abends, wenn die Kinder schlafen",
+          "en": "Evening, when the kids are asleep"
+        },
+        "variant": "standard"
+      },
+      {
+        "icon": "location",
+        "titel": {
+          "de": "Zuerich",
+          "en": "Zurich"
+        },
+        "text": {
+          "de": "Ort wird per E-Mail mitgeteilt",
+          "en": "Location sent via email"
+        },
+        "variant": "standard"
+      },
+      {
+        "icon": "sparkle",
+        "titel": {
+          "de": "Keine Anmeldung",
+          "en": "No Registration"
+        },
+        "text": {
+          "de": "Einfach vorbeikommen",
+          "en": "Just show up"
+        },
+        "variant": "highlight"
+      }
+    ],
+    "datenTitel": {
+      "de": "Naechste Termine",
+      "en": "Upcoming Dates"
+    },
+    "daten": [
+      {
+        "datum": {
+          "de": "Mi, 8. Januar 2025",
+          "en": "Wed, January 8, 2025"
+        },
+        "uhrzeit": {
+          "de": "20:00",
+          "en": "8:00 PM"
+        }
+      },
+      {
+        "datum": {
+          "de": "Mi, 12. Februar 2025",
+          "en": "Wed, February 12, 2025"
+        },
+        "uhrzeit": {
+          "de": "20:00",
+          "en": "8:00 PM"
+        }
+      },
+      {
+        "datum": {
+          "de": "Mi, 12. Maerz 2025",
+          "en": "Wed, March 12, 2025"
+        },
+        "uhrzeit": {
+          "de": "20:00",
+          "en": "8:00 PM"
+        }
+      }
+    ]
+  },
+  "expect": {
+    "titel": {
+      "de": "Was Sie erwartet",
+      "en": "What to Expect"
+    },
+    "items": [
+      {
+        "typ": "yes",
+        "text": {
+          "de": "Verstaendnis ohne Erklaerungen",
+          "en": "Understanding without explanations"
+        }
+      },
+      {
+        "typ": "yes",
+        "text": {
+          "de": "Andere Eltern mit aehnlichen Erfahrungen",
+          "en": "Other parents with similar experiences"
+        }
+      },
+      {
+        "typ": "yes",
+        "text": {
+          "de": "Ein offenes Ohr",
+          "en": "A listening ear"
+        }
+      },
+      {
+        "typ": "yes",
+        "text": {
+          "de": "Praktische Tipps aus dem Alltag",
+          "en": "Practical everyday tips"
+        }
+      },
+      {
+        "typ": "yes",
+        "text": {
+          "de": "Getraenke & Snacks",
+          "en": "Drinks & Snacks"
+        }
+      },
+      {
+        "typ": "no",
+        "text": {
+          "de": "Kein Vortrag, keine Therapie",
+          "en": "No lectures, no therapy"
+        }
+      },
+      {
+        "typ": "no",
+        "text": {
+          "de": "Kein Druck, etwas zu erzaehlen",
+          "en": "No pressure to share"
+        }
+      },
+      {
+        "typ": "no",
+        "text": {
+          "de": "Keine Anmeldung erforderlich",
+          "en": "No registration required"
+        }
+      }
+    ]
+  },
+  "quote": {
+    "text": {
+      "de": "Endlich Leute, die nicht fragen: 'Hast du schon X probiert?' Sondern einfach nicken. Das ist Gold wert.",
+      "en": "Finally, people who don't ask: 'Have you tried X yet?' They just nod. That's worth gold."
+    },
+    "autor": {
+      "de": "- Eine Mama aus dem EVOLEA Cafe",
+      "en": "- A mom from the EVOLEA Cafe"
+    }
+  },
+  "faq": {
+    "titel": {
+      "de": "Haeufige Fragen",
+      "en": "Frequently Asked Questions"
+    },
+    "items": [
+      {
+        "frage": {
+          "de": "Muss ich mich anmelden?",
+          "en": "Do I need to register?"
+        },
+        "antwort": {
+          "de": "Nein. Einfach vorbeikommen. Wir freuen uns auf Sie.",
+          "en": "No. Just show up. We look forward to seeing you."
+        }
+      },
+      {
+        "frage": {
+          "de": "Kann ich mein Kind mitbringen?",
+          "en": "Can I bring my child?"
+        },
+        "antwort": {
+          "de": "Das Cafe ist bewusst ein Abend nur fuer Erwachsene. So koennen Sie sich ganz auf sich konzentrieren.",
+          "en": "The Cafe is intentionally an evening for adults only. So you can fully focus on yourself."
+        }
+      },
+      {
+        "frage": {
+          "de": "Was kostet die Teilnahme?",
+          "en": "What does it cost?"
+        },
+        "antwort": {
+          "de": "Nichts. Das EVOLEA Cafe ist kostenlos.",
+          "en": "Nothing. The EVOLEA Cafe is free."
+        }
+      },
+      {
+        "frage": {
+          "de": "Ich bin zum ersten Mal da. Was muss ich wissen?",
+          "en": "It's my first time. What do I need to know?"
+        },
+        "antwort": {
+          "de": "Nur das: Sie sind willkommen. Kommen Sie rein, nehmen Sie sich einen Kaffee, und schauen Sie, wie es sich anfuehlt.",
+          "en": "Just this: You're welcome. Come in, grab a coffee, and see how it feels."
+        }
+      },
+      {
+        "frage": {
+          "de": "Mein Kind hat keine Diagnose. Darf ich trotzdem kommen?",
+          "en": "My child doesn't have a diagnosis. Can I still come?"
+        },
+        "antwort": {
+          "de": "Ja. Das Cafe ist fuer alle Eltern, die sich angesprochen fuehlen. Keine Diagnose noetig.",
+          "en": "Yes. The Cafe is for all parents who feel it speaks to them. No diagnosis needed."
+        }
+      },
+      {
+        "frage": {
+          "de": "Wo genau findet es statt?",
+          "en": "Where exactly does it take place?"
+        },
+        "antwort": {
+          "de": "In Zuerich. Den genauen Ort erfahren Sie per E-Mail oder ueber unseren Newsletter.",
+          "en": "In Zurich. You'll receive the exact location via email or through our newsletter."
+        }
+      }
+    ]
+  },
+  "cta": {
+    "titel": {
+      "de": "Wir freuen uns auf Sie",
+      "en": "We Look Forward to Seeing You"
+    },
+    "beschreibung": {
+      "de": "Keine Anmeldung noetig - aber wenn Sie Fragen haben oder den Ort erfahren moechten, schreiben Sie uns.",
+      "en": "No registration needed - but if you have questions or want to know the location, reach out to us."
+    },
+    "buttonText": {
+      "de": "Jetzt Kontakt aufnehmen",
+      "en": "Contact Us"
+    },
+    "buttonLink": {
+      "de": "/kontakt/",
+      "en": "/contact/"
+    }
+  }
+}
