@@ -73,7 +73,16 @@ const donatePath = lang === 'de' ? '/spenden/' : '/en/donate/';
       ]}
     >
       <span class="logo-text">EVOLEA</span>
-      <Butterfly size="sm" variant={transparent ? 'white' : 'spectrum'} />
+      <span class="butterfly-wrapper">
+        <span class="butterfly-default">
+          <Butterfly size="sm" variant={transparent ? 'white' : 'spectrum'} />
+        </span>
+        {transparent && (
+          <span class="butterfly-scrolled">
+            <Butterfly size="sm" variant="spectrum" />
+          </span>
+        )}
+      </span>
     </a>
 
     <!-- Desktop Navigation -->
@@ -204,6 +213,32 @@ const donatePath = lang === 'de' ? '/spenden/' : '/en/donate/';
     background-clip: text;
   }
 
+  /* Butterfly toggle for scrolled state */
+  .butterfly-wrapper {
+    position: relative;
+    display: inline-flex;
+  }
+
+  .butterfly-scrolled {
+    position: absolute;
+    top: 0;
+    left: 0;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+
+  .butterfly-default {
+    transition: opacity 0.3s ease;
+  }
+
+  :global(#main-header.header-scrolled) .butterfly-scrolled {
+    opacity: 1;
+  }
+
+  :global(#main-header.header-scrolled) .butterfly-default {
+    opacity: 0;
+  }
+
   /* Nav link with spectrum underline on active - per Brand Guide v3 */
   .nav-link-active::after {
     content: '';
@@ -255,6 +290,79 @@ const donatePath = lang === 'de' ? '/spenden/' : '/en/donate/';
   /* Header hide on scroll down, show on scroll up */
   :global(#main-header.header-hidden) {
     transform: translateY(-100%);
+  }
+
+  /* ===== SCROLLED STATE - Frosted Glass with Prism Accent ===== */
+  :global(#main-header.header-scrolled) {
+    background: rgba(255, 251, 247, 0.92);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    box-shadow:
+      0 4px 30px rgba(138, 61, 126, 0.08),
+      0 1px 3px rgba(0, 0, 0, 0.05);
+  }
+
+  /* Prism gradient line at bottom of scrolled header */
+  :global(#main-header.header-scrolled)::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: linear-gradient(
+      90deg,
+      #7BEDD5 0%,
+      #FFE066 20%,
+      #FF7E5D 40%,
+      #E97BF1 60%,
+      #CD87F8 80%,
+      #7BEDD5 100%
+    );
+    background-size: 200% 100%;
+    animation: prismSlide 8s linear infinite;
+    opacity: 0.8;
+  }
+
+  @keyframes prismSlide {
+    0% { background-position: 0% 50%; }
+    100% { background-position: 200% 50%; }
+  }
+
+  /* Override transparent styles when scrolled */
+  :global(#main-header.header-scrolled) .logo-text {
+    background: linear-gradient(90deg, #7BEDD5 0%, #FFE066 25%, #FF7E5D 50%, #E97BF1 75%, #CD87F8 100%) !important;
+    -webkit-background-clip: text !important;
+    -webkit-text-fill-color: transparent !important;
+    background-clip: text !important;
+  }
+
+  :global(#main-header.header-scrolled) .nav-link {
+    color: #5C5762 !important;
+  }
+
+  :global(#main-header.header-scrolled) .nav-link:hover {
+    color: #DD48E0 !important;
+  }
+
+  :global(#main-header.header-scrolled) .nav-link-active-light::after {
+    background: linear-gradient(90deg, #7BEDD5, #FFE066, #FF7E5D, #E97BF1, #CD87F8) !important;
+  }
+
+  :global(#main-header.header-scrolled) #mobile-menu-btn {
+    color: #BA53AD !important;
+  }
+
+  :global(#main-header.header-scrolled) #mobile-menu-btn:hover {
+    background: rgba(186, 83, 173, 0.1) !important;
+  }
+
+  /* Reduced motion - disable prism animation */
+  @media (prefers-reduced-motion: reduce) {
+    :global(#main-header.header-scrolled)::after {
+      animation: none;
+      background-position: 50% 50%;
+    }
   }
 
   /* ============================================
@@ -418,7 +526,7 @@ const donatePath = lang === 'de' ? '/spenden/' : '/en/donate/';
     });
   }
 
-  // Scroll hide/show header
+  // Scroll hide/show header with frosted glass effect
   function initScrollHeader() {
     const header = document.getElementById('main-header');
     if (!header) return;
@@ -441,12 +549,14 @@ const donatePath = lang === 'de' ? '/spenden/' : '/en/donate/';
           // Scrolling down - hide header
           header.classList.add('header-hidden');
         } else {
-          // Scrolling up - show header
+          // Scrolling up - show header with frosted glass effect
           header.classList.remove('header-hidden');
+          header.classList.add('header-scrolled');
         }
       } else {
-        // At top of page - always show header
+        // At top of page - always show header, remove scrolled state
         header.classList.remove('header-hidden');
+        header.classList.remove('header-scrolled');
       }
 
       lastScrollY = currentScrollY;
