@@ -63,7 +63,37 @@ const donatePath = lang === 'de' ? '/spenden/' : '/en/donate/';
   ]}
   data-transparent={transparent}
 >
-  <nav class="container mx-auto px-4 py-4 flex items-center justify-between">
+  <!-- Scrolled State Background Layer (hidden by default) -->
+  <div class="header-scrolled-bg" aria-hidden="true">
+    <!-- Animated Prism Gradient -->
+    <div class="header-prism-gradient"></div>
+
+    <!-- Floating Orbs (smaller for header) -->
+    <div class="header-orbs">
+      <div class="header-orb header-orb-mint"></div>
+      <div class="header-orb header-orb-gold"></div>
+      <div class="header-orb header-orb-pink"></div>
+      <div class="header-orb header-orb-purple"></div>
+    </div>
+
+    <!-- Floating Butterflies -->
+    <div class="header-butterflies">
+      <div class="header-butterfly header-butterfly-1">
+        <Butterfly size="sm" variant="white" />
+      </div>
+      <div class="header-butterfly header-butterfly-2">
+        <Butterfly size="sm" variant="spectrum" />
+      </div>
+      <div class="header-butterfly header-butterfly-3">
+        <Butterfly size="sm" variant="white" />
+      </div>
+    </div>
+
+    <!-- Soft Fade to Content -->
+    <div class="header-fade"></div>
+  </div>
+
+  <nav class="header-nav container mx-auto px-4 py-4 flex items-center justify-between">
     <!-- Logo -->
     <a
       href={translatePath('/')}
@@ -129,6 +159,276 @@ const donatePath = lang === 'de' ? '/spenden/' : '/en/donate/';
     </button>
   </nav>
 </header>
+
+<!-- Header Scrolled State Styles -->
+<style is:global>
+  /* ===== SCROLLED HEADER - PRISM GRADIENT WITH BUTTERFLIES ===== */
+
+  .header-scrolled-bg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: -40px; /* Extend below for fade effect */
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.4s ease;
+    overflow: visible;
+  }
+
+  #main-header.header-scrolled .header-scrolled-bg {
+    opacity: 1;
+  }
+
+  /* Animated Prism Gradient Background */
+  .header-prism-gradient {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 40px;
+    background: linear-gradient(
+      135deg,
+      #4ECDC4 0%,
+      #FFE066 18%,
+      #FF9ECC 36%,
+      #E97BF1 54%,
+      #CD87F8 72%,
+      #9B3D9B 100%
+    );
+    background-size: 400% 400%;
+    animation: headerPrismShift 20s ease infinite;
+  }
+
+  @keyframes headerPrismShift {
+    0%, 100% { background-position: 0% 50%; }
+    25% { background-position: 50% 100%; }
+    50% { background-position: 100% 50%; }
+    75% { background-position: 50% 0%; }
+  }
+
+  /* Floating Orbs */
+  .header-orbs {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 40px;
+    overflow: hidden;
+    pointer-events: none;
+  }
+
+  .header-orb {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(40px);
+    opacity: 0.6;
+    animation: headerOrbFloat 15s ease-in-out infinite;
+  }
+
+  .header-orb-mint {
+    width: 150px;
+    height: 150px;
+    background: radial-gradient(circle, #4ECDC4 0%, #3DB8AC 100%);
+    top: -30%;
+    left: 5%;
+    animation-delay: 0s;
+  }
+
+  .header-orb-gold {
+    width: 120px;
+    height: 120px;
+    background: radial-gradient(circle, #FFE066 0%, #FFC83D 100%);
+    top: -20%;
+    left: 35%;
+    animation-delay: -4s;
+  }
+
+  .header-orb-pink {
+    width: 180px;
+    height: 180px;
+    background: radial-gradient(circle, #FF6B9D 0%, #E84C82 100%);
+    top: -40%;
+    right: 10%;
+    animation-delay: -8s;
+  }
+
+  .header-orb-purple {
+    width: 140px;
+    height: 140px;
+    background: radial-gradient(circle, #CD87F8 0%, #B56FE8 100%);
+    top: -25%;
+    right: 40%;
+    animation-delay: -12s;
+  }
+
+  @keyframes headerOrbFloat {
+    0%, 100% { transform: translate(0, 0) scale(1); }
+    25% { transform: translate(20px, -10px) scale(1.05); }
+    50% { transform: translate(-15px, 15px) scale(0.95); }
+    75% { transform: translate(10px, 5px) scale(1.02); }
+  }
+
+  /* Floating Butterflies */
+  .header-butterflies {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 40px;
+    overflow: visible;
+    pointer-events: none;
+  }
+
+  .header-butterfly {
+    position: absolute;
+    animation: headerButterflyDrift 20s ease-in-out infinite;
+    opacity: 0;
+    transition: opacity 0.5s ease 0.2s;
+  }
+
+  #main-header.header-scrolled .header-butterfly {
+    opacity: 1;
+  }
+
+  .header-butterfly-1 {
+    top: 20%;
+    left: 8%;
+    opacity: 0.5;
+    animation-delay: 0s;
+  }
+
+  .header-butterfly-2 {
+    top: 35%;
+    right: 15%;
+    opacity: 0.4;
+    animation-delay: -7s;
+  }
+
+  .header-butterfly-3 {
+    top: 15%;
+    right: 45%;
+    opacity: 0.35;
+    animation-delay: -14s;
+  }
+
+  #main-header.header-scrolled .header-butterfly-1 { opacity: 0.5; }
+  #main-header.header-scrolled .header-butterfly-2 { opacity: 0.4; }
+  #main-header.header-scrolled .header-butterfly-3 { opacity: 0.35; }
+
+  @keyframes headerButterflyDrift {
+    0%, 100% { transform: translate(0, 0) rotate(0deg); }
+    25% { transform: translate(30px, -15px) rotate(8deg); }
+    50% { transform: translate(10px, 20px) rotate(-5deg); }
+    75% { transform: translate(-20px, -10px) rotate(6deg); }
+  }
+
+  /* Soft Fade to Content */
+  .header-fade {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 50px;
+    background: linear-gradient(
+      180deg,
+      transparent 0%,
+      rgba(255, 251, 247, 0.3) 30%,
+      rgba(255, 251, 247, 0.7) 60%,
+      rgba(255, 251, 247, 0.95) 100%
+    );
+    pointer-events: none;
+  }
+
+  /* Nav content stays above background */
+  .header-nav {
+    position: relative;
+    z-index: 10;
+  }
+
+  /* Text styles when scrolled - white for visibility on prism */
+  #main-header.header-scrolled .logo-text {
+    background: white !important;
+    -webkit-background-clip: text !important;
+    -webkit-text-fill-color: transparent !important;
+    background-clip: text !important;
+    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  }
+
+  #main-header.header-scrolled .nav-link {
+    color: rgba(255, 255, 255, 0.95) !important;
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);
+  }
+
+  #main-header.header-scrolled .nav-link:hover {
+    color: #FFFFFF !important;
+  }
+
+  #main-header.header-scrolled .nav-link-active-light::after,
+  #main-header.header-scrolled .nav-link-active::after {
+    background: white !important;
+  }
+
+  #main-header.header-scrolled #mobile-menu-btn {
+    color: white !important;
+  }
+
+  #main-header.header-scrolled #mobile-menu-btn:hover {
+    background: rgba(255, 255, 255, 0.15) !important;
+  }
+
+  /* Donate button adjustments for scrolled state */
+  #main-header.header-scrolled .nav-donate {
+    background: linear-gradient(
+      135deg,
+      #E8B86D 0%,
+      #FFE066 25%,
+      #F5D54A 50%,
+      #E8B86D 75%,
+      #D4A056 100%
+    );
+    background-size: 200% 200%;
+    animation: navDonateShimmer 4s ease infinite;
+    box-shadow:
+      0 4px 15px rgba(232, 184, 109, 0.4),
+      0 0 25px rgba(255, 224, 102, 0.3);
+  }
+
+  @keyframes navDonateShimmer {
+    0%, 100% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+  }
+
+  /* Hide the old butterfly wrapper swap when using new scrolled bg */
+  #main-header.header-scrolled .butterfly-scrolled {
+    opacity: 0 !important;
+  }
+
+  #main-header.header-scrolled .butterfly-default {
+    opacity: 1 !important;
+  }
+
+  /* Reduced motion */
+  @media (prefers-reduced-motion: reduce) {
+    .header-prism-gradient {
+      animation: none;
+      background-position: 50% 50%;
+    }
+
+    .header-orb {
+      animation: none;
+    }
+
+    .header-butterfly {
+      animation: none;
+    }
+
+    #main-header.header-scrolled .nav-donate {
+      animation: none;
+      background-position: 50% 50%;
+    }
+  }
+</style>
 
 <!-- Mobile Menu Overlay - COMPLETELY SEPARATE FROM HEADER -->
 <div
@@ -292,77 +592,9 @@ const donatePath = lang === 'de' ? '/spenden/' : '/en/donate/';
     transform: translateY(-100%);
   }
 
-  /* ===== SCROLLED STATE - Frosted Glass with Prism Accent ===== */
+  /* Header scrolled state - allow overflow for fade effect */
   :global(#main-header.header-scrolled) {
-    background: rgba(255, 251, 247, 0.92);
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
-    box-shadow:
-      0 4px 30px rgba(138, 61, 126, 0.08),
-      0 1px 3px rgba(0, 0, 0, 0.05);
-  }
-
-  /* Prism gradient line at bottom of scrolled header */
-  :global(#main-header.header-scrolled)::after {
-    content: '';
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    height: 2px;
-    background: linear-gradient(
-      90deg,
-      #7BEDD5 0%,
-      #FFE066 20%,
-      #FF7E5D 40%,
-      #E97BF1 60%,
-      #CD87F8 80%,
-      #7BEDD5 100%
-    );
-    background-size: 200% 100%;
-    animation: prismSlide 8s linear infinite;
-    opacity: 0.8;
-  }
-
-  @keyframes prismSlide {
-    0% { background-position: 0% 50%; }
-    100% { background-position: 200% 50%; }
-  }
-
-  /* Override transparent styles when scrolled */
-  :global(#main-header.header-scrolled) .logo-text {
-    background: linear-gradient(90deg, #7BEDD5 0%, #FFE066 25%, #FF7E5D 50%, #E97BF1 75%, #CD87F8 100%) !important;
-    -webkit-background-clip: text !important;
-    -webkit-text-fill-color: transparent !important;
-    background-clip: text !important;
-  }
-
-  :global(#main-header.header-scrolled) .nav-link {
-    color: #5C5762 !important;
-  }
-
-  :global(#main-header.header-scrolled) .nav-link:hover {
-    color: #DD48E0 !important;
-  }
-
-  :global(#main-header.header-scrolled) .nav-link-active-light::after {
-    background: linear-gradient(90deg, #7BEDD5, #FFE066, #FF7E5D, #E97BF1, #CD87F8) !important;
-  }
-
-  :global(#main-header.header-scrolled) #mobile-menu-btn {
-    color: #BA53AD !important;
-  }
-
-  :global(#main-header.header-scrolled) #mobile-menu-btn:hover {
-    background: rgba(186, 83, 173, 0.1) !important;
-  }
-
-  /* Reduced motion - disable prism animation */
-  @media (prefers-reduced-motion: reduce) {
-    :global(#main-header.header-scrolled)::after {
-      animation: none;
-      background-position: 50% 50%;
-    }
+    overflow: visible;
   }
 
   /* ============================================
