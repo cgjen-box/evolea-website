@@ -1,7 +1,6 @@
 ---
 import Base from '@layouts/Base.astro';
 import FloatingShapes from '@components/FloatingShapes.astro';
-import GradientCTA from '@components/GradientCTA.astro';
 import Icon from '@components/Icon.astro';
 import { getLangFromUrl, useTranslatedPath } from '@i18n/utils';
 import { getEntry } from 'astro:content';
@@ -34,7 +33,6 @@ const fuerWen = page?.fuerWen || {};
 const besonderheiten = page?.besonderheiten || {};
 const projekte = page?.projekte || {};
 const praktischeInfos = page?.praktischeInfos || {};
-const cta = page?.cta || {};
 
 // Color mappings for projects
 const statusColors: Record<string, string> = {
@@ -369,13 +367,4 @@ const textColors: Record<string, string> = {
       </div>
     </div>
   </section>
-
-  <!-- CTA Section -->
-  <GradientCTA
-    title={getText(cta.titel, 'Interesse geweckt?')}
-    description={getText(cta.beschreibung, 'Vereinbaren Sie ein kostenloses Kennenlerngespräch.')}
-    buttonText={getText(cta.buttonText, 'Jetzt Kontakt aufnehmen')}
-    buttonHref={translatePath('/kontakt/')}
-    variant="sunset"
-  />
 </Base>
