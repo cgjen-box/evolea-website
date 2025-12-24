@@ -1,0 +1,239 @@
+---
+/**
+ * FooterDonationCTA - A call-to-action section that appears before the footer
+ * to encourage donations to EVOLEA.
+ */
+import { getLangFromUrl, useTranslations, useTranslatedPath } from '@i18n/utils';
+import Butterfly from './Butterfly.astro';
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+const translatePath = useTranslatedPath(lang);
+
+// Get the donate path based on language
+const donatePath = lang === 'de' ? '/spenden/' : '/en/donate/';
+---
+
+<section class="donation-cta-section">
+  <!-- Gradient Background -->
+  <div class="donation-cta-bg"></div>
+
+  <!-- Floating Decorative Elements -->
+  <div class="donation-cta-decorations" aria-hidden="true">
+    <div class="donation-orb donation-orb-1"></div>
+    <div class="donation-orb donation-orb-2"></div>
+    <div class="donation-butterfly donation-butterfly-1">
+      <Butterfly size="md" variant="white" />
+    </div>
+    <div class="donation-butterfly donation-butterfly-2">
+      <Butterfly size="sm" variant="white" />
+    </div>
+  </div>
+
+  <!-- Content -->
+  <div class="donation-cta-content">
+    <div class="container mx-auto px-4 text-center">
+      <!-- Heart Icon -->
+      <div class="donation-cta-icon">
+        <svg class="w-8 h-8" fill="currentColor" viewBox="0 0 24 24">
+          <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+        </svg>
+      </div>
+
+      <h2 class="donation-cta-title">
+        {t('donate.footer.cta.title')}
+      </h2>
+      <p class="donation-cta-text">
+        {t('donate.footer.cta.text')}
+      </p>
+
+      <a href={translatePath(donatePath)} class="donation-cta-button">
+        {t('donate.footer.cta.button')}
+        <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+        </svg>
+      </a>
+    </div>
+  </div>
+</section>
+
+<style>
+  .donation-cta-section {
+    position: relative;
+    padding: 4rem 0;
+    overflow: hidden;
+  }
+
+  /* Gold/Warm Gradient Background */
+  .donation-cta-bg {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      135deg,
+      #E8B86D 0%,
+      #DCD49F 25%,
+      #FFE066 50%,
+      #E8B86D 75%,
+      #D4A056 100%
+    );
+    background-size: 200% 200%;
+    animation: goldShimmer 15s ease infinite;
+  }
+
+  @keyframes goldShimmer {
+    0%, 100% {
+      background-position: 0% 50%;
+    }
+    50% {
+      background-position: 100% 50%;
+    }
+  }
+
+  /* Floating Orbs */
+  .donation-cta-decorations {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    overflow: hidden;
+  }
+
+  .donation-orb {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(60px);
+    opacity: 0.4;
+  }
+
+  .donation-orb-1 {
+    width: 200px;
+    height: 200px;
+    background: radial-gradient(circle, #FFFFFF 0%, rgba(255, 255, 255, 0) 70%);
+    top: -50px;
+    left: 10%;
+    animation: orbFloat 12s ease-in-out infinite;
+  }
+
+  .donation-orb-2 {
+    width: 150px;
+    height: 150px;
+    background: radial-gradient(circle, #DD48E0 0%, rgba(221, 72, 224, 0) 70%);
+    bottom: -30px;
+    right: 15%;
+    animation: orbFloat 10s ease-in-out infinite;
+    animation-delay: -5s;
+  }
+
+  @keyframes orbFloat {
+    0%, 100% {
+      transform: translate(0, 0);
+    }
+    50% {
+      transform: translate(20px, -20px);
+    }
+  }
+
+  /* Floating Butterflies */
+  .donation-butterfly {
+    position: absolute;
+    opacity: 0.3;
+  }
+
+  .donation-butterfly-1 {
+    top: 20%;
+    right: 10%;
+    animation: butterflyFloat 8s ease-in-out infinite;
+  }
+
+  .donation-butterfly-2 {
+    bottom: 25%;
+    left: 8%;
+    animation: butterflyFloat 10s ease-in-out infinite;
+    animation-delay: -3s;
+  }
+
+  @keyframes butterflyFloat {
+    0%, 100% {
+      transform: translate(0, 0) rotate(0deg);
+    }
+    25% {
+      transform: translate(15px, -10px) rotate(5deg);
+    }
+    75% {
+      transform: translate(-10px, 10px) rotate(-5deg);
+    }
+  }
+
+  /* Content */
+  .donation-cta-content {
+    position: relative;
+    z-index: 10;
+  }
+
+  .donation-cta-icon {
+    width: 60px;
+    height: 60px;
+    margin: 0 auto 1.5rem;
+    background: rgba(255, 255, 255, 0.25);
+    backdrop-filter: blur(10px);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #5C2854;
+  }
+
+  .donation-cta-title {
+    font-family: 'Fredoka', sans-serif;
+    font-size: clamp(1.75rem, 4vw, 2.5rem);
+    font-weight: 700;
+    color: #5C2854;
+    margin-bottom: 0.75rem;
+    text-shadow: 0 2px 4px rgba(255, 255, 255, 0.3);
+  }
+
+  .donation-cta-text {
+    font-family: 'Poppins', sans-serif;
+    font-size: 1.125rem;
+    color: #5C2854;
+    opacity: 0.9;
+    margin-bottom: 2rem;
+  }
+
+  .donation-cta-button {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: #5C2854;
+    color: #FFFFFF;
+    font-family: 'Fredoka', sans-serif;
+    font-weight: 600;
+    font-size: 1.125rem;
+    padding: 1rem 2.5rem;
+    border-radius: 100px;
+    text-decoration: none;
+    box-shadow: 0 4px 20px rgba(92, 40, 84, 0.3);
+    transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+
+  .donation-cta-button:hover {
+    transform: translateY(-3px) scale(1.02);
+    box-shadow: 0 8px 30px rgba(92, 40, 84, 0.4);
+    background: #4A1F43;
+  }
+
+  /* Reduced motion */
+  @media (prefers-reduced-motion: reduce) {
+    .donation-cta-bg {
+      animation: none;
+    }
+
+    .donation-orb,
+    .donation-butterfly {
+      animation: none;
+    }
+
+    .donation-cta-button {
+      transition: none;
+    }
+  }
+</style>

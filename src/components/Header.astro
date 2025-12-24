@@ -49,6 +49,9 @@ const navItems = [
   { key: 'nav.blog', href: '/blog/' },
   { key: 'nav.contact', href: '/kontakt/' },
 ] as const;
+
+// Get donate path based on language
+const donatePath = lang === 'de' ? '/spenden/' : '/en/donate/';
 ---
 
 <!-- Desktop Header -->
@@ -92,6 +95,12 @@ const navItems = [
         );
       })}
       <LanguagePicker />
+      <a
+        href={translatePath(donatePath)}
+        class="nav-donate"
+      >
+        {t('nav.donate')}
+      </a>
       <a
         href={translatePath('/kontakt/')}
         class="nav-cta"
@@ -166,12 +175,21 @@ const navItems = [
         <span class="text-white/70 text-sm">{lang === 'de' ? 'Sprache' : 'Language'}</span>
         <LanguagePicker />
       </div>
-      <a
-        href={translatePath('/kontakt/')}
-        class="flex items-center justify-center gap-3 w-full py-4 px-8 bg-white text-evolea-purple font-display font-bold text-lg rounded-full shadow-lg hover:shadow-xl transition-all"
-      >
-        {t('contact.cta')}
-      </a>
+      <div class="flex flex-col gap-3">
+        <a
+          href={translatePath(donatePath)}
+          class="flex items-center justify-center gap-3 w-full py-4 px-8 font-display font-bold text-lg rounded-full shadow-lg hover:shadow-xl transition-all"
+          style="background: #E8B86D; color: #5C2854;"
+        >
+          {t('nav.donate')}
+        </a>
+        <a
+          href={translatePath('/kontakt/')}
+          class="flex items-center justify-center gap-3 w-full py-4 px-8 bg-white text-evolea-purple font-display font-bold text-lg rounded-full shadow-lg hover:shadow-xl transition-all"
+        >
+          {t('contact.cta')}
+        </a>
+      </div>
     </div>
   </div>
 </div>
@@ -215,6 +233,29 @@ const navItems = [
     height: 3px;
     background: white;
     border-radius: 2px;
+  }
+
+  /* Donate button in nav - Gold color per user request */
+  .nav-donate {
+    background: #E8B86D;
+    color: #5C2854;
+    padding: 0.6rem 1.25rem;
+    border-radius: 100px;
+    font-weight: 600;
+    font-size: 0.9rem;
+    box-shadow: 0 2px 10px rgba(232, 184, 109, 0.3);
+    transition: all 0.3s ease;
+  }
+
+  .nav-donate:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 20px rgba(232, 184, 109, 0.4);
+    background: #D4A056;
+  }
+
+  [data-transparent="true"] .nav-donate {
+    background: #E8B86D;
+    color: #5C2854;
   }
 
   /* CTA button in nav - per Brand Guide v3 */

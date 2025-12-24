@@ -51,6 +51,18 @@ export function getAlternateLang(lang: Lang): Lang {
 }
 
 /**
+ * Special route mappings for pages with different paths in different languages
+ */
+const routeMappings: Record<string, Record<string, string>> = {
+  de: {
+    '/spenden/': '/en/donate/',
+  },
+  en: {
+    '/donate/': '/spenden/',
+  },
+};
+
+/**
  * Get the path in the alternate language
  */
 export function getAlternatePath(url: URL): string {
@@ -63,6 +75,16 @@ export function getAlternatePath(url: URL): string {
   let path = url.pathname.replace(base, '') || '/';
   if (lang !== defaultLang) {
     path = path.replace(`/${lang}`, '') || '/';
+  }
+
+  // Check for special route mappings
+  const langMappings = routeMappings[lang];
+  if (langMappings) {
+    for (const [sourcePath, targetPath] of Object.entries(langMappings)) {
+      if (path === sourcePath || path === sourcePath.replace(/\/$/, '')) {
+        return `${base}${targetPath}`;
+      }
+    }
   }
 
   return translatePath(path, alternateLang);
@@ -79,6 +101,27 @@ export function getLanguageAlternates(url: URL): Array<{ lang: Lang; href: strin
   let basePath = url.pathname.replace(base, '') || '/';
   if (currentLang !== defaultLang) {
     basePath = basePath.replace(`/${currentLang}`, '') || '/';
+  }
+
+  // Check for special route mappings
+  const langMappings = routeMappings[currentLang];
+  if (langMappings) {
+    for (const [sourcePath, targetPath] of Object.entries(langMappings)) {
+      if (basePath === sourcePath || basePath === sourcePath.replace(/\/$/, '')) {
+        // Return the special mapped paths
+        if (currentLang === 'de') {
+          return [
+            { lang: 'de', href: `${base}${sourcePath}` },
+            { lang: 'en', href: `${base}${targetPath}` },
+          ];
+        } else {
+          return [
+            { lang: 'de', href: `${base}${targetPath}` },
+            { lang: 'en', href: `${base}/en${sourcePath}` },
+          ];
+        }
+      }
+    }
   }
 
   return [
