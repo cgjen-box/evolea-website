@@ -64,6 +64,14 @@ const {
     overflow: visible;
     transform: translateY(100%);
     z-index: -1;
+    /* Hidden by default - only show when scrolled */
+    opacity: 0;
+    transition: opacity 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  /* Only show fade when header is in scrolled state */
+  :global(#main-header.header-scrolled) .navbar-fade {
+    opacity: 1;
   }
 
   .navbar-fade__mist {
