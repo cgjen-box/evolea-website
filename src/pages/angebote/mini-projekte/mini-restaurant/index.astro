@@ -1,6 +1,5 @@
 ---
 import Base from '@layouts/Base.astro';
-import GradientCTA from '@components/GradientCTA.astro';
 import Icon from '@components/Icon.astro';
 import { getLangFromUrl, useTranslatedPath } from '@i18n/utils';
 import { getEntry } from 'astro:content';
@@ -475,13 +474,4 @@ const schedule = [
       </a>
     </div>
   </section>
-
-  <!-- CTA Section -->
-  <GradientCTA
-    title="Interesse am Mini Restaurant?"
-    description="Setzen Sie sich auf die Warteliste oder erfahren Sie mehr über unsere anderen Mini Projekte."
-    buttonText="Jetzt Kontakt aufnehmen"
-    buttonHref={translatePath('/kontakt/')}
-    variant="sunset"
-  />
 </Base>
