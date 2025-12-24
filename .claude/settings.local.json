@@ -18,7 +18,9 @@
       "WebSearch",
       "WebFetch(domain:developers.cloudflare.com)",
       "WebFetch(domain:evolea-website.pages.dev)",
-      "WebFetch(domain:keystatic.com)"
+      "WebFetch(domain:keystatic.com)",
+      "Bash(unzip:*)",
+      "Bash(git reset:*)"
     ],
     "deny": [],
     "ask": []

@@ -54,433 +54,131 @@ const navItems = [
 const donatePath = lang === 'de' ? '/spenden/' : '/en/donate/';
 ---
 
-<!-- Desktop Header -->
-<header
-  id="main-header"
-  class:list={[
-    'fixed top-0 left-0 right-0 z-50',
-    transparent ? 'bg-transparent' : 'bg-evolea-cream/95 backdrop-blur-md shadow-soft',
-  ]}
-  style="transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1), background-color 0.3s ease, box-shadow 0.3s ease;"
-  data-transparent={transparent}
->
-  <!-- Scrolled State Background Layer (hidden by default) -->
-  <div class="header-scrolled-bg" aria-hidden="true">
-    <!-- Animated Prism Gradient -->
-    <div class="header-prism-gradient"></div>
+<!-- Navbar Wrapper - Contains both navbar and fade effect -->
+<div id="navbar-wrapper" class="navbar-wrapper">
+  <!-- Desktop Header -->
+  <header
+    id="main-header"
+    class:list={[
+      'main-header',
+      transparent ? 'header-transparent' : '',
+    ]}
+    data-transparent={transparent}
+  >
+    <!-- Prism Gradient Background (only visible when scrolled) -->
+    <div class="header-prism-bg" aria-hidden="true">
+      <div class="header-prism-gradient"></div>
+      <div class="header-glass-layer"></div>
 
-    <!-- Glassmorphism Layer -->
-    <div class="header-glass-layer"></div>
+      <!-- Floating Orbs -->
+      <div class="header-orbs">
+        <div class="header-orb header-orb-mint"></div>
+        <div class="header-orb header-orb-gold"></div>
+        <div class="header-orb header-orb-pink"></div>
+        <div class="header-orb header-orb-purple"></div>
+      </div>
 
-    <!-- Floating Orbs (smaller for header) -->
-    <div class="header-orbs">
-      <div class="header-orb header-orb-mint"></div>
-      <div class="header-orb header-orb-gold"></div>
-      <div class="header-orb header-orb-pink"></div>
-      <div class="header-orb header-orb-purple"></div>
+      <!-- Floating Butterflies -->
+      <div class="header-butterflies">
+        <div class="header-butterfly header-butterfly-1">
+          <Butterfly size="sm" variant="white" />
+        </div>
+        <div class="header-butterfly header-butterfly-2">
+          <Butterfly size="sm" variant="spectrum" />
+        </div>
+        <div class="header-butterfly header-butterfly-3">
+          <Butterfly size="sm" variant="white" />
+        </div>
+      </div>
     </div>
 
-    <!-- Floating Butterflies -->
-    <div class="header-butterflies">
-      <div class="header-butterfly header-butterfly-1">
-        <Butterfly size="sm" variant="white" />
-      </div>
-      <div class="header-butterfly header-butterfly-2">
-        <Butterfly size="sm" variant="spectrum" />
-      </div>
-      <div class="header-butterfly header-butterfly-3">
-        <Butterfly size="sm" variant="white" />
-      </div>
-    </div>
-
-    <!-- Soft Fade to Content -->
-    <div class="header-fade"></div>
-  </div>
-
-  <nav class="header-nav container mx-auto px-4 py-4 flex items-center justify-between">
-    <!-- Logo -->
-    <a
-      href={translatePath('/')}
-      class:list={[
-        'flex items-center gap-2 font-display font-bold text-xl transition-colors',
-        transparent ? 'text-white' : 'text-evolea-purple',
-      ]}
-    >
-      <span class="logo-text">EVOLEA</span>
-      <span class="butterfly-wrapper">
-        <span class="butterfly-default">
+    <nav class="header-nav container mx-auto px-4 py-4 flex items-center justify-between">
+      <!-- Logo -->
+      <a
+        href={translatePath('/')}
+        class:list={[
+          'logo-link flex items-center gap-2 font-display font-bold text-xl transition-colors',
+          transparent ? 'text-white' : 'text-evolea-purple',
+        ]}
+      >
+        <span class="logo-text">EVOLEA</span>
+        <span class="logo-butterfly">
           <Butterfly size="sm" variant={transparent ? 'white' : 'spectrum'} />
         </span>
-        {transparent && (
-          <span class="butterfly-scrolled">
-            <Butterfly size="sm" variant="spectrum" />
-          </span>
-        )}
-      </span>
-    </a>
-
-    <!-- Desktop Navigation -->
-    <div class="hidden md:flex items-center gap-6">
-      {navItems.map(({ key, href }) => {
-        const isActive = Astro.url.pathname.startsWith(translatePath(href));
-        return (
-          <a
-            href={translatePath(href)}
-            class:list={[
-              'nav-link relative font-medium transition-colors py-2',
-              transparent ? 'text-white/90 hover:text-white' : 'text-evolea-text hover:text-evolea-magenta',
-              isActive && !transparent && 'nav-link-active text-evolea-magenta',
-              isActive && transparent && 'nav-link-active-light',
-            ]}
-          >
-            {navLabelMap[key] || t(key)}
-          </a>
-        );
-      })}
-      <LanguagePicker />
-      <a
-        href={translatePath(donatePath)}
-        class="nav-donate"
-      >
-        {t('nav.donate')}
       </a>
-    </div>
 
-    <!-- Mobile Menu Button -->
-    <button
-      type="button"
-      id="mobile-menu-btn"
-      class:list={[
-        'md:hidden p-2 rounded-lg transition-colors',
-        transparent ? 'text-white hover:bg-white/10' : 'text-evolea-purple hover:bg-evolea-purple/10',
-      ]}
-      aria-expanded="false"
-      aria-label={lang === 'de' ? 'Menü öffnen' : 'Open menu'}
-    >
-      <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
-      </svg>
-    </button>
-  </nav>
+      <!-- Desktop Navigation -->
+      <div class="hidden md:flex items-center gap-6">
+        {navItems.map(({ key, href }) => {
+          const isActive = Astro.url.pathname.startsWith(translatePath(href));
+          return (
+            <a
+              href={translatePath(href)}
+              class:list={[
+                'nav-link relative font-medium transition-colors py-2',
+                transparent ? 'text-white/90 hover:text-white' : 'text-evolea-text hover:text-evolea-magenta',
+                isActive && !transparent && 'nav-link-active text-evolea-magenta',
+                isActive && transparent && 'nav-link-active-light',
+              ]}
+            >
+              {navLabelMap[key] || t(key)}
+            </a>
+          );
+        })}
+        <LanguagePicker />
+        <a
+          href={translatePath(donatePath)}
+          class="nav-donate"
+        >
+          {t('nav.donate')}
+        </a>
+      </div>
 
-</header>
+      <!-- Mobile Menu Button -->
+      <button
+        type="button"
+        id="mobile-menu-btn"
+        class:list={[
+          'md:hidden p-2 rounded-lg transition-colors',
+          transparent ? 'text-white hover:bg-white/10' : 'text-evolea-purple hover:bg-evolea-purple/10',
+        ]}
+        aria-expanded="false"
+        aria-label={lang === 'de' ? 'Menü öffnen' : 'Open menu'}
+      >
+        <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+        </svg>
+      </button>
+    </nav>
+  </header>
 
-<!-- Header Scrolled State Styles -->
-<style is:global>
-  /* ===== SCROLLED HEADER - PRISM GRADIENT WITH BUTTERFLIES ===== */
+  <!-- The Wave Fade Effect (positioned below header) -->
+  <div class="navbar-fade" aria-hidden="true">
+    <!-- Soft Blur Mist -->
+    <div class="navbar-fade__mist"></div>
 
-  .header-scrolled-bg {
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: -60px; /* Extend below for smoother fade effect */
-    pointer-events: none;
-    opacity: 0;
-    transition: opacity 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-    overflow: visible;
-  }
+    <!-- Wave Layers -->
+    <div class="navbar-fade__wave navbar-fade__wave--primary"></div>
+    <div class="navbar-fade__wave navbar-fade__wave--secondary"></div>
+    <div class="navbar-fade__wave navbar-fade__wave--tertiary"></div>
 
-  #main-header.header-scrolled .header-scrolled-bg {
-    opacity: 1;
-  }
+    <!-- Prismatic Shimmer -->
+    <div class="navbar-fade__shimmer"></div>
 
-  /* Animated Prism Gradient Background */
-  .header-prism-gradient {
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 60px;
-    background: linear-gradient(
-      135deg,
-      #4ECDC4 0%,
-      #FFE066 18%,
-      #FF9ECC 36%,
-      #E97BF1 54%,
-      #CD87F8 72%,
-      #9B3D9B 100%
-    );
-    background-size: 400% 400%;
-    animation: headerPrismShift 20s ease infinite;
-    /* Add subtle blur for premium feel */
-    filter: blur(0.5px);
-  }
+    <!-- Bottom Feather -->
+    <div class="navbar-fade__feather"></div>
+  </div>
+</div>
 
-  @keyframes headerPrismShift {
-    0%, 100% { background-position: 0% 50%; }
-    25% { background-position: 50% 100%; }
-    50% { background-position: 100% 50%; }
-    75% { background-position: 50% 0%; }
-  }
-
-  /* Premium Glassmorphism Layer - Creates frosted glass effect */
-  .header-glass-layer {
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 60px;
-    background:
-      linear-gradient(
-        180deg,
-        rgba(255, 255, 255, 0.15) 0%,
-        rgba(255, 255, 255, 0.1) 50%,
-        rgba(255, 255, 255, 0.05) 100%
-      );
-    backdrop-filter: blur(12px) saturate(150%);
-    -webkit-backdrop-filter: blur(12px) saturate(150%);
-    /* Subtle inner glow for depth */
-    box-shadow:
-      0 0 40px rgba(255, 255, 255, 0.1) inset,
-      0 1px 0 rgba(255, 255, 255, 0.2) inset;
-    pointer-events: none;
-  }
-
-  /* Floating Orbs */
-  .header-orbs {
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 40px;
-    overflow: hidden;
-    pointer-events: none;
-  }
-
-  .header-orb {
-    position: absolute;
-    border-radius: 50%;
-    filter: blur(50px);
-    opacity: 0.4;
-    animation: headerOrbFloat 18s ease-in-out infinite;
-    mix-blend-mode: screen;
-  }
-
-  .header-orb-mint {
-    width: 180px;
-    height: 180px;
-    background: radial-gradient(circle, #4ECDC4 0%, #3DB8AC 100%);
-    top: -35%;
-    left: 5%;
-    animation-delay: 0s;
-  }
-
-  .header-orb-gold {
-    width: 150px;
-    height: 150px;
-    background: radial-gradient(circle, #FFE066 0%, #FFC83D 100%);
-    top: -25%;
-    left: 35%;
-    animation-delay: -5s;
-  }
-
-  .header-orb-pink {
-    width: 200px;
-    height: 200px;
-    background: radial-gradient(circle, #FF6B9D 0%, #E84C82 100%);
-    top: -45%;
-    right: 10%;
-    animation-delay: -10s;
-  }
-
-  .header-orb-purple {
-    width: 160px;
-    height: 160px;
-    background: radial-gradient(circle, #CD87F8 0%, #B56FE8 100%);
-    top: -30%;
-    right: 40%;
-    animation-delay: -15s;
-  }
-
-  @keyframes headerOrbFloat {
-    0%, 100% { transform: translate(0, 0) scale(1); }
-    25% { transform: translate(20px, -10px) scale(1.05); }
-    50% { transform: translate(-15px, 15px) scale(0.95); }
-    75% { transform: translate(10px, 5px) scale(1.02); }
-  }
-
-  /* Floating Butterflies */
-  .header-butterflies {
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 40px;
-    overflow: visible;
-    pointer-events: none;
-  }
-
-  .header-butterfly {
-    position: absolute;
-    animation: headerButterflyDrift 25s ease-in-out infinite;
-    opacity: 0;
-    transition: opacity 0.6s cubic-bezier(0.4, 0, 0.2, 1) 0.3s;
-    filter: drop-shadow(0 2px 8px rgba(255, 255, 255, 0.3));
-  }
-
-  #main-header.header-scrolled .header-butterfly {
-    opacity: 1;
-  }
-
-  .header-butterfly-1 {
-    top: 20%;
-    left: 8%;
-    opacity: 0.6;
-    animation-delay: 0s;
-  }
-
-  .header-butterfly-2 {
-    top: 35%;
-    right: 15%;
-    opacity: 0.5;
-    animation-delay: -8s;
-  }
-
-  .header-butterfly-3 {
-    top: 15%;
-    right: 45%;
-    opacity: 0.45;
-    animation-delay: -16s;
-  }
-
-  #main-header.header-scrolled .header-butterfly-1 { opacity: 0.6; }
-  #main-header.header-scrolled .header-butterfly-2 { opacity: 0.5; }
-  #main-header.header-scrolled .header-butterfly-3 { opacity: 0.45; }
-
-  @keyframes headerButterflyDrift {
-    0%, 100% { transform: translate(0, 0) rotate(0deg); }
-    25% { transform: translate(30px, -15px) rotate(8deg); }
-    50% { transform: translate(10px, 20px) rotate(-5deg); }
-    75% { transform: translate(-20px, -10px) rotate(6deg); }
-  }
-
-  /* Soft Fade to Content - Multi-layered for seamless blend */
-  .header-fade {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    height: 60px;
-    background:
-      /* Blur layer for depth */
-      linear-gradient(
-        180deg,
-        rgba(255, 251, 247, 0) 0%,
-        rgba(255, 251, 247, 0.15) 20%,
-        rgba(255, 251, 247, 0.4) 40%,
-        rgba(255, 251, 247, 0.7) 65%,
-        rgba(255, 251, 247, 0.9) 85%,
-        rgba(255, 251, 247, 1) 100%
-      );
-    pointer-events: none;
-    /* Add subtle backdrop blur for premium frosted glass effect */
-    backdrop-filter: blur(8px);
-    -webkit-backdrop-filter: blur(8px);
-  }
-
-  /* Nav content stays above background */
-  .header-nav {
-    position: relative;
-    z-index: 10;
-  }
-
-  /* Text styles when scrolled - white for visibility on prism */
-  #main-header.header-scrolled .logo-text {
-    background: white !important;
-    -webkit-background-clip: text !important;
-    -webkit-text-fill-color: transparent !important;
-    background-clip: text !important;
-    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-  }
-
-  #main-header.header-scrolled .nav-link {
-    color: rgba(255, 255, 255, 0.95) !important;
-    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);
-  }
-
-  #main-header.header-scrolled .nav-link:hover {
-    color: #FFFFFF !important;
-  }
-
-  #main-header.header-scrolled .nav-link-active-light::after,
-  #main-header.header-scrolled .nav-link-active::after {
-    background: white !important;
-  }
-
-  #main-header.header-scrolled #mobile-menu-btn {
-    color: white !important;
-  }
-
-  #main-header.header-scrolled #mobile-menu-btn:hover {
-    background: rgba(255, 255, 255, 0.15) !important;
-  }
-
-  /* Donate button adjustments for scrolled state */
-  #main-header.header-scrolled .nav-donate {
-    background: linear-gradient(
-      135deg,
-      #E8B86D 0%,
-      #FFE066 25%,
-      #F5D54A 50%,
-      #E8B86D 75%,
-      #D4A056 100%
-    );
-    background-size: 200% 200%;
-    animation: navDonateShimmer 4s ease infinite;
-    box-shadow:
-      0 4px 15px rgba(232, 184, 109, 0.4),
-      0 0 25px rgba(255, 224, 102, 0.3);
-  }
-
-  @keyframes navDonateShimmer {
-    0%, 100% { background-position: 0% 50%; }
-    50% { background-position: 100% 50%; }
-  }
-
-  /* Hide the old butterfly wrapper swap when using new scrolled bg */
-  #main-header.header-scrolled .butterfly-scrolled {
-    opacity: 0 !important;
-  }
-
-  #main-header.header-scrolled .butterfly-default {
-    opacity: 1 !important;
-  }
-
-  /* Reduced motion */
-  @media (prefers-reduced-motion: reduce) {
-    .header-prism-gradient {
-      animation: none;
-      background-position: 50% 50%;
-    }
-
-    .header-orb {
-      animation: none;
-    }
-
-    .header-butterfly {
-      animation: none;
-    }
-
-    #main-header.header-scrolled .nav-donate {
-      animation: none;
-      background-position: 50% 50%;
-    }
-  }
-</style>
-
-<!-- Mobile Menu Overlay - COMPLETELY SEPARATE FROM HEADER -->
+<!-- Mobile Menu Overlay -->
 <div
   id="mobile-menu-overlay"
   class="mobile-menu-overlay"
   aria-hidden="true"
 >
-  <!-- Solid Background - This is the key fix -->
   <div class="mobile-menu-bg"></div>
 
-  <!-- Content -->
   <div class="mobile-menu-content">
-    <!-- Close Button -->
     <button
       type="button"
       id="mobile-menu-close"
@@ -492,13 +190,11 @@ const donatePath = lang === 'de' ? '/spenden/' : '/en/donate/';
       </svg>
     </button>
 
-    <!-- Logo -->
     <a href={translatePath('/')} class="flex items-center gap-3 mb-12">
       <span class="font-display font-bold text-3xl text-white">EVOLEA</span>
       <Butterfly size="md" variant="white" />
     </a>
 
-    <!-- Navigation Links -->
     <nav class="flex flex-col gap-2 mb-auto">
       {navItems.map(({ key, href }, index) => (
         <a
@@ -511,7 +207,6 @@ const donatePath = lang === 'de' ? '/spenden/' : '/en/donate/';
       ))}
     </nav>
 
-    <!-- Footer -->
     <div class="mt-auto pt-8 border-t border-white/20">
       <div class="flex items-center justify-between mb-6">
         <span class="text-white/70 text-sm">{lang === 'de' ? 'Sprache' : 'Language'}</span>
@@ -536,7 +231,505 @@ const donatePath = lang === 'de' ? '/spenden/' : '/en/donate/';
   </div>
 </div>
 
+<style is:global>
+  /* ===========================================
+     NAVBAR WRAPPER - Contains header + fade
+     =========================================== */
+  .navbar-wrapper {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 50;
+    /* Hidden by default - only shows on scroll up */
+    transform: translateY(-100%);
+    opacity: 0;
+    transition:
+      transform 0.4s cubic-bezier(0.4, 0, 0.2, 1),
+      opacity 0.3s ease;
+    pointer-events: none;
+  }
+
+  .navbar-wrapper.visible {
+    transform: translateY(0);
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  /* At top of page - show header without prism effect */
+  .navbar-wrapper.at-top {
+    transform: translateY(0);
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  .navbar-wrapper.at-top .header-prism-bg,
+  .navbar-wrapper.at-top .navbar-fade {
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  /* ===========================================
+     MAIN HEADER
+     =========================================== */
+  .main-header {
+    position: relative;
+    background: rgba(255, 251, 247, 0.95);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+  }
+
+  .main-header.header-transparent {
+    background: transparent;
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+  }
+
+  /* When scrolled and visible - use prism bg */
+  .navbar-wrapper.visible:not(.at-top) .main-header {
+    background: transparent;
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+  }
+
+  /* ===========================================
+     PRISM GRADIENT BACKGROUND (visible on scroll)
+     =========================================== */
+  .header-prism-bg {
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+    opacity: 0;
+    transition: opacity 0.4s ease;
+  }
+
+  .navbar-wrapper.visible:not(.at-top) .header-prism-bg {
+    opacity: 1;
+  }
+
+  .header-prism-gradient {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      135deg,
+      #7BEDD5 0%,      /* Mint */
+      #FFE066 18%,     /* Sunshine */
+      #FF9ECC 36%,     /* Blush pink */
+      #E97BF1 54%,     /* Magenta */
+      #CD87F8 72%,     /* Lavender */
+      #BA53AD 100%     /* Deep purple */
+    );
+    background-size: 400% 400%;
+    animation: prismShift 20s ease infinite;
+  }
+
+  @keyframes prismShift {
+    0%, 100% { background-position: 0% 50%; }
+    25% { background-position: 50% 100%; }
+    50% { background-position: 100% 50%; }
+    75% { background-position: 50% 0%; }
+  }
+
+  .header-glass-layer {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      180deg,
+      rgba(255, 255, 255, 0.15) 0%,
+      rgba(255, 255, 255, 0.08) 50%,
+      rgba(255, 255, 255, 0.03) 100%
+    );
+    backdrop-filter: blur(8px) saturate(140%);
+    -webkit-backdrop-filter: blur(8px) saturate(140%);
+  }
+
+  /* ===========================================
+     FLOATING ORBS
+     =========================================== */
+  .header-orbs {
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+    pointer-events: none;
+  }
+
+  .header-orb {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(50px);
+    opacity: 0.5;
+    animation: orbFloat 18s ease-in-out infinite;
+    mix-blend-mode: screen;
+  }
+
+  .header-orb-mint {
+    width: 180px;
+    height: 180px;
+    background: radial-gradient(circle, #7BEDD5 0%, #4ECDC4 100%);
+    top: -40%;
+    left: 5%;
+  }
+
+  .header-orb-gold {
+    width: 150px;
+    height: 150px;
+    background: radial-gradient(circle, #FFE066 0%, #FFC83D 100%);
+    top: -30%;
+    left: 35%;
+    animation-delay: -5s;
+  }
+
+  .header-orb-pink {
+    width: 200px;
+    height: 200px;
+    background: radial-gradient(circle, #FF9ECC 0%, #E97BF1 100%);
+    top: -50%;
+    right: 10%;
+    animation-delay: -10s;
+  }
+
+  .header-orb-purple {
+    width: 160px;
+    height: 160px;
+    background: radial-gradient(circle, #CD87F8 0%, #BA53AD 100%);
+    top: -35%;
+    right: 40%;
+    animation-delay: -15s;
+  }
+
+  @keyframes orbFloat {
+    0%, 100% { transform: translate(0, 0) scale(1); }
+    25% { transform: translate(20px, -10px) scale(1.05); }
+    50% { transform: translate(-15px, 15px) scale(0.95); }
+    75% { transform: translate(10px, 5px) scale(1.02); }
+  }
+
+  /* ===========================================
+     FLOATING BUTTERFLIES
+     =========================================== */
+  .header-butterflies {
+    position: absolute;
+    inset: 0;
+    overflow: visible;
+    pointer-events: none;
+  }
+
+  .header-butterfly {
+    position: absolute;
+    animation: butterflyDrift 25s ease-in-out infinite;
+    filter: drop-shadow(0 2px 8px rgba(255, 255, 255, 0.4));
+  }
+
+  .header-butterfly-1 {
+    top: 20%;
+    left: 8%;
+    opacity: 0.6;
+  }
+
+  .header-butterfly-2 {
+    top: 35%;
+    right: 15%;
+    opacity: 0.5;
+    animation-delay: -8s;
+  }
+
+  .header-butterfly-3 {
+    top: 15%;
+    right: 45%;
+    opacity: 0.45;
+    animation-delay: -16s;
+  }
+
+  @keyframes butterflyDrift {
+    0%, 100% { transform: translate(0, 0) rotate(0deg); }
+    25% { transform: translate(30px, -15px) rotate(8deg); }
+    50% { transform: translate(10px, 20px) rotate(-5deg); }
+    75% { transform: translate(-20px, -10px) rotate(6deg); }
+  }
+
+  /* ===========================================
+     NAV CONTENT
+     =========================================== */
+  .header-nav {
+    position: relative;
+    z-index: 10;
+  }
+
+  /* Text styles when scrolled */
+  .navbar-wrapper.visible:not(.at-top) .logo-text {
+    background: white !important;
+    -webkit-background-clip: text !important;
+    -webkit-text-fill-color: transparent !important;
+    background-clip: text !important;
+  }
+
+  .navbar-wrapper.visible:not(.at-top) .nav-link {
+    color: rgba(255, 255, 255, 0.95) !important;
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);
+  }
+
+  .navbar-wrapper.visible:not(.at-top) .nav-link:hover {
+    color: #FFFFFF !important;
+  }
+
+  .navbar-wrapper.visible:not(.at-top) .nav-link-active::after,
+  .navbar-wrapper.visible:not(.at-top) .nav-link-active-light::after {
+    background: white !important;
+  }
+
+  .navbar-wrapper.visible:not(.at-top) #mobile-menu-btn {
+    color: white !important;
+  }
+
+  .navbar-wrapper.visible:not(.at-top) #mobile-menu-btn:hover {
+    background: rgba(255, 255, 255, 0.15) !important;
+  }
+
+  /* Gold donate button shimmer when scrolled */
+  .navbar-wrapper.visible:not(.at-top) .nav-donate {
+    background: linear-gradient(
+      135deg,
+      #E8B86D 0%,
+      #FFE066 25%,
+      #F5D54A 50%,
+      #E8B86D 75%,
+      #D4A056 100%
+    );
+    background-size: 200% 200%;
+    animation: goldShimmer 4s ease infinite;
+    box-shadow:
+      0 4px 15px rgba(232, 184, 109, 0.4),
+      0 0 25px rgba(255, 224, 102, 0.3);
+  }
+
+  @keyframes goldShimmer {
+    0%, 100% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+  }
+
+  /* ===========================================
+     NAVBAR FADE - "Butterfly's Edge"
+     =========================================== */
+  .navbar-fade {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    height: 120px;
+    pointer-events: none;
+    overflow: visible;
+    opacity: 0;
+    transition: opacity 0.4s ease;
+  }
+
+  .navbar-wrapper.visible:not(.at-top) .navbar-fade {
+    opacity: 1;
+  }
+
+  /* ===========================================
+     SOFT BLUR MIST
+     =========================================== */
+  .navbar-fade__mist {
+    position: absolute;
+    top: -30px;
+    left: 0;
+    right: 0;
+    height: 80px;
+    background: linear-gradient(
+      180deg,
+      rgba(205, 135, 248, 0.6) 0%,    /* Lavender */
+      rgba(205, 135, 248, 0.3) 40%,
+      rgba(205, 135, 248, 0) 100%
+    );
+    filter: blur(25px);
+  }
+
+  /* ===========================================
+     WAVE LAYERS
+     =========================================== */
+  .navbar-fade__wave {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 200%;
+    height: 100%;
+    will-change: transform;
+  }
+
+  /* Primary Wave - Deep purple to lavender */
+  .navbar-fade__wave--primary {
+    background: linear-gradient(
+      180deg,
+      rgba(186, 83, 173, 0.9) 0%,      /* Deep purple */
+      rgba(205, 135, 248, 0.7) 20%,    /* Lavender */
+      rgba(205, 135, 248, 0.4) 45%,
+      rgba(205, 135, 248, 0.15) 70%,
+      transparent 100%
+    );
+    clip-path: polygon(
+      0% 0%,
+      0% 25%,
+      5% 35%,
+      10% 30%,
+      15% 40%,
+      20% 45%,
+      25% 38%,
+      30% 50%,
+      35% 55%,
+      40% 48%,
+      45% 60%,
+      50% 52%,
+      55% 45%,
+      60% 55%,
+      65% 62%,
+      70% 50%,
+      75% 58%,
+      80% 45%,
+      85% 55%,
+      90% 48%,
+      95% 40%,
+      100% 35%,
+      100% 0%
+    );
+    animation: waveDriftSlow 25s ease-in-out infinite;
+  }
+
+  /* Secondary Wave - Pink/magenta */
+  .navbar-fade__wave--secondary {
+    background: linear-gradient(
+      180deg,
+      rgba(233, 123, 241, 0.6) 0%,     /* Magenta */
+      rgba(255, 158, 204, 0.4) 25%,    /* Blush */
+      rgba(255, 158, 204, 0.2) 50%,
+      rgba(255, 158, 204, 0.05) 75%,
+      transparent 100%
+    );
+    clip-path: polygon(
+      0% 0%,
+      0% 15%,
+      8% 22%,
+      12% 18%,
+      18% 28%,
+      25% 20%,
+      32% 30%,
+      38% 25%,
+      45% 35%,
+      52% 28%,
+      58% 38%,
+      65% 32%,
+      72% 25%,
+      78% 35%,
+      85% 28%,
+      92% 22%,
+      100% 18%,
+      100% 0%
+    );
+    animation: waveDriftMedium 18s ease-in-out infinite reverse;
+  }
+
+  /* Tertiary Wave - Mint/gold sparkle */
+  .navbar-fade__wave--tertiary {
+    background: linear-gradient(
+      180deg,
+      rgba(123, 237, 213, 0.4) 0%,     /* Mint */
+      rgba(255, 224, 102, 0.25) 30%,   /* Gold */
+      rgba(255, 224, 102, 0.1) 60%,
+      transparent 100%
+    );
+    clip-path: polygon(
+      0% 0%,
+      0% 10%,
+      6% 15%,
+      12% 12%,
+      18% 18%,
+      24% 14%,
+      30% 20%,
+      36% 16%,
+      42% 22%,
+      48% 18%,
+      54% 24%,
+      60% 20%,
+      66% 15%,
+      72% 22%,
+      78% 17%,
+      84% 12%,
+      90% 18%,
+      96% 14%,
+      100% 10%,
+      100% 0%
+    );
+    animation: waveDriftFast 12s ease-in-out infinite;
+  }
+
+  @keyframes waveDriftSlow {
+    0%, 100% { transform: translateX(0) scaleY(1); }
+    25% { transform: translateX(-12%) scaleY(1.05); }
+    50% { transform: translateX(-25%) scaleY(0.95); }
+    75% { transform: translateX(-12%) scaleY(1.02); }
+  }
+
+  @keyframes waveDriftMedium {
+    0%, 100% { transform: translateX(0) scaleY(1); }
+    33% { transform: translateX(-16%) scaleY(1.08); }
+    66% { transform: translateX(-33%) scaleY(0.92); }
+  }
+
+  @keyframes waveDriftFast {
+    0%, 100% { transform: translateX(0); }
+    50% { transform: translateX(-25%); }
+  }
+
+  /* ===========================================
+     PRISMATIC SHIMMER
+     =========================================== */
+  .navbar-fade__shimmer {
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 50%;
+    height: 80%;
+    background: linear-gradient(
+      90deg,
+      transparent 0%,
+      rgba(255, 255, 255, 0.15) 30%,
+      rgba(255, 255, 255, 0.25) 50%,
+      rgba(255, 255, 255, 0.15) 70%,
+      transparent 100%
+    );
+    animation: shimmerSweep 10s ease-in-out infinite;
+    pointer-events: none;
+  }
+
+  @keyframes shimmerSweep {
+    0% { left: -50%; opacity: 0; }
+    10% { opacity: 1; }
+    90% { opacity: 1; }
+    100% { left: 150%; opacity: 0; }
+  }
+
+  /* ===========================================
+     BOTTOM FEATHER
+     =========================================== */
+  .navbar-fade__feather {
+    position: absolute;
+    bottom: -20px;
+    left: 0;
+    right: 0;
+    height: 40px;
+    background: radial-gradient(
+      ellipse 80% 100% at 50% 0%,
+      rgba(205, 135, 248, 0.15) 0%,
+      transparent 70%
+    );
+    filter: blur(15px);
+  }
+</style>
+
 <style>
+  /* ===========================================
+     SCOPED STYLES
+     =========================================== */
+
   /* Logo gradient text */
   .logo-text {
     background: linear-gradient(90deg, #7BEDD5 0%, #FFE066 25%, #FF7E5D 50%, #E97BF1 75%, #CD87F8 100%);
@@ -545,40 +738,14 @@ const donatePath = lang === 'de' ? '/spenden/' : '/en/donate/';
     background-clip: text;
   }
 
-  [data-transparent="true"] .logo-text {
+  .header-transparent .logo-text {
     background: white;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
   }
 
-  /* Butterfly toggle for scrolled state */
-  .butterfly-wrapper {
-    position: relative;
-    display: inline-flex;
-  }
-
-  .butterfly-scrolled {
-    position: absolute;
-    top: 0;
-    left: 0;
-    opacity: 0;
-    transition: opacity 0.3s ease;
-  }
-
-  .butterfly-default {
-    transition: opacity 0.3s ease;
-  }
-
-  :global(#main-header.header-scrolled) .butterfly-scrolled {
-    opacity: 1;
-  }
-
-  :global(#main-header.header-scrolled) .butterfly-default {
-    opacity: 0;
-  }
-
-  /* Nav link with spectrum underline on active - per Brand Guide v3 */
+  /* Nav link with spectrum underline on active */
   .nav-link-active::after {
     content: '';
     position: absolute;
@@ -603,7 +770,7 @@ const donatePath = lang === 'de' ? '/spenden/' : '/en/donate/';
     border-radius: 2px;
   }
 
-  /* Donate button in nav - Gold color per user request */
+  /* Donate button */
   .nav-donate {
     background: #E8B86D;
     color: #5C2854;
@@ -621,61 +788,9 @@ const donatePath = lang === 'de' ? '/spenden/' : '/en/donate/';
     background: #D4A056;
   }
 
-  [data-transparent="true"] .nav-donate {
-    background: #E8B86D;
-    color: #5C2854;
-  }
-
-  /* Header hide on scroll down, show on scroll up */
-  :global(#main-header.header-hidden) {
-    transform: translateY(-100%);
-  }
-
-  /* Header scrolled state - allow overflow for fade effect */
-  :global(#main-header.header-scrolled) {
-    overflow: visible;
-    /* Add subtle shadow for depth without harsh edges */
-    box-shadow:
-      0 4px 20px -4px rgba(186, 83, 173, 0.15),
-      0 8px 40px -8px rgba(221, 72, 224, 0.1),
-      0 0 0 1px rgba(255, 255, 255, 0.1) inset;
-  }
-
-  /* Smooth shadow transition */
-  :global(#main-header) {
-    box-shadow: 0 0 0 0 transparent;
-  }
-
-  /* ===== SEAMLESS NAVBAR FADE - MATCHES PRISM GRADIENT TO PAGE CREAM ===== */
-  :global(#main-header.header-scrolled)::after {
-    content: '';
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    height: 120px;
-    transform: translateY(100%);
-    pointer-events: none;
-    z-index: -1;
-    background: linear-gradient(
-      to bottom,
-      /* Start with purple/lavender from bottom of prism gradient */
-      rgba(155, 61, 155, 0.85) 0%,
-      rgba(205, 135, 248, 0.7) 15%,
-      rgba(233, 123, 241, 0.5) 30%,
-      rgba(255, 158, 204, 0.35) 45%,
-      /* Transition to cream page background */
-      rgba(255, 251, 247, 0.6) 60%,
-      rgba(255, 251, 247, 0.85) 75%,
-      rgba(255, 251, 247, 0.95) 90%,
-      #FFFBF7 100%
-    );
-  }
-
-  /* ============================================
-     MOBILE MENU - BULLETPROOF IMPLEMENTATION
-     ============================================ */
-
+  /* ===========================================
+     MOBILE MENU
+     =========================================== */
   .mobile-menu-overlay {
     position: fixed;
     top: 0;
@@ -686,13 +801,9 @@ const donatePath = lang === 'de' ? '/spenden/' : '/en/donate/';
     height: 100vh;
     height: 100dvh;
     z-index: 999999;
-
-    /* HIDDEN by default */
     visibility: hidden;
     opacity: 0;
     pointer-events: none;
-
-    /* Slide from right */
     transform: translateX(100%);
     transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1),
                 opacity 0.3s ease,
@@ -706,17 +817,9 @@ const donatePath = lang === 'de' ? '/spenden/' : '/en/donate/';
     transform: translateX(0);
   }
 
-  /* SOLID BACKGROUND - NO TRANSPARENCY */
   .mobile-menu-bg {
     position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    width: 100%;
-    height: 100%;
-
-    /* SOLID gradient - this is the key */
+    inset: 0;
     background: linear-gradient(
       135deg,
       #BA53AD 0%,
@@ -745,7 +848,6 @@ const donatePath = lang === 'de' ? '/spenden/' : '/en/donate/';
     -webkit-overflow-scrolling: touch;
   }
 
-  /* Nav link animations */
   .mobile-nav-link {
     opacity: 0;
     transform: translateX(20px);
@@ -757,7 +859,6 @@ const donatePath = lang === 'de' ? '/spenden/' : '/en/donate/';
     transform: translateX(0);
   }
 
-  /* Body lock when menu is open */
   :global(body.menu-open) {
     overflow: hidden !important;
     position: fixed !important;
@@ -766,8 +867,23 @@ const donatePath = lang === 'de' ? '/spenden/' : '/en/donate/';
     touch-action: none !important;
   }
 
-  /* Reduced motion */
+  /* ===========================================
+     REDUCED MOTION
+     =========================================== */
   @media (prefers-reduced-motion: reduce) {
+    .navbar-wrapper {
+      transition: opacity 0.1s ease;
+    }
+
+    :global(.header-prism-gradient),
+    :global(.header-orb),
+    :global(.header-butterfly),
+    :global(.navbar-fade__wave),
+    :global(.navbar-fade__shimmer),
+    :global(.nav-donate) {
+      animation: none !important;
+    }
+
     .mobile-menu-overlay {
       transition: opacity 0.1s ease, visibility 0.1s ease;
       transform: none !important;
@@ -780,126 +896,107 @@ const donatePath = lang === 'de' ? '/spenden/' : '/en/donate/';
     .mobile-nav-link {
       opacity: 1;
       transform: none;
-      transition: color 0.2s ease;
     }
   }
 </style>
 
 <script>
-  function initMobileMenu() {
+  function initNavbar() {
+    const wrapper = document.getElementById('navbar-wrapper');
     const menuBtn = document.getElementById('mobile-menu-btn');
     const menuClose = document.getElementById('mobile-menu-close');
     const menuOverlay = document.getElementById('mobile-menu-overlay');
 
-    if (!menuBtn || !menuOverlay) return;
-
-    const openMenu = () => {
-      menuOverlay.classList.add('open');
-      menuOverlay.setAttribute('aria-hidden', 'false');
-      menuBtn.setAttribute('aria-expanded', 'true');
-      document.body.classList.add('menu-open');
-    };
-
-    const closeMenu = () => {
-      menuOverlay.classList.remove('open');
-      menuOverlay.setAttribute('aria-hidden', 'true');
-      menuBtn.setAttribute('aria-expanded', 'false');
-      document.body.classList.remove('menu-open');
-    };
-
-    // Open menu
-    menuBtn.addEventListener('click', openMenu);
-
-    // Close menu - close button
-    menuClose?.addEventListener('click', closeMenu);
-
-    // Close menu - clicking links
-    menuOverlay.querySelectorAll('a').forEach(link => {
-      link.addEventListener('click', closeMenu);
-    });
-
-    // Close menu - escape key
-    document.addEventListener('keydown', (e) => {
-      if (e.key === 'Escape' && menuOverlay.classList.contains('open')) {
-        closeMenu();
-      }
-    });
-
-    // Close menu - clicking outside content (on the background)
-    menuOverlay.addEventListener('click', (e) => {
-      if (e.target === menuOverlay) {
-        closeMenu();
-      }
-    });
-  }
-
-  // Scroll hide/show header with frosted glass effect
-  function initScrollHeader() {
-    const header = document.getElementById('main-header');
-    if (!header) return;
+    if (!wrapper) return;
 
     let lastScrollY = window.scrollY;
     let ticking = false;
-    let scrollTimeout: number | null = null;
+    let hasScrolledDown = false;
 
-    const updateHeader = () => {
+    const updateNavbar = () => {
       const currentScrollY = window.scrollY;
 
-      // Don't hide header when mobile menu is open
+      // Don't update when mobile menu is open
       if (document.body.classList.contains('menu-open')) {
         ticking = false;
         return;
       }
 
-      // Clear any pending timeout
-      if (scrollTimeout) {
-        clearTimeout(scrollTimeout);
+      // At top of page (within first 80px)
+      if (currentScrollY <= 80) {
+        wrapper.classList.add('at-top');
+        wrapper.classList.add('visible');
+        wrapper.classList.remove('hidden');
+        hasScrolledDown = false;
       }
-
-      // Only hide after scrolling past the header height
-      if (currentScrollY > 80) {
-        if (currentScrollY > lastScrollY) {
-          // Scrolling down - hide header immediately
-          header.classList.add('header-hidden');
-          header.classList.remove('header-scrolled');
-        } else {
-          // Scrolling up - show header with smooth delay for premium feel
-          header.classList.remove('header-hidden');
-
-          // Add scrolled state with slight delay for smooth transition
-          scrollTimeout = window.setTimeout(() => {
-            header.classList.add('header-scrolled');
-          }, 50);
-        }
-      } else {
-        // At top of page - always show header, remove scrolled state smoothly
-        header.classList.remove('header-hidden');
-
-        // Remove scrolled state with delay for smooth fade-out
-        scrollTimeout = window.setTimeout(() => {
-          header.classList.remove('header-scrolled');
-        }, 100);
+      // Scrolling down
+      else if (currentScrollY > lastScrollY) {
+        hasScrolledDown = true;
+        wrapper.classList.remove('visible');
+        wrapper.classList.remove('at-top');
+        wrapper.classList.add('hidden');
+      }
+      // Scrolling up (only if we've scrolled down first)
+      else if (currentScrollY < lastScrollY && hasScrolledDown) {
+        wrapper.classList.add('visible');
+        wrapper.classList.remove('at-top');
+        wrapper.classList.remove('hidden');
       }
 
       lastScrollY = currentScrollY;
       ticking = false;
     };
 
+    // Initial state
+    if (window.scrollY <= 80) {
+      wrapper.classList.add('at-top');
+      wrapper.classList.add('visible');
+    }
+
     window.addEventListener('scroll', () => {
       if (!ticking) {
-        window.requestAnimationFrame(updateHeader);
+        window.requestAnimationFrame(updateNavbar);
         ticking = true;
       }
     }, { passive: true });
+
+    // Mobile menu handlers
+    if (menuBtn && menuOverlay) {
+      const openMenu = () => {
+        menuOverlay.classList.add('open');
+        menuOverlay.setAttribute('aria-hidden', 'false');
+        menuBtn.setAttribute('aria-expanded', 'true');
+        document.body.classList.add('menu-open');
+      };
+
+      const closeMenu = () => {
+        menuOverlay.classList.remove('open');
+        menuOverlay.setAttribute('aria-hidden', 'true');
+        menuBtn.setAttribute('aria-expanded', 'false');
+        document.body.classList.remove('menu-open');
+      };
+
+      menuBtn.addEventListener('click', openMenu);
+      menuClose?.addEventListener('click', closeMenu);
+
+      menuOverlay.querySelectorAll('a').forEach(link => {
+        link.addEventListener('click', closeMenu);
+      });
+
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && menuOverlay.classList.contains('open')) {
+          closeMenu();
+        }
+      });
+
+      menuOverlay.addEventListener('click', (e) => {
+        if (e.target === menuOverlay) {
+          closeMenu();
+        }
+      });
+    }
   }
 
-  // Initialize
-  document.addEventListener('DOMContentLoaded', () => {
-    initMobileMenu();
-    initScrollHeader();
-  });
-  document.addEventListener('astro:page-load', () => {
-    initMobileMenu();
-    initScrollHeader();
-  });
+  document.addEventListener('DOMContentLoaded', initNavbar);
+  document.addEventListener('astro:page-load', initNavbar);
 </script>
