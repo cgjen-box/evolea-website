@@ -2,7 +2,6 @@
 import { getLangFromUrl, useTranslations, useTranslatedPath } from '@i18n/utils';
 import LanguagePicker from './LanguagePicker.astro';
 import Butterfly from './Butterfly.astro';
-import NavbarFade from './NavbarFade.astro';
 
 interface Props {
   transparent?: boolean;
@@ -164,12 +163,6 @@ const donatePath = lang === 'de' ? '/spenden/' : '/en/donate/';
     </button>
   </nav>
 
-  <!-- Navbar Fade Effect - Extends prism gradient seamlessly -->
-  <NavbarFade
-    primaryColor="233, 123, 241"
-    secondaryColor="255, 158, 204"
-    tertiaryColor="205, 135, 248"
-  />
 </header>
 
 <!-- Header Scrolled State Styles -->
@@ -651,6 +644,32 @@ const donatePath = lang === 'de' ? '/spenden/' : '/en/donate/';
   /* Smooth shadow transition */
   :global(#main-header) {
     box-shadow: 0 0 0 0 transparent;
+  }
+
+  /* ===== SEAMLESS NAVBAR FADE - MATCHES PRISM GRADIENT TO PAGE CREAM ===== */
+  :global(#main-header.header-scrolled)::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 120px;
+    transform: translateY(100%);
+    pointer-events: none;
+    z-index: -1;
+    background: linear-gradient(
+      to bottom,
+      /* Start with purple/lavender from bottom of prism gradient */
+      rgba(155, 61, 155, 0.85) 0%,
+      rgba(205, 135, 248, 0.7) 15%,
+      rgba(233, 123, 241, 0.5) 30%,
+      rgba(255, 158, 204, 0.35) 45%,
+      /* Transition to cream page background */
+      rgba(255, 251, 247, 0.6) 60%,
+      rgba(255, 251, 247, 0.85) 75%,
+      rgba(255, 251, 247, 0.95) 90%,
+      #FFFBF7 100%
+    );
   }
 
   /* ============================================
