@@ -1,7 +1,6 @@
 ---
 import Base from '@layouts/Base.astro';
 import FloatingShapes from '@components/FloatingShapes.astro';
-import GradientCTA from '@components/GradientCTA.astro';
 import Icon from '@components/Icon.astro';
 import { getLangFromUrl, useTranslatedPath } from '@i18n/utils';
 import { getEntry } from 'astro:content';
@@ -37,7 +36,6 @@ const ansatz = page?.ansatz || {};
 const typischerTag = page?.typischerTag || {};
 const interesse = page?.interesse || {};
 const weitereAngebote = page?.weitereAngebote || {};
-const cta = page?.cta || {};
 ---
 
 <Base title={hero.titel || 'Tagesschule'} description="Strukturiertes Tagesschulprogramm mit individueller Förderung für Kinder im Autismus Spektrum in Zürich.">
@@ -416,13 +414,4 @@ const cta = page?.cta || {};
       </div>
     </div>
   </section>
-
-  <!-- CTA Section -->
-  <GradientCTA
-    title={getText(cta.titel, 'Fragen zur Tagesschule?')}
-    description={getText(cta.beschreibung, 'Kontaktieren Sie uns für ein unverbindliches Gespräch über das Tagesschul-Programm.')}
-    buttonText={getText(cta.buttonText, 'Jetzt Kontakt aufnehmen')}
-    buttonHref={translatePath('/kontakt/')}
-    variant="calm"
-  />
 </Base>
