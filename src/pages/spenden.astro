@@ -36,10 +36,10 @@ const bankDetails = {
     size="sm"
   />
 
-  <!-- Introduction Section -->
+  <!-- Introduction & Impact Section -->
   <section class="py-16 md:py-24">
-    <div class="container mx-auto max-w-4xl px-4">
-      <div class="text-center mb-16">
+    <div class="container mx-auto max-w-5xl px-4">
+      <div class="text-center mb-12">
         <h2 class="text-3xl md:text-4xl font-display font-bold text-evolea-purple mb-6">
           {t('donate.intro.title')}
         </h2>
@@ -48,6 +48,70 @@ const bankDetails = {
         </p>
       </div>
 
+      <!-- Impact Section - What Your Donation Achieves -->
+      <div class="mb-16">
+        <h3 class="text-2xl md:text-3xl font-display font-bold text-evolea-purple text-center mb-10">
+          {t('donate.impact.title')}
+        </h3>
+
+        <div class="grid md:grid-cols-3 gap-8">
+          <!-- Impact 1 -->
+          <div class="text-center">
+            <div class="w-20 h-20 mx-auto mb-6 bg-gradient-to-br from-evolea-purple to-evolea-magenta rounded-full flex items-center justify-center shadow-lg">
+              <svg class="w-10 h-10 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+              </svg>
+            </div>
+            <h4 class="text-xl font-display font-bold text-evolea-purple mb-3">
+              {t('donate.impact.1.title')}
+            </h4>
+            <p class="text-evolea-text-light">
+              {t('donate.impact.1.text')}
+            </p>
+          </div>
+
+          <!-- Impact 2 -->
+          <div class="text-center">
+            <div class="w-20 h-20 mx-auto mb-6 bg-gradient-to-br from-evolea-mint to-evolea-sky rounded-full flex items-center justify-center shadow-lg">
+              <svg class="w-10 h-10 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z" />
+              </svg>
+            </div>
+            <h4 class="text-xl font-display font-bold text-evolea-purple mb-3">
+              {t('donate.impact.2.title')}
+            </h4>
+            <p class="text-evolea-text-light">
+              {t('donate.impact.2.text')}
+            </p>
+          </div>
+
+          <!-- Impact 3 -->
+          <div class="text-center">
+            <div class="w-20 h-20 mx-auto mb-6 bg-gradient-to-br from-evolea-coral to-evolea-yellow rounded-full flex items-center justify-center shadow-lg">
+              <svg class="w-10 h-10 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+              </svg>
+            </div>
+            <h4 class="text-xl font-display font-bold text-evolea-purple mb-3">
+              {t('donate.impact.3.title')}
+            </h4>
+            <p class="text-evolea-text-light">
+              {t('donate.impact.3.text')}
+            </p>
+          </div>
+        </div>
+
+        <!-- Decorative Butterfly -->
+        <div class="flex justify-center mt-10">
+          <Butterfly size="lg" variant="spectrum" />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Donation Methods Section -->
+  <section class="py-16 md:py-24 bg-white">
+    <div class="container mx-auto max-w-4xl px-4">
       <!-- Donation Methods Grid -->
       <div class="grid md:grid-cols-2 gap-8 mb-16">
         <!-- Bank Transfer Card -->
@@ -143,67 +207,6 @@ const bankDetails = {
             {t('donate.questions')} <a href={translatePath('/kontakt/')} class="text-evolea-purple hover:underline">{t('donate.contact')}</a>
           </p>
         </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Impact Section -->
-  <section class="py-16 md:py-24 bg-white">
-    <div class="container mx-auto max-w-5xl px-4">
-      <h2 class="text-3xl md:text-4xl font-display font-bold text-evolea-purple text-center mb-12">
-        {t('donate.impact.title')}
-      </h2>
-
-      <div class="grid md:grid-cols-3 gap-8">
-        <!-- Impact 1 -->
-        <div class="text-center">
-          <div class="w-20 h-20 mx-auto mb-6 bg-gradient-to-br from-evolea-purple to-evolea-magenta rounded-full flex items-center justify-center shadow-lg">
-            <svg class="w-10 h-10 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
-            </svg>
-          </div>
-          <h3 class="text-xl font-display font-bold text-evolea-purple mb-3">
-            {t('donate.impact.1.title')}
-          </h3>
-          <p class="text-evolea-text-light">
-            {t('donate.impact.1.text')}
-          </p>
-        </div>
-
-        <!-- Impact 2 -->
-        <div class="text-center">
-          <div class="w-20 h-20 mx-auto mb-6 bg-gradient-to-br from-evolea-mint to-evolea-sky rounded-full flex items-center justify-center shadow-lg">
-            <svg class="w-10 h-10 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z" />
-            </svg>
-          </div>
-          <h3 class="text-xl font-display font-bold text-evolea-purple mb-3">
-            {t('donate.impact.2.title')}
-          </h3>
-          <p class="text-evolea-text-light">
-            {t('donate.impact.2.text')}
-          </p>
-        </div>
-
-        <!-- Impact 3 -->
-        <div class="text-center">
-          <div class="w-20 h-20 mx-auto mb-6 bg-gradient-to-br from-evolea-coral to-evolea-yellow rounded-full flex items-center justify-center shadow-lg">
-            <svg class="w-10 h-10 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
-            </svg>
-          </div>
-          <h3 class="text-xl font-display font-bold text-evolea-purple mb-3">
-            {t('donate.impact.3.title')}
-          </h3>
-          <p class="text-evolea-text-light">
-            {t('donate.impact.3.text')}
-          </p>
-        </div>
-      </div>
-
-      <!-- Decorative Butterfly -->
-      <div class="flex justify-center mt-12">
-        <Butterfly size="lg" variant="spectrum" />
       </div>
     </div>
   </section>
