@@ -41,16 +41,18 @@ const bankDetails = {
   <section class="py-16 md:py-24 bg-white">
     <div class="container mx-auto max-w-6xl px-4">
       <div class="grid lg:grid-cols-2 gap-12 items-center">
-        <!-- Instagram Embed -->
+        <!-- Instagram Reel Embed -->
         <div class="instagram-embed-wrapper">
-          <div class="instagram-embed-container rounded-evolea-lg overflow-hidden shadow-elevated">
-            <blockquote
-              class="instagram-media"
-              data-instgrm-captioned
-              data-instgrm-permalink="https://www.instagram.com/evolea.verein/reel/DRcoCiaDJ-r/"
-              data-instgrm-version="14"
-              style="background:#FFF; border:0; border-radius:16px; box-shadow:0 0 1px 0 rgba(0,0,0,0.5),0 1px 10px 0 rgba(0,0,0,0.15); margin: 0; max-width:540px; min-width:326px; padding:0; width:100%;">
-            </blockquote>
+          <div class="instagram-reel-container rounded-evolea-lg overflow-hidden shadow-elevated">
+            <iframe
+              src="https://www.instagram.com/reel/DRcoCiaDJ-r/embed/"
+              class="instagram-reel-iframe"
+              frameborder="0"
+              scrolling="no"
+              allowtransparency="true"
+              allowfullscreen="true"
+              title="EVOLEA Mini Restaurant - Instagram Reel"
+            ></iframe>
           </div>
         </div>
 
@@ -412,8 +414,6 @@ const bankDetails = {
   />
 </Base>
 
-<!-- Instagram Embed Script -->
-<script async src="//www.instagram.com/embed.js"></script>
 
 <script>
   const copyBtn = document.getElementById('copy-iban-btn');
@@ -450,21 +450,39 @@ const bankDetails = {
     position: relative;
   }
 
-  /* Instagram Embed Container */
+  /* Instagram Reel Container */
   .instagram-embed-wrapper {
     display: flex;
     justify-content: center;
   }
 
-  .instagram-embed-container {
-    min-height: 400px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+  .instagram-reel-container {
+    position: relative;
+    width: 100%;
+    max-width: 400px;
     background: #FFFBF7;
   }
 
-  .instagram-embed-container .instagram-media {
-    margin: 0 !important;
+  /* Aspect ratio container for reel (9:16 vertical video) */
+  .instagram-reel-container::before {
+    content: "";
+    display: block;
+    padding-top: 177.78%; /* 16:9 inverted = 9:16 aspect ratio */
+  }
+
+  .instagram-reel-iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border: none;
+  }
+
+  /* Responsive adjustments */
+  @media (max-width: 768px) {
+    .instagram-reel-container {
+      max-width: 100%;
+    }
   }
 </style>
