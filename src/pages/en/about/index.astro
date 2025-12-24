@@ -1,7 +1,6 @@
 ---
 import Base from '@layouts/Base.astro';
 import InnerPageHero from '@components/InnerPageHero.astro';
-import PageCloser from '@components/PageCloser.astro';
 import Butterfly from '@components/Butterfly.astro';
 import Icon from '@components/Icon.astro';
 import EditLink from '@components/EditLink.astro';
@@ -315,14 +314,6 @@ const targetGroups = about?.fuerWen?.gruppen || [];
     </div>
   </section>
 
-  <!-- Page Closer - Prism Gradient -->
-  <PageCloser
-    showCTA={true}
-    ctaTitle={getText(about?.cta?.titel, 'Ready for the next step?')}
-    ctaDescription={getText(about?.cta?.beschreibung, 'We look forward to meeting you and your child.')}
-    ctaButtonText={getText(about?.cta?.buttonText, 'Get in Touch')}
-    ctaButtonHref={translatePath('/contact/')}
-  />
 </Base>
 
 <style>
