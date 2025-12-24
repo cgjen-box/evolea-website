@@ -1,7 +1,6 @@
 ---
 import Base from '@layouts/Base.astro';
 import InnerPageHero from '@components/InnerPageHero.astro';
-import PageCloser from '@components/PageCloser.astro';
 import EditLink from '@components/EditLink.astro';
 import Icon from '@components/Icon.astro';
 import { getLangFromUrl, useTranslations, useTranslatedPath } from '@i18n/utils';
@@ -112,14 +111,6 @@ const team = teamEntries
     </div>
   </section>
 
-  <!-- Page Closer - Prism Gradient -->
-  <PageCloser
-    showCTA={true}
-    ctaTitle="Lernen Sie uns kennen"
-    ctaDescription="Wir freuen uns auf den Austausch mit Ihnen."
-    ctaButtonText="Kontakt aufnehmen"
-    ctaButtonHref={translatePath('/kontakt/')}
-  />
 </Base>
 
 <style>

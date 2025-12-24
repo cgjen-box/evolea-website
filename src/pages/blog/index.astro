@@ -1,7 +1,6 @@
 ---
 import Base from '@layouts/Base.astro';
 import InnerPageHero from '@components/InnerPageHero.astro';
-import PageCloser from '@components/PageCloser.astro';
 import { getCollection } from 'astro:content';
 import { getLangFromUrl, useTranslations, useTranslatedPath } from '@i18n/utils';
 
@@ -134,12 +133,4 @@ function formatDate(date: Date): string {
     </div>
   </section>
 
-  <!-- Page Closer - Prism Gradient -->
-  <PageCloser
-    showCTA={true}
-    ctaTitle="Bleiben Sie informiert"
-    ctaDescription="Haben Sie Fragen oder möchten Sie mehr erfahren? Kontaktieren Sie uns jederzeit."
-    ctaButtonText="Kontakt aufnehmen"
-    ctaButtonHref={translatePath('/kontakt/')}
-  />
 </Base>

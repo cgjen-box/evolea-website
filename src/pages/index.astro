@@ -2,7 +2,6 @@
 import Base from '@layouts/Base.astro';
 import VideoHero from '@components/VideoHero.astro';
 import AngeboteSectionV3 from '@components/AngeboteSectionV3.astro';
-import PageCloser from '@components/PageCloser.astro';
 import FloatingShapes from '@components/FloatingShapes.astro';
 import Icon from '@components/Icon.astro';
 import EditLink from '@components/EditLink.astro';
@@ -216,18 +215,6 @@ const colorClasses: Record<string, string> = {
       </div>
     </div>
   </section>
-
-  <!-- Page Closer - Prism Gradient with Floating Elements -->
-  <PageCloser
-    showCTA={true}
-    ctaTitle={getText(homepage?.cta?.titel, t('contact.title'))}
-    ctaDescription={getText(homepage?.cta?.beschreibung, t('contact.subtitle'))}
-    ctaButtonText={getText(homepage?.cta?.buttonText, t('contact.cta'))}
-    ctaButtonHref={homepage?.cta?.buttonLink || translatePath('/kontakt/')}
-    secondaryButtonText="Instagram"
-    secondaryButtonHref={siteSettings?.social?.instagram || "https://www.instagram.com/evolea.verein/"}
-    secondaryButtonStyle="instagram"
-  />
 
   <!-- Edit Link for Keystatic -->
   <EditLink type="singleton" collection="homepage" label="Startseite bearbeiten" />

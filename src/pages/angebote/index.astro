@@ -1,7 +1,6 @@
 ---
 import Base from '@layouts/Base.astro';
 import InnerPageHero from '@components/InnerPageHero.astro';
-import PageCloser from '@components/PageCloser.astro';
 import Icon from '@components/Icon.astro';
 import { getLangFromUrl, useTranslations, useTranslatedPath } from '@i18n/utils';
 import { getEntry } from 'astro:content';
@@ -201,12 +200,4 @@ const jahreLabel = getText(labels.jahre, 'Jahre');
     </div>
   </section>
 
-  <!-- Page Closer - Prism Gradient -->
-  <PageCloser
-    showCTA={true}
-    ctaTitle={getText(page?.cta?.titel, 'Bereit für den nächsten Schritt?')}
-    ctaDescription={getText(page?.cta?.beschreibung, 'Kontaktieren Sie uns für ein unverbindliches Kennenlerngespräch.')}
-    ctaButtonText={getText(page?.cta?.buttonText, 'Jetzt Kontakt aufnehmen')}
-    ctaButtonHref={translatePath('/kontakt/')}
-  />
 </Base>

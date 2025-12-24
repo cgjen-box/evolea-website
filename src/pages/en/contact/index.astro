@@ -1,7 +1,6 @@
 ---
 import Base from '@layouts/Base.astro';
 import InnerPageHero from '@components/InnerPageHero.astro';
-import PageCloser from '@components/PageCloser.astro';
 import EditLink from '@components/EditLink.astro';
 import { getLangFromUrl, useTranslatedPath } from '@i18n/utils';
 import { getEntry } from 'astro:content';
@@ -226,8 +225,4 @@ const formspreeId = contact?.formular?.formspreeId || 'xpznqrjk';
     </div>
   </section>
 
-  <!-- Page Closer - Prism Gradient -->
-  <PageCloser
-    showCTA={false}
-  />
 </Base>
