@@ -27,6 +27,20 @@ const blogCollection = defineCollection({
   }),
 });
 
+const blogEnCollection = defineCollection({
+  type: 'content',
+  schema: z.object({
+    title: z.string(),
+    description: z.string(),
+    pubDate: z.coerce.date(),
+    author: z.string().default('EVOLEA Team'),
+    image: z.string().optional(),
+    tags: z.array(z.string()).default([]),
+    featured: z.boolean().default(false),
+    verwandteArtikel: z.array(z.string()).optional(),
+  }),
+});
+
 // =============================================================================
 // TEAM COLLECTION
 // =============================================================================
@@ -139,6 +153,7 @@ const settingsCollection = defineCollection({
 // =============================================================================
 export const collections = {
   blog: blogCollection,
+  blogEn: blogEnCollection,
   team: teamCollection,
   programs: programsCollection,
   principles: principlesCollection,

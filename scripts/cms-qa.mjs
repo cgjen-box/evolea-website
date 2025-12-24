@@ -506,6 +506,20 @@ const resolvePublicFilePath = (assetPath) => {
   return path.join(process.cwd(), 'public', cleaned);
 };
 
+const getFirstContentSlug = (dirPath) => {
+  try {
+    const entries = fs
+      .readdirSync(dirPath)
+      .filter((name) => /\.(md|mdx)$/i.test(name) && !name.startsWith('_'))
+      .sort();
+    if (entries.length === 0) return null;
+    const first = entries[0];
+    return first.replace(/\.(md|mdx)$/i, '');
+  } catch {
+    return null;
+  }
+};
+
 const findAssetPathInText = (text) => {
   if (!text) return '';
   const match = text.match(/\/(?:images|videos|uploads|files)\/[^\s)]+/i);
@@ -1074,6 +1088,7 @@ const runCmsSmoke = async (page) => {
     { name: 'Mini Garten', path: '/singleton/miniGarten' },
     { name: 'Mini Projekte', path: '/singleton/miniProjekte' },
     { name: 'Mini Turnen', path: '/singleton/miniTurnen' },
+    { name: 'EVOLEA Cafe', path: '/singleton/evoleaCafe' },
     { name: 'Tagesschule', path: '/singleton/tagesschule' },
     {
       name: 'Site Images',
@@ -1082,6 +1097,7 @@ const runCmsSmoke = async (page) => {
     },
     { name: 'Site Settings', path: '/singleton/siteSettings' },
     { name: 'Blog', path: '/collection/blog', collection: 'blog' },
+    { name: 'Blog EN', path: '/collection/blogEn', collection: 'blogEn' },
     { name: 'Team', path: '/collection/team', collection: 'team' },
     { name: 'Principles', path: '/collection/principles', collection: 'principles' },
   ];
@@ -1221,6 +1237,13 @@ const runCmsSmoke = async (page) => {
 };
 
 const runSiteChecks = async (context) => {
+  const deBlogSlug =
+    getFirstContentSlug(path.join(process.cwd(), 'src', 'content', 'blog')) ||
+    'belohnung-erziehung';
+  const enBlogSlug = getFirstContentSlug(
+    path.join(process.cwd(), 'src', 'content', 'blog-en')
+  );
+
   const pages = [
     { name: 'Home', path: '/' },
     { name: 'About', path: '/ueber-uns/' },
@@ -1228,12 +1251,13 @@ const runSiteChecks = async (context) => {
     { name: 'Mini Garten', path: '/angebote/mini-garten/' },
     { name: 'Mini Projekte', path: '/angebote/mini-projekte/' },
     { name: 'Mini Projekte Restaurant', path: '/angebote/mini-projekte/mini-restaurant/' },
+    { name: 'EVOLEA Cafe', path: '/angebote/evolea-cafe/' },
     { name: 'Mini Museum', path: '/angebote/mini-museum/' },
     { name: 'Mini Turnen', path: '/angebote/mini-turnen/' },
     { name: 'Tagesschule', path: '/angebote/tagesschule/' },
     { name: 'Contact', path: '/kontakt/' },
     { name: 'Blog', path: '/blog/' },
-    { name: 'Blog Post', path: '/blog/belohnung-erziehung/' },
+    { name: 'Blog Post', path: `/blog/${deBlogSlug}/` },
     { name: 'Team', path: '/team/' },
     { name: 'Impressum', path: '/impressum/' },
     { name: 'Datenschutz', path: '/datenschutz/' },
@@ -1245,13 +1269,17 @@ const runSiteChecks = async (context) => {
     { name: 'EN Mini Garden', path: '/en/programs/mini-garden/' },
     { name: 'EN Mini Projects', path: '/en/programs/mini-projects/' },
     { name: 'EN Mini Sports', path: '/en/programs/mini-sports/' },
+    { name: 'EN EVOLEA Cafe', path: '/en/angebote/evolea-cafe/' },
     { name: 'EN Blog', path: '/en/blog/' },
-    { name: 'EN Blog Post', path: '/en/blog/belohnung-erziehung/' },
     { name: 'EN Team', path: '/en/team/' },
     { name: 'EN Legal', path: '/en/legal/' },
     { name: 'EN Privacy', path: '/en/privacy/' },
     { name: 'EN Brand', path: '/en/brand/' },
   ];
+
+  if (enBlogSlug) {
+    pages.push({ name: 'EN Blog Post', path: `/en/blog/${enBlogSlug}/` });
+  }
 
   for (const item of pages) {
     const page = await context.newPage();

@@ -69,10 +69,12 @@ const iconOptions = [
   { label: 'Leaf (Natur)', value: 'leaf' },
   { label: 'People (Menschen)', value: 'people' },
   { label: 'Calendar (Termin)', value: 'calendar' },
+  { label: 'Clock (Zeit)', value: 'clock' },
   { label: 'Location (Ort)', value: 'location' },
   { label: 'Mail (Kontakt)', value: 'mail' },
   { label: 'Money (Kosten)', value: 'money' },
   { label: 'Coffee (Cafe)', value: 'coffee' },
+  { label: 'Check (Haken)', value: 'check' },
   { label: 'Sparkle (Besonders)', value: 'sparkle' },
 ];
 
@@ -107,9 +109,9 @@ export default config({
       name: 'EVOLEA CMS',
     },
     navigation: {
-      Inhalte: ['blog', 'team', 'principles'],
+      Inhalte: ['blog', 'blogEn', 'team', 'principles'],
       Seiten: ['homepage', 'about', 'contact'],
-      Programme: ['angeboteIndex', 'miniGarten', 'miniProjekte', 'miniTurnen', 'tagesschule'],
+      Programme: ['angeboteIndex', 'miniGarten', 'miniProjekte', 'miniTurnen', 'evoleaCafe', 'tagesschule'],
       Medien: ['siteImages'],
       Einstellungen: ['siteSettings'],
     },
@@ -165,6 +167,70 @@ export default config({
         }),
         content: fields.mdx({
           label: 'Inhalt',
+          options: {
+            bold: true,
+            italic: true,
+            strikethrough: true,
+            code: true,
+            heading: [2, 3, 4],
+            blockquote: true,
+            orderedList: true,
+            unorderedList: true,
+            table: true,
+            link: true,
+            image: true,
+            divider: true,
+          },
+        }),
+      },
+    }),
+
+    // =========================================================================
+    // BLOG COLLECTION (EN)
+    // =========================================================================
+    blogEn: collection({
+      label: 'Blog Articles (EN)',
+      slugField: 'title',
+      path: 'src/content/blog-en/*',
+      entryLayout: 'content',
+      format: { contentField: 'content' },
+      schema: {
+        title: fields.slug({
+          name: {
+            label: 'Title',
+            description: 'The title appears as heading and in the URL',
+          },
+        }),
+        description: fields.text({
+          label: 'Description',
+          description: 'Used in preview cards and search (2-3 sentences)',
+          multiline: true,
+        }),
+        pubDate: fields.date({
+          label: 'Publish date',
+        }),
+        author: fields.text({
+          label: 'Author',
+          defaultValue: 'EVOLEA Team',
+        }),
+        image: fields.image({
+          label: 'Cover image',
+          description: 'Recommended size: 1200x630px',
+          directory: 'public/images/blog',
+          publicPath: '/images/blog/',
+        }),
+        tags: fields.array(fields.text({ label: 'Tag' }), {
+          label: 'Tags',
+          description: 'Categories for the article',
+          itemLabel: (props) => props.value || 'New tag',
+        }),
+        featured: fields.checkbox({
+          label: 'Featured',
+          description: 'Highlight on the blog overview',
+          defaultValue: false,
+        }),
+        content: fields.mdx({
+          label: 'Content',
           options: {
             bold: true,
             italic: true,
@@ -1216,6 +1282,158 @@ export default config({
             buttonText: bilingualText('Button Text', 'Button Text'),
           },
           { label: 'Call-to-Action (unten)' }
+        ),
+      },
+    }),
+
+    // =========================================================================
+    // EVOLEA CAFE SINGLETON
+    // =========================================================================
+    evoleaCafe: singleton({
+      label: 'EVOLEA Cafe',
+      path: 'src/content/pages/evolea-cafe',
+      format: { data: 'json' },
+      schema: {
+        seo: fields.object(
+          {
+            title: bilingualText('SEO Titel', 'SEO Title'),
+            description: bilingualText('SEO Beschreibung', 'SEO Description', { multiline: true }),
+          },
+          { label: 'SEO' }
+        ),
+
+        hero: fields.object(
+          {
+            badge: bilingualText('Badge', 'Badge'),
+            titel: bilingualText('Titel', 'Title'),
+            tagline: bilingualText('Tagline', 'Tagline', { multiline: true }),
+          },
+          { label: 'Hero' }
+        ),
+
+        about: fields.object(
+          {
+            titel: bilingualText('Titel', 'Title'),
+            abschnitte: fields.array(
+              bilingualText('Absatz', 'Paragraph', { multiline: true }),
+              {
+                label: 'Absaetze',
+                itemLabel: (props) => props.fields.de.value as string || 'Neuer Absatz',
+              }
+            ),
+            hinweis: bilingualText('Hinweis', 'Note', { multiline: true }),
+          },
+          { label: 'About' }
+        ),
+
+        aboutCards: fields.array(
+          fields.object({
+            icon: fields.select({ label: 'Icon', options: iconOptions, defaultValue: 'people' }),
+            text: bilingualText('Text', 'Text'),
+          }),
+          {
+            label: 'Info-Karten',
+            itemLabel: (props) => props.fields.text.fields.de.value as string || 'Neue Karte',
+          }
+        ),
+
+        schedule: fields.object(
+          {
+            titel: bilingualText('Titel', 'Title'),
+            cards: fields.array(
+              fields.object({
+                icon: fields.select({ label: 'Icon', options: iconOptions, defaultValue: 'calendar' }),
+                titel: bilingualText('Titel', 'Title'),
+                text: bilingualText('Text', 'Text'),
+                variant: fields.select({
+                  label: 'Variante',
+                  options: [
+                    { label: 'Standard', value: 'standard' },
+                    { label: 'Primary', value: 'primary' },
+                    { label: 'Highlight', value: 'highlight' },
+                  ],
+                  defaultValue: 'standard',
+                }),
+              }),
+              {
+                label: 'Karten',
+                itemLabel: (props) => props.fields.titel.fields.de.value as string || 'Neue Karte',
+              }
+            ),
+            datenTitel: bilingualText('Termine Titel', 'Dates Title'),
+            daten: fields.array(
+              fields.object({
+                datum: bilingualText('Datum', 'Date'),
+                uhrzeit: bilingualText('Uhrzeit', 'Time'),
+              }),
+              {
+                label: 'Naechste Termine',
+                itemLabel: (props) => props.fields.datum.fields.de.value as string || 'Neuer Termin',
+              }
+            ),
+          },
+          { label: 'Wann & Wo' }
+        ),
+
+        expect: fields.object(
+          {
+            titel: bilingualText('Titel', 'Title'),
+            items: fields.array(
+              fields.object({
+                typ: fields.select({
+                  label: 'Typ',
+                  options: [
+                    { label: 'Ja', value: 'yes' },
+                    { label: 'Nein', value: 'no' },
+                  ],
+                  defaultValue: 'yes',
+                }),
+                text: bilingualText('Text', 'Text'),
+              }),
+              {
+                label: 'Erwartungen',
+                itemLabel: (props) => props.fields.text.fields.de.value as string || 'Neuer Punkt',
+              }
+            ),
+          },
+          { label: 'Was Sie erwartet' }
+        ),
+
+        quote: fields.object(
+          {
+            text: bilingualText('Zitat', 'Quote', { multiline: true }),
+            autor: bilingualText('Autor', 'Author'),
+          },
+          { label: 'Zitat' }
+        ),
+
+        faq: fields.object(
+          {
+            titel: bilingualText('Titel', 'Title'),
+            items: fields.array(
+              fields.object({
+                frage: bilingualText('Frage', 'Question'),
+                antwort: bilingualText('Antwort', 'Answer', { multiline: true }),
+              }),
+              {
+                label: 'FAQ',
+                itemLabel: (props) => props.fields.frage.fields.de.value as string || 'Neue Frage',
+              }
+            ),
+          },
+          { label: 'FAQ' }
+        ),
+
+        cta: fields.object(
+          {
+            titel: bilingualText('Titel', 'Title'),
+            beschreibung: bilingualText('Beschreibung', 'Description', { multiline: true }),
+            buttonText: bilingualText('Button Text', 'Button Text'),
+            buttonLink: bilingualText('Button Link', 'Button Link', {
+              description: 'z.B. "/kontakt/" (DE) und "/contact/" (EN)',
+            }),
+          },
+          { label: 'Call-to-Action' }
         ),
       },
     }),
