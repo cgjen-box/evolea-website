@@ -1,0 +1,241 @@
+---
+import Base from '@layouts/Base.astro';
+import InnerPageHero from '@components/InnerPageHero.astro';
+import PageCloser from '@components/PageCloser.astro';
+import Butterfly from '@components/Butterfly.astro';
+import { getLangFromUrl, useTranslations, useTranslatedPath } from '@i18n/utils';
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+const translatePath = useTranslatedPath(lang);
+
+// Bank details - DO NOT MODIFY
+const bankDetails = {
+  name: 'EVOLEA Verein',
+  bank: 'UBS Switzerland AG',
+  iban: 'CH90 0023 0230 9206 9201 G',
+  bic: 'UBSWCHZH80A',
+};
+---
+
+<Base
+  title={t('donate.title')}
+  description={t('donate.subtitle')}
+  transparentHeader={true}
+  hideFooterCTA={true}
+>
+  <!-- Premium Hero with Prism Gradient -->
+  <InnerPageHero
+    title={t('donate.title')}
+    subtitle={t('donate.subtitle')}
+    breadcrumbs={[
+      { label: t('nav.home'), href: translatePath('/') },
+      { label: t('nav.donate') }
+    ]}
+    label={t('donate.hero.label')}
+    size="sm"
+  />
+
+  <!-- Introduction Section -->
+  <section class="py-16 md:py-24">
+    <div class="container mx-auto max-w-4xl px-4">
+      <div class="text-center mb-16">
+        <h2 class="text-3xl md:text-4xl font-display font-bold text-evolea-purple mb-6">
+          {t('donate.intro.title')}
+        </h2>
+        <p class="text-lg text-evolea-text-light max-w-2xl mx-auto leading-relaxed">
+          {t('donate.intro.text')}
+        </p>
+      </div>
+
+      <!-- Donation Methods Grid -->
+      <div class="grid md:grid-cols-2 gap-8 mb-16">
+        <!-- Bank Transfer Card -->
+        <div class="bg-white rounded-evolea-lg p-8 shadow-card">
+          <div class="flex items-center gap-4 mb-6">
+            <div class="w-14 h-14 bg-evolea-purple/10 rounded-full flex items-center justify-center">
+              <svg class="w-7 h-7 text-evolea-purple" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z" />
+              </svg>
+            </div>
+            <h3 class="text-xl font-display font-bold text-evolea-purple">
+              {t('donate.bank.title')}
+            </h3>
+          </div>
+
+          <div class="space-y-4">
+            <div class="p-4 bg-evolea-cream rounded-evolea">
+              <p class="text-sm text-evolea-text-light mb-1">{t('donate.bank.name')}</p>
+              <p class="font-semibold text-evolea-text">{bankDetails.name}</p>
+            </div>
+            <div class="p-4 bg-evolea-cream rounded-evolea">
+              <p class="text-sm text-evolea-text-light mb-1">Bank</p>
+              <p class="font-semibold text-evolea-text">{bankDetails.bank}</p>
+            </div>
+            <div class="p-4 bg-evolea-cream rounded-evolea">
+              <p class="text-sm text-evolea-text-light mb-1">{t('donate.bank.iban')}</p>
+              <p class="font-mono font-semibold text-evolea-text tracking-wide">{bankDetails.iban}</p>
+            </div>
+            <div class="p-4 bg-evolea-cream rounded-evolea">
+              <p class="text-sm text-evolea-text-light mb-1">{t('donate.bank.bic')}</p>
+              <p class="font-mono font-semibold text-evolea-text">{bankDetails.bic}</p>
+            </div>
+            <div class="p-4 bg-evolea-cream rounded-evolea">
+              <p class="text-sm text-evolea-text-light mb-1">{t('donate.bank.reference')}</p>
+              <p class="font-semibold text-evolea-text">{t('donate.bank.reference.value')}</p>
+            </div>
+          </div>
+
+          <!-- Copy IBAN Button -->
+          <button
+            id="copy-iban-btn"
+            class="mt-6 w-full py-3 px-6 bg-evolea-purple/10 text-evolea-purple font-semibold rounded-full hover:bg-evolea-purple/20 transition-colors flex items-center justify-center gap-2"
+            data-iban={bankDetails.iban.replace(/\s/g, '')}
+          >
+            <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
+            </svg>
+            <span id="copy-text">IBAN kopieren</span>
+          </button>
+        </div>
+
+        <!-- TWINT Card -->
+        <div class="bg-white rounded-evolea-lg p-8 shadow-card flex flex-col">
+          <div class="flex items-center gap-4 mb-6">
+            <div class="w-14 h-14 bg-evolea-mint/20 rounded-full flex items-center justify-center">
+              <svg class="w-7 h-7 text-evolea-green" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm-1-13h2v6h-2zm0 8h2v2h-2z"/>
+              </svg>
+            </div>
+            <h3 class="text-xl font-display font-bold text-evolea-purple">
+              {t('donate.twint.title')}
+            </h3>
+          </div>
+
+          <div class="flex-1 flex flex-col items-center justify-center py-8">
+            <!-- TWINT QR Code Placeholder -->
+            <div class="w-48 h-48 bg-evolea-cream rounded-evolea-lg flex items-center justify-center mb-4 border-2 border-dashed border-evolea-purple/20">
+              <div class="text-center text-evolea-text-light">
+                <svg class="w-12 h-12 mx-auto mb-2 opacity-50" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v1m6 11h2m-6 0h-2v4m0-11v3m0 0h.01M12 12h4.01M16 20h4M4 12h4m12 0h.01M5 8h2a1 1 0 001-1V5a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1zm12 0h2a1 1 0 001-1V5a1 1 0 00-1-1h-2a1 1 0 00-1 1v2a1 1 0 001 1zM5 20h2a1 1 0 001-1v-2a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1z" />
+                </svg>
+                <p class="text-sm">QR-Code</p>
+                <p class="text-xs">(Coming soon)</p>
+              </div>
+            </div>
+            <p class="text-sm text-evolea-text-light text-center">
+              {t('donate.twint.text')}
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Tax Deductible Notice -->
+      <div class="bg-evolea-mint/10 border border-evolea-mint/30 rounded-evolea-lg p-6 flex items-start gap-4">
+        <div class="w-10 h-10 bg-evolea-mint/20 rounded-full flex items-center justify-center flex-shrink-0">
+          <svg class="w-5 h-5 text-evolea-green" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+          </svg>
+        </div>
+        <div>
+          <p class="font-semibold text-evolea-text">{t('donate.taxDeductible')}</p>
+          <p class="text-sm text-evolea-text-light mt-1">
+            {t('donate.questions')} <a href={translatePath('/kontakt/')} class="text-evolea-purple hover:underline">{t('donate.contact')}</a>
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Impact Section -->
+  <section class="py-16 md:py-24 bg-white">
+    <div class="container mx-auto max-w-5xl px-4">
+      <h2 class="text-3xl md:text-4xl font-display font-bold text-evolea-purple text-center mb-12">
+        {t('donate.impact.title')}
+      </h2>
+
+      <div class="grid md:grid-cols-3 gap-8">
+        <!-- Impact 1 -->
+        <div class="text-center">
+          <div class="w-20 h-20 mx-auto mb-6 bg-gradient-to-br from-evolea-purple to-evolea-magenta rounded-full flex items-center justify-center shadow-lg">
+            <svg class="w-10 h-10 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+            </svg>
+          </div>
+          <h3 class="text-xl font-display font-bold text-evolea-purple mb-3">
+            {t('donate.impact.1.title')}
+          </h3>
+          <p class="text-evolea-text-light">
+            {t('donate.impact.1.text')}
+          </p>
+        </div>
+
+        <!-- Impact 2 -->
+        <div class="text-center">
+          <div class="w-20 h-20 mx-auto mb-6 bg-gradient-to-br from-evolea-mint to-evolea-sky rounded-full flex items-center justify-center shadow-lg">
+            <svg class="w-10 h-10 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z" />
+            </svg>
+          </div>
+          <h3 class="text-xl font-display font-bold text-evolea-purple mb-3">
+            {t('donate.impact.2.title')}
+          </h3>
+          <p class="text-evolea-text-light">
+            {t('donate.impact.2.text')}
+          </p>
+        </div>
+
+        <!-- Impact 3 -->
+        <div class="text-center">
+          <div class="w-20 h-20 mx-auto mb-6 bg-gradient-to-br from-evolea-coral to-evolea-yellow rounded-full flex items-center justify-center shadow-lg">
+            <svg class="w-10 h-10 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+            </svg>
+          </div>
+          <h3 class="text-xl font-display font-bold text-evolea-purple mb-3">
+            {t('donate.impact.3.title')}
+          </h3>
+          <p class="text-evolea-text-light">
+            {t('donate.impact.3.text')}
+          </p>
+        </div>
+      </div>
+
+      <!-- Decorative Butterfly -->
+      <div class="flex justify-center mt-12">
+        <Butterfly size="lg" variant="spectrum" />
+      </div>
+    </div>
+  </section>
+
+  <!-- Page Closer -->
+  <PageCloser />
+</Base>
+
+<script>
+  const copyBtn = document.getElementById('copy-iban-btn');
+  const copyText = document.getElementById('copy-text');
+
+  if (copyBtn && copyText) {
+    copyBtn.addEventListener('click', async () => {
+      const iban = copyBtn.getAttribute('data-iban');
+      if (iban) {
+        try {
+          await navigator.clipboard.writeText(iban);
+          const originalText = copyText.textContent;
+          copyText.textContent = 'Kopiert!';
+          copyBtn.classList.add('bg-evolea-green/20', 'text-evolea-green');
+          copyBtn.classList.remove('bg-evolea-purple/10', 'text-evolea-purple');
+
+          setTimeout(() => {
+            copyText.textContent = originalText;
+            copyBtn.classList.remove('bg-evolea-green/20', 'text-evolea-green');
+            copyBtn.classList.add('bg-evolea-purple/10', 'text-evolea-purple');
+          }, 2000);
+        } catch (err) {
+          console.error('Failed to copy:', err);
+        }
+      }
+    });
+  }
+</script>

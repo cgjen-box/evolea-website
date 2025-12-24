@@ -3,6 +3,7 @@ import { getLangFromUrl, getLanguageAlternates } from '@i18n/utils';
 import { getEntry } from 'astro:content';
 import Header from '@components/Header.astro';
 import Footer from '@components/Footer.astro';
+import FooterDonationCTA from '@components/FooterDonationCTA.astro';
 
 // Import fonts
 import '@fontsource/poppins/400.css';
@@ -21,6 +22,7 @@ interface Props {
   description?: string;
   image?: string;
   transparentHeader?: boolean;
+  hideFooterCTA?: boolean;
 }
 
 const {
@@ -28,6 +30,7 @@ const {
   description = 'EVOLEA Verein - Bildungsangebote für Kinder im Autismus Spektrum oder mit ADHS in Zürich.',
   image = '/images/og-default.jpg',
   transparentHeader = false,
+  hideFooterCTA = false,
 } = Astro.props;
 
 const siteSettingsEntry = await getEntry('settings', 'site');
@@ -103,6 +106,8 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
     <main id="main-content" class:list={['flex-1', { 'pt-0': transparentHeader, 'pt-[72px]': !transparentHeader }]}>
       <slot />
     </main>
+
+    {!hideFooterCTA && <FooterDonationCTA />}
 
     <Footer siteSettings={siteSettings} />
 
