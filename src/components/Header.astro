@@ -58,15 +58,19 @@ const donatePath = lang === 'de' ? '/spenden/' : '/en/donate/';
 <header
   id="main-header"
   class:list={[
-    'fixed top-0 left-0 right-0 z-50 transition-all duration-300',
+    'fixed top-0 left-0 right-0 z-50',
     transparent ? 'bg-transparent' : 'bg-evolea-cream/95 backdrop-blur-md shadow-soft',
   ]}
+  style="transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1), background-color 0.3s ease, box-shadow 0.3s ease;"
   data-transparent={transparent}
 >
   <!-- Scrolled State Background Layer (hidden by default) -->
   <div class="header-scrolled-bg" aria-hidden="true">
     <!-- Animated Prism Gradient -->
     <div class="header-prism-gradient"></div>
+
+    <!-- Glassmorphism Layer -->
+    <div class="header-glass-layer"></div>
 
     <!-- Floating Orbs (smaller for header) -->
     <div class="header-orbs">
@@ -169,10 +173,10 @@ const donatePath = lang === 'de' ? '/spenden/' : '/en/donate/';
     top: 0;
     left: 0;
     right: 0;
-    bottom: -40px; /* Extend below for fade effect */
+    bottom: -60px; /* Extend below for smoother fade effect */
     pointer-events: none;
     opacity: 0;
-    transition: opacity 0.4s ease;
+    transition: opacity 0.5s cubic-bezier(0.4, 0, 0.2, 1);
     overflow: visible;
   }
 
@@ -186,7 +190,7 @@ const donatePath = lang === 'de' ? '/spenden/' : '/en/donate/';
     top: 0;
     left: 0;
     right: 0;
-    bottom: 40px;
+    bottom: 60px;
     background: linear-gradient(
       135deg,
       #4ECDC4 0%,
@@ -198,6 +202,8 @@ const donatePath = lang === 'de' ? '/spenden/' : '/en/donate/';
     );
     background-size: 400% 400%;
     animation: headerPrismShift 20s ease infinite;
+    /* Add subtle blur for premium feel */
+    filter: blur(0.5px);
   }
 
   @keyframes headerPrismShift {
@@ -205,6 +211,29 @@ const donatePath = lang === 'de' ? '/spenden/' : '/en/donate/';
     25% { background-position: 50% 100%; }
     50% { background-position: 100% 50%; }
     75% { background-position: 50% 0%; }
+  }
+
+  /* Premium Glassmorphism Layer - Creates frosted glass effect */
+  .header-glass-layer {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 60px;
+    background:
+      linear-gradient(
+        180deg,
+        rgba(255, 255, 255, 0.15) 0%,
+        rgba(255, 255, 255, 0.1) 50%,
+        rgba(255, 255, 255, 0.05) 100%
+      );
+    backdrop-filter: blur(12px) saturate(150%);
+    -webkit-backdrop-filter: blur(12px) saturate(150%);
+    /* Subtle inner glow for depth */
+    box-shadow:
+      0 0 40px rgba(255, 255, 255, 0.1) inset,
+      0 1px 0 rgba(255, 255, 255, 0.2) inset;
+    pointer-events: none;
   }
 
   /* Floating Orbs */
@@ -221,45 +250,46 @@ const donatePath = lang === 'de' ? '/spenden/' : '/en/donate/';
   .header-orb {
     position: absolute;
     border-radius: 50%;
-    filter: blur(40px);
-    opacity: 0.6;
-    animation: headerOrbFloat 15s ease-in-out infinite;
+    filter: blur(50px);
+    opacity: 0.4;
+    animation: headerOrbFloat 18s ease-in-out infinite;
+    mix-blend-mode: screen;
   }
 
   .header-orb-mint {
-    width: 150px;
-    height: 150px;
+    width: 180px;
+    height: 180px;
     background: radial-gradient(circle, #4ECDC4 0%, #3DB8AC 100%);
-    top: -30%;
+    top: -35%;
     left: 5%;
     animation-delay: 0s;
   }
 
   .header-orb-gold {
-    width: 120px;
-    height: 120px;
+    width: 150px;
+    height: 150px;
     background: radial-gradient(circle, #FFE066 0%, #FFC83D 100%);
-    top: -20%;
+    top: -25%;
     left: 35%;
-    animation-delay: -4s;
+    animation-delay: -5s;
   }
 
   .header-orb-pink {
-    width: 180px;
-    height: 180px;
+    width: 200px;
+    height: 200px;
     background: radial-gradient(circle, #FF6B9D 0%, #E84C82 100%);
-    top: -40%;
+    top: -45%;
     right: 10%;
-    animation-delay: -8s;
+    animation-delay: -10s;
   }
 
   .header-orb-purple {
-    width: 140px;
-    height: 140px;
+    width: 160px;
+    height: 160px;
     background: radial-gradient(circle, #CD87F8 0%, #B56FE8 100%);
-    top: -25%;
+    top: -30%;
     right: 40%;
-    animation-delay: -12s;
+    animation-delay: -15s;
   }
 
   @keyframes headerOrbFloat {
@@ -282,9 +312,10 @@ const donatePath = lang === 'de' ? '/spenden/' : '/en/donate/';
 
   .header-butterfly {
     position: absolute;
-    animation: headerButterflyDrift 20s ease-in-out infinite;
+    animation: headerButterflyDrift 25s ease-in-out infinite;
     opacity: 0;
-    transition: opacity 0.5s ease 0.2s;
+    transition: opacity 0.6s cubic-bezier(0.4, 0, 0.2, 1) 0.3s;
+    filter: drop-shadow(0 2px 8px rgba(255, 255, 255, 0.3));
   }
 
   #main-header.header-scrolled .header-butterfly {
@@ -294,27 +325,27 @@ const donatePath = lang === 'de' ? '/spenden/' : '/en/donate/';
   .header-butterfly-1 {
     top: 20%;
     left: 8%;
-    opacity: 0.5;
+    opacity: 0.6;
     animation-delay: 0s;
   }
 
   .header-butterfly-2 {
     top: 35%;
     right: 15%;
-    opacity: 0.4;
-    animation-delay: -7s;
+    opacity: 0.5;
+    animation-delay: -8s;
   }
 
   .header-butterfly-3 {
     top: 15%;
     right: 45%;
-    opacity: 0.35;
-    animation-delay: -14s;
+    opacity: 0.45;
+    animation-delay: -16s;
   }
 
-  #main-header.header-scrolled .header-butterfly-1 { opacity: 0.5; }
-  #main-header.header-scrolled .header-butterfly-2 { opacity: 0.4; }
-  #main-header.header-scrolled .header-butterfly-3 { opacity: 0.35; }
+  #main-header.header-scrolled .header-butterfly-1 { opacity: 0.6; }
+  #main-header.header-scrolled .header-butterfly-2 { opacity: 0.5; }
+  #main-header.header-scrolled .header-butterfly-3 { opacity: 0.45; }
 
   @keyframes headerButterflyDrift {
     0%, 100% { transform: translate(0, 0) rotate(0deg); }
@@ -323,21 +354,28 @@ const donatePath = lang === 'de' ? '/spenden/' : '/en/donate/';
     75% { transform: translate(-20px, -10px) rotate(6deg); }
   }
 
-  /* Soft Fade to Content */
+  /* Soft Fade to Content - Multi-layered for seamless blend */
   .header-fade {
     position: absolute;
     bottom: 0;
     left: 0;
     right: 0;
-    height: 50px;
-    background: linear-gradient(
-      180deg,
-      transparent 0%,
-      rgba(255, 251, 247, 0.3) 30%,
-      rgba(255, 251, 247, 0.7) 60%,
-      rgba(255, 251, 247, 0.95) 100%
-    );
+    height: 60px;
+    background:
+      /* Blur layer for depth */
+      linear-gradient(
+        180deg,
+        rgba(255, 251, 247, 0) 0%,
+        rgba(255, 251, 247, 0.15) 20%,
+        rgba(255, 251, 247, 0.4) 40%,
+        rgba(255, 251, 247, 0.7) 65%,
+        rgba(255, 251, 247, 0.9) 85%,
+        rgba(255, 251, 247, 1) 100%
+      );
     pointer-events: none;
+    /* Add subtle backdrop blur for premium frosted glass effect */
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
   }
 
   /* Nav content stays above background */
@@ -595,6 +633,16 @@ const donatePath = lang === 'de' ? '/spenden/' : '/en/donate/';
   /* Header scrolled state - allow overflow for fade effect */
   :global(#main-header.header-scrolled) {
     overflow: visible;
+    /* Add subtle shadow for depth without harsh edges */
+    box-shadow:
+      0 4px 20px -4px rgba(186, 83, 173, 0.15),
+      0 8px 40px -8px rgba(221, 72, 224, 0.1),
+      0 0 0 1px rgba(255, 255, 255, 0.1) inset;
+  }
+
+  /* Smooth shadow transition */
+  :global(#main-header) {
+    box-shadow: 0 0 0 0 transparent;
   }
 
   /* ============================================
@@ -765,6 +813,7 @@ const donatePath = lang === 'de' ? '/spenden/' : '/en/donate/';
 
     let lastScrollY = window.scrollY;
     let ticking = false;
+    let scrollTimeout: number | null = null;
 
     const updateHeader = () => {
       const currentScrollY = window.scrollY;
@@ -775,20 +824,34 @@ const donatePath = lang === 'de' ? '/spenden/' : '/en/donate/';
         return;
       }
 
+      // Clear any pending timeout
+      if (scrollTimeout) {
+        clearTimeout(scrollTimeout);
+      }
+
       // Only hide after scrolling past the header height
       if (currentScrollY > 80) {
         if (currentScrollY > lastScrollY) {
-          // Scrolling down - hide header
+          // Scrolling down - hide header immediately
           header.classList.add('header-hidden');
+          header.classList.remove('header-scrolled');
         } else {
-          // Scrolling up - show header with frosted glass effect
+          // Scrolling up - show header with smooth delay for premium feel
           header.classList.remove('header-hidden');
-          header.classList.add('header-scrolled');
+
+          // Add scrolled state with slight delay for smooth transition
+          scrollTimeout = window.setTimeout(() => {
+            header.classList.add('header-scrolled');
+          }, 50);
         }
       } else {
-        // At top of page - always show header, remove scrolled state
+        // At top of page - always show header, remove scrolled state smoothly
         header.classList.remove('header-hidden');
-        header.classList.remove('header-scrolled');
+
+        // Remove scrolled state with delay for smooth fade-out
+        scrollTimeout = window.setTimeout(() => {
+          header.classList.remove('header-scrolled');
+        }, 100);
       }
 
       lastScrollY = currentScrollY;
