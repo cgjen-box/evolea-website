@@ -1,0 +1,186 @@
+﻿---
+import Base from '@layouts/Base.astro';
+import FloatingShapes from '@components/FloatingShapes.astro';
+import GradientCTA from '@components/GradientCTA.astro';
+import EditLink from '@components/EditLink.astro';
+import { getCollection, type CollectionEntry } from 'astro:content';
+import { getLangFromUrl, useTranslatedPath } from '@i18n/utils';
+
+export const prerender = true;
+
+export async function getStaticPaths() {
+  const posts = await getCollection('blogEn');
+  return posts.map((post) => ({
+    params: { slug: post.slug },
+    props: post,
+  }));
+}
+
+type Props = CollectionEntry<'blogEn'>;
+
+const allPosts = await getCollection('blogEn');
+const lang = getLangFromUrl(Astro.url);
+const translatePath = useTranslatedPath(lang);
+const slugParam = Array.isArray(Astro.params.slug)
+  ? Astro.params.slug.join('/')
+  : Astro.params.slug;
+const post =
+  (Astro.props && (Astro.props as Props).slug ? (Astro.props as Props) : null) ??
+  allPosts.find((entry) => entry.slug === slugParam);
+
+if (!post) {
+  return Astro.redirect(translatePath('/blog/'));
+}
+
+const { Content } = await post.render();
+
+const tags = Array.isArray(post.data.tags) ? post.data.tags : [];
+const pubDate =
+  post.data.pubDate instanceof Date ? post.data.pubDate : new Date(post.data.pubDate);
+const hasValidPubDate = !Number.isNaN(pubDate.getTime());
+
+function formatDate(date: Date): string {
+  return date.toLocaleDateString('en-CH', {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric'
+  });
+}
+
+// Get related posts (same tags, excluding current)
+const getTags = (entry: CollectionEntry<'blogEn'>) =>
+  Array.isArray(entry.data.tags) ? entry.data.tags : [];
+
+const relatedPosts = allPosts
+  .filter((entry) => entry.slug !== post.slug)
+  .filter((entry) => getTags(entry).some((tag) => tags.includes(tag)))
+  .slice(0, 2);
+---
+
+<Base title={post.data.title} description={post.data.description}>
+  <!-- Hero Section -->
+  <section class="relative py-16 md:py-24 bg-gradient-to-br from-evolea-purple/10 to-evolea-cream overflow-hidden">
+    <FloatingShapes variant="minimal" />
+    <div class="container mx-auto max-w-4xl px-4 relative z-10">
+      <nav class="mb-8 text-sm text-evolea-text-light">
+        <a href={translatePath('/')} class="hover:text-evolea-purple transition-colors">Home</a>
+        <span class="mx-2">/</span>
+        <a href={translatePath('/blog/')} class="hover:text-evolea-purple transition-colors">Blog</a>
+        <span class="mx-2">/</span>
+        <span class="text-evolea-purple font-medium line-clamp-1">{post.data.title}</span>
+      </nav>
+
+      <div class="flex flex-wrap gap-2 mb-6">
+        {tags.map((tag) => (
+          <span class="text-sm bg-evolea-purple/10 text-evolea-purple px-3 py-1 rounded-full">{tag}</span>
+        ))}
+      </div>
+
+      <h1 class="text-3xl md:text-4xl lg:text-5xl font-display font-bold text-evolea-purple mb-6 leading-tight">
+        {post.data.title}
+      </h1>
+
+      <div class="flex items-center gap-4 text-evolea-text-light">
+        <span class="font-medium">{post.data.author}</span>
+        {hasValidPubDate && (
+          <>
+            <span>|</span>
+            <time datetime={pubDate.toISOString()}>
+              {formatDate(pubDate)}
+            </time>
+          </>
+        )}
+      </div>
+    </div>
+  </section>
+
+  <!-- Article Content -->
+  <article class="py-12 md:py-16">
+    <div class="container mx-auto max-w-3xl px-4">
+      <div class="prose prose-lg prose-evolea max-w-none">
+        <Content />
+      </div>
+    </div>
+  </article>
+
+  <!-- Share Section -->
+  <section class="py-8 border-t border-evolea-purple/10">
+    <div class="container mx-auto max-w-3xl px-4">
+      <div class="flex items-center justify-between">
+        <a href={translatePath('/blog/')} class="text-evolea-purple hover:text-evolea-purple-light transition-colors flex items-center gap-2">
+          <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16l-4-4m0 0l4-4m-4 4h18" />
+          </svg>
+          Back to Blog
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Related Posts -->
+  {relatedPosts.length > 0 && (
+    <section class="py-12 bg-evolea-cream/30">
+      <div class="container mx-auto max-w-4xl px-4">
+        <h2 class="text-2xl font-display font-bold text-evolea-purple mb-8">More Articles</h2>
+        <div class="grid md:grid-cols-2 gap-6">
+          {relatedPosts.map((relatedPost) => (
+            <a href={translatePath(`/blog/${relatedPost.slug}/`)} class="group block bg-white rounded-evolea-lg overflow-hidden hover:shadow-card transition-shadow">
+              <div class="p-6">
+                <div class="flex flex-wrap gap-2 mb-3">
+                  {relatedPost.data.tags.slice(0, 2).map((tag) => (
+                    <span class="text-xs bg-evolea-purple/10 text-evolea-purple px-2 py-1 rounded-full">{tag}</span>
+                  ))}
+                </div>
+                <h3 class="text-lg font-display font-bold text-evolea-purple mb-2 group-hover:text-evolea-purple-light transition-colors">
+                  {relatedPost.data.title}
+                </h3>
+                <p class="text-sm text-evolea-text-light line-clamp-2">
+                  {relatedPost.data.description}
+                </p>
+              </div>
+            </a>
+          ))}
+        </div>
+      </div>
+    </section>
+  )}
+
+  <!-- CTA Section -->
+  <GradientCTA
+    title="Have questions?"
+    description="We'd love to hear from you and are happy to help."
+    buttonText="Contact us"
+    buttonHref={translatePath('/contact/')}
+    variant="calm"
+  />
+
+  <!-- Edit Link for Keystatic -->
+  <EditLink type="collection" collection="blogEn" slug={post.slug} label="Edit" />
+</Base>
+
+<style>
+  .prose-evolea h2 {
+    @apply text-2xl font-display font-bold text-evolea-purple mt-12 mb-4;
+  }
+  .prose-evolea h3 {
+    @apply text-xl font-display font-bold text-evolea-purple mt-8 mb-3;
+  }
+  .prose-evolea p {
+    @apply text-evolea-text-light leading-relaxed mb-6;
+  }
+  .prose-evolea ul, .prose-evolea ol {
+    @apply text-evolea-text-light mb-6 pl-6;
+  }
+  .prose-evolea li {
+    @apply mb-2;
+  }
+  .prose-evolea strong {
+    @apply text-evolea-purple font-semibold;
+  }
+  .prose-evolea a {
+    @apply text-evolea-purple underline hover:text-evolea-purple-light transition-colors;
+  }
+  .prose-evolea blockquote {
+    @apply border-l-4 border-evolea-purple pl-6 italic text-evolea-text-light;
+  }
+</style>
