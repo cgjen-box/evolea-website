@@ -1,0 +1,530 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>EVOLEA Navbar Fade - Preview</title>
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Libre+Baskerville:wght@400;700&display=swap" rel="stylesheet">
+  
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: #FDFBF7;
+      min-height: 200vh;
+    }
+
+    /* ===========================================
+       NAVBAR WRAPPER
+       =========================================== */
+    .navbar-wrapper {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 1000;
+    }
+
+    /* ===========================================
+       NAVBAR MAIN
+       =========================================== */
+    .navbar {
+      position: relative;
+      padding: 1rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      
+      /* The prismatic gradient background */
+      background: linear-gradient(
+        135deg,
+        #E9D5FF 0%,
+        #D8B4FE 15%,
+        #C4B5FD 30%,
+        #F0ABFC 45%,
+        #F9A8D4 60%,
+        #FBCFE8 75%,
+        #DDD6FE 90%,
+        #E9D5FF 100%
+      );
+      background-size: 400% 400%;
+      animation: gradient-shift 15s ease infinite;
+    }
+
+    @keyframes gradient-shift {
+      0%, 100% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+    }
+
+    .logo {
+      font-family: 'Libre Baskerville', serif;
+      font-size: 1.75rem;
+      font-weight: 700;
+      color: #5B21B6;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .logo-butterfly {
+      font-size: 1.5rem;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 2rem;
+      align-items: center;
+    }
+
+    .nav-links a {
+      color: #5B21B6;
+      text-decoration: none;
+      font-weight: 500;
+      font-size: 0.95rem;
+      transition: opacity 0.2s;
+    }
+
+    .nav-links a:hover {
+      opacity: 0.7;
+    }
+
+    .nav-donate {
+      background: #E8B86D !important;
+      color: #1A1A1A !important;
+      padding: 0.5rem 1.25rem;
+      border-radius: 9999px;
+      font-weight: 600;
+    }
+
+    .nav-donate:hover {
+      background: #F5D9A8 !important;
+      opacity: 1 !important;
+    }
+
+    /* ===========================================
+       NAVBAR FADE - "Butterfly's Edge"
+       =========================================== */
+    .navbar-fade {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 120px;
+      pointer-events: none;
+      overflow: visible;
+      transform: translateY(100%);
+    }
+
+    /* ===========================================
+       SOFT BLUR MIST (Top layer - immediate blur)
+       =========================================== */
+    .navbar-fade__mist {
+      position: absolute;
+      top: -30px;
+      left: 0;
+      right: 0;
+      height: 80px;
+      background: linear-gradient(
+        180deg,
+        rgba(216, 180, 254, 0.6) 0%,
+        rgba(216, 180, 254, 0.3) 40%,
+        rgba(216, 180, 254, 0) 100%
+      );
+      filter: blur(25px);
+    }
+
+    /* ===========================================
+       WAVE LAYERS
+       =========================================== */
+    .navbar-fade__wave {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 200%;
+      height: 100%;
+      will-change: transform;
+    }
+
+    /* Primary Wave: Deep, slow, most visible */
+    .navbar-fade__wave--primary {
+      background: linear-gradient(
+        180deg,
+        rgba(216, 180, 254, 0.95) 0%,
+        rgba(216, 180, 254, 0.7) 20%,
+        rgba(216, 180, 254, 0.4) 45%,
+        rgba(216, 180, 254, 0.15) 70%,
+        transparent 100%
+      );
+      clip-path: polygon(
+        0% 0%,
+        0% 25%,
+        5% 35%,
+        10% 30%,
+        15% 40%,
+        20% 45%,
+        25% 38%,
+        30% 50%,
+        35% 55%,
+        40% 48%,
+        45% 60%,
+        50% 52%,
+        55% 45%,
+        60% 55%,
+        65% 62%,
+        70% 50%,
+        75% 58%,
+        80% 45%,
+        85% 55%,
+        90% 48%,
+        95% 40%,
+        100% 35%,
+        100% 0%
+      );
+      animation: wave-drift-slow 25s ease-in-out infinite;
+    }
+
+    /* Secondary Wave: Medium depth, pink tint */
+    .navbar-fade__wave--secondary {
+      background: linear-gradient(
+        180deg,
+        rgba(249, 168, 212, 0.6) 0%,
+        rgba(249, 168, 212, 0.4) 25%,
+        rgba(249, 168, 212, 0.2) 50%,
+        rgba(249, 168, 212, 0.05) 75%,
+        transparent 100%
+      );
+      clip-path: polygon(
+        0% 0%,
+        0% 15%,
+        8% 22%,
+        12% 18%,
+        18% 28%,
+        25% 20%,
+        32% 30%,
+        38% 25%,
+        45% 35%,
+        52% 28%,
+        58% 38%,
+        65% 32%,
+        72% 25%,
+        78% 35%,
+        85% 28%,
+        92% 22%,
+        100% 18%,
+        100% 0%
+      );
+      animation: wave-drift-medium 18s ease-in-out infinite reverse;
+    }
+
+    /* Tertiary Wave: Shallow, fast, sparkle effect */
+    .navbar-fade__wave--tertiary {
+      background: linear-gradient(
+        180deg,
+        rgba(196, 181, 253, 0.4) 0%,
+        rgba(196, 181, 253, 0.2) 30%,
+        rgba(196, 181, 253, 0.05) 60%,
+        transparent 100%
+      );
+      clip-path: polygon(
+        0% 0%,
+        0% 10%,
+        6% 15%,
+        12% 12%,
+        18% 18%,
+        24% 14%,
+        30% 20%,
+        36% 16%,
+        42% 22%,
+        48% 18%,
+        54% 24%,
+        60% 20%,
+        66% 15%,
+        72% 22%,
+        78% 17%,
+        84% 12%,
+        90% 18%,
+        96% 14%,
+        100% 10%,
+        100% 0%
+      );
+      animation: wave-drift-fast 12s ease-in-out infinite;
+    }
+
+    /* ===========================================
+       WAVE ANIMATIONS
+       =========================================== */
+    @keyframes wave-drift-slow {
+      0%, 100% {
+        transform: translateX(0) scaleY(1);
+      }
+      25% {
+        transform: translateX(-12%) scaleY(1.05);
+      }
+      50% {
+        transform: translateX(-25%) scaleY(0.95);
+      }
+      75% {
+        transform: translateX(-12%) scaleY(1.02);
+      }
+    }
+
+    @keyframes wave-drift-medium {
+      0%, 100% {
+        transform: translateX(0) scaleY(1);
+      }
+      33% {
+        transform: translateX(-16%) scaleY(1.08);
+      }
+      66% {
+        transform: translateX(-33%) scaleY(0.92);
+      }
+    }
+
+    @keyframes wave-drift-fast {
+      0%, 100% {
+        transform: translateX(0);
+      }
+      50% {
+        transform: translateX(-25%);
+      }
+    }
+
+    /* ===========================================
+       PRISMATIC SHIMMER
+       =========================================== */
+    .navbar-fade__shimmer {
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 50%;
+      height: 80%;
+      background: linear-gradient(
+        90deg,
+        transparent 0%,
+        rgba(255, 255, 255, 0.15) 30%,
+        rgba(255, 255, 255, 0.25) 50%,
+        rgba(255, 255, 255, 0.15) 70%,
+        transparent 100%
+      );
+      animation: shimmer-sweep 10s ease-in-out infinite;
+      pointer-events: none;
+    }
+
+    @keyframes shimmer-sweep {
+      0% {
+        left: -50%;
+        opacity: 0;
+      }
+      10% {
+        opacity: 1;
+      }
+      90% {
+        opacity: 1;
+      }
+      100% {
+        left: 150%;
+        opacity: 0;
+      }
+    }
+
+    /* ===========================================
+       BOTTOM FEATHER (Extra soft edge)
+       =========================================== */
+    .navbar-fade__feather {
+      position: absolute;
+      bottom: -20px;
+      left: 0;
+      right: 0;
+      height: 40px;
+      background: radial-gradient(
+        ellipse 80% 100% at 50% 0%,
+        rgba(216, 180, 254, 0.15) 0%,
+        transparent 70%
+      );
+      filter: blur(15px);
+    }
+
+    /* ===========================================
+       PAGE CONTENT (Demo)
+       =========================================== */
+    .page-content {
+      padding-top: 180px;
+      min-height: 100vh;
+    }
+
+    .hero {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 4rem 2rem;
+      text-align: center;
+    }
+
+    .hero h1 {
+      font-family: 'Libre Baskerville', serif;
+      font-size: clamp(2rem, 5vw, 3.5rem);
+      color: #1A1A1A;
+      margin-bottom: 1.5rem;
+      line-height: 1.2;
+    }
+
+    .hero p {
+      font-size: 1.25rem;
+      color: #6B7280;
+      line-height: 1.6;
+      margin-bottom: 2rem;
+    }
+
+    /* Demo controls */
+    .demo-controls {
+      position: fixed;
+      bottom: 2rem;
+      right: 2rem;
+      background: white;
+      padding: 1.5rem;
+      border-radius: 12px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+      z-index: 2000;
+      max-width: 280px;
+    }
+
+    .demo-controls h3 {
+      font-size: 0.875rem;
+      font-weight: 600;
+      color: #5B21B6;
+      margin-bottom: 1rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .demo-controls label {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      margin-bottom: 0.75rem;
+      font-size: 0.9rem;
+      cursor: pointer;
+    }
+
+    .demo-controls input[type="checkbox"] {
+      width: 18px;
+      height: 18px;
+      accent-color: #5B21B6;
+    }
+
+    .demo-note {
+      font-size: 0.75rem;
+      color: #9CA3AF;
+      margin-top: 1rem;
+      padding-top: 1rem;
+      border-top: 1px solid #E5E7EB;
+    }
+  </style>
+</head>
+<body>
+  <!-- Navbar -->
+  <div class="navbar-wrapper">
+    <nav class="navbar">
+      <div class="logo">
+        <span>EVOLEA</span>
+        <span class="logo-butterfly">🦋</span>
+      </div>
+      <div class="nav-links">
+        <a href="#">Angebote</a>
+        <a href="#">Über uns</a>
+        <a href="#">Team</a>
+        <a href="#">Blog</a>
+        <a href="#">Kontakt</a>
+        <a href="#" class="nav-donate">Spenden</a>
+      </div>
+    </nav>
+    
+    <!-- The Fade Effect -->
+    <div class="navbar-fade" aria-hidden="true">
+      <div class="navbar-fade__mist"></div>
+      <div class="navbar-fade__wave navbar-fade__wave--primary"></div>
+      <div class="navbar-fade__wave navbar-fade__wave--secondary"></div>
+      <div class="navbar-fade__wave navbar-fade__wave--tertiary"></div>
+      <div class="navbar-fade__shimmer"></div>
+      <div class="navbar-fade__feather"></div>
+    </div>
+  </div>
+
+  <!-- Page Content -->
+  <div class="page-content">
+    <section class="hero">
+      <h1>Wo Kinder sich im Spektrum entfalten</h1>
+      <p>
+        Unsere Bildungsangebote schaffen Räume, damit sich Kinder im Spektrum 
+        entfalten können. Evidenzbasiert, individuell und mit Herz.
+      </p>
+      <p style="color: #D8B4FE; font-weight: 500;">
+        ↑ Scroll up and down to see how the navbar fades into the content
+      </p>
+    </section>
+    
+    <!-- Placeholder content to enable scrolling -->
+    <div style="height: 100vh; display: flex; align-items: center; justify-content: center;">
+      <p style="color: #9CA3AF; font-size: 1.5rem;">Scroll to see the effect...</p>
+    </div>
+  </div>
+
+  <!-- Demo Controls -->
+  <div class="demo-controls">
+    <h3>Toggle Layers</h3>
+    <label>
+      <input type="checkbox" id="toggle-mist" checked>
+      Blur Mist
+    </label>
+    <label>
+      <input type="checkbox" id="toggle-primary" checked>
+      Primary Wave
+    </label>
+    <label>
+      <input type="checkbox" id="toggle-secondary" checked>
+      Secondary Wave
+    </label>
+    <label>
+      <input type="checkbox" id="toggle-tertiary" checked>
+      Tertiary Wave
+    </label>
+    <label>
+      <input type="checkbox" id="toggle-shimmer" checked>
+      Shimmer
+    </label>
+    <label>
+      <input type="checkbox" id="toggle-feather" checked>
+      Bottom Feather
+    </label>
+    <p class="demo-note">
+      Each layer adds depth. Try disabling some to see how they contribute.
+    </p>
+  </div>
+
+  <script>
+    // Demo: Toggle visibility of each layer
+    const toggles = {
+      'toggle-mist': '.navbar-fade__mist',
+      'toggle-primary': '.navbar-fade__wave--primary',
+      'toggle-secondary': '.navbar-fade__wave--secondary',
+      'toggle-tertiary': '.navbar-fade__wave--tertiary',
+      'toggle-shimmer': '.navbar-fade__shimmer',
+      'toggle-feather': '.navbar-fade__feather'
+    };
+
+    Object.entries(toggles).forEach(([id, selector]) => {
+      document.getElementById(id).addEventListener('change', (e) => {
+        document.querySelector(selector).style.display = 
+          e.target.checked ? 'block' : 'none';
+      });
+    });
+  </script>
+</body>
+</html>

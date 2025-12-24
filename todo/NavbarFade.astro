@@ -1,0 +1,216 @@
+---
+/**
+ * NavbarFade Component
+ * 
+ * Drop-in component that adds a fade effect to the existing navbar.
+ * Does NOT modify the navbar itself - just adds the fade below it.
+ * 
+ * The fade inherits colors from CSS custom properties. Set these
+ * in your navbar CSS to match your prism gradient:
+ * 
+ * --navbar-fade-primary: 216, 180, 254;
+ * --navbar-fade-secondary: 249, 168, 212;
+ * --navbar-fade-tertiary: 196, 181, 253;
+ * 
+ * Or pass them as props to this component.
+ * 
+ * USAGE:
+ * Place right after your </nav> tag, inside the header wrapper:
+ * 
+ * <header class="header">
+ *   <nav>...</nav>
+ *   <NavbarFade />
+ * </header>
+ */
+
+interface Props {
+  /** RGB values without rgba() wrapper, e.g. "216, 180, 254" */
+  primaryColor?: string;
+  secondaryColor?: string;
+  tertiaryColor?: string;
+  height?: string;
+}
+
+const {
+  primaryColor,
+  secondaryColor,
+  tertiaryColor,
+  height = '120px'
+} = Astro.props;
+---
+
+<div class="navbar-fade" aria-hidden="true">
+  <div class="navbar-fade__mist"></div>
+  <div class="navbar-fade__wave navbar-fade__wave--primary"></div>
+  <div class="navbar-fade__wave navbar-fade__wave--secondary"></div>
+  <div class="navbar-fade__wave navbar-fade__wave--tertiary"></div>
+  <div class="navbar-fade__shimmer"></div>
+  <div class="navbar-fade__feather"></div>
+</div>
+
+<style define:vars={{ 
+  primaryColor: primaryColor || 'var(--navbar-fade-primary, 216, 180, 254)',
+  secondaryColor: secondaryColor || 'var(--navbar-fade-secondary, 249, 168, 212)', 
+  tertiaryColor: tertiaryColor || 'var(--navbar-fade-tertiary, 196, 181, 253)',
+  height 
+}}>
+  .navbar-fade {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: var(--height);
+    pointer-events: none;
+    overflow: visible;
+    transform: translateY(100%);
+    z-index: -1;
+  }
+
+  .navbar-fade__mist {
+    position: absolute;
+    top: -30px;
+    left: 0;
+    right: 0;
+    height: 80px;
+    background: linear-gradient(
+      180deg,
+      rgba(var(--primaryColor), 0.6) 0%,
+      rgba(var(--primaryColor), 0.3) 40%,
+      rgba(var(--primaryColor), 0) 100%
+    );
+    filter: blur(25px);
+  }
+
+  .navbar-fade__wave {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 200%;
+    height: 100%;
+    will-change: transform;
+  }
+
+  .navbar-fade__wave--primary {
+    background: linear-gradient(
+      180deg,
+      rgba(var(--primaryColor), 0.95) 0%,
+      rgba(var(--primaryColor), 0.7) 20%,
+      rgba(var(--primaryColor), 0.4) 45%,
+      rgba(var(--primaryColor), 0.15) 70%,
+      transparent 100%
+    );
+    clip-path: polygon(
+      0% 0%, 0% 25%, 5% 35%, 10% 30%, 15% 40%, 20% 45%, 25% 38%,
+      30% 50%, 35% 55%, 40% 48%, 45% 60%, 50% 52%, 55% 45%,
+      60% 55%, 65% 62%, 70% 50%, 75% 58%, 80% 45%, 85% 55%,
+      90% 48%, 95% 40%, 100% 35%, 100% 0%
+    );
+    animation: wave-drift-slow 25s ease-in-out infinite;
+  }
+
+  .navbar-fade__wave--secondary {
+    background: linear-gradient(
+      180deg,
+      rgba(var(--secondaryColor), 0.6) 0%,
+      rgba(var(--secondaryColor), 0.4) 25%,
+      rgba(var(--secondaryColor), 0.2) 50%,
+      rgba(var(--secondaryColor), 0.05) 75%,
+      transparent 100%
+    );
+    clip-path: polygon(
+      0% 0%, 0% 15%, 8% 22%, 12% 18%, 18% 28%, 25% 20%, 32% 30%,
+      38% 25%, 45% 35%, 52% 28%, 58% 38%, 65% 32%, 72% 25%,
+      78% 35%, 85% 28%, 92% 22%, 100% 18%, 100% 0%
+    );
+    animation: wave-drift-medium 18s ease-in-out infinite reverse;
+  }
+
+  .navbar-fade__wave--tertiary {
+    background: linear-gradient(
+      180deg,
+      rgba(var(--tertiaryColor), 0.4) 0%,
+      rgba(var(--tertiaryColor), 0.2) 30%,
+      rgba(var(--tertiaryColor), 0.05) 60%,
+      transparent 100%
+    );
+    clip-path: polygon(
+      0% 0%, 0% 10%, 6% 15%, 12% 12%, 18% 18%, 24% 14%, 30% 20%,
+      36% 16%, 42% 22%, 48% 18%, 54% 24%, 60% 20%, 66% 15%,
+      72% 22%, 78% 17%, 84% 12%, 90% 18%, 96% 14%, 100% 10%, 100% 0%
+    );
+    animation: wave-drift-fast 12s ease-in-out infinite;
+  }
+
+  .navbar-fade__shimmer {
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 50%;
+    height: 80%;
+    background: linear-gradient(
+      90deg,
+      transparent 0%,
+      rgba(255, 255, 255, 0.15) 30%,
+      rgba(255, 255, 255, 0.25) 50%,
+      rgba(255, 255, 255, 0.15) 70%,
+      transparent 100%
+    );
+    animation: shimmer-sweep 10s ease-in-out infinite;
+  }
+
+  .navbar-fade__feather {
+    position: absolute;
+    bottom: -20px;
+    left: 0;
+    right: 0;
+    height: 40px;
+    background: radial-gradient(
+      ellipse 80% 100% at 50% 0%,
+      rgba(var(--primaryColor), 0.15) 0%,
+      transparent 70%
+    );
+    filter: blur(15px);
+  }
+
+  @keyframes wave-drift-slow {
+    0%, 100% { transform: translateX(0) scaleY(1); }
+    25% { transform: translateX(-12%) scaleY(1.05); }
+    50% { transform: translateX(-25%) scaleY(0.95); }
+    75% { transform: translateX(-12%) scaleY(1.02); }
+  }
+
+  @keyframes wave-drift-medium {
+    0%, 100% { transform: translateX(0) scaleY(1); }
+    33% { transform: translateX(-16%) scaleY(1.08); }
+    66% { transform: translateX(-33%) scaleY(0.92); }
+  }
+
+  @keyframes wave-drift-fast {
+    0%, 100% { transform: translateX(0); }
+    50% { transform: translateX(-25%); }
+  }
+
+  @keyframes shimmer-sweep {
+    0% { left: -50%; opacity: 0; }
+    10% { opacity: 1; }
+    90% { opacity: 1; }
+    100% { left: 150%; opacity: 0; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .navbar-fade__wave,
+    .navbar-fade__shimmer {
+      animation: none;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .navbar-fade {
+      height: 80px;
+    }
+    .navbar-fade__wave--tertiary,
+    .navbar-fade__shimmer {
+      display: none;
+    }
+  }
+</style>
