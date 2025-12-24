@@ -2,6 +2,7 @@
 import { getLangFromUrl, useTranslations, useTranslatedPath } from '@i18n/utils';
 import LanguagePicker from './LanguagePicker.astro';
 import Butterfly from './Butterfly.astro';
+import NavbarFade from './NavbarFade.astro';
 
 interface Props {
   transparent?: boolean;
@@ -162,6 +163,13 @@ const donatePath = lang === 'de' ? '/spenden/' : '/en/donate/';
       </svg>
     </button>
   </nav>
+
+  <!-- Navbar Fade Effect - Extends prism gradient seamlessly -->
+  <NavbarFade
+    primaryColor="233, 123, 241"
+    secondaryColor="255, 158, 204"
+    tertiaryColor="205, 135, 248"
+  />
 </header>
 
 <!-- Header Scrolled State Styles -->
