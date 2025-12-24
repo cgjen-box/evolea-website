@@ -1,0 +1,726 @@
+---
+/**
+ * EVOLEA Cafe Page
+ *
+ * Community meetup for parents of children on the spectrum.
+ * Every 2nd Wednesday of the month at 20:00.
+ *
+ * BRAND COMPLIANCE: Following EVOLEA Brand Guide v3.0
+ * - NO emojis - using SVG icons only
+ * - Prism gradient hero
+ * - EVOLEA brand colors (Magenta, Purple, Mint, etc.)
+ * - Fredoka for headlines, Poppins for body
+ */
+import Base from '@layouts/Base.astro';
+import FloatingShapes from '@components/FloatingShapes.astro';
+import GradientCTA from '@components/GradientCTA.astro';
+import Icon from '@components/Icon.astro';
+import { getLangFromUrl, useTranslatedPath } from '@i18n/utils';
+
+const lang = getLangFromUrl(Astro.url);
+const translatePath = useTranslatedPath(lang);
+---
+
+<Base
+  title="EVOLEA Cafe | Austausch für Eltern"
+  description="Jeden 2. Mittwoch treffen sich Eltern von Kindern im Spektrum zum Austausch. Keine Anmeldung nötig. Einfach vorbeikommen."
+>
+  <main class="cafe-page">
+    <!-- Hero Section with Prism Gradient -->
+    <section class="cafe-hero">
+      <FloatingShapes variant="minimal" />
+      <div class="cafe-hero-content">
+        <div class="cafe-hero-icon">
+          <Icon name="coffee" size="xl" class="icon-white" gradient={false} />
+        </div>
+        <span class="cafe-hero-badge">Offen für alle</span>
+        <h1>EVOLEA Cafe</h1>
+        <p class="cafe-hero-tagline">
+          Ein Abend für Eltern. Ohne Kinder. Ohne Programm. Ohne Anmeldung.
+        </p>
+      </div>
+    </section>
+
+    <!-- About Section -->
+    <section class="cafe-about">
+      <div class="container">
+        <div class="about-grid">
+          <div class="about-text">
+            <h2>Einfach reden. Einfach zuhören.</h2>
+            <p>
+              Manchmal braucht man jemanden, der versteht.
+              Nicht erklärt. Nicht bewertet. Einfach versteht.
+            </p>
+            <p>
+              Das EVOLEA Cafe ist ein geschützter Raum für Eltern von Kindern im Spektrum.
+              Hier treffen Sie andere, die ähnliche Wege gehen.
+              Kein Vortrag, keine Agenda — nur Kaffee, Gespräche und Gemeinschaft.
+            </p>
+            <p class="about-note">
+              (Und ja, es gibt auch Tee. Und manchmal Kuchen.)
+            </p>
+          </div>
+          <div class="about-cards">
+            <div class="info-card">
+              <Icon name="people" size="lg" />
+              <span>Austausch unter Eltern</span>
+            </div>
+            <div class="info-card">
+              <Icon name="handshake" size="lg" />
+              <span>Erfahrungen teilen</span>
+            </div>
+            <div class="info-card">
+              <Icon name="sparkle" size="lg" />
+              <span>Tipps & Ressourcen</span>
+            </div>
+            <div class="info-card">
+              <Icon name="heart" size="lg" />
+              <span>Gemeinschaft finden</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Schedule Section -->
+    <section class="cafe-schedule">
+      <div class="container">
+        <h2>Wann & Wo</h2>
+
+        <div class="schedule-grid">
+          <div class="schedule-card primary">
+            <div class="schedule-icon">
+              <Icon name="calendar" size="lg" />
+            </div>
+            <div class="schedule-info">
+              <h3>Jeden 2. Mittwoch</h3>
+              <p>im Monat</p>
+            </div>
+          </div>
+
+          <div class="schedule-card">
+            <div class="schedule-icon">
+              <Icon name="clock" size="lg" />
+            </div>
+            <div class="schedule-info">
+              <h3>20:00 Uhr</h3>
+              <p>Abends, wenn die Kinder schlafen</p>
+            </div>
+          </div>
+
+          <div class="schedule-card">
+            <div class="schedule-icon">
+              <Icon name="location" size="lg" />
+            </div>
+            <div class="schedule-info">
+              <h3>Zürich</h3>
+              <p>Ort wird per E-Mail mitgeteilt</p>
+            </div>
+          </div>
+
+          <div class="schedule-card highlight">
+            <div class="schedule-icon">
+              <Icon name="sparkle" size="lg" class="icon-white" gradient={false} />
+            </div>
+            <div class="schedule-info">
+              <h3>Keine Anmeldung</h3>
+              <p>Einfach vorbeikommen</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="next-dates">
+          <h3>Nächste Termine</h3>
+          <ul>
+            <li>
+              <span class="date">Mi, 8. Januar 2025</span>
+              <span class="time">20:00</span>
+            </li>
+            <li>
+              <span class="date">Mi, 12. Februar 2025</span>
+              <span class="time">20:00</span>
+            </li>
+            <li>
+              <span class="date">Mi, 12. März 2025</span>
+              <span class="time">20:00</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- What to Expect Section -->
+    <section class="cafe-expect">
+      <div class="container">
+        <h2>Was Sie erwartet</h2>
+
+        <div class="expect-grid">
+          <div class="expect-item yes">
+            <Icon name="check" size="sm" />
+            <span>Verständnis ohne Erklärungen</span>
+          </div>
+          <div class="expect-item yes">
+            <Icon name="check" size="sm" />
+            <span>Andere Eltern mit ähnlichen Erfahrungen</span>
+          </div>
+          <div class="expect-item yes">
+            <Icon name="check" size="sm" />
+            <span>Ein offenes Ohr</span>
+          </div>
+          <div class="expect-item yes">
+            <Icon name="check" size="sm" />
+            <span>Praktische Tipps aus dem Alltag</span>
+          </div>
+          <div class="expect-item yes">
+            <Icon name="check" size="sm" />
+            <span>Getränke & Snacks</span>
+          </div>
+          <div class="expect-item no">
+            <Icon name="sparkle" size="sm" />
+            <span>Kein Vortrag, keine Therapie</span>
+          </div>
+          <div class="expect-item no">
+            <Icon name="sparkle" size="sm" />
+            <span>Kein Druck, etwas zu erzählen</span>
+          </div>
+          <div class="expect-item no">
+            <Icon name="sparkle" size="sm" />
+            <span>Keine Anmeldung erforderlich</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Quote Section (Dark Vision Style) -->
+    <section class="cafe-quote">
+      <blockquote>
+        <p>
+          „Endlich Leute, die nicht fragen: ‚Hast du schon X probiert?'
+          Sondern einfach nicken. Das ist Gold wert."
+        </p>
+        <cite>— Eine Mama aus dem EVOLEA Cafe</cite>
+      </blockquote>
+    </section>
+
+    <!-- FAQ Section -->
+    <section class="cafe-faq">
+      <div class="container">
+        <h2>Häufige Fragen</h2>
+
+        <div class="faq-grid">
+          <div class="faq-item">
+            <h3>Muss ich mich anmelden?</h3>
+            <p>Nein. Einfach vorbeikommen. Wir freuen uns auf Sie.</p>
+          </div>
+
+          <div class="faq-item">
+            <h3>Kann ich mein Kind mitbringen?</h3>
+            <p>Das Cafe ist bewusst ein Abend nur für Erwachsene. So können Sie sich ganz auf sich konzentrieren.</p>
+          </div>
+
+          <div class="faq-item">
+            <h3>Was kostet die Teilnahme?</h3>
+            <p>Nichts. Das EVOLEA Cafe ist kostenlos.</p>
+          </div>
+
+          <div class="faq-item">
+            <h3>Ich bin zum ersten Mal da. Was muss ich wissen?</h3>
+            <p>Nur das: Sie sind willkommen. Kommen Sie rein, nehmen Sie sich einen Kaffee, und schauen Sie, wie es sich anfühlt.</p>
+          </div>
+
+          <div class="faq-item">
+            <h3>Mein Kind hat keine Diagnose. Darf ich trotzdem kommen?</h3>
+            <p>Ja. Das Cafe ist für alle Eltern, die sich angesprochen fühlen. Keine Diagnose nötig.</p>
+          </div>
+
+          <div class="faq-item">
+            <h3>Wo genau findet es statt?</h3>
+            <p>In Zürich. Den genauen Ort erfahren Sie per E-Mail oder über unseren Newsletter.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA Section -->
+    <GradientCTA
+      title="Wir freuen uns auf Sie"
+      description="Keine Anmeldung nötig — aber wenn Sie Fragen haben oder den Ort erfahren möchten, schreiben Sie uns."
+      buttonText="Jetzt Kontakt aufnehmen"
+      buttonHref={translatePath('/kontakt/')}
+      variant="calm"
+    />
+  </main>
+</Base>
+
+<style>
+  /* ===========================================
+     EVOLEA CAFE PAGE
+     Following Brand Guide v3.0
+     =========================================== */
+
+  .cafe-page {
+    --evolea-cafe-primary: var(--evolea-magenta);
+    --evolea-cafe-accent: var(--evolea-purple);
+    --evolea-cafe-mint: var(--evolea-mint);
+  }
+
+  .container {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 0 1.5rem;
+  }
+
+  /* ===========================================
+     HERO SECTION - PRISM GRADIENT
+     =========================================== */
+  .cafe-hero {
+    position: relative;
+    background: linear-gradient(
+      135deg,
+      #7BEDD5 0%,
+      #A8F0E0 10%,
+      #FFE066 25%,
+      #FFEEBB 35%,
+      #FFD5E5 45%,
+      #F5B8D0 55%,
+      #E97BF1 70%,
+      #CD87F8 85%,
+      #B56FE8 100%
+    );
+    padding: 8rem 1.5rem 6rem;
+    text-align: center;
+    overflow: hidden;
+  }
+
+  .cafe-hero-content {
+    position: relative;
+    z-index: 10;
+    max-width: 600px;
+    margin: 0 auto;
+  }
+
+  .cafe-hero-icon {
+    font-size: 4rem;
+    margin-bottom: 1rem;
+    filter: drop-shadow(0 4px 20px rgba(138, 61, 158, 0.3));
+  }
+
+  .cafe-hero-icon :global(.icon-white) {
+    color: #FFFFFF;
+  }
+
+  .cafe-hero-badge {
+    display: inline-block;
+    font-family: 'Poppins', sans-serif;
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: var(--evolea-purple);
+    background: rgba(255, 255, 255, 0.95);
+    padding: 0.5rem 1rem;
+    border-radius: 9999px;
+    margin-bottom: 1.5rem;
+    box-shadow: 0 4px 20px rgba(186, 83, 173, 0.3);
+  }
+
+  .cafe-hero h1 {
+    font-family: 'Fredoka', sans-serif;
+    font-size: clamp(2.5rem, 6vw, 3.5rem);
+    font-weight: 700;
+    color: #FFFFFF;
+    margin: 0 0 1rem;
+    text-shadow:
+      0 2px 4px rgba(0, 0, 0, 0.1),
+      0 4px 20px rgba(138, 61, 158, 0.3),
+      0 0 60px rgba(186, 83, 173, 0.2);
+  }
+
+  .cafe-hero-tagline {
+    font-size: 1.25rem;
+    color: #FFFFFF;
+    line-height: 1.6;
+    margin: 0;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+
+  /* ===========================================
+     ABOUT SECTION
+     =========================================== */
+  .cafe-about {
+    padding: 5rem 0;
+    background: white;
+  }
+
+  .about-grid {
+    display: grid;
+    gap: 3rem;
+    align-items: center;
+  }
+
+  @media (min-width: 768px) {
+    .about-grid {
+      grid-template-columns: 1.3fr 1fr;
+    }
+  }
+
+  .about-text h2 {
+    font-family: 'Fredoka', sans-serif;
+    font-size: clamp(1.75rem, 3vw, 2.25rem);
+    font-weight: 700;
+    color: var(--evolea-purple);
+    margin: 0 0 1.5rem;
+  }
+
+  .about-text p {
+    font-size: 1.1rem;
+    color: var(--evolea-text-light);
+    line-height: 1.7;
+    margin: 0 0 1rem;
+  }
+
+  .about-note {
+    font-style: italic;
+    color: var(--evolea-magenta) !important;
+    font-weight: 500;
+  }
+
+  .about-cards {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+  }
+
+  .info-card {
+    background: var(--evolea-cream);
+    padding: 1.5rem;
+    border-radius: 16px;
+    text-align: center;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    border: 2px solid transparent;
+  }
+
+  .info-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 30px rgba(186, 83, 173, 0.15);
+    border-color: var(--evolea-purple-light);
+  }
+
+  .info-card :global(svg) {
+    margin: 0 auto 0.5rem;
+    color: var(--evolea-magenta);
+  }
+
+  .info-card span:last-child {
+    display: block;
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: var(--evolea-text);
+  }
+
+  /* ===========================================
+     SCHEDULE SECTION
+     =========================================== */
+  .cafe-schedule {
+    padding: 5rem 0;
+    background: var(--evolea-cream);
+  }
+
+  .cafe-schedule h2 {
+    font-family: 'Fredoka', sans-serif;
+    font-size: clamp(1.75rem, 3vw, 2.25rem);
+    font-weight: 700;
+    color: var(--evolea-purple);
+    margin: 0 0 2.5rem;
+    text-align: center;
+  }
+
+  .schedule-grid {
+    display: grid;
+    gap: 1rem;
+    margin-bottom: 2.5rem;
+  }
+
+  @media (min-width: 600px) {
+    .schedule-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  .schedule-card {
+    background: white;
+    padding: 1.5rem;
+    border-radius: 16px;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    box-shadow: 0 4px 20px rgba(186, 83, 173, 0.08);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+
+  .schedule-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 30px rgba(186, 83, 173, 0.15);
+  }
+
+  .schedule-card.primary {
+    background: linear-gradient(135deg, #BA53AD 0%, #DD48E0 50%, #E97BF1 100%);
+  }
+
+  .schedule-card.primary h3,
+  .schedule-card.primary p {
+    color: white;
+  }
+
+  .schedule-card.primary :global(svg) {
+    color: white;
+  }
+
+  .schedule-card.highlight {
+    background: var(--evolea-purple);
+  }
+
+  .schedule-card.highlight h3,
+  .schedule-card.highlight p {
+    color: white;
+  }
+
+  .schedule-icon {
+    flex-shrink: 0;
+  }
+
+  .schedule-icon :global(svg) {
+    color: var(--evolea-magenta);
+  }
+
+  .schedule-info h3 {
+    font-family: 'Fredoka', sans-serif;
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--evolea-text);
+    margin: 0 0 0.25rem;
+  }
+
+  .schedule-info p {
+    font-size: 0.9rem;
+    color: var(--evolea-text-light);
+    margin: 0;
+  }
+
+  .next-dates {
+    background: white;
+    padding: 1.5rem;
+    border-radius: 16px;
+    max-width: 400px;
+    margin: 0 auto;
+    box-shadow: 0 4px 20px rgba(186, 83, 173, 0.08);
+  }
+
+  .next-dates h3 {
+    font-family: 'Fredoka', sans-serif;
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: var(--evolea-purple);
+    margin: 0 0 1rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    text-align: center;
+  }
+
+  .next-dates ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  .next-dates li {
+    display: flex;
+    justify-content: space-between;
+    padding: 0.75rem 0;
+    border-bottom: 1px solid rgba(186, 83, 173, 0.1);
+  }
+
+  .next-dates li:last-child {
+    border-bottom: none;
+  }
+
+  .next-dates .date {
+    font-weight: 500;
+    color: var(--evolea-text);
+  }
+
+  .next-dates .time {
+    color: var(--evolea-text-light);
+  }
+
+  /* ===========================================
+     EXPECT SECTION
+     =========================================== */
+  .cafe-expect {
+    padding: 5rem 0;
+    background: white;
+  }
+
+  .cafe-expect h2 {
+    font-family: 'Fredoka', sans-serif;
+    font-size: clamp(1.75rem, 3vw, 2.25rem);
+    font-weight: 700;
+    color: var(--evolea-purple);
+    margin: 0 0 2.5rem;
+    text-align: center;
+  }
+
+  .expect-grid {
+    display: grid;
+    gap: 0.75rem;
+  }
+
+  @media (min-width: 600px) {
+    .expect-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  .expect-item {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 1rem;
+    border-radius: 12px;
+    background: var(--evolea-cream);
+    transition: transform 0.2s ease;
+  }
+
+  .expect-item:hover {
+    transform: translateX(4px);
+  }
+
+  .expect-item :global(svg) {
+    flex-shrink: 0;
+  }
+
+  .expect-item.yes :global(svg) {
+    color: var(--evolea-mint);
+  }
+
+  .expect-item.no {
+    background: transparent;
+    opacity: 0.65;
+  }
+
+  .expect-item.no :global(svg) {
+    color: var(--evolea-text-light);
+  }
+
+  .expect-item span {
+    font-size: 0.95rem;
+    color: var(--evolea-text);
+  }
+
+  /* ===========================================
+     QUOTE SECTION - DARK VISION STYLE
+     =========================================== */
+  .cafe-quote {
+    padding: 5rem 1.5rem;
+    background: linear-gradient(180deg, #1A1A2E 0%, #2D2A32 100%);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .cafe-quote blockquote {
+    max-width: 700px;
+    margin: 0 auto;
+    text-align: center;
+    position: relative;
+    z-index: 10;
+  }
+
+  .cafe-quote p {
+    font-family: 'Fredoka', sans-serif;
+    font-size: clamp(1.25rem, 3vw, 1.6rem);
+    font-weight: 600;
+    background: linear-gradient(90deg, #7BEDD5, #FFE066, #FF9ECC, #E97BF1, #CD87F8);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    line-height: 1.5;
+    margin: 0 0 1.5rem;
+  }
+
+  .cafe-quote cite {
+    font-family: 'Poppins', sans-serif;
+    font-size: 1rem;
+    color: rgba(255, 255, 255, 0.7);
+    font-style: normal;
+  }
+
+  /* ===========================================
+     FAQ SECTION
+     =========================================== */
+  .cafe-faq {
+    padding: 5rem 0;
+    background: var(--evolea-cream);
+  }
+
+  .cafe-faq h2 {
+    font-family: 'Fredoka', sans-serif;
+    font-size: clamp(1.75rem, 3vw, 2.25rem);
+    font-weight: 700;
+    color: var(--evolea-purple);
+    margin: 0 0 2.5rem;
+    text-align: center;
+  }
+
+  .faq-grid {
+    display: grid;
+    gap: 1.25rem;
+  }
+
+  @media (min-width: 600px) {
+    .faq-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  .faq-item {
+    padding: 1.5rem;
+    background: white;
+    border-radius: 16px;
+    box-shadow: 0 4px 20px rgba(186, 83, 173, 0.08);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+
+  .faq-item:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 30px rgba(186, 83, 173, 0.15);
+  }
+
+  .faq-item h3 {
+    font-family: 'Fredoka', sans-serif;
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--evolea-purple);
+    margin: 0 0 0.5rem;
+  }
+
+  .faq-item p {
+    font-size: 0.95rem;
+    color: var(--evolea-text-light);
+    line-height: 1.6;
+    margin: 0;
+  }
+
+  /* Reduce motion for accessibility */
+  @media (prefers-reduced-motion: reduce) {
+    .info-card,
+    .schedule-card,
+    .expect-item,
+    .faq-item {
+      transition: none;
+    }
+
+    .info-card:hover,
+    .schedule-card:hover,
+    .expect-item:hover,
+    .faq-item:hover {
+      transform: none;
+    }
+  }
+</style>
