@@ -1,0 +1,1091 @@
+---
+/**
+ * Spenden (Donate) Page for EVOLEA
+ * 
+ * This page showcases completed projects, upcoming initiatives,
+ * and provides clear donation instructions.
+ * 
+ * Implementation: Copy this file to src/pages/spenden.astro
+ */
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout 
+  title="Spenden | EVOLEA" 
+  description="Unterstützen Sie Kinder im Spektrum. EVOLEA ist ein gemeinnütziger Verein in Zürich."
+>
+  <!-- Hero Section -->
+  <section class="hero">
+    <div class="hero-content">
+      <span class="hero-label">Gemeinnütziger Verein</span>
+      <h1>Kleine Beiträge.<br/>Grosse Wirkung.</h1>
+      <p class="hero-subtitle">
+        Wir haben gerade unser erstes Projekt abgeschlossen. 
+        Das Mini Restaurant war ein voller Erfolg. 
+        Jetzt bauen wir weiter.
+      </p>
+      <a href="#spenden" class="btn-primary">Jetzt unterstützen</a>
+    </div>
+    <div class="hero-visual">
+      <div class="celebration-badge">
+        <span class="badge-icon">🎉</span>
+        <span class="badge-text">Erstes Projekt<br/>abgeschlossen!</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- Success Story: Mini Restaurant -->
+  <section class="success-story">
+    <div class="story-container">
+      <div class="story-image">
+        <div class="instagram-embed-container">
+          <blockquote class="instagram-media" data-instgrm-captioned data-instgrm-permalink="https://www.instagram.com/evolea.verein/p/DSQPYIqDGRq/" data-instgrm-version="14">
+          </blockquote>
+        </div>
+      </div>
+      <div class="story-content">
+        <span class="section-label">Was wir erreicht haben</span>
+        <h2>Mini Restaurant: 10 Wochen, die zählen</h2>
+        <p>
+          Kochen. Servieren. Abräumen. Klingt einfach. 
+          Für Kinder im Spektrum ist das ein riesiger Schritt.
+        </p>
+        <p>
+          10 Wochen lang haben Kinder gemeinsam gekocht, 
+          Rollen übernommen und soziale Kompetenz aufgebaut. 
+          Nicht in der Theorie. Im echten Leben.
+        </p>
+        <ul class="impact-list">
+          <li>
+            <span class="impact-icon">👧👦</span>
+            <span>Kinder haben teilgenommen</span>
+          </li>
+          <li>
+            <span class="impact-icon">🍳</span>
+            <span>10 Wochen strukturiertes Lernen</span>
+          </li>
+          <li>
+            <span class="impact-icon">⭐</span>
+            <span>Neue soziale Fähigkeiten gelernt</span>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- Why We Need You -->
+  <section class="why-donate">
+    <div class="section-header">
+      <span class="section-label">Warum Ihre Hilfe zählt</span>
+      <h2>Ihre Spende reduziert den Beitrag, den Eltern zahlen müssen</h2>
+    </div>
+    <div class="reasons-grid">
+      <div class="reason-card">
+        <div class="reason-icon">🏠</div>
+        <h3>Räume kosten</h3>
+        <p>
+          Kleine Gruppen brauchen sichere Räume. 
+          Diese Räume muss jemand bezahlen.
+        </p>
+      </div>
+      <div class="reason-card">
+        <div class="reason-icon">👩‍🏫</div>
+        <h3>Fachpersonal ist wichtig</h3>
+        <p>
+          Unsere Fachpersonen sind hochqualifiziert. 
+          BCBAs, Psycholog:innen, Pädagog:innen. 
+          Und die arbeiten nicht gratis. (Sollten sie auch nicht.)
+        </p>
+      </div>
+      <div class="reason-card">
+        <div class="reason-icon">📦</div>
+        <h3>Material braucht's auch</h3>
+        <p>
+          Kochzutaten, Bastelmaterial, Turngeräte. 
+          Die Details machen den Unterschied.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Upcoming Projects -->
+  <section class="upcoming-projects">
+    <div class="section-header">
+      <span class="section-label">Was kommt als Nächstes</span>
+      <h2>Zwei Projekte, die auf Sie warten</h2>
+      <p class="section-intro">
+        Das Mini Restaurant hat funktioniert. Jetzt wollen wir weitermachen. 
+        Mit Ihrer Hilfe starten diese zwei Angebote.
+      </p>
+    </div>
+    
+    <div class="projects-grid">
+      <!-- Mini Turnen -->
+      <div class="project-card">
+        <div class="project-badge">Start: Februar 2026</div>
+        <div class="project-icon">🤸</div>
+        <h3>Mini Turnen</h3>
+        <p class="project-tagline">Bewegung. In einer Gruppe, die versteht.</p>
+        <p class="project-description">
+          Sport im Verein? Für viele Kinder im Spektrum undenkbar. 
+          Zu laut, zu chaotisch, zu viele ungeschriebene Regeln.
+        </p>
+        <p class="project-description">
+          Mini Turnen ist anders. Kleine Gruppe. Klare Struktur. 
+          Und Erwachsene, die wissen, was sie tun.
+        </p>
+        <ul class="project-details">
+          <li>Mittwochs 18:30</li>
+          <li>5–8 Jahre</li>
+          <li>Kleine Gruppe</li>
+        </ul>
+        <a href="/angebote/mini-turnen/" class="project-link">Mehr erfahren →</a>
+      </div>
+
+      <!-- Mini Museum -->
+      <div class="project-card">
+        <div class="project-badge">Start: Februar 2026</div>
+        <div class="project-icon">🎨</div>
+        <h3>Mini Museum</h3>
+        <p class="project-tagline">Kunst machen. Kunst zeigen. Stolz sein.</p>
+        <p class="project-description">
+          Kreativität braucht keinen Smalltalk. 
+          Im Mini Museum arbeiten Kinder an eigenen Kunstprojekten. 
+          Und zeigen sie dann in einer echten Ausstellung.
+        </p>
+        <p class="project-description">
+          Der Fokus: Schaffen, nicht Reden. 
+          Etwas Eigenes machen und dafür gesehen werden.
+        </p>
+        <ul class="project-details">
+          <li>Samstags 09:00</li>
+          <li>Ca. jede 2. Woche</li>
+          <li>5–8 Jahre</li>
+        </ul>
+        <a href="/angebote/mini-museum/" class="project-link">Mehr erfahren →</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- How to Donate -->
+  <section class="how-to-donate" id="spenden">
+    <div class="donate-container">
+      <div class="donate-info">
+        <span class="section-label">So können Sie helfen</span>
+        <h2>Direkt. Einfach. Wirksam.</h2>
+        <p>
+          Keine komplizierte Online-Plattform. 
+          Einfach überweisen. Jeder Franken kommt an.
+        </p>
+        
+        <div class="bank-details">
+          <h3>Bankverbindung</h3>
+          <div class="detail-row">
+            <span class="detail-label">Kontoinhaber</span>
+            <span class="detail-value">EVOLEA<br/>Stapferstrasse 10<br/>8006 Zürich</span>
+          </div>
+          <div class="detail-row">
+            <span class="detail-label">IBAN</span>
+            <span class="detail-value">CH90 0023 0230 9206 9201 G</span>
+          </div>
+          <div class="detail-row">
+            <span class="detail-label">Bank</span>
+            <span class="detail-value">UBS Switzerland AG</span>
+          </div>
+          <div class="detail-row">
+            <span class="detail-label">BIC/SWIFT</span>
+            <span class="detail-value">UBSWCHZH80A</span>
+          </div>
+          <div class="detail-row">
+            <span class="detail-label">Verwendungszweck</span>
+            <span class="detail-value">Spende EVOLEA</span>
+          </div>
+        </div>
+
+        <div class="tax-info">
+          <h3>Gut zu wissen</h3>
+          <ul>
+            <li>
+              <strong>Gemeinnützig:</strong> EVOLEA ist ein gemeinnütziger Verein 
+              und von der Steuer befreit.
+            </li>
+            <li>
+              <strong>Steuerabzug:</strong> Spenden ab CHF 100 können bei der 
+              Steuererklärung abgezogen werden (kantonal unterschiedlich).
+            </li>
+            <li>
+              <strong>Transparenz:</strong> Auf Wunsch senden wir Ihnen gerne 
+              eine Spendenbestätigung.
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="donate-amounts">
+        <h3>Was Ihre Spende bewirkt</h3>
+        <div class="amount-card">
+          <span class="amount">CHF 50</span>
+          <span class="impact">Material für eine Aktivität</span>
+        </div>
+        <div class="amount-card">
+          <span class="amount">CHF 150</span>
+          <span class="impact">Ein Kind, eine Session</span>
+        </div>
+        <div class="amount-card">
+          <span class="amount">CHF 500</span>
+          <span class="impact">Ein Kind, ein ganzes Projekt</span>
+        </div>
+        <div class="amount-card highlight">
+          <span class="amount">CHF 1'500</span>
+          <span class="impact">Projekt-Pate für ein Quartal</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Contact Person -->
+  <section class="contact-person">
+    <div class="contact-container">
+      <div class="contact-image">
+        <img 
+          src="/images/team/gianna-spiess.png" 
+          alt="Gianna Spiess" 
+          loading="lazy"
+        />
+      </div>
+      <div class="contact-info">
+        <h3>Fragen? Einfach fragen.</h3>
+        <p class="contact-name">Gianna Spiess</p>
+        <p class="contact-title">M.Sc., BCBA – Mitgründerin</p>
+        <p class="contact-text">
+          Sie möchten wissen, wohin Ihre Spende geht? 
+          Haben Sie eine Idee für eine Zusammenarbeit? 
+          Schreiben Sie mir.
+        </p>
+        <a href="mailto:hello@evolea.ch" class="contact-link">hello@evolea.ch</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer CTA - Schoolcraft Style -->
+  <section class="footer-cta">
+    <div class="cta-content">
+      <h2>Kinder brauchen keine perfekte Welt.<br/>Sie brauchen Räume, die zu ihnen passen.</h2>
+      <p class="cta-subtitle">Sie können einen schaffen. Jetzt.</p>
+      <a href="#spenden" class="btn-cta">Ich will helfen</a>
+    </div>
+    <div class="cta-note">
+      <p>
+        (Übrigens: Wir sind kein grosser Apparat. Kein Fundraising-Team. 
+        Keine Hochglanz-Galas. Einfach Fachleute und Eltern, 
+        die etwas für Kinder aufbauen. Danke, dass Sie das unterstützen.)
+      </p>
+    </div>
+  </section>
+</Layout>
+
+<style>
+  /* ===========================================
+     VARIABLES - Matching Evolea Brand
+     =========================================== */
+  :root {
+    --color-primary: #2D5A4C;
+    --color-primary-light: #3D7A66;
+    --color-accent: #E8B86D;
+    --color-accent-light: #F5D9A8;
+    --color-text: #1A1A1A;
+    --color-text-light: #6B7280;
+    --color-bg: #FDFBF7;
+    --color-bg-warm: #FAF6EF;
+    --color-white: #FFFFFF;
+    --color-success: #34D399;
+    
+    --font-display: 'Libre Baskerville', Georgia, serif;
+    --font-body: 'DM Sans', system-ui, sans-serif;
+    
+    --spacing-xs: 0.5rem;
+    --spacing-sm: 1rem;
+    --spacing-md: 2rem;
+    --spacing-lg: 4rem;
+    --spacing-xl: 8rem;
+    
+    --radius-sm: 8px;
+    --radius-md: 16px;
+    --radius-lg: 24px;
+    --radius-full: 9999px;
+    
+    --shadow-sm: 0 1px 3px rgba(0,0,0,0.08);
+    --shadow-md: 0 4px 12px rgba(0,0,0,0.1);
+    --shadow-lg: 0 8px 24px rgba(0,0,0,0.12);
+  }
+
+  /* ===========================================
+     BASE STYLES
+     =========================================== */
+  section {
+    padding: var(--spacing-lg) var(--spacing-md);
+  }
+
+  @media (min-width: 768px) {
+    section {
+      padding: var(--spacing-xl) var(--spacing-lg);
+    }
+  }
+
+  .section-label {
+    display: inline-block;
+    font-family: var(--font-body);
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: var(--color-primary);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: var(--spacing-sm);
+  }
+
+  .section-header {
+    text-align: center;
+    max-width: 700px;
+    margin: 0 auto var(--spacing-lg);
+  }
+
+  .section-header h2 {
+    font-family: var(--font-display);
+    font-size: clamp(1.75rem, 4vw, 2.5rem);
+    color: var(--color-text);
+    margin-bottom: var(--spacing-sm);
+    line-height: 1.2;
+  }
+
+  .section-intro {
+    font-size: 1.125rem;
+    color: var(--color-text-light);
+    line-height: 1.6;
+  }
+
+  /* ===========================================
+     HERO SECTION
+     =========================================== */
+  .hero {
+    display: grid;
+    gap: var(--spacing-lg);
+    align-items: center;
+    min-height: 70vh;
+    background: linear-gradient(135deg, var(--color-bg) 0%, var(--color-bg-warm) 100%);
+    padding-top: var(--spacing-xl);
+  }
+
+  @media (min-width: 768px) {
+    .hero {
+      grid-template-columns: 1.2fr 1fr;
+    }
+  }
+
+  .hero-label {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-family: var(--font-body);
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: var(--color-primary);
+    background: var(--color-white);
+    padding: 0.5rem 1rem;
+    border-radius: var(--radius-full);
+    box-shadow: var(--shadow-sm);
+    margin-bottom: var(--spacing-md);
+  }
+
+  .hero h1 {
+    font-family: var(--font-display);
+    font-size: clamp(2.5rem, 6vw, 4rem);
+    line-height: 1.1;
+    color: var(--color-text);
+    margin-bottom: var(--spacing-md);
+  }
+
+  .hero-subtitle {
+    font-size: 1.25rem;
+    color: var(--color-text-light);
+    line-height: 1.6;
+    max-width: 500px;
+    margin-bottom: var(--spacing-md);
+  }
+
+  .btn-primary {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-family: var(--font-body);
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--color-white);
+    background: var(--color-primary);
+    padding: 1rem 2rem;
+    border-radius: var(--radius-full);
+    text-decoration: none;
+    transition: all 0.3s ease;
+    box-shadow: var(--shadow-md);
+  }
+
+  .btn-primary:hover {
+    background: var(--color-primary-light);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-lg);
+  }
+
+  .hero-visual {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .celebration-badge {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 200px;
+    height: 200px;
+    background: var(--color-white);
+    border-radius: 50%;
+    box-shadow: var(--shadow-lg);
+    text-align: center;
+    animation: float 3s ease-in-out infinite;
+  }
+
+  @keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+  }
+
+  .badge-icon {
+    font-size: 3rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .badge-text {
+    font-family: var(--font-body);
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: var(--color-primary);
+    line-height: 1.3;
+  }
+
+  /* ===========================================
+     SUCCESS STORY SECTION
+     =========================================== */
+  .success-story {
+    background: var(--color-white);
+  }
+
+  .story-container {
+    display: grid;
+    gap: var(--spacing-lg);
+    max-width: 1100px;
+    margin: 0 auto;
+    align-items: center;
+  }
+
+  @media (min-width: 768px) {
+    .story-container {
+      grid-template-columns: 1fr 1.2fr;
+    }
+  }
+
+  .story-image {
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    box-shadow: var(--shadow-lg);
+  }
+
+  .instagram-embed-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 400px;
+    background: var(--color-bg-warm);
+    border-radius: var(--radius-lg);
+  }
+
+  .instagram-embed-container :global(.instagram-media) {
+    margin: 0 !important;
+  }
+
+  .image-placeholder {
+    aspect-ratio: 4/3;
+    background: linear-gradient(135deg, var(--color-bg-warm), var(--color-bg));
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    color: var(--color-text-light);
+  }
+
+  .image-placeholder span {
+    font-size: 3rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .story-content h2 {
+    font-family: var(--font-display);
+    font-size: clamp(1.5rem, 3vw, 2rem);
+    color: var(--color-text);
+    margin-bottom: var(--spacing-sm);
+    line-height: 1.2;
+  }
+
+  .story-content p {
+    font-size: 1.125rem;
+    color: var(--color-text-light);
+    line-height: 1.6;
+    margin-bottom: var(--spacing-sm);
+  }
+
+  .impact-list {
+    list-style: none;
+    padding: 0;
+    margin-top: var(--spacing-md);
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-sm);
+  }
+
+  .impact-list li {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+    font-family: var(--font-body);
+    font-weight: 500;
+    color: var(--color-text);
+  }
+
+  .impact-icon {
+    font-size: 1.5rem;
+  }
+
+  /* ===========================================
+     WHY DONATE SECTION
+     =========================================== */
+  .why-donate {
+    background: var(--color-bg-warm);
+  }
+
+  .reasons-grid {
+    display: grid;
+    gap: var(--spacing-md);
+    max-width: 1000px;
+    margin: 0 auto;
+  }
+
+  @media (min-width: 768px) {
+    .reasons-grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+
+  .reason-card {
+    background: var(--color-white);
+    padding: var(--spacing-md);
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-sm);
+    transition: all 0.3s ease;
+  }
+
+  .reason-card:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-md);
+  }
+
+  .reason-icon {
+    font-size: 2.5rem;
+    margin-bottom: var(--spacing-sm);
+  }
+
+  .reason-card h3 {
+    font-family: var(--font-display);
+    font-size: 1.25rem;
+    color: var(--color-text);
+    margin-bottom: var(--spacing-xs);
+  }
+
+  .reason-card p {
+    font-size: 1rem;
+    color: var(--color-text-light);
+    line-height: 1.5;
+  }
+
+  /* ===========================================
+     UPCOMING PROJECTS SECTION
+     =========================================== */
+  .upcoming-projects {
+    background: var(--color-white);
+  }
+
+  .projects-grid {
+    display: grid;
+    gap: var(--spacing-md);
+    max-width: 900px;
+    margin: 0 auto;
+  }
+
+  @media (min-width: 768px) {
+    .projects-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  .project-card {
+    position: relative;
+    background: var(--color-bg);
+    padding: var(--spacing-md);
+    border-radius: var(--radius-lg);
+    border: 2px solid transparent;
+    transition: all 0.3s ease;
+  }
+
+  .project-card:hover {
+    border-color: var(--color-primary);
+    box-shadow: var(--shadow-md);
+  }
+
+  .project-badge {
+    position: absolute;
+    top: var(--spacing-sm);
+    right: var(--spacing-sm);
+    font-family: var(--font-body);
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: var(--color-white);
+    background: var(--color-primary);
+    padding: 0.25rem 0.75rem;
+    border-radius: var(--radius-full);
+  }
+
+  .project-icon {
+    font-size: 3rem;
+    margin-bottom: var(--spacing-sm);
+  }
+
+  .project-card h3 {
+    font-family: var(--font-display);
+    font-size: 1.5rem;
+    color: var(--color-text);
+    margin-bottom: 0.25rem;
+  }
+
+  .project-tagline {
+    font-family: var(--font-body);
+    font-size: 1rem;
+    font-weight: 500;
+    color: var(--color-primary);
+    margin-bottom: var(--spacing-sm);
+    font-style: italic;
+  }
+
+  .project-description {
+    font-size: 1rem;
+    color: var(--color-text-light);
+    line-height: 1.5;
+    margin-bottom: var(--spacing-xs);
+  }
+
+  .project-details {
+    list-style: none;
+    padding: 0;
+    margin: var(--spacing-sm) 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--spacing-xs);
+  }
+
+  .project-details li {
+    font-family: var(--font-body);
+    font-size: 0.875rem;
+    color: var(--color-text);
+    background: var(--color-white);
+    padding: 0.25rem 0.75rem;
+    border-radius: var(--radius-full);
+  }
+
+  .funding-bar {
+    margin-top: var(--spacing-md);
+    padding-top: var(--spacing-sm);
+    border-top: 1px solid rgba(0,0,0,0.1);
+  }
+
+  .funding-label {
+    font-size: 0.75rem;
+    font-weight: 500;
+    color: var(--color-text-light);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: 0.5rem;
+  }
+
+  .funding-track {
+    height: 8px;
+    background: rgba(0,0,0,0.1);
+    border-radius: var(--radius-full);
+    overflow: hidden;
+    margin-bottom: 0.5rem;
+  }
+
+  .funding-progress {
+    height: 100%;
+    background: linear-gradient(90deg, var(--color-primary), var(--color-accent));
+    border-radius: var(--radius-full);
+    transition: width 1s ease;
+  }
+
+  .funding-status {
+    font-family: var(--font-body);
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: var(--color-primary);
+  }
+
+  .project-link {
+    display: inline-flex;
+    align-items: center;
+    margin-top: var(--spacing-sm);
+    font-family: var(--font-body);
+    font-weight: 600;
+    font-size: 0.95rem;
+    color: var(--color-primary);
+    text-decoration: none;
+    transition: all 0.2s ease;
+  }
+
+  .project-link:hover {
+    color: var(--color-primary-light);
+    transform: translateX(4px);
+  }
+
+  /* ===========================================
+     HOW TO DONATE SECTION
+     =========================================== */
+  .how-to-donate {
+    background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-light) 100%);
+    color: var(--color-white);
+  }
+
+  .donate-container {
+    display: grid;
+    gap: var(--spacing-lg);
+    max-width: 1000px;
+    margin: 0 auto;
+    align-items: start;
+  }
+
+  @media (min-width: 768px) {
+    .donate-container {
+      grid-template-columns: 1.3fr 1fr;
+    }
+  }
+
+  .donate-info .section-label {
+    color: var(--color-accent-light);
+  }
+
+  .donate-info h2 {
+    font-family: var(--font-display);
+    font-size: clamp(1.75rem, 4vw, 2.5rem);
+    color: var(--color-white);
+    margin-bottom: var(--spacing-sm);
+  }
+
+  .donate-info > p {
+    font-size: 1.125rem;
+    color: rgba(255,255,255,0.9);
+    line-height: 1.6;
+    margin-bottom: var(--spacing-md);
+  }
+
+  .bank-details {
+    background: rgba(255,255,255,0.1);
+    padding: var(--spacing-md);
+    border-radius: var(--radius-md);
+    margin-bottom: var(--spacing-md);
+    backdrop-filter: blur(10px);
+  }
+
+  .bank-details h3 {
+    font-family: var(--font-display);
+    font-size: 1.125rem;
+    margin-bottom: var(--spacing-sm);
+    color: var(--color-white);
+  }
+
+  .detail-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.75rem 0;
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+  }
+
+  .detail-row:last-child {
+    border-bottom: none;
+  }
+
+  .detail-label {
+    font-size: 0.875rem;
+    color: rgba(255,255,255,0.7);
+  }
+
+  .detail-value {
+    font-family: var(--font-body);
+    font-weight: 600;
+    color: var(--color-white);
+    font-size: 0.95rem;
+  }
+
+  .tax-info {
+    background: rgba(255,255,255,0.05);
+    padding: var(--spacing-md);
+    border-radius: var(--radius-md);
+    border: 1px solid rgba(255,255,255,0.1);
+  }
+
+  .tax-info h3 {
+    font-family: var(--font-display);
+    font-size: 1.125rem;
+    margin-bottom: var(--spacing-sm);
+    color: var(--color-white);
+  }
+
+  .tax-info ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  .tax-info li {
+    font-size: 0.95rem;
+    color: rgba(255,255,255,0.9);
+    line-height: 1.5;
+    margin-bottom: var(--spacing-sm);
+    padding-left: 1.5rem;
+    position: relative;
+  }
+
+  .tax-info li::before {
+    content: "✓";
+    position: absolute;
+    left: 0;
+    color: var(--color-accent);
+  }
+
+  .tax-info li:last-child {
+    margin-bottom: 0;
+  }
+
+  .tax-info strong {
+    color: var(--color-white);
+  }
+
+  .donate-amounts {
+    background: var(--color-white);
+    padding: var(--spacing-md);
+    border-radius: var(--radius-lg);
+    color: var(--color-text);
+  }
+
+  .donate-amounts h3 {
+    font-family: var(--font-display);
+    font-size: 1.25rem;
+    color: var(--color-text);
+    margin-bottom: var(--spacing-md);
+    text-align: center;
+  }
+
+  .amount-card {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: var(--spacing-sm);
+    margin-bottom: var(--spacing-xs);
+    border-radius: var(--radius-sm);
+    background: var(--color-bg);
+    transition: all 0.2s ease;
+  }
+
+  .amount-card:hover {
+    background: var(--color-bg-warm);
+  }
+
+  .amount-card.highlight {
+    background: linear-gradient(135deg, var(--color-accent-light), var(--color-accent));
+    color: var(--color-text);
+  }
+
+  .amount {
+    font-family: var(--font-display);
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: var(--color-primary);
+  }
+
+  .amount-card.highlight .amount {
+    color: var(--color-text);
+  }
+
+  .impact {
+    font-size: 0.95rem;
+    color: var(--color-text-light);
+    text-align: right;
+  }
+
+  .amount-card.highlight .impact {
+    color: var(--color-text);
+    font-weight: 500;
+  }
+
+  /* ===========================================
+     CONTACT PERSON SECTION
+     =========================================== */
+  .contact-person {
+    background: var(--color-bg);
+  }
+
+  .contact-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: var(--spacing-md);
+    max-width: 500px;
+    margin: 0 auto;
+  }
+
+  @media (min-width: 768px) {
+    .contact-container {
+      flex-direction: row;
+      text-align: left;
+    }
+  }
+
+  .contact-image {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    overflow: hidden;
+    box-shadow: var(--shadow-md);
+    flex-shrink: 0;
+  }
+
+  .contact-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .contact-info h3 {
+    font-family: var(--font-display);
+    font-size: 1.25rem;
+    color: var(--color-text);
+    margin-bottom: 0.25rem;
+  }
+
+  .contact-name {
+    font-family: var(--font-body);
+    font-size: 1.125rem;
+    font-weight: 600;
+    color: var(--color-primary);
+    margin-bottom: 0;
+  }
+
+  .contact-title {
+    font-size: 0.875rem;
+    color: var(--color-text-light);
+    margin-bottom: var(--spacing-sm);
+  }
+
+  .contact-text {
+    font-size: 1rem;
+    color: var(--color-text-light);
+    line-height: 1.5;
+    margin-bottom: var(--spacing-sm);
+  }
+
+  .contact-link {
+    display: inline-flex;
+    align-items: center;
+    font-family: var(--font-body);
+    font-weight: 600;
+    color: var(--color-primary);
+    text-decoration: none;
+    transition: color 0.2s ease;
+  }
+
+  .contact-link:hover {
+    color: var(--color-primary-light);
+  }
+
+  /* ===========================================
+     FOOTER CTA - SCHOOLCRAFT STYLE
+     =========================================== */
+  .footer-cta {
+    background: var(--color-text);
+    color: var(--color-white);
+    text-align: center;
+    padding: var(--spacing-xl) var(--spacing-md);
+  }
+
+  .cta-content {
+    max-width: 700px;
+    margin: 0 auto var(--spacing-lg);
+  }
+
+  .cta-content h2 {
+    font-family: var(--font-display);
+    font-size: clamp(1.75rem, 4vw, 2.5rem);
+    line-height: 1.3;
+    margin-bottom: var(--spacing-sm);
+    color: var(--color-white);
+  }
+
+  .cta-subtitle {
+    font-size: 1.25rem;
+    color: var(--color-accent);
+    margin-bottom: var(--spacing-md);
+    font-weight: 500;
+  }
+
+  .btn-cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-family: var(--font-body);
+    font-size: 1.125rem;
+    font-weight: 600;
+    color: var(--color-text);
+    background: var(--color-accent);
+    padding: 1rem 2.5rem;
+    border-radius: var(--radius-full);
+    text-decoration: none;
+    transition: all 0.3s ease;
+    box-shadow: var(--shadow-lg);
+  }
+
+  .btn-cta:hover {
+    background: var(--color-accent-light);
+    transform: translateY(-2px);
+  }
+
+  .cta-note {
+    max-width: 600px;
+    margin: 0 auto;
+  }
+
+  .cta-note p {
+    font-size: 0.95rem;
+    color: rgba(255,255,255,0.6);
+    line-height: 1.6;
+    font-style: italic;
+  }
+</style>
+
+<!-- Instagram Embed Script -->
+<script async src="//www.instagram.com/embed.js"></script>
