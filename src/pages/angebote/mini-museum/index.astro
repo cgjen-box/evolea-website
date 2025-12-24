@@ -1,6 +1,5 @@
 ---
 import Base from '@layouts/Base.astro';
-import GradientCTA from '@components/GradientCTA.astro';
 import Icon from '@components/Icon.astro';
 import { getLangFromUrl, useTranslatedPath } from '@i18n/utils';
 
@@ -446,15 +445,6 @@ const schedule = [
       </a>
     </div>
   </section>
-
-  <!-- CTA Section -->
-  <GradientCTA
-    title="Interesse am Mini Museum?"
-    description="Wir freuen uns auf Sie! Vereinbaren Sie ein kostenloses Erstgespräch."
-    buttonText="Jetzt anmelden"
-    buttonHref={`${base}/kontakt/?programm=mini-museum`}
-    variant="sunset"
-  />
 </Base>
 
 <style>
