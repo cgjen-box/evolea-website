@@ -63,9 +63,9 @@ const instagramUrl = siteSettings?.social?.instagram || 'https://www.instagram.c
   <div class="relative pt-12 pb-8">
     <div class="container mx-auto px-4">
       <!-- Top section with branding and links -->
-      <div class="grid md:grid-cols-4 gap-12 mb-16">
+      <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-8 sm:gap-10 lg:gap-12 mb-16">
         <!-- Brand column -->
-        <div class="md:col-span-2">
+        <div class="sm:col-span-2 lg:col-span-2">
           <a href={translatePath('/')} class="inline-flex items-center gap-2 font-display font-bold text-2xl mb-4 group">
             <span>EVOLEA</span>
             <span class="opacity-80 group-hover:opacity-100 transition-opacity" style="transform: rotate(-15deg);">
@@ -85,7 +85,7 @@ const instagramUrl = siteSettings?.social?.instagram || 'https://www.instagram.c
               href={instagramUrl}
               target="_blank"
               rel="noopener noreferrer"
-              class="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-white/20 transition-colors"
+              class="w-11 h-11 min-w-[44px] min-h-[44px] rounded-full bg-white/10 flex items-center justify-center hover:bg-white/20 transition-colors"
               aria-label="Instagram"
             >
               <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
@@ -94,7 +94,7 @@ const instagramUrl = siteSettings?.social?.instagram || 'https://www.instagram.c
             </a>
             <a
               href={`mailto:${email}`}
-              class="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-white/20 transition-colors"
+              class="w-11 h-11 min-w-[44px] min-h-[44px] rounded-full bg-white/10 flex items-center justify-center hover:bg-white/20 transition-colors"
               aria-label="Email"
             >
               <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
