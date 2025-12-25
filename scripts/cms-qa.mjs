@@ -1241,7 +1241,7 @@ const runSiteChecks = async (context) => {
     getFirstContentSlug(path.join(process.cwd(), 'src', 'content', 'blog')) ||
     'belohnung-erziehung';
   const enBlogSlug = getFirstContentSlug(
-    path.join(process.cwd(), 'src', 'content', 'blog-en')
+    path.join(process.cwd(), 'src', 'content', 'blogEn')
   );
 
   const pages = [
