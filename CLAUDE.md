@@ -76,7 +76,7 @@ Location: `.claude/todo/EVOLEA-BRAND-GUIDE-V3.md`
 - Not overly "stock photo" or generic
 
 **Always Generate 2 Options:**
-When generating images for EVOLEA, ALWAYS provide 2 different versions for the user to choose from. This allows for better selection and ensures the final image matches the brand perfectly.
+When generating images for EVOLEA, ALWAYS provide 2 different versions for the user to choose from.
 
 **Subject Guidelines:**
 - Children should appear ages 3-8 (depending on program)
@@ -85,46 +85,130 @@ When generating images for EVOLEA, ALWAYS provide 2 different versions for the u
 - Keep backgrounds simple but warm
 - Butterflies can be included as brand element
 
-**Brand Colors to Incorporate:**
-- Cream: #FFFBF7
-- Magenta: #DD48E0
-- Purple: #BA53AD
-- Mint: #7BEDD5
-- Soft pinks and lavenders
-
 ---
 
 ## Tech Stack
 - **Framework**: Astro 5.x with static site generation
 - **Language**: TypeScript (strict mode)
 - **Styling**: Tailwind CSS with custom EVOLEA theme
-- **Deployment**: GitHub Pages via GitHub Actions
+- **CMS**: Keystatic (GitHub-based headless CMS)
+- **Deployment**: GitHub Pages + Cloudflare Pages
 - **i18n**: Astro's built-in i18n routing (DE default, EN with /en/ prefix)
 
 ## Project Structure
 ```
 src/
 ├── components/     # Reusable Astro components
-├── layouts/        # Page layouts (Base.astro, etc.)
+├── layouts/        # Page layouts (Base.astro)
 ├── pages/          # German pages (default)
 │   └── en/         # English pages (prefixed)
 ├── i18n/           # Translation files and utilities
 │   ├── ui.ts       # UI string translations
 │   └── utils.ts    # i18n helper functions
-├── content/        # Content collections (programs, team, blog)
-└── styles/         # Global CSS and Tailwind config
+├── content/        # Content collections (blog, team, pages, etc.)
+└── styles/         # Global CSS
 public/
 ├── images/         # Static images
-├── fonts/          # Self-hosted fonts
+├── fonts/          # Self-hosted fonts (Fredoka, Poppins)
 └── CNAME           # GitHub Pages custom domain
 ```
 
 ## Key Commands
 ```bash
-npm run dev         # Start dev server
+npm run dev         # Start dev server at localhost:4321
 npm run build       # Build for production
 npm run preview     # Preview production build
 ```
+
+## Path Aliases
+```typescript
+@/            # src/
+@components/  # src/components/
+@layouts/     # src/layouts/
+@i18n/        # src/i18n/
+@content/     # src/content/
+```
+
+---
+
+## CMS (Keystatic)
+
+### Access
+- **CMS URL**: https://evolea-website.pages.dev/keystatic
+- **Local**: http://localhost:4321/keystatic (when running dev server)
+- **Authentication**: GitHub OAuth
+
+### Content Collections
+| Collection | Type | Description |
+|------------|------|-------------|
+| `blog` | content (MDX) | German blog posts |
+| `blog-en` | content (MDX) | English blog posts |
+| `team` | data (JSON) | Team members |
+| `programs` | data (JSON) | Program details |
+| `principles` | data (JSON) | Founding principles |
+| `testimonials` | data (JSON) | Parent testimonials |
+| `pages` | data (JSON) | Page-specific content (singletons) |
+| `settings` | data (JSON) | Site-wide settings |
+
+### Bilingual Content Pattern
+Most content uses bilingual objects:
+```typescript
+{
+  de: "German text",
+  en: "English text"
+}
+```
+
+Helper function to get correct language:
+```typescript
+const getText = (obj: { de?: string; en?: string }, fallback: string) => {
+  return lang === 'de' ? (obj.de || fallback) : (obj.en || obj.de || fallback);
+};
+```
+
+---
+
+## Icon System
+
+Use the `Icon.astro` component for all icons. NEVER use emojis.
+
+### Usage
+```astro
+<Icon name="sprout" size="lg" />
+<Icon name="heart" size="md" gradient={false} />
+```
+
+### Available Icons
+`sprout` | `palette` | `ball` | `school` | `chart` | `target` | `gamepad` | `clipboard` | `diamond` | `family` | `rainbow` | `lightning` | `heart` | `book` | `brain` | `handshake` | `teacher` | `running` | `gymnast` | `sparkle` | `leaf` | `people` | `calendar` | `location` | `mail` | `money` | `shield` | `clock` | `child` | `fire` | `cooking` | `coffee` | `rocket` | `museum` | `check`
+
+### Sizes
+`xs` (16px) | `sm` (24px) | `md` (32px) | `lg` (48px) | `xl` (64px) | `2xl` (80px)
+
+### Props
+- `name` - Icon name (required)
+- `size` - Size preset (default: 'md')
+- `gradient` - Use brand gradient (default: true)
+- `class` - Additional CSS classes
+
+---
+
+## Key Components
+
+| Component | Purpose |
+|-----------|---------|
+| `Base.astro` | Main layout with head, nav, footer |
+| `Header.astro` | Navigation with language picker |
+| `Footer.astro` | Site footer with links |
+| `Icon.astro` | SVG icon system |
+| `VideoHero.astro` | Homepage video hero |
+| `InnerPageHero.astro` | Inner page hero with gradient |
+| `GradientCTA.astro` | Call-to-action sections |
+| `FloatingShapes.astro` | Decorative background shapes |
+| `FooterDonationCTA.astro` | Gold donation CTA before footer |
+| `NavbarFade.astro` | Navbar with scroll fade effect |
+| `LanguagePicker.astro` | DE/EN language switcher |
+
+---
 
 ## Coding Standards
 
@@ -136,14 +220,12 @@ npm run preview     # Preview production build
 ### Astro Components
 ```astro
 ---
-// Frontmatter: imports, props, logic
 interface Props {
   title: string;
   variant?: 'purple' | 'cream';
 }
 const { title, variant = 'cream' } = Astro.props;
 ---
-<!-- Template: semantic HTML -->
 <article class:list={['card', { 'bg-evolea-purple': variant === 'purple' }]}>
   <h3>{title}</h3>
   <slot />
@@ -160,14 +242,17 @@ const { title, variant = 'cream' } = Astro.props;
 
 ### i18n Pattern
 ```typescript
-// src/i18n/utils.ts
-import { getLangFromUrl, useTranslations } from '@i18n/utils';
+import { getLangFromUrl, useTranslations, useTranslatedPath } from '@i18n/utils';
 
 const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
+const translatePath = useTranslatedPath(lang);
 
 // Usage: t('nav.home') -> "Startseite" or "Home"
+// Usage: translatePath('/angebote/') -> "/evolea-website/angebote/"
 ```
+
+---
 
 ## Content Guidelines
 - Use "Kinder im Spektrum" not "autistische Kinder"
@@ -179,7 +264,10 @@ const t = useTranslations(lang);
 1. **Mini Garten** - Kindergarten prep (ages 3-6)
 2. **Mini Projekte** - Social skills groups (ages 5-8)
 3. **Mini Turnen** - Sports/gymnastics group (ages 5-8)
-4. **B+U Schulberatung** - School consultation
+4. **EVOLEA Cafe** - Parent community meetup (every 2nd Wednesday)
+5. **Tagesschule** - Day school (vision/future)
+
+---
 
 ## Donation Page
 
@@ -187,7 +275,7 @@ const t = useTranslations(lang);
 - German: `/spenden/`
 - English: `/en/donate/`
 
-The language switcher automatically maps between these different paths. This is configured in `src/i18n/utils.ts` via `routeMappings`.
+The language switcher automatically maps between these paths via `routeMappings` in `src/i18n/utils.ts`.
 
 ### Bank Details (DO NOT MODIFY)
 ```
@@ -198,12 +286,13 @@ BIC/SWIFT: UBSWCHZH80A
 ```
 
 ### Components
-- `FooterDonationCTA.astro` - Gold gradient CTA shown before footer on all pages
+- `FooterDonationCTA.astro` - Gold gradient CTA shown before footer
 - Use `hideFooterCTA={true}` prop on Base layout to hide on donate pages
 
 ### Navigation
-- Gold "Spenden" button (#E8B86D) appears in both desktop and mobile navigation
-- Positioned between language picker and contact CTA
+- Gold "Spenden" button (#E8B86D) in both desktop and mobile nav
+
+---
 
 ## Testing Checklist
 - [ ] Lighthouse accessibility score >= 90
@@ -215,40 +304,48 @@ BIC/SWIFT: UBSWCHZH80A
 - [ ] No emojis on any page (SVG icons only)
 - [ ] Mobile menu has solid background
 - [ ] All text readable on gradients
-- [ ] Donate page language switcher works (/spenden/ ↔ /en/donate/)
+- [ ] Donate page language switcher works
 - [ ] FooterDonationCTA appears on all pages except donate pages
 - [ ] Gold Spenden button visible in navigation
+
+---
 
 ## Deployment
 
 ### Deployment Targets
-- **GitHub Pages** (static site): https://cgjen-box.github.io/evolea-website/
-- **Cloudflare Pages** (CMS): https://evolea-website.pages.dev/keystatic
-
-GitHub Actions automatically builds and deploys on push to `main` branch. Custom domain: evolea.ch
+- **GitHub Pages**: https://cgjen-box.github.io/evolea-website/
+- **Cloudflare Pages**: https://evolea-website.pages.dev/
+- **CMS (Keystatic)**: https://evolea-website.pages.dev/keystatic
 
 ### Post-Commit Deployment (MANDATORY)
 
 **After every git push, ALWAYS do the following:**
 
-1. **Trigger Cloudflare Deploy Hook** - Run this command to ensure Cloudflare deploys the latest commit:
+1. **Trigger Cloudflare Deploy Hook**:
    ```bash
    curl -X POST "https://api.cloudflare.com/client/v4/pages/webhooks/deploy_hooks/3e0b6230-6965-46cf-a7a2-176969101e48"
    ```
-   This is required because Cloudflare's automatic GitHub webhook is unreliable.
 
-2. **Check GitHub Actions** - Fetch https://github.com/cgjen-box/evolea-website/actions to verify the build passed
+2. **Check GitHub Actions**: https://github.com/cgjen-box/evolea-website/actions
 
-3. **Check for errors** - Look for TypeScript errors, build failures, or warnings that became errors
-
-4. **Test the live sites** - Verify both deployments are live:
+3. **Verify both sites are live**:
    - GitHub Pages: https://cgjen-box.github.io/evolea-website/
    - Cloudflare Pages: https://evolea-website.pages.dev/
 
 **Common deployment issues:**
 - TypeScript errors (unused variables, wrong imports)
 - Missing dependencies
-- Wrong import paths or exports
-- Cloudflare stuck on old commit (use the deploy hook above to fix)
+- Cloudflare stuck on old commit (use deploy hook to fix)
 
-**Never assume a push succeeded - always verify and trigger the Cloudflare webhook!**
+**Never assume a push succeeded - always verify!**
+
+---
+
+## Claude Code Skills
+
+Available skills in `.claude/skills/`:
+- `/website-review` - QA review using Chrome DevTools MCP
+- `/verify-deploy` - Deployment verification
+- `/brand` - Brand guidelines reference
+- `/image` - Image generation guidance
+- `/generate-assets` - Asset generation
