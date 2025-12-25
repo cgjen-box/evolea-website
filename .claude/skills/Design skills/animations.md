@@ -181,28 +181,91 @@ gsap.to('.butterfly-float', {
 });
 ```
 
-### 5. Navbar Scroll Effect
+### 5. Navbar Hide/Show with Scroll Thresholds
+
+The EVOLEA navbar uses a **threshold-based scroll system** to prevent jittery show/hide behavior. This is implemented in pure JavaScript (not GSAP) for performance.
+
+#### Current Implementation (Header.astro)
+
+| Setting | Value | Purpose |
+|---------|-------|---------|
+| `SHOW_THRESHOLD` | 60px | Upward scroll required before showing navbar |
+| `HIDE_THRESHOLD` | 30px | Downward scroll required before hiding navbar |
+| `TOP_ZONE` | 80px | Distance from top where navbar always shows |
+| Hide animation | 0.5s | Slower fade for smooth disappearance |
+| Show animation | 0.35s | Faster response when appearing |
+
+#### How It Works
 
 ```javascript
-const navbar = document.querySelector('.navbar');
+// Track cumulative scroll distance in current direction
+let scrollDelta = 0;
+let lastDirection = null;
 
+const updateNavbar = () => {
+  const scrollDiff = currentScrollY - lastScrollY;
+  const currentDirection = scrollDiff > 0 ? 'down' : 'up';
+
+  // Reset delta if direction changed
+  if (currentDirection !== lastDirection) {
+    scrollDelta = 0;
+    lastDirection = currentDirection;
+  }
+
+  // Accumulate scroll distance
+  scrollDelta += Math.abs(scrollDiff);
+
+  // Only trigger after threshold reached
+  if (currentDirection === 'down' && scrollDelta >= HIDE_THRESHOLD) {
+    // Hide navbar
+  } else if (currentDirection === 'up' && scrollDelta >= SHOW_THRESHOLD) {
+    // Show navbar
+  }
+};
+```
+
+#### CSS Transitions
+
+```css
+/* Base state - slower hide animation */
+.navbar-wrapper {
+  transition:
+    transform 0.5s cubic-bezier(0.4, 0, 0.2, 1),
+    opacity 0.4s ease;
+}
+
+/* Visible state - faster show animation */
+.navbar-wrapper.visible {
+  transition:
+    transform 0.35s cubic-bezier(0.0, 0, 0.2, 1),
+    opacity 0.25s ease;
+}
+```
+
+#### Why Thresholds Matter
+
+1. **Prevents jitter**: Small scroll fluctuations don't trigger state changes
+2. **Intentional interaction**: User must deliberately scroll to trigger
+3. **Asymmetric UX**: Easier to hide (30px) than show (60px) - respects content focus
+4. **Smooth feel**: Direction change resets delta, preventing false triggers
+
+#### Legacy GSAP Alternative (for reference)
+
+```javascript
+// Simple GSAP-based navbar effect (not using thresholds)
 ScrollTrigger.create({
   start: 'top -80',
   onUpdate: (self) => {
     if (self.direction === 1) {
-      // Scrolling down - shrink navbar
       gsap.to(navbar, {
         backgroundColor: 'rgba(255,255,255,0.95)',
         backdropFilter: 'blur(10px)',
-        boxShadow: '0 4px 20px rgba(0,0,0,0.1)',
         duration: 0.3
       });
     } else {
-      // Scrolling up - restore
       gsap.to(navbar, {
         backgroundColor: 'transparent',
         backdropFilter: 'none',
-        boxShadow: 'none',
         duration: 0.3
       });
     }
@@ -427,7 +490,8 @@ const { animationType = 'fade-up' } = Astro.props;
 | Section reveal | 800ms | - | power3.out |
 | Card stagger | 600-700ms | 100-150ms each | back.out(1.4) |
 | Button hover | 200ms | - | playful (CSS) |
-| Navbar transition | 300ms | - | ease-out |
+| Navbar show | 350ms | 60px scroll threshold | ease-out |
+| Navbar hide | 500ms | 30px scroll threshold | ease-out |
 | Floating element | 2500ms | random | sine.inOut |
 
 ---
