@@ -108,7 +108,22 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 
     <Footer siteSettings={siteSettings} />
 
-    <!-- Scroll reveal script -->
+    <!-- GSAP Scroll Animations -->
+    <script>
+      import { initScrollAnimations } from '@/scripts/gsap-animations';
+
+      // Initialize on DOM ready
+      document.addEventListener('DOMContentLoaded', () => {
+        initScrollAnimations();
+      });
+
+      // Re-initialize on Astro page transitions (if using View Transitions)
+      document.addEventListener('astro:page-load', () => {
+        initScrollAnimations();
+      });
+    </script>
+
+    <!-- Legacy scroll reveal script (fallback for non-GSAP elements) -->
     <script>
       // Intersection Observer for scroll reveal animations
       const observerOptions = {
@@ -127,7 +142,7 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
         });
       }, observerOptions);
 
-      // Observe all elements with reveal classes
+      // Observe all elements with reveal classes (not handled by GSAP)
       document.querySelectorAll('.reveal, .reveal-scale, .reveal-left, .reveal-right').forEach((el) => {
         revealOnScroll.observe(el);
       });

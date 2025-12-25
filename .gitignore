@@ -36,3 +36,6 @@ Thumbs.db
 # Astro
 .astro/
 artifacts/
+
+# Image Generation Pipeline
+public/images/generated/

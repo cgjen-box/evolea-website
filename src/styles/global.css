@@ -812,6 +812,48 @@
     min-width: 44px;
     min-height: 44px;
   }
+
+  /* =============================================================================
+     HOVER GUARDS - Only apply hover effects on devices that support it
+     ============================================================================= */
+
+  /* Hover states for pointer devices only */
+  @media (hover: hover) and (pointer: fine) {
+    .card-hover:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 12px 40px rgba(186, 83, 173, 0.2);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .btn-hover:hover {
+      transform: translateY(-2px) scale(1.02);
+      transition: transform 0.2s ease;
+    }
+
+    .link-hover:hover {
+      color: var(--evolea-magenta);
+      transition: color 0.2s ease;
+    }
+  }
+
+  /* Reset transforms for touch devices to prevent sticky hover */
+  @media (hover: none) or (pointer: coarse) {
+    .card-hover,
+    .btn-hover,
+    .link-hover {
+      transform: none !important;
+    }
+
+    /* Active states for touch feedback */
+    .card-hover:active {
+      transform: scale(0.98) !important;
+      transition: transform 0.1s ease;
+    }
+
+    .btn-hover:active {
+      transform: scale(0.95) !important;
+    }
+  }
 }
 
 /* ===== LANDSCAPE ORIENTATION SUPPORT ===== */
