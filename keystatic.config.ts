@@ -191,7 +191,7 @@ export default config({
     blogEn: collection({
       label: 'Blog Articles (EN)',
       slugField: 'title',
-      path: 'src/content/blog-en/*',
+      path: 'src/content/blogEn/*',
       entryLayout: 'content',
       format: { contentField: 'content' },
       schema: {
