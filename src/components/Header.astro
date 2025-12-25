@@ -244,9 +244,10 @@ const donatePath = lang === 'de' ? '/spenden/' : '/donate/';
     /* Hidden by default - only shows on scroll up */
     transform: translateY(-100%);
     opacity: 0;
+    /* Slower hide (0.5s), faster show (0.35s) for better feel */
     transition:
-      transform 0.4s cubic-bezier(0.4, 0, 0.2, 1),
-      opacity 0.3s ease;
+      transform 0.5s cubic-bezier(0.4, 0, 0.2, 1),
+      opacity 0.4s ease;
     pointer-events: none;
   }
 
@@ -254,6 +255,10 @@ const donatePath = lang === 'de' ? '/spenden/' : '/donate/';
     transform: translateY(0);
     opacity: 1;
     pointer-events: auto;
+    /* Faster appear transition */
+    transition:
+      transform 0.35s cubic-bezier(0.0, 0, 0.2, 1),
+      opacity 0.25s ease;
   }
 
   /* At top of page - show header without prism effect */
@@ -913,8 +918,18 @@ const donatePath = lang === 'de' ? '/spenden/' : '/donate/';
     let ticking = false;
     let hasScrolledDown = false;
 
+    // Scroll thresholds for smoother behavior
+    const SHOW_THRESHOLD = 60;  // Pixels of upward scroll needed to show navbar
+    const HIDE_THRESHOLD = 30;  // Pixels of downward scroll needed to hide navbar
+    const TOP_ZONE = 80;        // Pixels from top where navbar always shows
+
+    // Track cumulative scroll distance in current direction
+    let scrollDelta = 0;
+    let lastDirection: 'up' | 'down' | null = null;
+
     const updateNavbar = () => {
       const currentScrollY = window.scrollY;
+      const scrollDiff = currentScrollY - lastScrollY;
 
       // Don't update when mobile menu is open
       if (document.body.classList.contains('menu-open')) {
@@ -922,22 +937,40 @@ const donatePath = lang === 'de' ? '/spenden/' : '/donate/';
         return;
       }
 
-      // At top of page (within first 80px)
-      if (currentScrollY <= 80) {
+      // At top of page - always show without prism effect
+      if (currentScrollY <= TOP_ZONE) {
         wrapper.classList.add('at-top');
         wrapper.classList.add('visible');
         wrapper.classList.remove('hidden');
         hasScrolledDown = false;
+        scrollDelta = 0;
+        lastDirection = null;
+        lastScrollY = currentScrollY;
+        ticking = false;
+        return;
       }
-      // Scrolling down
-      else if (currentScrollY > lastScrollY) {
+
+      // Determine scroll direction
+      const currentDirection: 'up' | 'down' = scrollDiff > 0 ? 'down' : 'up';
+
+      // Reset delta if direction changed
+      if (currentDirection !== lastDirection) {
+        scrollDelta = 0;
+        lastDirection = currentDirection;
+      }
+
+      // Accumulate scroll distance
+      scrollDelta += Math.abs(scrollDiff);
+
+      // Scrolling down - hide after threshold
+      if (currentDirection === 'down' && scrollDelta >= HIDE_THRESHOLD) {
         hasScrolledDown = true;
         wrapper.classList.remove('visible');
         wrapper.classList.remove('at-top');
         wrapper.classList.add('hidden');
       }
-      // Scrolling up (only if we've scrolled down first)
-      else if (currentScrollY < lastScrollY && hasScrolledDown) {
+      // Scrolling up - show after threshold (only if we've scrolled down first)
+      else if (currentDirection === 'up' && scrollDelta >= SHOW_THRESHOLD && hasScrolledDown) {
         wrapper.classList.add('visible');
         wrapper.classList.remove('at-top');
         wrapper.classList.remove('hidden');
@@ -948,7 +981,7 @@ const donatePath = lang === 'de' ? '/spenden/' : '/donate/';
     };
 
     // Initial state
-    if (window.scrollY <= 80) {
+    if (window.scrollY <= TOP_ZONE) {
       wrapper.classList.add('at-top');
       wrapper.classList.add('visible');
     }
