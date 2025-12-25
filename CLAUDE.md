@@ -349,3 +349,37 @@ Available skills in `.claude/skills/`:
 - `/brand` - Brand guidelines reference
 - `/image` - Image generation guidance
 - `/generate-assets` - Asset generation
+
+---
+
+## Design Skills & Reference Documentation
+
+### Skill Architecture
+
+| Skill | Location | Purpose |
+|-------|----------|---------|
+| **Design UX Lead** | `.claude/skills/Design skills/EVOLEA-DESIGN-UX.md` | Master orchestrator for all design work |
+| Animations | `.claude/skills/Design skills/animations.md` | GSAP patterns, scroll effects, reduced motion |
+| Responsive | `.claude/skills/Design skills/responsive.md` | Mobile-first patterns, touch targets |
+| Angebote Structure | `.claude/skills/Design skills/angebote-structure.md` | Program page templates (Mini Garten, etc.) |
+| Illustrations | `.claude/skills/Design skills/illustrations.md` | AI image prompts for Gemini/ChatGPT |
+| Accessibility | `.claude/skills/Design skills/accessibility.md` | WCAG AA, neurodivergent-friendly patterns |
+| **Breakpoints** | `.claude/skills/breakpoints/SKILL.md` | Responsive breakpoint system, CSS specs |
+| Website Review | `.claude/skills/website-review/SKILL.md` | QA testing with Chrome DevTools MCP |
+
+### When to Consult Skills
+
+- **Before any design changes** → Start with `EVOLEA-DESIGN-UX.md`
+- **Adding animations** → Check `animations.md` for GSAP patterns
+- **Responsive issues** → Check both `responsive.md` AND `breakpoints/SKILL.md`
+- **New program page** → Follow `angebote-structure.md` template
+- **Need illustrations** → Use prompts from `illustrations.md`
+- **Accessibility concerns** → Check `accessibility.md` for WCAG standards
+
+### CSS Changes Protocol
+
+**IMPORTANT:** Before modifying `src/styles/global.css` or `tailwind.config.mjs`:
+1. Consult the relevant skill documentation
+2. Check if the pattern already exists in the codebase
+3. Ask user for approval before adding new CSS variables or breakpoints
+4. Test changes at all breakpoints (375px, 768px, 1024px, 1440px, 1920px)
