@@ -1,9 +1,8 @@
 ﻿---
 import FloatingShapes from '@components/FloatingShapes.astro';
-import GradientCTA from '@components/GradientCTA.astro';
 import Icon from '@components/Icon.astro';
 
-const { content, lang, translatePath } = Astro.props;
+const { content, lang } = Astro.props;
 
 const isEnglish = lang === 'en';
 
@@ -22,7 +21,6 @@ const schedule = content?.schedule || {};
 const expect = content?.expect || {};
 const quote = content?.quote || {};
 const faq = content?.faq || {};
-const cta = content?.cta || {};
 
 const aboutParagraphs = getArray(about.abschnitte);
 const aboutCards = getArray(content?.aboutCards);
@@ -30,24 +28,6 @@ const scheduleCards = getArray(schedule.cards);
 const scheduleDates = getArray(schedule.daten);
 const expectItems = getArray(expect.items);
 const faqItems = getArray(faq.items);
-
-const normalizePath = (value: any, fallback: string) => {
-  let path = getText(value, fallback);
-  if (!path) return fallback;
-  if (!path.startsWith('/')) path = `/${path}`;
-  return path;
-};
-
-const ctaLink = normalizePath(cta.buttonLink, '/kontakt/');
-const ctaHref = translatePath(ctaLink);
-const ctaTitle = getText(cta.titel, isEnglish ? 'We Look Forward to Seeing You' : 'Wir freuen uns auf Sie');
-const ctaDescription = getText(
-  cta.beschreibung,
-  isEnglish
-    ? 'No registration needed - but if you have questions or want to know the location, reach out to us.'
-    : 'Keine Anmeldung noetig - aber wenn Sie Fragen haben oder den Ort erfahren moechten, schreiben Sie uns.'
-);
-const ctaButtonText = getText(cta.buttonText, isEnglish ? 'Contact Us' : 'Jetzt Kontakt aufnehmen');
 ---
 
 <main class="cafe-page">
@@ -184,15 +164,6 @@ const ctaButtonText = getText(cta.buttonText, isEnglish ? 'Contact Us' : 'Jetzt 
       </div>
     </div>
   </section>
-
-  <!-- CTA Section -->
-  <GradientCTA
-    title={ctaTitle}
-    description={ctaDescription}
-    buttonText={ctaButtonText}
-    buttonHref={ctaHref}
-    variant="calm"
-  />
 </main>
 
 <style>
