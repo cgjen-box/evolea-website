@@ -1,35 +1,37 @@
 # EVOLEA Website
 
-[![Deploy to GitHub Pages](https://github.com/evolea/evolea-website/actions/workflows/deploy.yml/badge.svg)](https://github.com/evolea/evolea-website/actions/workflows/deploy.yml)
+Official website for EVOLEA Verein - a Swiss non-profit providing educational programs for children on the autism spectrum or with ADHD, based in Zurich.
 
-Official website for EVOLEA Verein - a Swiss non-profit providing educational programs for children on the autism spectrum or with ADHD.
+## Live Sites
 
-## 🌐 Live Site
+- **Production**: [evolea.ch](https://evolea.ch)
+- **GitHub Pages**: [cgjen-box.github.io/evolea-website](https://cgjen-box.github.io/evolea-website/)
+- **Cloudflare Pages**: [evolea-website.pages.dev](https://evolea-website.pages.dev/)
+- **CMS (Keystatic)**: [evolea-website.pages.dev/keystatic](https://evolea-website.pages.dev/keystatic)
 
-- **Production**: [https://evolea.ch](https://evolea.ch)
+## Tech Stack
 
-## 🚀 Tech Stack
-
-- **Framework**: [Astro](https://astro.build/) 5.x
+- **Framework**: Astro 5.x with static site generation
 - **Language**: TypeScript (strict mode)
 - **Styling**: Tailwind CSS with custom EVOLEA theme
-- **i18n**: Bilingual (German default, English)
-- **Deployment**: GitHub Pages via GitHub Actions
+- **CMS**: Keystatic (GitHub-based)
+- **i18n**: Bilingual (German default, English with /en/ prefix)
+- **Deployment**: GitHub Pages + Cloudflare Pages
 
-## 📁 Project Structure
+## Project Structure
 
 ```
 src/
 ├── components/     # Reusable Astro components
-├── layouts/        # Page layouts
+├── layouts/        # Page layouts (Base.astro)
 ├── pages/          # German pages (default)
 │   └── en/         # English pages
-├── i18n/           # Translation files
-├── content/        # Content collections
-└── styles/         # Global styles
+├── i18n/           # Translation files and utilities
+├── content/        # Content collections (blog, team, pages)
+└── styles/         # Global CSS
 ```
 
-## 🧞 Commands
+## Commands
 
 | Command           | Action                                       |
 |:------------------|:---------------------------------------------|
@@ -38,44 +40,38 @@ src/
 | `npm run build`   | Build production site to `./dist/`           |
 | `npm run preview` | Preview build locally before deploying       |
 
-## 🌍 Internationalization
+## Internationalization
 
 - **German (de)**: Default language, no URL prefix (`/angebote/`)
 - **English (en)**: URL prefix (`/en/programs/`)
 
 Translations are managed in `src/i18n/ui.ts`.
 
-## 🎨 Design System
+## Programs
 
-See `.github/copilot-instructions.md` for the complete EVOLEA design agent guidelines including:
-- Color palette
-- Typography
+1. **Mini Garten** - Kindergarten prep (ages 3-6)
+2. **Mini Projekte** - Social skills groups (ages 5-8)
+3. **Mini Turnen** - Sports/gymnastics group (ages 5-8)
+4. **EVOLEA Cafe** - Parent community meetup
+5. **Tagesschule** - Day school (vision)
+
+## Design System
+
+See `.claude/todo/EVOLEA-BRAND-GUIDE-V3.md` for the complete brand guide including:
+- Color palette (Magenta, Purple, Mint, etc.)
+- Typography (Fredoka for headlines, Poppins for body)
+- The 10 Brand Commandments
 - Accessibility requirements
-- Component patterns
 
-## 📝 AI Agents
+## Development
 
-This project uses AI agents for development:
+See `CLAUDE.md` for detailed project instructions, coding standards, and deployment procedures.
 
-1. **GitHub Copilot**: See `.github/copilot-instructions.md` for the EVOLEA Design Agent
-2. **Claude CLI**: See `CLAUDE.md` for project context and coding standards
+## Deployment
 
-## 🚀 Deployment
+- **GitHub Pages**: Automatic via GitHub Actions on push to `main`
+- **Cloudflare Pages**: Webhook trigger after push (see CLAUDE.md)
 
-Automatic deployment via GitHub Actions on push to `main` branch.
+## License
 
-### Custom Domain Setup
-
-1. DNS A records pointing to GitHub Pages IPs:
-   - 185.199.108.153
-   - 185.199.109.153
-   - 185.199.110.153
-   - 185.199.111.153
-
-2. CNAME record: `www` → `evolea.github.io`
-
-3. Enable HTTPS in repository settings
-
-## 📄 License
-
-© 2025 EVOLEA Verein. All rights reserved.
+Copyright 2025 EVOLEA Verein. All rights reserved.
