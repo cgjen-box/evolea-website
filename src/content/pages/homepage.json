@@ -1,26 +1,26 @@
 {
   "hero": {
     "titel": {
-      "de": "Wo Kinder sich im Spektrum entfalten",
-      "en": "Where Children on the Spectrum Flourish"
+      "de": "Wo Kinder sich im Spektrum entfalten QA",
+      "en": "Where Children on the Spectrum Flourish QA"
     },
     "untertitel": {
-      "de": "Unsere Bildungsangebote schaffen Räume, damit sich Kinder im Spektrum entfalten können.",
-      "en": "Our educational programs create spaces where children on the spectrum can thrive."
+      "de": "Unsere Bildungsangebote schaffen Räume, damit sich Kinder im Spektrum entfalten können. QA",
+      "en": "Our educational programs create spaces where children on the spectrum can thrive. QA"
     },
     "buttonText": {
-      "de": "Angebote entdecken",
-      "en": "Explore Programs"
+      "de": "Angebote entdecken QA",
+      "en": "Explore Programs QA"
     },
-    "buttonLink": "/angebote/"
+    "buttonLink": "/angebote/ QA"
   },
   "angeboteSection": {
     "label": {
-      "de": "Angebote",
-      "en": "Programs"
+      "de": "Angebote QA",
+      "en": "Programs QA"
     },
     "titel": {
-      "de": "Unsere Angebote",
+      "de": "Unsere Angebote QA",
       "en": "Our Programs"
     },
     "intro1": {
