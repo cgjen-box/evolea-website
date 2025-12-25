@@ -2,6 +2,64 @@ import { defineMiddleware } from 'astro:middleware';
 
 const CLOUDFLARE_DEPLOY_HOOK = 'https://api.cloudflare.com/client/v4/pages/webhooks/deploy_hooks/3e0b6230-6965-46cf-a7a2-176969101e48';
 
+const DEPLOY_COOLDOWN_MS = 10 * 60 * 1000;
+const DEPLOY_COOLDOWN_CACHE_KEY = 'https://evolea.local/__deploy_cooldown';
+
+let lastDeployAt = 0;
+
+const getDeployCache = async () => {
+  if (typeof caches === 'undefined') return null;
+  try {
+    return await caches.open('evolea-deploy');
+  } catch {
+    return null;
+  }
+};
+
+const getDeployCooldownRemaining = async () => {
+  const now = Date.now();
+  let last = lastDeployAt;
+
+  const cache = await getDeployCache();
+  if (cache) {
+    try {
+      const cached = await cache.match(DEPLOY_COOLDOWN_CACHE_KEY);
+      if (cached) {
+        const payload = await cached.json().catch(() => ({}));
+        if (payload && typeof payload.lastDeployAt === 'number') {
+          last = payload.lastDeployAt;
+        }
+      }
+    } catch {
+      // ignore cache errors
+    }
+  }
+
+  if (!last) return 0;
+  const remaining = DEPLOY_COOLDOWN_MS - (now - last);
+  return remaining > 0 ? remaining : 0;
+};
+
+const setDeployCooldown = async () => {
+  const now = Date.now();
+  lastDeployAt = now;
+
+  const cache = await getDeployCache();
+  if (!cache) return;
+
+  try {
+    const response = new Response(JSON.stringify({ lastDeployAt: now }), {
+      headers: {
+        'Content-Type': 'application/json',
+        'Cache-Control': `max-age=${Math.ceil(DEPLOY_COOLDOWN_MS / 1000)}`,
+      },
+    });
+    await cache.put(DEPLOY_COOLDOWN_CACHE_KEY, response);
+  } catch {
+    // ignore cache errors
+  }
+};
+
 // Minimal script to inject deploy button into Keystatic navbar
 const deployScript = `<script>
 (function(){
@@ -52,12 +110,21 @@ const deployScript = `<script>
 
       try {
         var response = await fetch('/api/deploy', { method: 'POST' });
-        var data = await response.json();
+        var data = {};
+        try {
+          data = await response.json();
+        } catch (e) {
+          data = {};
+        }
         if (data.success) {
           btn.innerHTML = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="margin-right:6px"><path d="M20 6L9 17l-5-5"/></svg>Deployed!';
           btn.style.background = '#22c55e';
           showToast('Deploy gestartet! Live in 1-2 Min.', 'success');
         } else {
+          if (data.retryAfterMs) {
+            var minutes = Math.max(1, Math.ceil(data.retryAfterMs / 60000));
+            throw new Error('Bitte ' + minutes + ' Min warten.');
+          }
           throw new Error(data.error || 'Deploy failed');
         }
       } catch (e) {
@@ -122,14 +189,37 @@ export const onRequest = defineMiddleware(async (context, next) => {
 
   // Handle deploy API endpoint
   if (url.pathname === '/api/deploy' && request.method === 'POST') {
+    const remainingMs = await getDeployCooldownRemaining();
+    if (remainingMs > 0) {
+      const retryAfter = Math.ceil(remainingMs / 1000);
+      return new Response(JSON.stringify({
+        success: false,
+        error: 'Deploy cooldown active',
+        retryAfterMs: remainingMs,
+        retryAfterSeconds: retryAfter,
+      }), {
+        status: 429,
+        headers: {
+          'Content-Type': 'application/json',
+          'Retry-After': String(retryAfter),
+        },
+      });
+    }
+
     try {
       const response = await fetch(CLOUDFLARE_DEPLOY_HOOK, { method: 'POST' });
-      const data = await response.json() as { success: boolean; result?: { id: string } };
+      let data: { success?: boolean; result?: { id: string } } = {};
+      try {
+        data = await response.json();
+      } catch {
+        data = {};
+      }
 
       if (data.success) {
+        await setDeployCooldown();
         return new Response(JSON.stringify({
           success: true,
-          message: 'Deployment gestartet! Die Änderungen sind in 1-2 Minuten live.',
+          message: 'Deployment gestartet! Die A,nderungen sind in 1-2 Minuten live.',
           deployId: data.result?.id
         }), {
           status: 200,
