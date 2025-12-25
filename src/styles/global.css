@@ -77,6 +77,51 @@
 
     /* Mint family */
     --gradient-mint: linear-gradient(135deg, #7BEDD5 0%, #A3F4E6 50%, #DCD49F 100%);
+
+    /* ============================================
+       BREAKPOINT REFERENCE VARIABLES
+       ============================================ */
+    --bp-sm: 640px;
+    --bp-md: 768px;
+    --bp-lg: 1024px;
+    --bp-xl: 1280px;
+    --bp-2xl: 1440px;
+    --bp-3xl: 1920px;
+    --bp-4xl: 2560px;
+
+    /* ============================================
+       FLUID TYPOGRAPHY VARIABLES
+       ============================================ */
+    --font-hero: clamp(2.5rem, 4vw + 1rem, 6rem);
+    --font-h1: clamp(2rem, 3vw + 0.75rem, 4rem);
+    --font-h2: clamp(1.5rem, 2.5vw + 0.5rem, 3rem);
+    --font-h3: clamp(1.25rem, 2vw + 0.25rem, 2rem);
+    --font-body-lg: clamp(1.125rem, 0.5vw + 1rem, 1.375rem);
+    --font-body: clamp(1rem, 0.3vw + 0.9rem, 1.125rem);
+    --font-small: clamp(0.875rem, 0.2vw + 0.8rem, 1rem);
+    --font-micro: clamp(0.75rem, 0.15vw + 0.7rem, 0.875rem);
+
+    /* ============================================
+       FLUID SPACING VARIABLES
+       ============================================ */
+    --space-section: clamp(4rem, 8vh, 8rem);
+    --space-component: clamp(2rem, 4vh, 5rem);
+    --space-card-gap: clamp(1rem, 2vw, 2.5rem);
+    --space-content-padding: clamp(1.5rem, 5vw, 4rem);
+    --gradient-fade-height: clamp(80px, 10vh, 160px);
+
+    /* ============================================
+       CONTAINER WIDTH VARIABLES
+       ============================================ */
+    --container-sm: 640px;
+    --container-md: 768px;
+    --container-lg: 1024px;
+    --container-xl: 1280px;
+    --container-2xl: 1440px;
+    --container-3xl: 1600px;
+    --container-4xl: 1800px;
+    --container-fluid: min(92vw, 1800px);
+    --container-hero: min(90vw, 1600px);
   }
 
   html {

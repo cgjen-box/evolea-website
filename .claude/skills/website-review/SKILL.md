@@ -238,4 +238,4 @@ scripts\chrome-debug.bat
 - `TESTING-MANUAL.md` - Detailed test cases for each page type
 - `TEST-REPORT-TEMPLATE.md` - Report format
 - `AUTH-SETUP.md` - Production authentication setup
-- `.claude/skills/design-brand/SKILL.md` - Visual design reference
+- `.claude/skills/EVOLEA-SKILL.md` - Visual design reference
