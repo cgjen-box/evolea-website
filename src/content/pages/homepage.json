@@ -21,15 +21,15 @@
     },
     "titel": {
       "de": "Unsere Angebote",
-      "en": "Our Programs QA"
+      "en": "Our Programs"
     },
     "intro1": {
-      "de": "Wir bieten Förderangebote für Kinder im Autismus Spektrum oder mit ADHS an. QA",
-      "en": "We offer support programs for children on the autism spectrum or with ADHD. QA"
+      "de": "Wir bieten Förderangebote für Kinder im Autismus Spektrum oder mit ADHS an.",
+      "en": "We offer support programs for children on the autism spectrum or with ADHD."
     },
     "intro2": {
-      "de": "Wir arbeiten inklusiv, individuell und mit den neusten wissenschaftlichen Erkenntnissen. Unsere Angebote umfassen: QA",
-      "en": "We work inclusively, individually and with the latest scientific knowledge. Our programs include: QA"
+      "de": "Wir arbeiten inklusiv, individuell und mit den neusten wissenschaftlichen Erkenntnissen. Unsere Angebote umfassen:",
+      "en": "We work inclusively, individually and with the latest scientific knowledge. Our programs include:"
     },
     "listItems": [
       {
@@ -50,15 +50,15 @@
       }
     ],
     "outro": {
-      "de": "Unsere Angebote werden in Zukunft stets erweitert. QA",
-      "en": "Our programs are constantly being expanded. QA"
+      "de": "Unsere Angebote werden in Zukunft stets erweitert.",
+      "en": "Our programs are constantly being expanded."
     },
     "funding": {
-      "de": "QA",
-      "en": "QA"
+      "de": "",
+      "en": ""
     },
     "weitereAngeboteLabel": {
-      "de": "Weitere Angebote QA",
+      "de": "Weitere Angebote",
       "en": "More Programs"
     }
   },
