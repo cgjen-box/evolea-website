@@ -215,8 +215,7 @@ const donatePath = lang === 'de' ? '/spenden/' : '/donate/';
       <div class="flex flex-col gap-3">
         <a
           href={translatePath(donatePath)}
-          class="flex items-center justify-center gap-3 w-full py-4 px-8 font-display font-bold text-lg rounded-full shadow-lg hover:shadow-xl transition-all"
-          style="background: #E8B86D; color: #5C2854;"
+          class="mobile-donate flex items-center justify-center gap-3 w-full py-4 px-8 font-display font-bold text-lg rounded-full shadow-lg hover:shadow-xl transition-all"
         >
           {t('nav.donate')}
         </a>
@@ -490,21 +489,12 @@ const donatePath = lang === 'de' ? '/spenden/' : '/donate/';
     background: rgba(255, 255, 255, 0.15) !important;
   }
 
-  /* Gold donate button shimmer when scrolled */
+  /* Gold donate button - enhanced glow when scrolled */
   .navbar-wrapper.visible:not(.at-top) .nav-donate {
-    background: linear-gradient(
-      135deg,
-      #E8B86D 0%,
-      #FFE066 25%,
-      #F5D54A 50%,
-      #E8B86D 75%,
-      #D4A056 100%
-    );
-    background-size: 200% 200%;
-    animation: goldShimmer 4s ease infinite;
     box-shadow:
-      0 4px 15px rgba(232, 184, 109, 0.4),
-      0 0 25px rgba(255, 224, 102, 0.3);
+      0 4px 20px rgba(232, 184, 109, 0.5),
+      0 0 35px rgba(255, 224, 102, 0.4),
+      inset 0 1px 0 rgba(255, 255, 255, 0.5);
   }
 
   @keyframes goldShimmer {
@@ -777,20 +767,70 @@ const donatePath = lang === 'de' ? '/spenden/' : '/donate/';
 
   /* Donate button */
   .nav-donate {
-    background: #E8B86D;
-    color: #5C2854;
+    background: linear-gradient(
+      135deg,
+      #E8B86D 0%,
+      #FFE066 25%,
+      #F5D54A 50%,
+      #E8B86D 75%,
+      #D4A056 100%
+    );
+    background-size: 200% 200%;
+    animation: goldShimmer 4s ease infinite;
+    color: #FFFFFF;
     padding: 0.6rem 1.25rem;
     border-radius: 100px;
-    font-weight: 600;
+    font-weight: 700;
     font-size: 0.9rem;
-    box-shadow: 0 2px 10px rgba(232, 184, 109, 0.3);
-    transition: all 0.3s ease;
+    text-shadow:
+      0 1px 1px rgba(0, 0, 0, 0.35),
+      0 2px 5px rgba(0, 0, 0, 0.3),
+      0 4px 12px rgba(138, 61, 158, 0.6),
+      0 0 30px rgba(0, 0, 0, 0.2);
+    box-shadow:
+      0 4px 15px rgba(232, 184, 109, 0.4),
+      0 0 25px rgba(255, 224, 102, 0.3),
+      inset 0 1px 0 rgba(255, 255, 255, 0.4);
+    transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
   }
 
   .nav-donate:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 4px 20px rgba(232, 184, 109, 0.4);
-    background: #D4A056;
+    transform: translateY(-3px) scale(1.02);
+    box-shadow:
+      0 6px 25px rgba(232, 184, 109, 0.5),
+      0 0 40px rgba(255, 224, 102, 0.4),
+      inset 0 1px 0 rgba(255, 255, 255, 0.5);
+  }
+
+  /* Mobile donate button */
+  .mobile-donate {
+    background: linear-gradient(
+      135deg,
+      #E8B86D 0%,
+      #FFE066 25%,
+      #F5D54A 50%,
+      #E8B86D 75%,
+      #D4A056 100%
+    );
+    background-size: 200% 200%;
+    animation: goldShimmer 4s ease infinite;
+    color: #FFFFFF;
+    text-shadow:
+      0 1px 1px rgba(0, 0, 0, 0.35),
+      0 2px 5px rgba(0, 0, 0, 0.3),
+      0 4px 12px rgba(138, 61, 158, 0.6),
+      0 0 30px rgba(0, 0, 0, 0.2);
+    box-shadow:
+      0 4px 20px rgba(232, 184, 109, 0.4),
+      0 0 40px rgba(255, 224, 102, 0.3),
+      inset 0 1px 0 rgba(255, 255, 255, 0.4);
+  }
+
+  .mobile-donate:hover {
+    box-shadow:
+      0 8px 30px rgba(232, 184, 109, 0.5),
+      0 0 60px rgba(255, 224, 102, 0.4),
+      inset 0 1px 0 rgba(255, 255, 255, 0.5);
   }
 
   /* ===========================================
@@ -885,8 +925,10 @@ const donatePath = lang === 'de' ? '/spenden/' : '/donate/';
     :global(.header-butterfly),
     :global(.navbar-fade__wave),
     :global(.navbar-fade__shimmer),
-    :global(.nav-donate) {
+    :global(.nav-donate),
+    :global(.mobile-donate) {
       animation: none !important;
+      background-position: 50% 50%;
     }
 
     .mobile-menu-overlay {
