@@ -813,6 +813,25 @@
     min-height: 44px;
   }
 
+  /* Mobile touch targets - ensure 44px minimum for all interactive elements */
+  @media (max-width: 768px) {
+    /* Navigation and footer links need adequate touch targets */
+    nav a:not(.sr-only),
+    footer a,
+    .breadcrumb a {
+      min-height: 44px;
+      display: inline-flex;
+      align-items: center;
+      padding-block: 0.5rem;
+    }
+
+    /* Footer link spacing */
+    footer nav a,
+    footer ul a {
+      padding: 0.5rem 0;
+    }
+  }
+
   /* =============================================================================
      HOVER GUARDS - Only apply hover effects on devices that support it
      ============================================================================= */
