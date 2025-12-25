@@ -87,10 +87,7 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 
-    <!-- Preload hero video for homepage -->
-    {transparentHeader && (
-      <link rel="preload" as="video" href={`${base}/videos/hero.mp4`} />
-    )}
+    <!-- Hero video is preloaded by the video element itself -->
   </head>
   <body class="bg-evolea-cream text-evolea-text min-h-screen flex flex-col antialiased font-sans">
     <!-- Skip link for accessibility -->
