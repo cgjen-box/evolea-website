@@ -20,7 +20,8 @@
       "WebFetch(domain:evolea-website.pages.dev)",
       "WebFetch(domain:keystatic.com)",
       "Bash(unzip:*)",
-      "Bash(git reset:*)"
+      "Bash(git reset:*)",
+      "Skill(website-review)"
     ],
     "deny": [],
     "ask": []
