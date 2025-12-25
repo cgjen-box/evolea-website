@@ -1,7 +1,7 @@
 {
   "hero": {
     "titel": {
-      "de": "Wo Kinder sich im Spektrum entfalten",
+      "de": "Wo Kinder sich im Spektrum entfalten QA",
       "en": "Where Children on the Spectrum Flourish"
     },
     "untertitel": {
@@ -53,10 +53,7 @@
       "de": "Unsere Angebote werden in Zukunft stets erweitert.",
       "en": "Our programs are constantly being expanded."
     },
-    "funding": {
-      "de": "",
-      "en": ""
-    },
+    "funding": {},
     "weitereAngeboteLabel": {
       "de": "Weitere Angebote",
       "en": "More Programs"
