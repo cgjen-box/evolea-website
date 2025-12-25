@@ -21,7 +21,10 @@
       "WebFetch(domain:keystatic.com)",
       "Bash(unzip:*)",
       "Bash(git reset:*)",
-      "Skill(website-review)"
+      "Skill(website-review)",
+      "Bash(npm run dev:*)",
+      "Skill(breakpoints)",
+      "Bash(nul)"
     ],
     "deny": [],
     "ask": []
