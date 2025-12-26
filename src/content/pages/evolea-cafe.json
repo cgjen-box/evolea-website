@@ -11,7 +11,9 @@
   "about": {
     "titel": {},
     "abschnitte": [],
-    "hinweis": {}
+    "hinweis": {
+      "de": "QA"
+    }
   },
   "aboutCards": [],
   "schedule": {
