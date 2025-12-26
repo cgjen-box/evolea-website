@@ -6,9 +6,7 @@
   "hero": {
     "badge": {},
     "titel": {},
-    "tagline": {
-      "en": "QA"
-    }
+    "tagline": {}
   },
   "about": {
     "titel": {},
