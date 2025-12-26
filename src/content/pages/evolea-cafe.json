@@ -29,9 +29,7 @@
     "autor": {}
   },
   "faq": {
-    "titel": {
-      "en": "QA"
-    },
+    "titel": {},
     "items": []
   },
   "cta": {
