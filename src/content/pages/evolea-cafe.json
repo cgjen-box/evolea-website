@@ -9,7 +9,9 @@
     "tagline": {}
   },
   "about": {
-    "titel": {},
+    "titel": {
+      "de": "QA"
+    },
     "abschnitte": [],
     "hinweis": {}
   },
