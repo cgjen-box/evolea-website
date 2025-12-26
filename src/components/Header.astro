@@ -883,37 +883,90 @@ const donatePath = lang === 'de' ? '/spenden/' : '/donate/';
     transform: translateX(0);
   }
 
+  /* iOS Safari doesn't animate background-position reliably */
+  /* Use transform-based animation instead for iOS compatibility */
   .mobile-menu-bg {
     position: absolute;
     inset: 0;
+    overflow: hidden;
+    background: #BA53AD; /* Fallback solid color */
+  }
+
+  /* Animated gradient using pseudo-elements with transform */
+  /* This approach works reliably on iOS Safari */
+  .mobile-menu-bg::before,
+  .mobile-menu-bg::after {
+    content: '';
+    position: absolute;
+    inset: -50%;
+    width: 200%;
+    height: 200%;
     background: linear-gradient(
       135deg,
       #BA53AD 0%,
-      #DD48E0 25%,
-      #CD87F8 50%,
-      #7BEDD5 75%,
+      #DD48E0 20%,
+      #CD87F8 40%,
+      #7BEDD5 60%,
+      #5DADE2 80%,
+      #BA53AD 100%
+    );
+    /* Transform animation works on iOS */
+    -webkit-animation: gradientRotate 20s linear infinite;
+    animation: gradientRotate 20s linear infinite;
+    -webkit-transform-origin: center center;
+    transform-origin: center center;
+  }
+
+  .mobile-menu-bg::after {
+    background: linear-gradient(
+      225deg,
+      #5DADE2 0%,
+      #7BEDD5 20%,
+      #CD87F8 40%,
+      #DD48E0 60%,
+      #BA53AD 80%,
       #5DADE2 100%
     );
-    background-size: 400% 400%;
-    /* iOS Safari requires webkit prefix and hardware acceleration */
-    -webkit-animation: gradientShift 15s ease infinite;
-    animation: gradientShift 15s ease infinite;
-    /* Force hardware acceleration on iOS */
-    -webkit-transform: translateZ(0);
-    transform: translateZ(0);
-    -webkit-backface-visibility: hidden;
-    backface-visibility: hidden;
-    will-change: background-position;
+    -webkit-animation-delay: -10s;
+    animation-delay: -10s;
+    -webkit-animation-duration: 25s;
+    animation-duration: 25s;
+    opacity: 0.8;
   }
 
-  @-webkit-keyframes gradientShift {
-    0%, 100% { background-position: 0% 50%; }
-    50% { background-position: 100% 50%; }
+  /* Transform-based animation - iOS compatible */
+  @-webkit-keyframes gradientRotate {
+    0% {
+      -webkit-transform: translate(0, 0) rotate(0deg) scale(1);
+      transform: translate(0, 0) rotate(0deg) scale(1);
+    }
+    33% {
+      -webkit-transform: translate(-10%, 10%) rotate(120deg) scale(1.1);
+      transform: translate(-10%, 10%) rotate(120deg) scale(1.1);
+    }
+    66% {
+      -webkit-transform: translate(10%, -5%) rotate(240deg) scale(1.05);
+      transform: translate(10%, -5%) rotate(240deg) scale(1.05);
+    }
+    100% {
+      -webkit-transform: translate(0, 0) rotate(360deg) scale(1);
+      transform: translate(0, 0) rotate(360deg) scale(1);
+    }
   }
 
-  @keyframes gradientShift {
-    0%, 100% { background-position: 0% 50%; }
-    50% { background-position: 100% 50%; }
+  @keyframes gradientRotate {
+    0% {
+      transform: translate(0, 0) rotate(0deg) scale(1);
+    }
+    33% {
+      transform: translate(-10%, 10%) rotate(120deg) scale(1.1);
+    }
+    66% {
+      transform: translate(10%, -5%) rotate(240deg) scale(1.05);
+    }
+    100% {
+      transform: translate(0, 0) rotate(360deg) scale(1);
+    }
   }
 
   .mobile-menu-content {
@@ -970,8 +1023,10 @@ const donatePath = lang === 'de' ? '/spenden/' : '/donate/';
       transform: none !important;
     }
 
-    .mobile-menu-bg {
-      animation: none;
+    .mobile-menu-bg::before,
+    .mobile-menu-bg::after {
+      animation: none !important;
+      transform: none !important;
     }
 
     .mobile-nav-link {
