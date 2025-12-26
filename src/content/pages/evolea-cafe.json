@@ -36,8 +36,6 @@
     "titel": {},
     "beschreibung": {},
     "buttonText": {},
-    "buttonLink": {
-      "en": "https://example.com/qa"
-    }
+    "buttonLink": {}
   }
 }
