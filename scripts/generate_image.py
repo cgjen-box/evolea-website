@@ -56,7 +56,7 @@ def check_dependencies():
             sys.executable, '-m', 'pip', 'install', 
             *missing, '--break-system-packages', '-q'
         ])
-        print("✅ Dependencies installed\n")
+        print("[OK] Dependencies installed\n")
 
 check_dependencies()
 
@@ -238,13 +238,13 @@ Aspect ratio: {aspect_ratio}""",
                         f.write(image_data)
                     
                     saved_paths.append(filepath)
-                    print(f"✅ {filename}")
+                    print(f"[OK] {filename}")
                     break
             else:
-                print("⚠️ No image in response")
+                print("[WARNING] No image in response")
                 
         except Exception as e:
-            print(f"❌ Failed: {e}")
+            print(f"[ERROR] Failed: {e}")
     
     if not saved_paths:
         raise RuntimeError("No images were generated successfully")
@@ -294,7 +294,7 @@ def create_comparison_grid(image_paths: List[Path], output_dir: Path) -> Optiona
         return grid_path
         
     except Exception as e:
-        print(f"⚠️ Could not create grid: {e}")
+        print(f"[WARNING] Could not create grid: {e}")
         return None
 
 
@@ -373,7 +373,7 @@ Respond with ONLY the JSON object, no other text.
         if match:
             evaluation = {"selected": int(match.group(1)), "reasoning": response_text}
         else:
-            print("⚠️ Could not parse evaluation, defaulting to image 1")
+            print("[WARNING] Could not parse evaluation, defaulting to image 1")
             evaluation = {"selected": 1, "reasoning": "Parse error, defaulted to first"}
     
     selected_idx = evaluation.get("selected", 1) - 1  # Convert to 0-indexed
@@ -381,9 +381,9 @@ Respond with ONLY the JSON object, no other text.
     
     selected_path = image_paths[selected_idx]
     
-    print(f"✅ Selected: Image {selected_idx + 1} ({selected_path.name})")
+    print(f"[OK] Selected: Image {selected_idx + 1} ({selected_path.name})")
     if evaluation.get("reasoning"):
-        print(f"📋 Reason: {evaluation['reasoning'][:200]}...")
+        print(f"[REASON] {evaluation['reasoning'][:200]}...")
     
     return selected_path, evaluation
 
@@ -472,7 +472,7 @@ def generate_and_select(
     
     # Step 1: Generate images
     print("=" * 60)
-    print("🚀 EVOLEA IMAGE GENERATION PIPELINE")
+    print("[GENERATING] EVOLEA IMAGE GENERATION PIPELINE")
     print("=" * 60)
     
     image_paths = generate_images_gemini(
@@ -486,7 +486,7 @@ def generate_and_select(
     # Step 2: Create comparison grid
     grid_path = create_comparison_grid(image_paths, output_dir)
     if grid_path:
-        print(f"\n📊 Comparison grid: {grid_path}")
+        print(f"\n[GRID] Comparison grid: {grid_path}")
     
     result = {
         "generated": [str(p) for p in image_paths],
@@ -507,7 +507,7 @@ def generate_and_select(
         result["final"] = str(final_path)
         
     elif auto_select and not CONFIG.anthropic_key:
-        print("\n⚠️ ANTHROPIC_API_KEY not set - skipping auto-selection")
+        print("\n[WARNING] ANTHROPIC_API_KEY not set - skipping auto-selection")
         print("   Set the key or run without --auto-select for manual review")
     
     # Log generation
@@ -521,7 +521,7 @@ def generate_and_select(
     
     # Summary
     print("\n" + "=" * 60)
-    print("✨ GENERATION COMPLETE")
+    print("[SUCCESS] GENERATION COMPLETE")
     print("=" * 60)
     print(f"Generated: {len(image_paths)} images")
     if result["final"]:
@@ -590,7 +590,7 @@ Environment Variables:
             print("\n" + json.dumps(result, indent=2))
         
     except Exception as e:
-        print(f"\n❌ Error: {e}")
+        print(f"\n[ERROR] Error: {e}")
         sys.exit(1)
 
 
