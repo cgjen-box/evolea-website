@@ -15,7 +15,9 @@
   },
   "aboutCards": [],
   "schedule": {
-    "titel": {},
+    "titel": {
+      "en": "QA"
+    },
     "cards": [],
     "datenTitel": {},
     "daten": []
