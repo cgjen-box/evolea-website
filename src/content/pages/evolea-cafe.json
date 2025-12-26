@@ -21,7 +21,9 @@
     "daten": []
   },
   "expect": {
-    "titel": {},
+    "titel": {
+      "en": "QA"
+    },
     "items": []
   },
   "quote": {
