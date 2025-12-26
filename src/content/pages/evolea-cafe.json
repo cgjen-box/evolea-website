@@ -4,9 +4,7 @@
     "description": {}
   },
   "hero": {
-    "badge": {
-      "en": "QA"
-    },
+    "badge": {},
     "titel": {},
     "tagline": {}
   },
