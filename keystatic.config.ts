@@ -1724,5 +1724,173 @@ export default config({
         ),
       },
     }),
+
+    // =========================================================================
+    // SPENDEN (DONATION) SINGLETON
+    // =========================================================================
+    spenden: singleton({
+      label: 'Spenden / Donate',
+      path: 'src/content/pages/spenden',
+      format: { data: 'json' },
+      schema: {
+        // --- HERO ---
+        hero: fields.object(
+          {
+            label: bilingualText('Label', 'Label'),
+            titel: bilingualText('Titel', 'Title'),
+            untertitel: bilingualText('Untertitel', 'Subtitle', { multiline: true }),
+          },
+          { label: 'Hero-Bereich' }
+        ),
+
+        // --- SUCCESS STORY ---
+        successStory: fields.object(
+          {
+            label: bilingualText('Label', 'Label'),
+            titel: bilingualText('Titel', 'Title'),
+            text1: bilingualText('Absatz 1', 'Paragraph 1', { multiline: true }),
+            text2: bilingualText('Absatz 2', 'Paragraph 2', { multiline: true }),
+            instagramReelUrl: fields.text({
+              label: 'Instagram Reel URL',
+              description: 'z.B. https://www.instagram.com/reel/ABC123/embed/',
+            }),
+            impactItems: fields.array(
+              fields.object({
+                icon: fields.select({
+                  label: 'Icon',
+                  options: [
+                    { label: 'Menschen', value: 'people' },
+                    { label: 'Kalender', value: 'calendar' },
+                    { label: 'Sparkle', value: 'sparkle' },
+                    { label: 'Herz', value: 'heart' },
+                    { label: 'Check', value: 'check' },
+                  ],
+                  defaultValue: 'people',
+                }),
+                text: bilingualText('Text', 'Text'),
+              }),
+              {
+                label: 'Impact-Punkte',
+                itemLabel: (props) => props.fields.text.fields.de.value as string || 'Neuer Punkt',
+              }
+            ),
+          },
+          { label: 'Erfolgsgeschichte' }
+        ),
+
+        // --- WHY DONATE ---
+        whyDonate: fields.object(
+          {
+            label: bilingualText('Label', 'Label'),
+            titel: bilingualText('Titel', 'Title'),
+            karten: fields.array(
+              fields.object({
+                titel: bilingualText('Titel', 'Title'),
+                text: bilingualText('Text', 'Text', { multiline: true }),
+                farbe: fields.select({
+                  label: 'Farbe',
+                  options: [
+                    { label: 'Lila', value: 'purple' },
+                    { label: 'Mint', value: 'mint' },
+                    { label: 'Coral', value: 'coral' },
+                  ],
+                  defaultValue: 'purple',
+                }),
+              }),
+              {
+                label: 'Warum-Karten',
+                itemLabel: (props) => props.fields.titel.fields.de.value as string || 'Neue Karte',
+              }
+            ),
+          },
+          { label: 'Warum Ihre Hilfe zählt' }
+        ),
+
+        // --- UPCOMING PROJECTS ---
+        upcomingProjects: fields.object(
+          {
+            label: bilingualText('Label', 'Label'),
+            titel: bilingualText('Titel', 'Title'),
+            intro: bilingualText('Intro', 'Intro', { multiline: true }),
+          },
+          { label: 'Was kommt als Nächstes' }
+        ),
+
+        // --- HOW TO DONATE ---
+        howToDonate: fields.object(
+          {
+            label: bilingualText('Label', 'Label'),
+            titel: bilingualText('Titel', 'Title'),
+            intro: bilingualText('Intro', 'Intro', { multiline: true }),
+            bankSectionTitle: bilingualText('Bankverbindung Titel', 'Bank Details Title'),
+            kontoinhaber: bilingualText('Kontoinhaber Label', 'Account Holder Label'),
+            ibanLabel: bilingualText('IBAN Label', 'IBAN Label'),
+            bankLabel: bilingualText('Bank Label', 'Bank Label'),
+            bicLabel: bilingualText('BIC Label', 'BIC Label'),
+            verwendungszweckLabel: bilingualText('Verwendungszweck Label', 'Reference Label'),
+            verwendungszweck: bilingualText('Verwendungszweck', 'Payment Reference'),
+            gutZuWissenTitel: bilingualText('Gut zu wissen Titel', 'Good to Know Title'),
+            taxInfo: fields.array(
+              fields.object({
+                label: bilingualText('Label', 'Label'),
+                text: bilingualText('Text', 'Text'),
+              }),
+              {
+                label: 'Steuer-Infos',
+                itemLabel: (props) => props.fields.label.fields.de.value as string || 'Neuer Punkt',
+              }
+            ),
+          },
+          { label: 'So können Sie helfen' }
+        ),
+
+        // --- DONATION AMOUNTS ---
+        donationAmounts: fields.object(
+          {
+            titel: bilingualText('Titel', 'Title'),
+            buttonText: bilingualText('Button Text', 'Button Text'),
+            betraege: fields.array(
+              fields.object({
+                betrag: fields.text({ label: 'Betrag', description: 'z.B. "CHF 50"' }),
+                beschreibung: bilingualText('Beschreibung', 'Description'),
+                highlighted: fields.checkbox({ label: 'Hervorgehoben (gold)', defaultValue: false }),
+              }),
+              {
+                label: 'Spenden-Beträge',
+                itemLabel: (props) => props.fields.betrag.value || 'Neuer Betrag',
+              }
+            ),
+          },
+          { label: 'Was Ihre Spende bewirkt' }
+        ),
+
+        // --- CONTACT PERSON ---
+        contactPerson: fields.object(
+          {
+            titel: bilingualText('Titel', 'Title'),
+            name: fields.text({ label: 'Name', defaultValue: 'Gianna Spiess' }),
+            rolle: bilingualText('Rolle', 'Role'),
+            text: bilingualText('Text', 'Text', { multiline: true }),
+            email: fields.text({ label: 'E-Mail', defaultValue: 'hello@evolea.ch' }),
+            foto: fields.text({
+              label: 'Foto Pfad',
+              description: 'z.B. /images/team/gianna-spiess.png',
+              defaultValue: '/images/team/gianna-spiess.png',
+            }),
+          },
+          { label: 'Kontaktperson' }
+        ),
+
+        // --- CTA ---
+        cta: fields.object(
+          {
+            titel: bilingualText('Titel', 'Title'),
+            beschreibung: bilingualText('Beschreibung', 'Description'),
+            buttonText: bilingualText('Button Text', 'Button Text'),
+          },
+          { label: 'Page Closer CTA' }
+        ),
+      },
+    }),
   },
 });

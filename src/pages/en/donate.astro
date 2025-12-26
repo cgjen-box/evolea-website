@@ -2,218 +2,382 @@
 import Base from '@layouts/Base.astro';
 import InnerPageHero from '@components/InnerPageHero.astro';
 import PageCloser from '@components/PageCloser.astro';
-import Butterfly from '@components/Butterfly.astro';
+import Icon from '@components/Icon.astro';
+import EditLink from '@components/EditLink.astro';
 import { getLangFromUrl, useTranslations, useTranslatedPath } from '@i18n/utils';
+import { getEntry } from 'astro:content';
 
 const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
 const translatePath = useTranslatedPath(lang);
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 
-// Bank details - DO NOT MODIFY
+// Get CMS content
+const spendenEntry = await getEntry('pages', 'spenden');
+const page = spendenEntry?.data;
+
+// Helper to get bilingual text
+const getText = (obj: { de?: string; en?: string } | undefined, fallback: string = '') => {
+  if (!obj) return fallback;
+  return lang === 'de' ? (obj.de || fallback) : (obj.en || obj.de || fallback);
+};
+
+// Bank details - DO NOT MODIFY (hardcoded per policy)
 const bankDetails = {
   name: 'EVOLEA Verein',
+  address: 'Stapferstrasse 10, 8006 Zürich',
   bank: 'UBS Switzerland AG',
   iban: 'CH90 0023 0230 9206 9201 G',
   bic: 'UBSWCHZH80A',
 };
+
+// Color classes for why donate cards
+const cardColorClasses: Record<string, { bg: string; icon: string }> = {
+  purple: { bg: 'bg-evolea-purple/10', icon: 'text-evolea-purple' },
+  mint: { bg: 'bg-evolea-mint/20', icon: 'text-evolea-mint' },
+  coral: { bg: 'bg-evolea-coral/20', icon: 'text-evolea-coral' },
+};
 ---
 
 <Base
-  title={t('donate.title')}
-  description={t('donate.subtitle')}
+  title={getText(page?.hero?.titel, "Support EVOLEA")}
+  description={getText(page?.hero?.untertitel, "Your donation enables children on the spectrum to access our programs.")}
   transparentHeader={true}
   hideFooterCTA={true}
 >
   <!-- Premium Hero with Prism Gradient -->
   <InnerPageHero
-    title={t('donate.title')}
-    subtitle={t('donate.subtitle')}
+    title={getText(page?.hero?.titel, "Support EVOLEA")}
+    subtitle={getText(page?.hero?.untertitel, "Your donation enables children on the spectrum to access our programs.")}
     breadcrumbs={[
       { label: t('nav.home'), href: translatePath('/') },
       { label: t('nav.donate') }
     ]}
-    label={t('donate.hero.label')}
-    size="sm"
+    label={getText(page?.hero?.label, "Donate")}
+    size="md"
   />
 
-  <!-- Introduction & Impact Section -->
-  <section class="py-16 md:py-24">
+  <!-- ===== SUCCESS STORY: What We've Achieved ===== -->
+  <section class="py-16 md:py-24 bg-white">
+    <div class="container mx-auto max-w-6xl px-4">
+      <div class="grid lg:grid-cols-2 gap-12 items-center">
+        <!-- Instagram Reel Embed -->
+        <div class="instagram-embed-wrapper">
+          <div class="instagram-reel-container rounded-evolea-lg overflow-hidden shadow-elevated">
+            <iframe
+              src={page?.successStory?.instagramReelUrl || "https://www.instagram.com/reel/DRcoCiaDJ-r/embed/"}
+              class="instagram-reel-iframe"
+              frameborder="0"
+              scrolling="no"
+              allowtransparency="true"
+              allowfullscreen="true"
+              title="EVOLEA Mini Restaurant - Instagram Reel"
+            ></iframe>
+          </div>
+        </div>
+
+        <!-- Story Content -->
+        <div>
+          <span class="inline-block text-sm font-semibold text-evolea-purple uppercase tracking-wider mb-4">
+            {getText(page?.successStory?.label, "What We've Achieved")}
+          </span>
+          <h2 class="text-3xl md:text-4xl font-display font-bold text-evolea-purple mb-6 leading-tight">
+            {getText(page?.successStory?.titel, "Mini Restaurant: 10 Weeks That Matter")}
+          </h2>
+          <p class="text-lg text-evolea-text-light mb-4 leading-relaxed">
+            {getText(page?.successStory?.text1, "Cooking. Serving. Cleaning up. Sounds simple. For children on the spectrum, it's a huge step.")}
+          </p>
+          <p class="text-lg text-evolea-text-light mb-6 leading-relaxed">
+            {getText(page?.successStory?.text2, "For 10 weeks, children cooked together, took on roles, and built social skills. Not in theory. In real life.")}
+          </p>
+
+          <!-- Impact List -->
+          <ul class="space-y-4">
+            {(page?.successStory?.impactItems || []).map((item: { icon: string; text: { de?: string; en?: string } }) => (
+              <li class="flex items-center gap-4">
+                <div class="w-12 h-12 bg-evolea-purple/10 rounded-full flex items-center justify-center flex-shrink-0">
+                  <Icon name={item.icon as 'people' | 'calendar' | 'sparkle' | 'heart' | 'check'} size="md" />
+                </div>
+                <span class="font-medium text-evolea-text">{getText(item.text, '')}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== WHY DONATE: Why Your Help Matters ===== -->
+  <section class="py-16 md:py-24 bg-evolea-cream/50">
     <div class="container mx-auto max-w-5xl px-4">
       <div class="text-center mb-12">
-        <h2 class="text-3xl md:text-4xl font-display font-bold text-evolea-purple mb-6">
-          {t('donate.intro.title')}
+        <span class="inline-block text-sm font-semibold text-evolea-purple uppercase tracking-wider mb-4">
+          {getText(page?.whyDonate?.label, "Why Your Help Matters")}
+        </span>
+        <h2 class="text-3xl md:text-4xl font-display font-bold text-evolea-purple mb-4">
+          {getText(page?.whyDonate?.titel, "Your donation reduces the cost for parents")}
         </h2>
-        <p class="text-lg text-evolea-text-light max-w-2xl mx-auto leading-relaxed">
-          {t('donate.intro.text')}
+      </div>
+
+      <div class="grid md:grid-cols-3 gap-8">
+        {(page?.whyDonate?.karten || []).map((karte: { titel: { de?: string; en?: string }; text: { de?: string; en?: string }; farbe: string }) => {
+          const colors = cardColorClasses[karte.farbe] || cardColorClasses.purple;
+          return (
+            <div class="bg-white rounded-evolea-lg p-8 shadow-soft hover:shadow-elevated transition-shadow">
+              <div class={`w-16 h-16 ${colors.bg} rounded-full flex items-center justify-center mb-6`}>
+                <svg class={`w-8 h-8 ${colors.icon}`} fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
+                </svg>
+              </div>
+              <h3 class="text-xl font-display font-bold text-evolea-purple mb-3">{getText(karte.titel, '')}</h3>
+              <p class="text-evolea-text-light leading-relaxed">
+                {getText(karte.text, '')}
+              </p>
+            </div>
+          );
+        })}
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== UPCOMING PROJECTS: What's Coming Next ===== -->
+  <section class="py-16 md:py-24 bg-white">
+    <div class="container mx-auto max-w-5xl px-4">
+      <div class="text-center mb-12">
+        <span class="inline-block text-sm font-semibold text-evolea-purple uppercase tracking-wider mb-4">
+          {getText(page?.upcomingProjects?.label, "What's Coming Next")}
+        </span>
+        <h2 class="text-3xl md:text-4xl font-display font-bold text-evolea-purple mb-4">
+          {getText(page?.upcomingProjects?.titel, "Two Projects Waiting for You")}
+        </h2>
+        <p class="text-lg text-evolea-text-light max-w-2xl mx-auto">
+          {getText(page?.upcomingProjects?.intro, "The Mini Restaurant worked. Now we want to continue. With your help, these two programs will launch.")}
         </p>
       </div>
 
-      <!-- Impact Section - What Your Donation Achieves -->
-      <div class="mb-16">
-        <h3 class="text-2xl md:text-3xl font-display font-bold text-evolea-purple text-center mb-10">
-          {t('donate.impact.title')}
-        </h3>
+      <div class="grid md:grid-cols-2 gap-8">
+        <!-- Mini Turnen -->
+        <div class="group relative bg-evolea-cream/50 rounded-evolea-lg p-8 border-2 border-transparent hover:border-evolea-purple transition-all">
+          <span class="absolute top-4 right-4 text-xs font-semibold text-white bg-evolea-purple px-3 py-1 rounded-full">
+            Start: January 2025
+          </span>
 
-        <div class="grid md:grid-cols-3 gap-8">
-          <!-- Impact 1 -->
-          <div class="text-center">
-            <div class="w-20 h-20 mx-auto mb-6 bg-gradient-to-br from-evolea-purple to-evolea-magenta rounded-full flex items-center justify-center shadow-lg">
-              <svg class="w-10 h-10 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
-              </svg>
-            </div>
-            <h4 class="text-xl font-display font-bold text-evolea-purple mb-3">
-              {t('donate.impact.1.title')}
-            </h4>
-            <p class="text-evolea-text-light">
-              {t('donate.impact.1.text')}
-            </p>
+          <div class="w-16 h-16 bg-evolea-mint/20 rounded-full flex items-center justify-center mb-6">
+            <Icon name="running" size="lg" />
           </div>
 
-          <!-- Impact 2 -->
-          <div class="text-center">
-            <div class="w-20 h-20 mx-auto mb-6 bg-gradient-to-br from-evolea-mint to-evolea-sky rounded-full flex items-center justify-center shadow-lg">
-              <svg class="w-10 h-10 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z" />
-              </svg>
-            </div>
-            <h4 class="text-xl font-display font-bold text-evolea-purple mb-3">
-              {t('donate.impact.2.title')}
-            </h4>
-            <p class="text-evolea-text-light">
-              {t('donate.impact.2.text')}
-            </p>
+          <h3 class="text-2xl font-display font-bold text-evolea-purple mb-2">Mini Turnen</h3>
+          <p class="text-evolea-purple font-medium italic mb-4">Movement. In a group that understands.</p>
+
+          <p class="text-evolea-text-light mb-4">
+            Sports in a club? For many children on the spectrum, unthinkable.
+            Too loud, too chaotic, too many unwritten rules.
+          </p>
+          <p class="text-evolea-text-light mb-6">
+            Mini Turnen is different. Small group. Clear structure.
+            And adults who know what they're doing.
+          </p>
+
+          <div class="flex flex-wrap gap-2 mb-6">
+            <span class="text-sm bg-white px-3 py-1 rounded-full text-evolea-text">Wednesdays 18:30</span>
+            <span class="text-sm bg-white px-3 py-1 rounded-full text-evolea-text">Ages 5-8</span>
+            <span class="text-sm bg-white px-3 py-1 rounded-full text-evolea-text">Small Group</span>
           </div>
 
-          <!-- Impact 3 -->
-          <div class="text-center">
-            <div class="w-20 h-20 mx-auto mb-6 bg-gradient-to-br from-evolea-coral to-evolea-yellow rounded-full flex items-center justify-center shadow-lg">
-              <svg class="w-10 h-10 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
-              </svg>
-            </div>
-            <h4 class="text-xl font-display font-bold text-evolea-purple mb-3">
-              {t('donate.impact.3.title')}
-            </h4>
-            <p class="text-evolea-text-light">
-              {t('donate.impact.3.text')}
-            </p>
-          </div>
+          <a href={translatePath('/angebote/mini-turnen/')} class="inline-flex items-center gap-2 font-semibold text-evolea-purple hover:gap-3 transition-all">
+            Learn more
+            <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+            </svg>
+          </a>
         </div>
 
-        <!-- Decorative Butterfly -->
-        <div class="flex justify-center mt-10">
-          <Butterfly size="lg" variant="spectrum" />
+        <!-- Mini Museum -->
+        <div class="group relative bg-evolea-cream/50 rounded-evolea-lg p-8 border-2 border-transparent hover:border-evolea-purple transition-all">
+          <span class="absolute top-4 right-4 text-xs font-semibold text-white bg-evolea-purple px-3 py-1 rounded-full">
+            Start: February 2026
+          </span>
+
+          <div class="w-16 h-16 bg-evolea-magenta/10 rounded-full flex items-center justify-center mb-6">
+            <Icon name="museum" size="lg" />
+          </div>
+
+          <h3 class="text-2xl font-display font-bold text-evolea-purple mb-2">Mini Museum</h3>
+          <p class="text-evolea-purple font-medium italic mb-4">Make art. Show art. Be proud.</p>
+
+          <p class="text-evolea-text-light mb-4">
+            Creativity doesn't need small talk.
+            At Mini Museum, children work on their own art projects.
+            And then show them in a real exhibition.
+          </p>
+          <p class="text-evolea-text-light mb-6">
+            The focus: Creating, not talking.
+            Making something of your own and being seen for it.
+          </p>
+
+          <div class="flex flex-wrap gap-2 mb-6">
+            <span class="text-sm bg-white px-3 py-1 rounded-full text-evolea-text">Saturdays 09:00</span>
+            <span class="text-sm bg-white px-3 py-1 rounded-full text-evolea-text">Every 2 weeks</span>
+            <span class="text-sm bg-white px-3 py-1 rounded-full text-evolea-text">Ages 5-8</span>
+          </div>
+
+          <a href={translatePath('/angebote/mini-museum/')} class="inline-flex items-center gap-2 font-semibold text-evolea-purple hover:gap-3 transition-all">
+            Learn more
+            <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+            </svg>
+          </a>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- Donation Methods Section -->
-  <section class="py-16 md:py-24 bg-white">
-    <div class="container mx-auto max-w-4xl px-4">
-      <!-- Donation Methods Grid -->
-      <div class="grid md:grid-cols-2 gap-8 mb-16">
-        <!-- Bank Transfer Card -->
-        <div class="bg-white rounded-evolea-lg p-8 shadow-card">
-          <div class="flex items-center gap-4 mb-6">
-            <div class="w-14 h-14 bg-evolea-purple/10 rounded-full flex items-center justify-center">
-              <svg class="w-7 h-7 text-evolea-purple" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z" />
-              </svg>
-            </div>
-            <h3 class="text-xl font-display font-bold text-evolea-purple">
-              {t('donate.bank.title')}
+  <!-- ===== HOW TO DONATE: How to Help ===== -->
+  <section id="donate-section" class="py-16 md:py-24 donate-section">
+    <div class="container mx-auto max-w-6xl px-4">
+      <div class="grid lg:grid-cols-5 gap-12">
+        <!-- Bank Details (3 cols) -->
+        <div class="lg:col-span-3">
+          <span class="inline-block text-sm font-semibold text-evolea-lavender uppercase tracking-wider mb-4">
+            {getText(page?.howToDonate?.label, "How to Help")}
+          </span>
+          <h2 class="text-3xl md:text-4xl font-display font-bold text-white mb-4">
+            {getText(page?.howToDonate?.titel, "Direct. Simple. Effective.")}
+          </h2>
+          <p class="text-lg text-white/90 mb-8">
+            {getText(page?.howToDonate?.intro, "No complicated online platform. Just transfer. Every franc arrives.")}
+          </p>
+
+          <!-- Bank Details Card -->
+          <div class="bg-white/10 backdrop-blur-sm rounded-evolea-lg p-6 mb-6">
+            <h3 class="font-display font-bold text-white text-lg mb-4">
+              {getText(page?.howToDonate?.bankSectionTitle, "Bank Details")}
             </h3>
-          </div>
 
-          <div class="space-y-4">
-            <div class="p-4 bg-evolea-cream rounded-evolea">
-              <p class="text-sm text-evolea-text-light mb-1">{t('donate.bank.name')}</p>
-              <p class="font-semibold text-evolea-text">{bankDetails.name}</p>
-            </div>
-            <div class="p-4 bg-evolea-cream rounded-evolea">
-              <p class="text-sm text-evolea-text-light mb-1">Bank</p>
-              <p class="font-semibold text-evolea-text">{bankDetails.bank}</p>
-            </div>
-            <div class="p-4 bg-evolea-cream rounded-evolea">
-              <p class="text-sm text-evolea-text-light mb-1">{t('donate.bank.iban')}</p>
-              <p class="font-mono font-semibold text-evolea-text tracking-wide">{bankDetails.iban}</p>
-            </div>
-            <div class="p-4 bg-evolea-cream rounded-evolea">
-              <p class="text-sm text-evolea-text-light mb-1">{t('donate.bank.bic')}</p>
-              <p class="font-mono font-semibold text-evolea-text">{bankDetails.bic}</p>
-            </div>
-            <div class="p-4 bg-evolea-cream rounded-evolea">
-              <p class="text-sm text-evolea-text-light mb-1">{t('donate.bank.reference')}</p>
-              <p class="font-semibold text-evolea-text">{t('donate.bank.reference.value')}</p>
-            </div>
-          </div>
-
-          <!-- Copy IBAN Button -->
-          <button
-            id="copy-iban-btn"
-            class="mt-6 w-full py-3 px-6 bg-evolea-purple/10 text-evolea-purple font-semibold rounded-full hover:bg-evolea-purple/20 transition-colors flex items-center justify-center gap-2"
-            data-iban={bankDetails.iban.replace(/\s/g, '')}
-          >
-            <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
-            </svg>
-            <span id="copy-text">Copy IBAN</span>
-          </button>
-        </div>
-
-        <!-- TWINT Card -->
-        <div class="bg-white rounded-evolea-lg p-8 shadow-card flex flex-col">
-          <div class="flex items-center gap-4 mb-6">
-            <div class="w-14 h-14 bg-evolea-mint/20 rounded-full flex items-center justify-center">
-              <svg class="w-7 h-7 text-evolea-green" viewBox="0 0 24 24" fill="currentColor">
-                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm-1-13h2v6h-2zm0 8h2v2h-2z"/>
-              </svg>
-            </div>
-            <h3 class="text-xl font-display font-bold text-evolea-purple">
-              {t('donate.twint.title')}
-            </h3>
-          </div>
-
-          <div class="flex-1 flex flex-col items-center justify-center py-8">
-            <!-- TWINT QR Code Placeholder -->
-            <div class="w-48 h-48 bg-evolea-cream rounded-evolea-lg flex items-center justify-center mb-4 border-2 border-dashed border-evolea-purple/20">
-              <div class="text-center text-evolea-text-light">
-                <svg class="w-12 h-12 mx-auto mb-2 opacity-50" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v1m6 11h2m-6 0h-2v4m0-11v3m0 0h.01M12 12h4.01M16 20h4M4 12h4m12 0h.01M5 8h2a1 1 0 001-1V5a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1zm12 0h2a1 1 0 001-1V5a1 1 0 00-1-1h-2a1 1 0 00-1 1v2a1 1 0 001 1zM5 20h2a1 1 0 001-1v-2a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1z" />
-                </svg>
-                <p class="text-sm">QR Code</p>
-                <p class="text-xs">(Coming soon)</p>
+            <div class="space-y-3">
+              <div class="flex justify-between items-start py-3 border-b border-white/10">
+                <span class="text-white/70 text-sm">{getText(page?.howToDonate?.kontoinhaber, "Account Holder")}</span>
+                <span class="text-white font-semibold text-right">
+                  {bankDetails.name}<br/>
+                  <span class="font-normal text-sm">{bankDetails.address}</span>
+                </span>
+              </div>
+              <div class="flex justify-between items-center py-3 border-b border-white/10">
+                <span class="text-white/70 text-sm">{getText(page?.howToDonate?.ibanLabel, "IBAN")}</span>
+                <span class="text-white font-mono font-semibold">{bankDetails.iban}</span>
+              </div>
+              <div class="flex justify-between items-center py-3 border-b border-white/10">
+                <span class="text-white/70 text-sm">{getText(page?.howToDonate?.bankLabel, "Bank")}</span>
+                <span class="text-white font-semibold">{bankDetails.bank}</span>
+              </div>
+              <div class="flex justify-between items-center py-3 border-b border-white/10">
+                <span class="text-white/70 text-sm">{getText(page?.howToDonate?.bicLabel, "BIC/SWIFT")}</span>
+                <span class="text-white font-mono font-semibold">{bankDetails.bic}</span>
+              </div>
+              <div class="flex justify-between items-center py-3">
+                <span class="text-white/70 text-sm">{getText(page?.howToDonate?.verwendungszweckLabel, "Reference")}</span>
+                <span class="text-white font-semibold">{getText(page?.howToDonate?.verwendungszweck, "Donation EVOLEA")}</span>
               </div>
             </div>
-            <p class="text-sm text-evolea-text-light text-center">
-              {t('donate.twint.text')}
-            </p>
+          </div>
+
+          <!-- Tax Info -->
+          <div class="bg-white/5 border border-white/10 rounded-evolea-lg p-6">
+            <h3 class="font-display font-bold text-white text-lg mb-4">
+              {getText(page?.howToDonate?.gutZuWissenTitel, "Good to Know")}
+            </h3>
+            <ul class="space-y-3">
+              {(page?.howToDonate?.taxInfo || []).map((info: { label: { de?: string; en?: string }; text: { de?: string; en?: string } }) => (
+                <li class="flex items-start gap-3 text-white/90">
+                  <svg class="w-5 h-5 text-evolea-yellow flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                  </svg>
+                  <span><strong class="text-white">{getText(info.label, '')}:</strong> {getText(info.text, '')}</span>
+                </li>
+              ))}
+            </ul>
           </div>
         </div>
-      </div>
 
-      <!-- Tax Deductible Notice -->
-      <div class="bg-evolea-mint/10 border border-evolea-mint/30 rounded-evolea-lg p-6 flex items-start gap-4">
-        <div class="w-10 h-10 bg-evolea-mint/20 rounded-full flex items-center justify-center flex-shrink-0">
-          <svg class="w-5 h-5 text-evolea-green" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-          </svg>
-        </div>
-        <div>
-          <p class="font-semibold text-evolea-text">{t('donate.taxDeductible')}</p>
-          <p class="text-sm text-evolea-text-light mt-1">
-            {t('donate.questions')} <a href={translatePath('/kontakt/')} class="text-evolea-purple hover:underline">{t('donate.contact')}</a>
-          </p>
+        <!-- Donation Amounts Card (2 cols) -->
+        <div class="lg:col-span-2">
+          <div class="bg-white rounded-evolea-lg p-8 shadow-elevated">
+            <h3 class="text-xl font-display font-bold text-evolea-purple text-center mb-6">
+              {getText(page?.donationAmounts?.titel, "What Your Donation Achieves")}
+            </h3>
+
+            <div class="space-y-3">
+              {(page?.donationAmounts?.betraege || []).map((betrag: { betrag: string; beschreibung: { de?: string; en?: string }; highlighted: boolean }) => (
+                <div class={`flex justify-between items-center p-4 rounded-evolea ${betrag.highlighted ? 'bg-gradient-to-r from-evolea-yellow to-evolea-coral/80' : 'bg-evolea-cream/50'}`}>
+                  <span class="font-display font-bold text-evolea-purple text-lg">{betrag.betrag}</span>
+                  <span class={`text-sm text-right ${betrag.highlighted ? 'text-evolea-text font-medium' : 'text-evolea-text-light'}`}>
+                    {getText(betrag.beschreibung, '')}
+                  </span>
+                </div>
+              ))}
+            </div>
+
+            <!-- Copy IBAN Button -->
+            <button
+              id="copy-iban-btn"
+              class="mt-6 w-full py-3 px-6 bg-evolea-purple text-white font-semibold rounded-full hover:bg-evolea-purple/90 transition-colors flex items-center justify-center gap-2"
+              data-iban={bankDetails.iban.replace(/\s/g, '')}
+            >
+              <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
+              </svg>
+              <span id="copy-text">{getText(page?.donationAmounts?.buttonText, "Copy IBAN")}</span>
+            </button>
+          </div>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- Page Closer -->
-  <PageCloser />
+  <!-- ===== CONTACT PERSON ===== -->
+  <section class="py-16 md:py-20 bg-evolea-cream/50">
+    <div class="container mx-auto max-w-2xl px-4">
+      <div class="flex flex-col md:flex-row items-center gap-8 text-center md:text-left">
+        <div class="w-32 h-32 rounded-full overflow-hidden shadow-elevated flex-shrink-0 bg-white">
+          <img
+            src={`${base}${page?.contactPerson?.foto || '/images/team/gianna-spiess.png'}`}
+            alt={page?.contactPerson?.name || 'Gianna Spiess'}
+            class="w-full h-full object-cover"
+          />
+        </div>
+        <div>
+          <h3 class="font-display font-bold text-evolea-purple text-xl mb-1">
+            {getText(page?.contactPerson?.titel, "Questions? Just ask.")}
+          </h3>
+          <p class="font-semibold text-evolea-purple text-lg">{page?.contactPerson?.name || 'Gianna Spiess'}</p>
+          <p class="text-evolea-text-light text-sm mb-3">{getText(page?.contactPerson?.rolle, "M.Sc., BCBA – Co-Founder")}</p>
+          <p class="text-evolea-text-light mb-4">
+            {getText(page?.contactPerson?.text, "Want to know where your donation goes? Have an idea for collaboration? Write to me.")}
+          </p>
+          <a href={`mailto:${page?.contactPerson?.email || 'hello@evolea.ch'}`} class="inline-flex items-center gap-2 font-semibold text-evolea-purple hover:underline">
+            {page?.contactPerson?.email || 'hello@evolea.ch'}
+            <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+            </svg>
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Page Closer with custom message -->
+  <PageCloser
+    showCTA={true}
+    ctaTitle={getText(page?.cta?.titel, "Children don't need a perfect world.")}
+    ctaDescription={getText(page?.cta?.beschreibung, "They need spaces that fit them. You can create one.")}
+    ctaButtonText={getText(page?.cta?.buttonText, "I want to help")}
+    ctaButtonHref="#donate-section"
+  />
+
+  <!-- Edit Link for Keystatic -->
+  <EditLink type="singleton" collection="spenden" label="Edit Spenden" />
 </Base>
+
 
 <script>
   const copyBtn = document.getElementById('copy-iban-btn');
@@ -227,13 +391,13 @@ const bankDetails = {
           await navigator.clipboard.writeText(iban);
           const originalText = copyText.textContent;
           copyText.textContent = 'Copied!';
-          copyBtn.classList.add('bg-evolea-green/20', 'text-evolea-green');
-          copyBtn.classList.remove('bg-evolea-purple/10', 'text-evolea-purple');
+          copyBtn.classList.add('bg-evolea-green', 'hover:bg-evolea-green/90');
+          copyBtn.classList.remove('bg-evolea-purple', 'hover:bg-evolea-purple/90');
 
           setTimeout(() => {
             copyText.textContent = originalText;
-            copyBtn.classList.remove('bg-evolea-green/20', 'text-evolea-green');
-            copyBtn.classList.add('bg-evolea-purple/10', 'text-evolea-purple');
+            copyBtn.classList.remove('bg-evolea-green', 'hover:bg-evolea-green/90');
+            copyBtn.classList.add('bg-evolea-purple', 'hover:bg-evolea-purple/90');
           }, 2000);
         } catch (err) {
           console.error('Failed to copy:', err);
@@ -242,3 +406,47 @@ const bankDetails = {
     });
   }
 </script>
+
+<style>
+  /* Donate Section Gradient Background */
+  .donate-section {
+    background: linear-gradient(135deg, #BA53AD 0%, #8A3D7E 50%, #5C2854 100%);
+    position: relative;
+  }
+
+  /* Instagram Reel Container */
+  .instagram-embed-wrapper {
+    display: flex;
+    justify-content: center;
+  }
+
+  .instagram-reel-container {
+    position: relative;
+    width: 100%;
+    max-width: 400px;
+    background: #FFFBF7;
+  }
+
+  /* Aspect ratio container for reel (9:16 vertical video) */
+  .instagram-reel-container::before {
+    content: "";
+    display: block;
+    padding-top: 177.78%; /* 16:9 inverted = 9:16 aspect ratio */
+  }
+
+  .instagram-reel-iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border: none;
+  }
+
+  /* Responsive adjustments */
+  @media (max-width: 768px) {
+    .instagram-reel-container {
+      max-width: 100%;
+    }
+  }
+</style>

@@ -1,0 +1,270 @@
+{
+  "hero": {
+    "label": {
+      "de": "Gemeinnütziger Verein",
+      "en": "Donate"
+    },
+    "titel": {
+      "de": "Kleine Beiträge. Grosse Wirkung.",
+      "en": "Support EVOLEA"
+    },
+    "untertitel": {
+      "de": "Wir haben gerade unser erstes Projekt abgeschlossen. Das Mini Restaurant war ein voller Erfolg. Jetzt bauen wir weiter.",
+      "en": "Your donation enables children on the spectrum to access our programs."
+    }
+  },
+  "successStory": {
+    "label": {
+      "de": "Was wir erreicht haben",
+      "en": "What We've Achieved"
+    },
+    "titel": {
+      "de": "Mini Restaurant: 10 Wochen, die zählen",
+      "en": "Mini Restaurant: 10 Weeks That Matter"
+    },
+    "text1": {
+      "de": "Kochen. Servieren. Abräumen. Klingt einfach. Für Kinder im Spektrum ist das ein riesiger Schritt.",
+      "en": "Cooking. Serving. Cleaning up. Sounds simple. For children on the spectrum, it's a huge step."
+    },
+    "text2": {
+      "de": "10 Wochen lang haben Kinder gemeinsam gekocht, Rollen übernommen und soziale Kompetenz aufgebaut. Nicht in der Theorie. Im echten Leben.",
+      "en": "For 10 weeks, children cooked together, took on roles, and built social skills. Not in theory. In real life."
+    },
+    "instagramReelUrl": "https://www.instagram.com/reel/DRcoCiaDJ-r/embed/",
+    "impactItems": [
+      {
+        "icon": "people",
+        "text": {
+          "de": "Kinder haben teilgenommen",
+          "en": "Children participated"
+        }
+      },
+      {
+        "icon": "calendar",
+        "text": {
+          "de": "10 Wochen strukturiertes Lernen",
+          "en": "10 weeks of structured learning"
+        }
+      },
+      {
+        "icon": "sparkle",
+        "text": {
+          "de": "Neue soziale Fähigkeiten gelernt",
+          "en": "New social skills learned"
+        }
+      }
+    ]
+  },
+  "whyDonate": {
+    "label": {
+      "de": "Warum Ihre Hilfe zählt",
+      "en": "Why Your Help Matters"
+    },
+    "titel": {
+      "de": "Ihre Spende reduziert den Beitrag, den Eltern zahlen müssen",
+      "en": "Your donation reduces the cost for parents"
+    },
+    "karten": [
+      {
+        "titel": {
+          "de": "Räume kosten",
+          "en": "Rooms Cost Money"
+        },
+        "text": {
+          "de": "Kleine Gruppen brauchen sichere Räume. Diese Räume muss jemand bezahlen.",
+          "en": "Small groups need safe spaces. Someone has to pay for these rooms."
+        },
+        "farbe": "purple"
+      },
+      {
+        "titel": {
+          "de": "Fachpersonal ist wichtig",
+          "en": "Staff Matters"
+        },
+        "text": {
+          "de": "Unsere Fachpersonen sind hochqualifiziert. BCBAs, Psycholog:innen, Pädagog:innen. Und die arbeiten nicht gratis.",
+          "en": "Our specialists are highly qualified. BCBAs, psychologists, educators. And they don't work for free."
+        },
+        "farbe": "mint"
+      },
+      {
+        "titel": {
+          "de": "Material braucht's auch",
+          "en": "Materials Are Needed"
+        },
+        "text": {
+          "de": "Kochzutaten, Bastelmaterial, Turngeräte. Die Details machen den Unterschied.",
+          "en": "Cooking ingredients, craft supplies, gym equipment. The details make the difference."
+        },
+        "farbe": "coral"
+      }
+    ]
+  },
+  "upcomingProjects": {
+    "label": {
+      "de": "Was kommt als Nächstes",
+      "en": "What's Coming Next"
+    },
+    "titel": {
+      "de": "Zwei Projekte, die auf Sie warten",
+      "en": "Two Projects Waiting for You"
+    },
+    "intro": {
+      "de": "Das Mini Restaurant hat funktioniert. Jetzt wollen wir weitermachen. Mit Ihrer Hilfe starten diese zwei Angebote.",
+      "en": "The Mini Restaurant worked. Now we want to continue. With your help, these two programs will launch."
+    }
+  },
+  "howToDonate": {
+    "label": {
+      "de": "So können Sie helfen",
+      "en": "How to Help"
+    },
+    "titel": {
+      "de": "Direkt. Einfach. Wirksam.",
+      "en": "Direct. Simple. Effective."
+    },
+    "intro": {
+      "de": "Keine komplizierte Online-Plattform. Einfach überweisen. Jeder Franken kommt an.",
+      "en": "No complicated online platform. Just transfer. Every franc arrives."
+    },
+    "bankSectionTitle": {
+      "de": "Bankverbindung",
+      "en": "Bank Details"
+    },
+    "kontoinhaber": {
+      "de": "Kontoinhaber",
+      "en": "Account Holder"
+    },
+    "ibanLabel": {
+      "de": "IBAN",
+      "en": "IBAN"
+    },
+    "bankLabel": {
+      "de": "Bank",
+      "en": "Bank"
+    },
+    "bicLabel": {
+      "de": "BIC/SWIFT",
+      "en": "BIC/SWIFT"
+    },
+    "verwendungszweckLabel": {
+      "de": "Verwendungszweck",
+      "en": "Reference"
+    },
+    "verwendungszweck": {
+      "de": "Spende EVOLEA",
+      "en": "Donation EVOLEA"
+    },
+    "gutZuWissenTitel": {
+      "de": "Gut zu wissen",
+      "en": "Good to Know"
+    },
+    "taxInfo": [
+      {
+        "label": {
+          "de": "Gemeinnützig",
+          "en": "Non-Profit"
+        },
+        "text": {
+          "de": "EVOLEA ist ein gemeinnütziger Verein und von der Steuer befreit.",
+          "en": "EVOLEA is a non-profit organization and tax-exempt."
+        }
+      },
+      {
+        "label": {
+          "de": "Steuerabzug",
+          "en": "Tax Deduction"
+        },
+        "text": {
+          "de": "Spenden ab CHF 100 können bei der Steuererklärung abgezogen werden.",
+          "en": "Donations from CHF 100 can be deducted on your tax return."
+        }
+      },
+      {
+        "label": {
+          "de": "Transparenz",
+          "en": "Transparency"
+        },
+        "text": {
+          "de": "Auf Wunsch senden wir Ihnen gerne eine Spendenbestätigung.",
+          "en": "Upon request, we'll gladly send you a donation confirmation."
+        }
+      }
+    ]
+  },
+  "donationAmounts": {
+    "titel": {
+      "de": "Was Ihre Spende bewirkt",
+      "en": "What Your Donation Achieves"
+    },
+    "buttonText": {
+      "de": "IBAN kopieren",
+      "en": "Copy IBAN"
+    },
+    "betraege": [
+      {
+        "betrag": "CHF 50",
+        "beschreibung": {
+          "de": "Material für eine Aktivität",
+          "en": "Materials for one activity"
+        },
+        "highlighted": false
+      },
+      {
+        "betrag": "CHF 150",
+        "beschreibung": {
+          "de": "Ein Kind, eine Session",
+          "en": "One child, one session"
+        },
+        "highlighted": false
+      },
+      {
+        "betrag": "CHF 500",
+        "beschreibung": {
+          "de": "Ein Kind, ein ganzes Projekt",
+          "en": "One child, one full project"
+        },
+        "highlighted": false
+      },
+      {
+        "betrag": "CHF 1'500",
+        "beschreibung": {
+          "de": "Projekt-Pate für ein Quartal",
+          "en": "Project sponsor for a quarter"
+        },
+        "highlighted": true
+      }
+    ]
+  },
+  "contactPerson": {
+    "titel": {
+      "de": "Fragen? Einfach fragen.",
+      "en": "Questions? Just ask."
+    },
+    "name": "Gianna Spiess",
+    "rolle": {
+      "de": "M.Sc., BCBA – Mitgründerin",
+      "en": "M.Sc., BCBA – Co-Founder"
+    },
+    "text": {
+      "de": "Sie möchten wissen, wohin Ihre Spende geht? Haben Sie eine Idee für eine Zusammenarbeit? Schreiben Sie mir.",
+      "en": "Want to know where your donation goes? Have an idea for collaboration? Write to me."
+    },
+    "email": "hello@evolea.ch",
+    "foto": "/images/team/gianna-spiess.png"
+  },
+  "cta": {
+    "titel": {
+      "de": "Kinder brauchen keine perfekte Welt.",
+      "en": "Children don't need a perfect world."
+    },
+    "beschreibung": {
+      "de": "Sie brauchen Räume, die zu ihnen passen. Sie können einen schaffen.",
+      "en": "They need spaces that fit them. You can create one."
+    },
+    "buttonText": {
+      "de": "Ich will helfen",
+      "en": "I want to help"
+    }
+  }
+}
