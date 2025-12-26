@@ -207,24 +207,19 @@ const donatePath = lang === 'de' ? '/spenden/' : '/donate/';
       ))}
     </nav>
 
-    <div class="mt-auto pt-8 border-t border-white/20">
-      <div class="flex items-center justify-between mb-6">
-        <span class="text-white/70 text-sm">{lang === 'de' ? 'Sprache' : 'Language'}</span>
+    <div class="mt-auto pt-8">
+      <a
+        href={translatePath(donatePath)}
+        class="mobile-donate flex items-center justify-center gap-3 w-full py-5 px-8 font-display font-bold text-xl rounded-full shadow-xl hover:shadow-2xl transition-all mb-6"
+      >
+        <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+          <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+        </svg>
+        {t('nav.donate')}
+      </a>
+      <div class="flex items-center justify-center gap-3 text-white/60 text-sm">
+        <span>{lang === 'de' ? 'Sprache' : 'Language'}</span>
         <LanguagePicker />
-      </div>
-      <div class="flex flex-col gap-3">
-        <a
-          href={translatePath(donatePath)}
-          class="mobile-donate flex items-center justify-center gap-3 w-full py-4 px-8 font-display font-bold text-lg rounded-full shadow-lg hover:shadow-xl transition-all"
-        >
-          {t('nav.donate')}
-        </a>
-        <a
-          href={translatePath('/kontakt/')}
-          class="flex items-center justify-center gap-3 w-full py-4 px-8 bg-white text-evolea-purple font-display font-bold text-lg rounded-full shadow-lg hover:shadow-xl transition-all"
-        >
-          {t('contact.cta')}
-        </a>
       </div>
     </div>
   </div>
@@ -495,6 +490,12 @@ const donatePath = lang === 'de' ? '/spenden/' : '/donate/';
       0 4px 20px rgba(232, 184, 109, 0.5),
       0 0 35px rgba(255, 224, 102, 0.4),
       inset 0 1px 0 rgba(255, 255, 255, 0.5);
+  }
+
+  /* iOS Safari requires webkit prefix */
+  @-webkit-keyframes goldShimmer {
+    0%, 100% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
   }
 
   @keyframes goldShimmer {
@@ -802,7 +803,7 @@ const donatePath = lang === 'de' ? '/spenden/' : '/donate/';
       inset 0 1px 0 rgba(255, 255, 255, 0.5);
   }
 
-  /* Mobile donate button */
+  /* Mobile donate button - enhanced prominence */
   .mobile-donate {
     background: linear-gradient(
       135deg,
@@ -813,24 +814,44 @@ const donatePath = lang === 'de' ? '/spenden/' : '/donate/';
       #D4A056 100%
     );
     background-size: 200% 200%;
+    /* iOS Safari needs webkit prefix */
+    -webkit-animation: goldShimmer 4s ease infinite;
     animation: goldShimmer 4s ease infinite;
     color: #FFFFFF;
     text-shadow:
-      0 1px 1px rgba(0, 0, 0, 0.35),
-      0 2px 5px rgba(0, 0, 0, 0.3),
-      0 4px 12px rgba(138, 61, 158, 0.6),
-      0 0 30px rgba(0, 0, 0, 0.2);
+      0 2px 2px rgba(0, 0, 0, 0.4),
+      0 3px 8px rgba(0, 0, 0, 0.35),
+      0 5px 15px rgba(138, 61, 158, 0.7),
+      0 0 40px rgba(0, 0, 0, 0.25);
     box-shadow:
-      0 4px 20px rgba(232, 184, 109, 0.4),
-      0 0 40px rgba(255, 224, 102, 0.3),
+      0 6px 30px rgba(232, 184, 109, 0.5),
+      0 0 50px rgba(255, 224, 102, 0.4),
+      inset 0 2px 0 rgba(255, 255, 255, 0.5),
+      inset 0 -2px 0 rgba(0, 0, 0, 0.15);
+    /* Hardware acceleration for iOS */
+    -webkit-transform: translateZ(0);
+    transform: translateZ(0);
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+  }
+
+  .mobile-donate:active {
+    transform: translateY(2px) scale(0.98);
+    box-shadow:
+      0 3px 15px rgba(232, 184, 109, 0.4),
+      0 0 30px rgba(255, 224, 102, 0.3),
       inset 0 1px 0 rgba(255, 255, 255, 0.4);
   }
 
-  .mobile-donate:hover {
-    box-shadow:
-      0 8px 30px rgba(232, 184, 109, 0.5),
-      0 0 60px rgba(255, 224, 102, 0.4),
-      inset 0 1px 0 rgba(255, 255, 255, 0.5);
+  /* Hover only on devices that support it */
+  @media (hover: hover) and (pointer: fine) {
+    .mobile-donate:hover {
+      transform: translateY(-2px) scale(1.02);
+      box-shadow:
+        0 8px 40px rgba(232, 184, 109, 0.6),
+        0 0 70px rgba(255, 224, 102, 0.5),
+        inset 0 2px 0 rgba(255, 255, 255, 0.6);
+    }
   }
 
   /* ===========================================
@@ -874,7 +895,20 @@ const donatePath = lang === 'de' ? '/spenden/' : '/donate/';
       #5DADE2 100%
     );
     background-size: 400% 400%;
+    /* iOS Safari requires webkit prefix and hardware acceleration */
+    -webkit-animation: gradientShift 15s ease infinite;
     animation: gradientShift 15s ease infinite;
+    /* Force hardware acceleration on iOS */
+    -webkit-transform: translateZ(0);
+    transform: translateZ(0);
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+    will-change: background-position;
+  }
+
+  @-webkit-keyframes gradientShift {
+    0%, 100% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
   }
 
   @keyframes gradientShift {
