@@ -25,7 +25,9 @@
     "items": []
   },
   "quote": {
-    "text": {},
+    "text": {
+      "de": "QA"
+    },
     "autor": {}
   },
   "faq": {
