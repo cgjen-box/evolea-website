@@ -34,9 +34,7 @@
   },
   "cta": {
     "titel": {},
-    "beschreibung": {
-      "de": "QA"
-    },
+    "beschreibung": {},
     "buttonText": {},
     "buttonLink": {}
   }
