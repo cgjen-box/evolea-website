@@ -16,7 +16,7 @@
     "buttonLink": "#anmeldung",
     "zweitButtonText": {
       "de": "Fragen? Kontaktieren Sie uns",
-      "en": "Questions? Contact us QA"
+      "en": "Questions? Contact us"
     },
     "zweitButtonLink": "/kontakt/",
     "alter": "3-6"
