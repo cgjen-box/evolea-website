@@ -1,6 +1,8 @@
 {
   "seo": {
-    "title": {},
+    "title": {
+      "en": "QA"
+    },
     "description": {}
   },
   "hero": {
