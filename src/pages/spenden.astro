@@ -3,13 +3,25 @@ import Base from '@layouts/Base.astro';
 import InnerPageHero from '@components/InnerPageHero.astro';
 import PageCloser from '@components/PageCloser.astro';
 import Icon from '@components/Icon.astro';
+import EditLink from '@components/EditLink.astro';
 import { getLangFromUrl, useTranslatedPath } from '@i18n/utils';
+import { getEntry } from 'astro:content';
 
 const lang = getLangFromUrl(Astro.url);
 const translatePath = useTranslatedPath(lang);
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 
-// Bank details - DO NOT MODIFY
+// Get CMS content
+const spendenEntry = await getEntry('pages', 'spenden');
+const page = spendenEntry?.data;
+
+// Helper to get bilingual text
+const getText = (obj: { de?: string; en?: string } | undefined, fallback: string = '') => {
+  if (!obj) return fallback;
+  return lang === 'de' ? (obj.de || fallback) : (obj.en || obj.de || fallback);
+};
+
+// Bank details - DO NOT MODIFY (hardcoded per policy)
 const bankDetails = {
   name: 'EVOLEA Verein',
   address: 'Stapferstrasse 10, 8006 Zürich',
@@ -17,23 +29,30 @@ const bankDetails = {
   iban: 'CH90 0023 0230 9206 9201 G',
   bic: 'UBSWCHZH80A',
 };
+
+// Color classes for why donate cards
+const cardColorClasses: Record<string, { bg: string; icon: string }> = {
+  purple: { bg: 'bg-evolea-purple/10', icon: 'text-evolea-purple' },
+  mint: { bg: 'bg-evolea-mint/20', icon: 'text-evolea-mint' },
+  coral: { bg: 'bg-evolea-coral/20', icon: 'text-evolea-coral' },
+};
 ---
 
 <Base
   title="Spenden"
-  description="Unterstützen Sie Kinder im Spektrum. EVOLEA ist ein gemeinnütziger Verein in Zürich."
+  description={getText(page?.hero?.untertitel, "Unterstützen Sie Kinder im Spektrum. EVOLEA ist ein gemeinnütziger Verein in Zürich.")}
   transparentHeader={true}
   hideFooterCTA={true}
 >
   <!-- Premium Hero with Prism Gradient -->
   <InnerPageHero
-    title="Kleine Beiträge. Grosse Wirkung."
-    subtitle="Wir haben gerade unser erstes Projekt abgeschlossen. Das Mini Restaurant war ein voller Erfolg. Jetzt bauen wir weiter."
+    title={getText(page?.hero?.titel, "Kleine Beiträge. Grosse Wirkung.")}
+    subtitle={getText(page?.hero?.untertitel, "Wir haben gerade unser erstes Projekt abgeschlossen. Das Mini Restaurant war ein voller Erfolg.")}
     breadcrumbs={[
       { label: 'Startseite', href: translatePath('/') },
       { label: 'Spenden' }
     ]}
-    label="Gemeinnütziger Verein"
+    label={getText(page?.hero?.label, "Gemeinnütziger Verein")}
     size="md"
   />
 
@@ -45,7 +64,7 @@ const bankDetails = {
         <div class="instagram-embed-wrapper">
           <div class="instagram-reel-container rounded-evolea-lg overflow-hidden shadow-elevated">
             <iframe
-              src="https://www.instagram.com/reel/DRcoCiaDJ-r/embed/"
+              src={page?.successStory?.instagramReelUrl || "https://www.instagram.com/reel/DRcoCiaDJ-r/embed/"}
               class="instagram-reel-iframe"
               frameborder="0"
               scrolling="no"
@@ -59,41 +78,28 @@ const bankDetails = {
         <!-- Story Content -->
         <div>
           <span class="inline-block text-sm font-semibold text-evolea-purple uppercase tracking-wider mb-4">
-            Was wir erreicht haben
+            {getText(page?.successStory?.label, "Was wir erreicht haben")}
           </span>
           <h2 class="text-3xl md:text-4xl font-display font-bold text-evolea-purple mb-6 leading-tight">
-            Mini Restaurant: 10 Wochen, die zählen
+            {getText(page?.successStory?.titel, "Mini Restaurant: 10 Wochen, die zählen")}
           </h2>
           <p class="text-lg text-evolea-text-light mb-4 leading-relaxed">
-            Kochen. Servieren. Abräumen. Klingt einfach.
-            Für Kinder im Spektrum ist das ein riesiger Schritt.
+            {getText(page?.successStory?.text1, "Kochen. Servieren. Abräumen. Klingt einfach. Für Kinder im Spektrum ist das ein riesiger Schritt.")}
           </p>
           <p class="text-lg text-evolea-text-light mb-6 leading-relaxed">
-            10 Wochen lang haben Kinder gemeinsam gekocht,
-            Rollen übernommen und soziale Kompetenz aufgebaut.
-            Nicht in der Theorie. Im echten Leben.
+            {getText(page?.successStory?.text2, "10 Wochen lang haben Kinder gemeinsam gekocht, Rollen übernommen und soziale Kompetenz aufgebaut.")}
           </p>
 
           <!-- Impact List -->
           <ul class="space-y-4">
-            <li class="flex items-center gap-4">
-              <div class="w-12 h-12 bg-evolea-purple/10 rounded-full flex items-center justify-center flex-shrink-0">
-                <Icon name="people" size="md" />
-              </div>
-              <span class="font-medium text-evolea-text">Kinder haben teilgenommen</span>
-            </li>
-            <li class="flex items-center gap-4">
-              <div class="w-12 h-12 bg-evolea-mint/20 rounded-full flex items-center justify-center flex-shrink-0">
-                <Icon name="calendar" size="md" />
-              </div>
-              <span class="font-medium text-evolea-text">10 Wochen strukturiertes Lernen</span>
-            </li>
-            <li class="flex items-center gap-4">
-              <div class="w-12 h-12 bg-evolea-coral/20 rounded-full flex items-center justify-center flex-shrink-0">
-                <Icon name="sparkle" size="md" />
-              </div>
-              <span class="font-medium text-evolea-text">Neue soziale Fähigkeiten gelernt</span>
-            </li>
+            {(page?.successStory?.impactItems || []).map((item: { icon: string; text: { de?: string; en?: string } }) => (
+              <li class="flex items-center gap-4">
+                <div class="w-12 h-12 bg-evolea-purple/10 rounded-full flex items-center justify-center flex-shrink-0">
+                  <Icon name={item.icon as 'people' | 'calendar' | 'sparkle' | 'heart' | 'check'} size="md" />
+                </div>
+                <span class="font-medium text-evolea-text">{getText(item.text, '')}</span>
+              </li>
+            ))}
           </ul>
         </div>
       </div>
@@ -105,56 +111,30 @@ const bankDetails = {
     <div class="container mx-auto max-w-5xl px-4">
       <div class="text-center mb-12">
         <span class="inline-block text-sm font-semibold text-evolea-purple uppercase tracking-wider mb-4">
-          Warum Ihre Hilfe zählt
+          {getText(page?.whyDonate?.label, "Warum Ihre Hilfe zählt")}
         </span>
         <h2 class="text-3xl md:text-4xl font-display font-bold text-evolea-purple mb-4">
-          Ihre Spende reduziert den Beitrag, den Eltern zahlen müssen
+          {getText(page?.whyDonate?.titel, "Ihre Spende reduziert den Beitrag, den Eltern zahlen müssen")}
         </h2>
       </div>
 
       <div class="grid md:grid-cols-3 gap-8">
-        <!-- Reason 1: Rooms -->
-        <div class="bg-white rounded-evolea-lg p-8 shadow-soft hover:shadow-elevated transition-shadow">
-          <div class="w-16 h-16 bg-evolea-purple/10 rounded-full flex items-center justify-center mb-6">
-            <svg class="w-8 h-8 text-evolea-purple" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
-            </svg>
-          </div>
-          <h3 class="text-xl font-display font-bold text-evolea-purple mb-3">Räume kosten</h3>
-          <p class="text-evolea-text-light leading-relaxed">
-            Kleine Gruppen brauchen sichere Räume.
-            Diese Räume muss jemand bezahlen.
-          </p>
-        </div>
-
-        <!-- Reason 2: Staff -->
-        <div class="bg-white rounded-evolea-lg p-8 shadow-soft hover:shadow-elevated transition-shadow">
-          <div class="w-16 h-16 bg-evolea-mint/20 rounded-full flex items-center justify-center mb-6">
-            <svg class="w-8 h-8 text-evolea-mint" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" />
-            </svg>
-          </div>
-          <h3 class="text-xl font-display font-bold text-evolea-purple mb-3">Fachpersonal ist wichtig</h3>
-          <p class="text-evolea-text-light leading-relaxed">
-            Unsere Fachpersonen sind hochqualifiziert.
-            BCBAs, Psycholog:innen, Pädagog:innen.
-            Und die arbeiten nicht gratis.
-          </p>
-        </div>
-
-        <!-- Reason 3: Materials -->
-        <div class="bg-white rounded-evolea-lg p-8 shadow-soft hover:shadow-elevated transition-shadow">
-          <div class="w-16 h-16 bg-evolea-coral/20 rounded-full flex items-center justify-center mb-6">
-            <svg class="w-8 h-8 text-evolea-coral" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" />
-            </svg>
-          </div>
-          <h3 class="text-xl font-display font-bold text-evolea-purple mb-3">Material braucht's auch</h3>
-          <p class="text-evolea-text-light leading-relaxed">
-            Kochzutaten, Bastelmaterial, Turngeräte.
-            Die Details machen den Unterschied.
-          </p>
-        </div>
+        {(page?.whyDonate?.karten || []).map((karte: { titel: { de?: string; en?: string }; text: { de?: string; en?: string }; farbe: string }) => {
+          const colors = cardColorClasses[karte.farbe] || cardColorClasses.purple;
+          return (
+            <div class="bg-white rounded-evolea-lg p-8 shadow-soft hover:shadow-elevated transition-shadow">
+              <div class={`w-16 h-16 ${colors.bg} rounded-full flex items-center justify-center mb-6`}>
+                <svg class={`w-8 h-8 ${colors.icon}`} fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
+                </svg>
+              </div>
+              <h3 class="text-xl font-display font-bold text-evolea-purple mb-3">{getText(karte.titel, '')}</h3>
+              <p class="text-evolea-text-light leading-relaxed">
+                {getText(karte.text, '')}
+              </p>
+            </div>
+          );
+        })}
       </div>
     </div>
   </section>
@@ -164,14 +144,13 @@ const bankDetails = {
     <div class="container mx-auto max-w-5xl px-4">
       <div class="text-center mb-12">
         <span class="inline-block text-sm font-semibold text-evolea-purple uppercase tracking-wider mb-4">
-          Was kommt als Nächstes
+          {getText(page?.upcomingProjects?.label, "Was kommt als Nächstes")}
         </span>
         <h2 class="text-3xl md:text-4xl font-display font-bold text-evolea-purple mb-4">
-          Zwei Projekte, die auf Sie warten
+          {getText(page?.upcomingProjects?.titel, "Zwei Projekte, die auf Sie warten")}
         </h2>
         <p class="text-lg text-evolea-text-light max-w-2xl mx-auto">
-          Das Mini Restaurant hat funktioniert. Jetzt wollen wir weitermachen.
-          Mit Ihrer Hilfe starten diese zwei Angebote.
+          {getText(page?.upcomingProjects?.intro, "Das Mini Restaurant hat funktioniert. Jetzt wollen wir weitermachen.")}
         </p>
       </div>
 
@@ -183,9 +162,7 @@ const bankDetails = {
           </span>
 
           <div class="w-16 h-16 bg-evolea-mint/20 rounded-full flex items-center justify-center mb-6">
-            <svg class="w-8 h-8 text-evolea-mint" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.828 14.828a4 4 0 01-5.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-            </svg>
+            <Icon name="running" size="lg" />
           </div>
 
           <h3 class="text-2xl font-display font-bold text-evolea-purple mb-2">Mini Turnen</h3>
@@ -221,9 +198,7 @@ const bankDetails = {
           </span>
 
           <div class="w-16 h-16 bg-evolea-magenta/10 rounded-full flex items-center justify-center mb-6">
-            <svg class="w-8 h-8 text-evolea-magenta" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
-            </svg>
+            <Icon name="museum" size="lg" />
           </div>
 
           <h3 class="text-2xl font-display font-bold text-evolea-purple mb-2">Mini Museum</h3>
@@ -263,69 +238,62 @@ const bankDetails = {
         <!-- Bank Details (3 cols) -->
         <div class="lg:col-span-3">
           <span class="inline-block text-sm font-semibold text-evolea-lavender uppercase tracking-wider mb-4">
-            So können Sie helfen
+            {getText(page?.howToDonate?.label, "So können Sie helfen")}
           </span>
           <h2 class="text-3xl md:text-4xl font-display font-bold text-white mb-4">
-            Direkt. Einfach. Wirksam.
+            {getText(page?.howToDonate?.titel, "Direkt. Einfach. Wirksam.")}
           </h2>
           <p class="text-lg text-white/90 mb-8">
-            Keine komplizierte Online-Plattform.
-            Einfach überweisen. Jeder Franken kommt an.
+            {getText(page?.howToDonate?.intro, "Keine komplizierte Online-Plattform. Einfach überweisen. Jeder Franken kommt an.")}
           </p>
 
           <!-- Bank Details Card -->
           <div class="bg-white/10 backdrop-blur-sm rounded-evolea-lg p-6 mb-6">
-            <h3 class="font-display font-bold text-white text-lg mb-4">Bankverbindung</h3>
+            <h3 class="font-display font-bold text-white text-lg mb-4">
+              {getText(page?.howToDonate?.bankSectionTitle, "Bankverbindung")}
+            </h3>
 
             <div class="space-y-3">
               <div class="flex justify-between items-start py-3 border-b border-white/10">
-                <span class="text-white/70 text-sm">Kontoinhaber</span>
+                <span class="text-white/70 text-sm">{getText(page?.howToDonate?.kontoinhaber, "Kontoinhaber")}</span>
                 <span class="text-white font-semibold text-right">
                   {bankDetails.name}<br/>
                   <span class="font-normal text-sm">{bankDetails.address}</span>
                 </span>
               </div>
               <div class="flex justify-between items-center py-3 border-b border-white/10">
-                <span class="text-white/70 text-sm">IBAN</span>
+                <span class="text-white/70 text-sm">{getText(page?.howToDonate?.ibanLabel, "IBAN")}</span>
                 <span class="text-white font-mono font-semibold">{bankDetails.iban}</span>
               </div>
               <div class="flex justify-between items-center py-3 border-b border-white/10">
-                <span class="text-white/70 text-sm">Bank</span>
+                <span class="text-white/70 text-sm">{getText(page?.howToDonate?.bankLabel, "Bank")}</span>
                 <span class="text-white font-semibold">{bankDetails.bank}</span>
               </div>
               <div class="flex justify-between items-center py-3 border-b border-white/10">
-                <span class="text-white/70 text-sm">BIC/SWIFT</span>
+                <span class="text-white/70 text-sm">{getText(page?.howToDonate?.bicLabel, "BIC/SWIFT")}</span>
                 <span class="text-white font-mono font-semibold">{bankDetails.bic}</span>
               </div>
               <div class="flex justify-between items-center py-3">
-                <span class="text-white/70 text-sm">Verwendungszweck</span>
-                <span class="text-white font-semibold">Spende EVOLEA</span>
+                <span class="text-white/70 text-sm">{getText(page?.howToDonate?.verwendungszweckLabel, "Verwendungszweck")}</span>
+                <span class="text-white font-semibold">{getText(page?.howToDonate?.verwendungszweck, "Spende EVOLEA")}</span>
               </div>
             </div>
           </div>
 
           <!-- Tax Info -->
           <div class="bg-white/5 border border-white/10 rounded-evolea-lg p-6">
-            <h3 class="font-display font-bold text-white text-lg mb-4">Gut zu wissen</h3>
+            <h3 class="font-display font-bold text-white text-lg mb-4">
+              {getText(page?.howToDonate?.gutZuWissenTitel, "Gut zu wissen")}
+            </h3>
             <ul class="space-y-3">
-              <li class="flex items-start gap-3 text-white/90">
-                <svg class="w-5 h-5 text-evolea-yellow flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
-                </svg>
-                <span><strong class="text-white">Gemeinnützig:</strong> EVOLEA ist ein gemeinnütziger Verein und von der Steuer befreit.</span>
-              </li>
-              <li class="flex items-start gap-3 text-white/90">
-                <svg class="w-5 h-5 text-evolea-yellow flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
-                </svg>
-                <span><strong class="text-white">Steuerabzug:</strong> Spenden ab CHF 100 können bei der Steuererklärung abgezogen werden.</span>
-              </li>
-              <li class="flex items-start gap-3 text-white/90">
-                <svg class="w-5 h-5 text-evolea-yellow flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
-                </svg>
-                <span><strong class="text-white">Transparenz:</strong> Auf Wunsch senden wir Ihnen gerne eine Spendenbestätigung.</span>
-              </li>
+              {(page?.howToDonate?.taxInfo || []).map((info: { label: { de?: string; en?: string }; text: { de?: string; en?: string } }) => (
+                <li class="flex items-start gap-3 text-white/90">
+                  <svg class="w-5 h-5 text-evolea-yellow flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                  </svg>
+                  <span><strong class="text-white">{getText(info.label, '')}:</strong> {getText(info.text, '')}</span>
+                </li>
+              ))}
             </ul>
           </div>
         </div>
@@ -334,26 +302,18 @@ const bankDetails = {
         <div class="lg:col-span-2">
           <div class="bg-white rounded-evolea-lg p-8 shadow-elevated">
             <h3 class="text-xl font-display font-bold text-evolea-purple text-center mb-6">
-              Was Ihre Spende bewirkt
+              {getText(page?.donationAmounts?.titel, "Was Ihre Spende bewirkt")}
             </h3>
 
             <div class="space-y-3">
-              <div class="flex justify-between items-center p-4 bg-evolea-cream/50 rounded-evolea">
-                <span class="font-display font-bold text-evolea-purple text-lg">CHF 50</span>
-                <span class="text-evolea-text-light text-sm text-right">Material für eine Aktivität</span>
-              </div>
-              <div class="flex justify-between items-center p-4 bg-evolea-cream/50 rounded-evolea">
-                <span class="font-display font-bold text-evolea-purple text-lg">CHF 150</span>
-                <span class="text-evolea-text-light text-sm text-right">Ein Kind, eine Session</span>
-              </div>
-              <div class="flex justify-between items-center p-4 bg-evolea-cream/50 rounded-evolea">
-                <span class="font-display font-bold text-evolea-purple text-lg">CHF 500</span>
-                <span class="text-evolea-text-light text-sm text-right">Ein Kind, ein ganzes Projekt</span>
-              </div>
-              <div class="flex justify-between items-center p-4 bg-gradient-to-r from-evolea-yellow to-evolea-coral/80 rounded-evolea">
-                <span class="font-display font-bold text-evolea-purple text-lg">CHF 1'500</span>
-                <span class="text-evolea-text font-medium text-sm text-right">Projekt-Pate für ein Quartal</span>
-              </div>
+              {(page?.donationAmounts?.betraege || []).map((betrag: { betrag: string; beschreibung: { de?: string; en?: string }; highlighted: boolean }) => (
+                <div class={`flex justify-between items-center p-4 rounded-evolea ${betrag.highlighted ? 'bg-gradient-to-r from-evolea-yellow to-evolea-coral/80' : 'bg-evolea-cream/50'}`}>
+                  <span class="font-display font-bold text-evolea-purple text-lg">{betrag.betrag}</span>
+                  <span class={`text-sm text-right ${betrag.highlighted ? 'text-evolea-text font-medium' : 'text-evolea-text-light'}`}>
+                    {getText(betrag.beschreibung, '')}
+                  </span>
+                </div>
+              ))}
             </div>
 
             <!-- Copy IBAN Button -->
@@ -365,7 +325,7 @@ const bankDetails = {
               <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
               </svg>
-              <span id="copy-text">IBAN kopieren</span>
+              <span id="copy-text">{getText(page?.donationAmounts?.buttonText, "IBAN kopieren")}</span>
             </button>
           </div>
         </div>
@@ -379,22 +339,22 @@ const bankDetails = {
       <div class="flex flex-col md:flex-row items-center gap-8 text-center md:text-left">
         <div class="w-32 h-32 rounded-full overflow-hidden shadow-elevated flex-shrink-0 bg-white">
           <img
-            src={`${base}/images/team/gianna-spiess.png`}
-            alt="Gianna Spiess"
+            src={`${base}${page?.contactPerson?.foto || '/images/team/gianna-spiess.png'}`}
+            alt={page?.contactPerson?.name || 'Gianna Spiess'}
             class="w-full h-full object-cover"
           />
         </div>
         <div>
-          <h3 class="font-display font-bold text-evolea-purple text-xl mb-1">Fragen? Einfach fragen.</h3>
-          <p class="font-semibold text-evolea-purple text-lg">Gianna Spiess</p>
-          <p class="text-evolea-text-light text-sm mb-3">M.Sc., BCBA – Mitgründerin</p>
+          <h3 class="font-display font-bold text-evolea-purple text-xl mb-1">
+            {getText(page?.contactPerson?.titel, "Fragen? Einfach fragen.")}
+          </h3>
+          <p class="font-semibold text-evolea-purple text-lg">{page?.contactPerson?.name || 'Gianna Spiess'}</p>
+          <p class="text-evolea-text-light text-sm mb-3">{getText(page?.contactPerson?.rolle, "M.Sc., BCBA – Mitgründerin")}</p>
           <p class="text-evolea-text-light mb-4">
-            Sie möchten wissen, wohin Ihre Spende geht?
-            Haben Sie eine Idee für eine Zusammenarbeit?
-            Schreiben Sie mir.
+            {getText(page?.contactPerson?.text, "Sie möchten wissen, wohin Ihre Spende geht? Schreiben Sie mir.")}
           </p>
-          <a href="mailto:hello@evolea.ch" class="inline-flex items-center gap-2 font-semibold text-evolea-purple hover:underline">
-            hello@evolea.ch
+          <a href={`mailto:${page?.contactPerson?.email || 'hello@evolea.ch'}`} class="inline-flex items-center gap-2 font-semibold text-evolea-purple hover:underline">
+            {page?.contactPerson?.email || 'hello@evolea.ch'}
             <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
             </svg>
@@ -407,11 +367,14 @@ const bankDetails = {
   <!-- Page Closer with custom message -->
   <PageCloser
     showCTA={true}
-    ctaTitle="Kinder brauchen keine perfekte Welt."
-    ctaDescription="Sie brauchen Räume, die zu ihnen passen. Sie können einen schaffen."
-    ctaButtonText="Ich will helfen"
+    ctaTitle={getText(page?.cta?.titel, "Kinder brauchen keine perfekte Welt.")}
+    ctaDescription={getText(page?.cta?.beschreibung, "Sie brauchen Räume, die zu ihnen passen. Sie können einen schaffen.")}
+    ctaButtonText={getText(page?.cta?.buttonText, "Ich will helfen")}
     ctaButtonHref="#donate-section"
   />
+
+  <!-- Edit Link for Keystatic -->
+  <EditLink type="singleton" collection="spenden" label="Edit Spenden" />
 </Base>
 
 
