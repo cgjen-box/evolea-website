@@ -1,7 +1,9 @@
 {
   "seo": {
     "title": {},
-    "description": {}
+    "description": {
+      "en": "QA"
+    }
   },
   "hero": {
     "badge": {},
