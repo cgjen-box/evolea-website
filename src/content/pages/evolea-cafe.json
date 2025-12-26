@@ -17,9 +17,7 @@
   "schedule": {
     "titel": {},
     "cards": [],
-    "datenTitel": {
-      "en": "QA"
-    },
+    "datenTitel": {},
     "daten": []
   },
   "expect": {
