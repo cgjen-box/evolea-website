@@ -1,6 +1,6 @@
 # EVOLEA Image Generation Learnings
 
-> **Last Updated**: 2024-12-27
+> **Last Updated**: 2025-12-27
 > **Version**: 1.0
 > **Total Training Sessions**: 0
 
@@ -14,25 +14,25 @@ This file stores learned preferences from user feedback. It is automatically upd
 
 | Pattern | Source | Date Added |
 |---------|--------|------------|
-| Soft dreamy watercolor with floating clouds | Initial (liked images) | 2024-12-27 |
-| Layered colorful clouds in lavender, mint, coral, cream | Initial (liked images) | 2024-12-27 |
-| Whimsical, ethereal atmosphere | Initial (liked images) | 2024-12-27 |
-| Delicate butterflies with gradient wings | Initial (liked images) | 2024-12-27 |
-| Pastel gradient backgrounds | Initial (liked images) | 2024-12-27 |
-| Gentle, diffused lighting | Initial (liked images) | 2024-12-27 |
-| Soft children's book illustration style | Initial (liked images) | 2024-12-27 |
+| Soft dreamy watercolor with floating clouds | Initial (liked images) | 2025-12-27 |
+| Layered colorful clouds in lavender, mint, coral, cream | Initial (liked images) | 2025-12-27 |
+| Whimsical, ethereal atmosphere | Initial (liked images) | 2025-12-27 |
+| Delicate butterflies with gradient wings | Initial (liked images) | 2025-12-27 |
+| Pastel gradient backgrounds | Initial (liked images) | 2025-12-27 |
+| Gentle, diffused lighting | Initial (liked images) | 2025-12-27 |
+| Soft children's book illustration style | Initial (liked images) | 2025-12-27 |
 
 ### POSITIVE (+1) - Prefer When Relevant
 
 | Pattern | Source | Date Added |
 |---------|--------|------------|
-| Children aged 5-8 for most programs | Brand guide | 2024-12-27 |
-| Children aged 3-5 for Mini Garten | Brand guide | 2024-12-27 |
-| Swiss/Central European features | User requirement | 2024-12-27 |
-| Round table collaborative settings | Initial (liked images) | 2024-12-27 |
-| Natural window light streaming in | Initial (liked images) | 2024-12-27 |
-| Warm indoor settings | Initial (liked images) | 2024-12-27 |
-| Unicorns as alternative to butterflies | User preference | 2024-12-27 |
+| Children aged 5-8 for most programs | Brand guide | 2025-12-27 |
+| Children aged 3-5 for Mini Garten | Brand guide | 2025-12-27 |
+| Swiss/Central European features | User requirement | 2025-12-27 |
+| Round table collaborative settings | Initial (liked images) | 2025-12-27 |
+| Natural window light streaming in | Initial (liked images) | 2025-12-27 |
+| Warm indoor settings | Initial (liked images) | 2025-12-27 |
+| Unicorns as alternative to butterflies | User preference | 2025-12-27 |
 
 ### NEUTRAL (0) - Test and Learn
 
@@ -47,22 +47,22 @@ This file stores learned preferences from user feedback. It is automatically upd
 
 | Pattern | Reason | Date Added |
 |---------|--------|------------|
-| Photorealistic children's faces | User feedback | 2024-12-27 |
-| American cultural elements | Brand guide | 2024-12-27 |
-| Generic stock photo look | User feedback | 2024-12-27 |
-| Hard edges or sharp contrasts | Style preference | 2024-12-27 |
-| Busy, cluttered compositions | Style preference | 2024-12-27 |
+| Photorealistic children's faces | User feedback | 2025-12-27 |
+| American cultural elements | Brand guide | 2025-12-27 |
+| Generic stock photo look | User feedback | 2025-12-27 |
+| Hard edges or sharp contrasts | Style preference | 2025-12-27 |
+| Busy, cluttered compositions | Style preference | 2025-12-27 |
 
 ### STRONG NEGATIVE (-3) - Never Include
 
 | Pattern | Reason | Date Added |
 |---------|--------|------------|
-| Puzzle piece symbols | Autism community rejects | 2024-12-27 |
-| Clinical/medical settings | Brand guide | 2024-12-27 |
-| Religious symbols on children | Brand guide | 2024-12-27 |
-| Dark or muted colors | Brand guide | 2024-12-27 |
-| Isolated or distressed children | Brand guide | 2024-12-27 |
-| Adults dominating scenes | Brand guide | 2024-12-27 |
+| Puzzle piece symbols | Autism community rejects | 2025-12-27 |
+| Clinical/medical settings | Brand guide | 2025-12-27 |
+| Religious symbols on children | Brand guide | 2025-12-27 |
+| Dark or muted colors | Brand guide | 2025-12-27 |
+| Isolated or distressed children | Brand guide | 2025-12-27 |
+| Adults dominating scenes | Brand guide | 2025-12-27 |
 
 ---
 
@@ -207,4 +207,4 @@ modifier_pool:
 
 | Version | Date | Changes |
 |---------|------|---------|
-| 1.0 | 2024-12-27 | Initial creation with pre-populated preferences from user's liked images |
+| 1.0 | 2025-12-27 | Initial creation with pre-populated preferences from user's liked images |
