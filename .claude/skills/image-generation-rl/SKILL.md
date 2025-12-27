@@ -207,14 +207,15 @@ Dominant colors: [COLORS]. Mood: magical, warm, inviting.
 
 ## Backend Configuration
 
-The image generation uses Google Gemini by default:
+The image generation always uses **Gemini 3 Pro**:
 
-| Model | ID | Use Case |
-|-------|-----|----------|
-| Gemini Flash | `gemini-2.5-flash-image` | Standard quality, fast |
-| Gemini Pro | `gemini-3-pro-image-preview` | High quality (4K) |
+| Model | ID |
+|-------|-----|
+| Gemini 3 Pro | `gemini-3-pro-image-preview` |
 
-Replicate (Flux) is available as a fallback if Gemini is unavailable.
+This is configured in `scripts/generate_image.py` via `CONFIG.gemini_model`.
+
+Replicate (Flux) is available as a fallback if Gemini is unavailable in your region.
 
 ---
 
