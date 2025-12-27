@@ -210,9 +210,9 @@ const donatePath = lang === 'de' ? '/spenden/' : '/donate/';
     <div class="mt-auto pt-8">
       <a
         href={translatePath(donatePath)}
-        class="mobile-donate flex items-center justify-center gap-3 w-full py-5 px-8 font-display font-bold text-xl rounded-full shadow-xl hover:shadow-2xl transition-all mb-6"
+        class="mobile-donate flex items-center justify-center gap-2.5 w-full py-4 px-6 font-display font-bold text-lg rounded-full shadow-xl hover:shadow-2xl transition-all mb-6"
       >
-        <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
           <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
         </svg>
         {t('nav.donate')}
@@ -1050,8 +1050,10 @@ const donatePath = lang === 'de' ? '/spenden/' : '/donate/';
     let hasScrolledDown = false;
 
     // Scroll thresholds for smoother behavior
-    const SHOW_THRESHOLD = 60;  // Pixels of upward scroll needed to show navbar
-    const HIDE_THRESHOLD = 30;  // Pixels of downward scroll needed to hide navbar
+    // Mobile needs higher thresholds to avoid accidental hiding during touch scrolling
+    const isMobile = window.innerWidth < 768;
+    const SHOW_THRESHOLD = isMobile ? 80 : 60;   // Pixels of upward scroll needed to show navbar
+    const HIDE_THRESHOLD = isMobile ? 100 : 30;  // Pixels of downward scroll needed to hide navbar (much higher on mobile)
     const TOP_ZONE = 80;        // Pixels from top where navbar always shows
 
     // Track cumulative scroll distance in current direction

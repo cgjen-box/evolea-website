@@ -1,0 +1,11 @@
+{
+  "mcpServers": {
+    "evolea-images": {
+      "command": "python",
+      "args": ["C:/Users/christoph/evolea-website/scripts/mcp_image_server.py"],
+      "env": {
+        "GOOGLE_API_KEY": "AIzaSyDydgBdPKXG4HshBVAy36Fir3xZbB9uKcA"
+      }
+    }
+  }
+}
