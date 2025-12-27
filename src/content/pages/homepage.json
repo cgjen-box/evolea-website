@@ -152,8 +152,8 @@
     },
     "miniRestaurant": {
       "status": {
-        "de": "Läuft · Keine Anmeldung",
-        "en": "Running · No registration"
+        "de": "Abgeschlossen · Keine Anmeldung",
+        "en": "Completed · No registration"
       },
       "titel": {
         "de": "Mini Restaurant",
@@ -168,8 +168,8 @@
         "en": "Week 8 of 10"
       },
       "buttonText": {
-        "de": "Für Teilnehmer",
-        "en": "For Participants"
+        "de": "Was wir gemacht haben",
+        "en": "What we did"
       }
     },
     "evoleaCafe": {
