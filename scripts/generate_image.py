@@ -115,8 +115,8 @@ class Config:
     # Generation settings
     default_count: int = 4
     default_aspect: str = "16:9"
-    gemini_model: str = "gemini-2.5-flash-image"  # Stable image generation
-    gemini_model_pro: str = "gemini-3-pro-image-preview"  # Pro image generation (4K)
+    gemini_model: str = "gemini-2.5-flash-image"  # Fallback (not used)
+    gemini_model_pro: str = "gemini-3-pro-image-preview"  # Default: Gemini 3 Pro
     claude_model: str = "claude-sonnet-4-20250514"
 
     # Replicate settings (fallback when Gemini is blocked)
@@ -494,8 +494,9 @@ def generate_images_gemini(
     client = genai.Client(api_key=CONFIG.gemini_key)
 
     # Select model based on quality preference
-    model_id = CONFIG.gemini_model_pro if use_pro else CONFIG.gemini_model
-    log(f"[INFO] Using Gemini model: {model_id}")
+    # Always use Gemini 3 Pro for best quality
+    model_id = CONFIG.gemini_model_pro
+    log(f"[INFO] Using Gemini 3 Pro: {model_id}")
 
     output_dir.mkdir(parents=True, exist_ok=True)
     timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
