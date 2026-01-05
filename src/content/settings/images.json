@@ -1,6 +1,6 @@
 {
   "startseite": {
-    "videoPoster": "/images/hero/homepage-hero.png",
+    "videoPoster": null,
     "ogImage": null
   },
   "programmeHeroes": {
@@ -9,7 +9,7 @@
     "miniTurnen": "/images/programs/mini-turnen-hero.png",
     "miniMuseum": "/images/programs/mini-museum-hero.png",
     "miniRestaurantPoster": null,
-    "tagesschule": null,
+    "tagesschule": "/images/hero/homepage-hero.png",
     "angeboteIndex": "/images/hero/angebote-hero.png",
     "evoleaCafe": "/images/hero/evolea-cafe-hero.png",
     "spenden": "/images/hero/spenden-hero.png"
