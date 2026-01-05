@@ -1,8 +1,9 @@
 ﻿---
 import FloatingShapes from '@components/FloatingShapes.astro';
 import Icon from '@components/Icon.astro';
+import GradientCTA from '@components/GradientCTA.astro';
 
-const { content, lang, heroImage } = Astro.props;
+const { content, lang, translatePath, heroImage } = Astro.props;
 
 const isEnglish = lang === 'en';
 
@@ -21,6 +22,7 @@ const schedule = content?.schedule || {};
 const expect = content?.expect || {};
 const quote = content?.quote || {};
 const faq = content?.faq || {};
+const cta = content?.cta || {};
 
 const aboutParagraphs = getArray(about.abschnitte);
 const aboutCards = getArray(content?.aboutCards);
@@ -176,6 +178,16 @@ const faqItems = getArray(faq.items);
       </div>
     </div>
   </section>
+
+  <!-- CTA Section -->
+  {(cta.titel?.de || cta.titel?.en) && (
+    <GradientCTA
+      title={getText(cta.titel, '')}
+      description={getText(cta.beschreibung, '')}
+      buttonText={getText(cta.buttonText, 'Kontakt')}
+      buttonHref={translatePath ? translatePath('/kontakt/') : '/kontakt/'}
+    />
+  )}
 </main>
 
 <style>

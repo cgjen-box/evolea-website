@@ -290,17 +290,8 @@
     ]
   },
   "cta": {
-    "titel": {
-      "de": "Bewegung macht Freude!",
-      "en": "Movement brings joy!"
-    },
-    "beschreibung": {
-      "de": "Kontaktieren Sie uns für ein unverbindliches Gespräch.",
-      "en": "Contact us for a no-obligation conversation."
-    },
-    "buttonText": {
-      "de": "Jetzt Kontakt aufnehmen",
-      "en": "Contact us now"
-    }
+    "titel": {},
+    "beschreibung": {},
+    "buttonText": {}
   }
 }

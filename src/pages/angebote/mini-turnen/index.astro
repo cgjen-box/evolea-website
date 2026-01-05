@@ -322,11 +322,13 @@ const cta = page?.cta || {};
     </div>
   </section>
 
-  <!-- CTA Section from CMS -->
-  <GradientCTA
-    title={getText(cta.titel, 'Bewegung macht Freude!')}
-    description={getText(cta.beschreibung, 'Kontaktieren Sie uns für ein unverbindliches Gespräch.')}
-    buttonText={getText(cta.buttonText, 'Jetzt Kontakt aufnehmen')}
-    buttonHref={translatePath('/kontakt/')}
-  />
+  <!-- CTA Section from CMS (only if content exists) -->
+  {(cta.titel?.de || cta.titel?.en) && (
+    <GradientCTA
+      title={getText(cta.titel, '')}
+      description={getText(cta.beschreibung, '')}
+      buttonText={getText(cta.buttonText, 'Kontakt')}
+      buttonHref={translatePath('/kontakt/')}
+    />
+  )}
 </Base>
