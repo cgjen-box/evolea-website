@@ -1,41 +1,305 @@
 {
   "seo": {
-    "title": {},
-    "description": {}
+    "title": {
+      "de": "EVOLEA Cafe | Austausch für Eltern",
+      "en": "EVOLEA Cafe | Parent Community"
+    },
+    "description": {
+      "de": "Jeden 2. Mittwoch treffen sich Eltern von Kindern im Spektrum zum Austausch. Keine Anmeldung nötig. Einfach vorbeikommen.",
+      "en": "Every 2nd Wednesday, parents of children on the spectrum meet for exchange. No registration needed. Just drop by."
+    }
   },
   "hero": {
-    "badge": {},
-    "titel": {},
-    "tagline": {}
+    "badge": {
+      "de": "Eltern-Community",
+      "en": "Parent Community"
+    },
+    "titel": {
+      "de": "EVOLEA Cafe",
+      "en": "EVOLEA Cafe"
+    },
+    "tagline": {
+      "de": "Ein Ort für Austausch, Verständnis und Verbundenheit – von Eltern für Eltern.",
+      "en": "A place for exchange, understanding and connection – by parents, for parents."
+    }
   },
   "about": {
-    "titel": {},
-    "abschnitte": [],
-    "hinweis": {}
+    "titel": {
+      "de": "Was ist das EVOLEA Cafe?",
+      "en": "What is EVOLEA Cafe?"
+    },
+    "abschnitte": [
+      {
+        "de": "Das EVOLEA Cafe ist ein offener Treffpunkt für Eltern von Kindern im Autismus Spektrum oder mit ADHS. Hier können Sie sich in entspannter Atmosphäre mit anderen Eltern austauschen, die ähnliche Erfahrungen teilen.",
+        "en": "EVOLEA Cafe is an open meeting point for parents of children on the autism spectrum or with ADHD. Here you can exchange ideas with other parents who share similar experiences in a relaxed atmosphere."
+      },
+      {
+        "de": "Manchmal tut es einfach gut zu wissen, dass man nicht allein ist. Bei uns finden Sie Verständnis, praktische Tipps und vielleicht sogar neue Freundschaften.",
+        "en": "Sometimes it just feels good to know you're not alone. With us, you'll find understanding, practical tips, and perhaps even new friendships."
+      }
+    ],
+    "hinweis": {
+      "de": "Keine Anmeldung erforderlich – einfach vorbeikommen!",
+      "en": "No registration required – just drop by!"
+    }
   },
-  "aboutCards": [],
+  "aboutCards": [
+    {
+      "icon": "coffee",
+      "text": {
+        "de": "Gemütliche Atmosphäre",
+        "en": "Cozy atmosphere"
+      }
+    },
+    {
+      "icon": "heart",
+      "text": {
+        "de": "Verständnis & Empathie",
+        "en": "Understanding & empathy"
+      }
+    },
+    {
+      "icon": "people",
+      "text": {
+        "de": "Eltern-Community",
+        "en": "Parent community"
+      }
+    },
+    {
+      "icon": "sparkle",
+      "text": {
+        "de": "Kostenlos & offen",
+        "en": "Free & open"
+      }
+    }
+  ],
   "schedule": {
-    "titel": {},
-    "cards": [],
-    "datenTitel": {},
-    "daten": []
+    "titel": {
+      "de": "Wann & Wo?",
+      "en": "When & Where?"
+    },
+    "cards": [
+      {
+        "icon": "calendar",
+        "titel": {
+          "de": "Jeden 2. Mittwoch",
+          "en": "Every 2nd Wednesday"
+        },
+        "text": {
+          "de": "im Monat",
+          "en": "of the month"
+        },
+        "variant": "highlight"
+      },
+      {
+        "icon": "clock",
+        "titel": {
+          "de": "19:00 – 21:00 Uhr",
+          "en": "7:00 – 9:00 PM"
+        },
+        "text": {
+          "de": "Abends",
+          "en": "Evening"
+        },
+        "variant": "standard"
+      },
+      {
+        "icon": "location",
+        "titel": {
+          "de": "Zürich",
+          "en": "Zurich"
+        },
+        "text": {
+          "de": "Genauer Ort auf Anfrage",
+          "en": "Exact location on request"
+        },
+        "variant": "standard"
+      },
+      {
+        "icon": "sparkle",
+        "titel": {
+          "de": "Kostenlos",
+          "en": "Free"
+        },
+        "text": {
+          "de": "Keine Gebühren",
+          "en": "No fees"
+        },
+        "variant": "standard"
+      }
+    ],
+    "datenTitel": {
+      "de": "Nächste Termine",
+      "en": "Upcoming Dates"
+    },
+    "daten": [
+      {
+        "datum": {
+          "de": "Mi, 8. Januar 2025",
+          "en": "Wed, January 8, 2025"
+        },
+        "uhrzeit": {
+          "de": "19:00 Uhr",
+          "en": "7:00 PM"
+        }
+      },
+      {
+        "datum": {
+          "de": "Mi, 12. Februar 2025",
+          "en": "Wed, February 12, 2025"
+        },
+        "uhrzeit": {
+          "de": "19:00 Uhr",
+          "en": "7:00 PM"
+        }
+      },
+      {
+        "datum": {
+          "de": "Mi, 12. März 2025",
+          "en": "Wed, March 12, 2025"
+        },
+        "uhrzeit": {
+          "de": "19:00 Uhr",
+          "en": "7:00 PM"
+        }
+      }
+    ]
   },
   "expect": {
-    "titel": {},
-    "items": []
+    "titel": {
+      "de": "Was erwartet Sie?",
+      "en": "What to expect?"
+    },
+    "items": [
+      {
+        "typ": "yes",
+        "text": {
+          "de": "Offener Austausch mit anderen Eltern",
+          "en": "Open exchange with other parents"
+        }
+      },
+      {
+        "typ": "yes",
+        "text": {
+          "de": "Verständnis für Ihre Situation",
+          "en": "Understanding for your situation"
+        }
+      },
+      {
+        "typ": "yes",
+        "text": {
+          "de": "Praktische Tipps aus dem Alltag",
+          "en": "Practical tips from everyday life"
+        }
+      },
+      {
+        "typ": "yes",
+        "text": {
+          "de": "Neue Kontakte und Freundschaften",
+          "en": "New contacts and friendships"
+        }
+      },
+      {
+        "typ": "yes",
+        "text": {
+          "de": "Ein offenes Ohr für Ihre Fragen",
+          "en": "An open ear for your questions"
+        }
+      },
+      {
+        "typ": "yes",
+        "text": {
+          "de": "Entspannte, ungezwungene Atmosphäre",
+          "en": "Relaxed, casual atmosphere"
+        }
+      },
+      {
+        "typ": "no",
+        "text": {
+          "de": "Keine Vorträge oder Schulungen",
+          "en": "No lectures or training sessions"
+        }
+      },
+      {
+        "typ": "no",
+        "text": {
+          "de": "Keine Therapie oder Beratung",
+          "en": "No therapy or counseling"
+        }
+      }
+    ]
   },
   "quote": {
-    "text": {},
-    "autor": {}
+    "text": {
+      "de": "\"Manchmal braucht man einfach Menschen, die verstehen, ohne dass man viel erklären muss.\"",
+      "en": "\"Sometimes you just need people who understand, without having to explain much.\""
+    },
+    "autor": {
+      "de": "– Eine EVOLEA Cafe Teilnehmerin",
+      "en": "– An EVOLEA Cafe participant"
+    }
   },
   "faq": {
-    "titel": {},
-    "items": []
+    "titel": {
+      "de": "Häufige Fragen",
+      "en": "Frequently Asked Questions"
+    },
+    "items": [
+      {
+        "frage": {
+          "de": "Muss ich mich anmelden?",
+          "en": "Do I need to register?"
+        },
+        "antwort": {
+          "de": "Nein, eine Anmeldung ist nicht erforderlich. Kommen Sie einfach vorbei, wann immer es Ihnen passt.",
+          "en": "No, registration is not required. Just drop by whenever it suits you."
+        }
+      },
+      {
+        "frage": {
+          "de": "Kann ich mein Kind mitbringen?",
+          "en": "Can I bring my child?"
+        },
+        "antwort": {
+          "de": "Das EVOLEA Cafe ist primär ein Angebot für Eltern unter sich. Falls Sie keine Betreuung finden, sprechen Sie uns bitte vorher an.",
+          "en": "EVOLEA Cafe is primarily an offering for parents among themselves. If you can't find childcare, please contact us beforehand."
+        }
+      },
+      {
+        "frage": {
+          "de": "Kostet die Teilnahme etwas?",
+          "en": "Does participation cost anything?"
+        },
+        "antwort": {
+          "de": "Nein, das EVOLEA Cafe ist kostenlos. Getränke werden zur Verfügung gestellt.",
+          "en": "No, EVOLEA Cafe is free. Beverages are provided."
+        }
+      },
+      {
+        "frage": {
+          "de": "Wer kann teilnehmen?",
+          "en": "Who can participate?"
+        },
+        "antwort": {
+          "de": "Alle Eltern, Grosseltern oder Bezugspersonen von Kindern im Autismus Spektrum oder mit ADHS sind herzlich willkommen.",
+          "en": "All parents, grandparents, or caregivers of children on the autism spectrum or with ADHD are warmly welcome."
+        }
+      }
+    ]
   },
   "cta": {
-    "titel": {},
-    "beschreibung": {},
-    "buttonText": {},
-    "buttonLink": {}
+    "titel": {
+      "de": "Fragen zum EVOLEA Cafe?",
+      "en": "Questions about EVOLEA Cafe?"
+    },
+    "beschreibung": {
+      "de": "Kontaktieren Sie uns – wir freuen uns auf Sie!",
+      "en": "Contact us – we look forward to meeting you!"
+    },
+    "buttonText": {
+      "de": "Kontakt aufnehmen",
+      "en": "Get in touch"
+    },
+    "buttonLink": "/kontakt/"
   }
 }
