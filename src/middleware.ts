@@ -87,13 +87,24 @@ const deployScript = `<script>
     // Insert at the top of sidebar
     sidebar.insertBefore(container, sidebar.firstChild);
 
-    // Add keyframe animation
+    // Add keyframe animation and hide Keystatic's built-in Deploy button
     if (!document.getElementById('evolea-deploy-styles')) {
       var style = document.createElement('style');
       style.id = 'evolea-deploy-styles';
-      style.textContent = '@keyframes evolea-spin{to{transform:rotate(360deg)}}';
+      // Hide only the Keystatic built-in Deploy button (in sidebar nav, not our custom one)
+      style.textContent = '@keyframes evolea-spin{to{transform:rotate(360deg)}} aside nav > button, nav[class] > button:first-child:not(#evolea-deploy-btn) { display:none !important; }';
       document.head.appendChild(style);
     }
+
+    // Also hide Keystatic's deploy button by looking for it directly
+    setTimeout(function() {
+      var buttons = document.querySelectorAll('nav button, aside button');
+      buttons.forEach(function(btn) {
+        if (btn.id !== 'evolea-deploy-btn' && btn.textContent && btn.textContent.toLowerCase().includes('deploy')) {
+          btn.style.display = 'none';
+        }
+      });
+    }, 100);
   }
 
   function showToast(message, type) {
