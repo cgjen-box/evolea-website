@@ -15,6 +15,9 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 const spendenEntry = await getEntry('pages', 'spenden');
 const page = spendenEntry?.data;
 
+// Hero image
+const heroImage = base + '/images/hero/spenden-hero.png';
+
 // Helper to get bilingual text
 const getText = (obj: { de?: string; en?: string } | undefined, fallback: string = '') => {
   if (!obj) return fallback;
@@ -44,7 +47,7 @@ const cardColorClasses: Record<string, { bg: string; icon: string }> = {
   transparentHeader={true}
   hideFooterCTA={true}
 >
-  <!-- Premium Hero with Prism Gradient -->
+  <!-- Premium Hero with Prism Gradient and Image -->
   <InnerPageHero
     title={getText(page?.hero?.titel, "Kleine Beiträge. Grosse Wirkung.")}
     subtitle={getText(page?.hero?.untertitel, "Wir haben gerade unser erstes Projekt abgeschlossen. Das Mini Restaurant war ein voller Erfolg.")}
@@ -54,6 +57,8 @@ const cardColorClasses: Record<string, { bg: string; icon: string }> = {
     ]}
     label={getText(page?.hero?.label, "Gemeinnütziger Verein")}
     size="md"
+    heroImage={heroImage}
+    heroImageAlt={lang === 'de' ? 'Kinder bei EVOLEA Projekten' : 'Children at EVOLEA projects'}
   />
 
   <!-- ===== SUCCESS STORY: Was wir erreicht haben ===== -->

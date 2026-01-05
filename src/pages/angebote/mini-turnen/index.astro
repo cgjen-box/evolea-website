@@ -19,7 +19,7 @@ const siteImagesEntry = await getEntry('settings', 'images');
 const siteImages = siteImagesEntry?.data;
 const heroImage = siteImages?.programmeHeroes?.miniTurnen
   ? base + siteImages.programmeHeroes.miniTurnen
-  : base + "/images/generated/mini-turnen-hero.png";
+  : base + "/images/programs/mini-turnen-hero.png";
 
 // Helper to get bilingual text
 const getText = (obj: { de?: string; en?: string } | undefined, fallback: string = '') => {

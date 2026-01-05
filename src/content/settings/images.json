@@ -1,15 +1,18 @@
 {
   "startseite": {
-    "videoPoster": null,
+    "videoPoster": "/images/hero/homepage-hero.png",
     "ogImage": null
   },
   "programmeHeroes": {
-    "miniGarten": null,
-    "miniProjekte": null,
-    "miniTurnen": null,
-    "miniMuseum": null,
+    "miniGarten": "/images/programs/mini-garten-hero.png",
+    "miniProjekte": "/images/programs/mini-projekte-hero.png",
+    "miniTurnen": "/images/programs/mini-turnen-hero.png",
+    "miniMuseum": "/images/programs/mini-museum-hero.png",
     "miniRestaurantPoster": null,
-    "tagesschule": null
+    "tagesschule": null,
+    "angeboteIndex": "/images/hero/angebote-hero.png",
+    "evoleaCafe": "/images/hero/evolea-cafe-hero.png",
+    "spenden": "/images/hero/spenden-hero.png"
   },
   "programmeKarten": {
     "miniGarten": null,

@@ -2,7 +2,7 @@
 import FloatingShapes from '@components/FloatingShapes.astro';
 import Icon from '@components/Icon.astro';
 
-const { content, lang } = Astro.props;
+const { content, lang, heroImage } = Astro.props;
 
 const isEnglish = lang === 'en';
 
@@ -31,18 +31,30 @@ const faqItems = getArray(faq.items);
 ---
 
 <main class="cafe-page">
-  <!-- Hero Section with Prism Gradient -->
+  <!-- Hero Section with Prism Gradient and Image -->
   <section class="cafe-hero">
     <FloatingShapes variant="minimal" />
-    <div class="cafe-hero-content">
-      <div class="cafe-hero-icon">
-        <Icon name="coffee" size="xl" class="icon-white" gradient={false} />
+    <div class="cafe-hero-wrapper container">
+      <div class="cafe-hero-content">
+        <div class="cafe-hero-icon">
+          <Icon name="coffee" size="xl" class="icon-white" gradient={false} />
+        </div>
+        <span class="cafe-hero-badge">{getText(hero.badge)}</span>
+        <h1>{getText(hero.titel, 'EVOLEA Cafe')}</h1>
+        <p class="cafe-hero-tagline">
+          {getText(hero.tagline)}
+        </p>
       </div>
-      <span class="cafe-hero-badge">{getText(hero.badge)}</span>
-      <h1>{getText(hero.titel, 'EVOLEA Cafe')}</h1>
-      <p class="cafe-hero-tagline">
-        {getText(hero.tagline)}
-      </p>
+      {heroImage && (
+        <div class="cafe-hero-image-container">
+          <img
+            src={heroImage}
+            alt={getText(hero.titel, 'EVOLEA Cafe')}
+            class="cafe-hero-image"
+            loading="eager"
+          />
+        </div>
+      )}
     </div>
   </section>
 
@@ -202,15 +214,37 @@ const faqItems = getArray(faq.items);
       #B56FE8 100%
     );
     padding: 8rem 1.5rem 6rem;
-    text-align: center;
     overflow: hidden;
+  }
+
+  .cafe-hero-wrapper {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 2rem;
+    align-items: center;
+    position: relative;
+    z-index: 10;
+  }
+
+  @media (min-width: 1024px) {
+    .cafe-hero-wrapper {
+      grid-template-columns: 1fr 1fr;
+      gap: 3rem;
+    }
   }
 
   .cafe-hero-content {
     position: relative;
     z-index: 10;
-    max-width: 600px;
-    margin: 0 auto;
+    text-align: center;
+    order: 2;
+  }
+
+  @media (min-width: 1024px) {
+    .cafe-hero-content {
+      text-align: left;
+      order: 1;
+    }
   }
 
   .cafe-hero-icon {
@@ -254,6 +288,36 @@ const faqItems = getArray(faq.items);
     line-height: 1.6;
     margin: 0;
     text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+
+  .cafe-hero-image-container {
+    order: 1;
+    display: flex;
+    justify-content: center;
+  }
+
+  @media (min-width: 1024px) {
+    .cafe-hero-image-container {
+      order: 2;
+    }
+  }
+
+  .cafe-hero-image {
+    width: 100%;
+    max-width: 500px;
+    height: auto;
+    border-radius: 1.5rem;
+    box-shadow:
+      0 20px 40px rgba(138, 61, 158, 0.2),
+      0 8px 16px rgba(0, 0, 0, 0.1);
+    object-fit: cover;
+    aspect-ratio: 4/3;
+  }
+
+  @media (min-width: 1024px) {
+    .cafe-hero-image {
+      max-width: 100%;
+    }
   }
 
   /* ===========================================
