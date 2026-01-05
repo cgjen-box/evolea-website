@@ -25,6 +25,8 @@ interface Props {
   breadcrumbs: BreadcrumbItem[];
   size?: 'sm' | 'md' | 'lg';
   label?: string;
+  heroImage?: string;
+  heroImageAlt?: string;
 }
 
 const {
@@ -33,7 +35,11 @@ const {
   breadcrumbs,
   size = 'md',
   label,
+  heroImage,
+  heroImageAlt = '',
 } = Astro.props;
+
+const hasHeroImage = !!heroImage;
 
 const sizeClasses = {
   sm: 'hero-sm',
@@ -42,7 +48,7 @@ const sizeClasses = {
 };
 ---
 
-<section class:list={['inner-page-hero', sizeClasses[size]]}>
+<section class:list={['inner-page-hero', sizeClasses[size], { 'has-hero-image': hasHeroImage }]}>
   <!-- Animated Prism Gradient Background -->
   <div class="hero-prism-bg"></div>
 
@@ -65,34 +71,82 @@ const sizeClasses = {
   </div>
 
   <!-- Hero Content -->
-  <div class="hero-content container mx-auto max-w-6xl px-4">
-    <!-- Breadcrumb -->
-    <nav class="hero-breadcrumb" aria-label="Breadcrumb">
-      {breadcrumbs.map((item, index) => (
-        <>
-          {item.href ? (
-            <a href={item.href} class="breadcrumb-link">{item.label}</a>
-          ) : (
-            <span class="breadcrumb-current">{item.label}</span>
+  <div class:list={['hero-content container mx-auto max-w-6xl px-4', { 'hero-content-with-image': hasHeroImage }]}>
+    {hasHeroImage ? (
+      <!-- Two-column layout with hero image -->
+      <div class="hero-grid">
+        <div class="hero-text">
+          <!-- Breadcrumb -->
+          <nav class="hero-breadcrumb hero-breadcrumb-left" aria-label="Breadcrumb">
+            {breadcrumbs.map((item, index) => (
+              <>
+                {item.href ? (
+                  <a href={item.href} class="breadcrumb-link">{item.label}</a>
+                ) : (
+                  <span class="breadcrumb-current">{item.label}</span>
+                )}
+                {index < breadcrumbs.length - 1 && (
+                  <span class="breadcrumb-separator">/</span>
+                )}
+              </>
+            ))}
+          </nav>
+
+          <!-- Optional Label -->
+          {label && (
+            <span class="hero-label">{label}</span>
           )}
-          {index < breadcrumbs.length - 1 && (
-            <span class="breadcrumb-separator">/</span>
+
+          <!-- Page Title -->
+          <h1 class="hero-title hero-title-left">{title}</h1>
+
+          <!-- Subtitle -->
+          {subtitle && (
+            <p class="hero-subtitle hero-subtitle-left">{subtitle}</p>
           )}
-        </>
-      ))}
-    </nav>
+        </div>
 
-    <!-- Optional Label -->
-    {label && (
-      <span class="hero-label">{label}</span>
-    )}
+        <div class="hero-image-container">
+          <img
+            src={heroImage}
+            alt={heroImageAlt}
+            class="hero-image"
+            loading="eager"
+          />
+        </div>
+      </div>
+    ) : (
+      <!-- Default centered layout -->
+      <>
+        <!-- Breadcrumb -->
+        <nav class="hero-breadcrumb" aria-label="Breadcrumb">
+          {breadcrumbs.map((item, index) => (
+            <>
+              {item.href ? (
+                <a href={item.href} class="breadcrumb-link">{item.label}</a>
+              ) : (
+                <span class="breadcrumb-current">{item.label}</span>
+              )}
+              {index < breadcrumbs.length - 1 && (
+                <span class="breadcrumb-separator">/</span>
+              )}
+            </>
+          ))}
+        </nav>
 
-    <!-- Page Title -->
-    <h1 class="hero-title">{title}</h1>
+        <!-- Optional Label -->
+        {label && (
+          <span class="hero-label">{label}</span>
+        )}
 
-    <!-- Subtitle -->
-    {subtitle && (
-      <p class="hero-subtitle">{subtitle}</p>
+        <!-- Page Title -->
+        <h1 class="hero-title">{title}</h1>
+
+        <!-- Subtitle -->
+        {subtitle && (
+          <p class="hero-subtitle">{subtitle}</p>
+        )}
+      </>
     )}
   </div>
 
@@ -385,6 +439,84 @@ const sizeClasses = {
     .hero-orb.orb-purple { width: 420px; height: 420px; }
   }
 
+  /* ===== HERO IMAGE LAYOUT ===== */
+  .has-hero-image {
+    padding: 8rem 0 6rem;
+  }
+
+  .hero-content-with-image {
+    text-align: left;
+  }
+
+  .hero-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 2rem;
+    align-items: center;
+  }
+
+  @media (min-width: 1024px) {
+    .hero-grid {
+      grid-template-columns: 1fr 1fr;
+      gap: 3rem;
+    }
+  }
+
+  .hero-text {
+    order: 2;
+  }
+
+  @media (min-width: 1024px) {
+    .hero-text {
+      order: 1;
+    }
+  }
+
+  .hero-breadcrumb-left {
+    justify-content: flex-start;
+  }
+
+  .hero-title-left {
+    text-align: left;
+  }
+
+  .hero-subtitle-left {
+    text-align: left;
+    margin: 0;
+  }
+
+  .hero-image-container {
+    order: 1;
+    display: flex;
+    justify-content: center;
+    opacity: 0;
+    animation: fadeSlideUp 0.8s ease 0.4s forwards;
+  }
+
+  @media (min-width: 1024px) {
+    .hero-image-container {
+      order: 2;
+    }
+  }
+
+  .hero-image {
+    width: 100%;
+    max-width: 500px;
+    height: auto;
+    border-radius: 1.5rem;
+    box-shadow:
+      0 20px 40px rgba(138, 61, 158, 0.2),
+      0 8px 16px rgba(0, 0, 0, 0.1);
+    object-fit: cover;
+    aspect-ratio: 4/3;
+  }
+
+  @media (min-width: 1024px) {
+    .hero-image {
+      max-width: 100%;
+    }
+  }
+
   /* ===== REDUCED MOTION ===== */
   @media (prefers-reduced-motion: reduce) {
     .hero-prism-bg {
@@ -402,7 +534,8 @@ const sizeClasses = {
     .hero-breadcrumb,
     .hero-label,
     .hero-title,
-    .hero-subtitle {
+    .hero-subtitle,
+    .hero-image-container {
       animation: none;
       opacity: 1;
     }

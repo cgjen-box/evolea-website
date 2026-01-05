@@ -8,10 +8,14 @@ import { getEntry } from 'astro:content';
 const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
 const translatePath = useTranslatedPath(lang);
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 
 // Get CMS content
 const pageEntry = await getEntry('pages', 'angebote-index');
 const page = pageEntry?.data;
+
+// Hero image
+const heroImage = base + '/images/hero/angebote-hero.png';
 
 // Helper to get bilingual text
 const getText = (obj: { de?: string; en?: string } | undefined, fallback: string = '') => {
@@ -81,7 +85,7 @@ const jahreLabel = getText(labels.jahre, 'Jahre');
 ---
 
 <Base title={getText(page?.hero?.titel, 'Angebote')} description="EVOLEA bietet verschiedene Förderprogramme für Kinder im Autismus Spektrum oder mit ADHS an: Mini Garten, Mini Projekte, Mini Turnen, Tagesschule und mehr." transparentHeader={true}>
-  <!-- Premium Hero with Prism Gradient -->
+  <!-- Premium Hero with Prism Gradient and Image -->
   <InnerPageHero
     title={getText(page?.hero?.titel, t('nav.programs'))}
     subtitle={getText(page?.hero?.untertitel, 'Programme, die jedes Kind dort abholen, wo es steht.')}
@@ -90,6 +94,8 @@ const jahreLabel = getText(labels.jahre, 'Jahre');
       { label: getText(page?.hero?.titel, 'Angebote') }
     ]}
     size="md"
+    heroImage={heroImage}
+    heroImageAlt={lang === 'de' ? 'Kinder bei EVOLEA Programmen' : 'Children at EVOLEA programs'}
   />
 
   <!-- Introduction -->
