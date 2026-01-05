@@ -300,6 +300,9 @@
       "de": "Kontakt aufnehmen",
       "en": "Get in touch"
     },
-    "buttonLink": "/kontakt/"
+    "buttonLink": {
+      "de": "/kontakt/",
+      "en": "/en/contact/"
+    }
   }
 }

@@ -290,8 +290,17 @@
     ]
   },
   "cta": {
-    "titel": {},
-    "beschreibung": {},
-    "buttonText": {}
+    "titel": {
+      "de": "Bereit für den ersten Schritt?",
+      "en": "Ready for the first step?"
+    },
+    "beschreibung": {
+      "de": "Kontaktieren Sie uns für ein unverbindliches Kennenlerngespräch.",
+      "en": "Contact us for a no-obligation introductory meeting."
+    },
+    "buttonText": {
+      "de": "Jetzt Kontakt aufnehmen",
+      "en": "Contact us now"
+    }
   }
 }
