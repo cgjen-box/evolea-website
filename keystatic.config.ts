@@ -101,7 +101,6 @@ export default config({
     : {
         kind: 'github',
         repo: 'cgjen-box/evolea-website',
-        branchPrefix: 'keystatic/',
       },
 
   ui: {
