@@ -827,6 +827,24 @@ export default config({
               directory: 'public/images/generated',
               publicPath: '/images/generated/',
             }),
+            angeboteIndex: fields.image({
+              label: 'Angebote Übersicht Hero',
+              description: 'Hero-Bild für die Angebote-Übersichtsseite',
+              directory: 'public/images/hero',
+              publicPath: '/images/hero/',
+            }),
+            evoleaCafe: fields.image({
+              label: 'EVOLEA Cafe Hero',
+              description: 'Hero-Bild für EVOLEA Cafe Seite',
+              directory: 'public/images/hero',
+              publicPath: '/images/hero/',
+            }),
+            spenden: fields.image({
+              label: 'Spenden Hero',
+              description: 'Hero-Bild für Spenden-Seite',
+              directory: 'public/images/hero',
+              publicPath: '/images/hero/',
+            }),
           },
           { label: 'Programm Hero-Bilder' }
         ),
