@@ -307,6 +307,8 @@ BIC/SWIFT: UBSWCHZH80A
 - [ ] Donate page language switcher works
 - [ ] FooterDonationCTA appears on all pages except donate pages
 - [ ] Gold Spenden button visible in navigation
+- [ ] No secrets in staged files (`python scripts/check_secrets.py --staged-only`)
+- [ ] No secrets in git history (`python scripts/check_secrets.py --history`)
 
 ---
 
@@ -338,6 +340,50 @@ BIC/SWIFT: UBSWCHZH80A
 - Cloudflare stuck on old commit (use deploy hook to fix)
 
 **Never assume a push succeeded - always verify!**
+
+---
+
+## Security
+
+### Secret Detection (Pre-commit Hook)
+
+A secret detection script runs automatically on every commit via Husky pre-commit hook.
+
+**Location:** `scripts/check_secrets.py`
+
+**Automatic Protection:**
+- Runs on `git commit` - blocks commits containing secrets
+- Checks only staged files for speed
+
+**Manual Commands:**
+```bash
+# Scan all tracked files
+python scripts/check_secrets.py
+
+# Scan git history for past leaks
+python scripts/check_secrets.py --history
+
+# Check specific file
+python scripts/check_secrets.py --file path/to/file.py
+```
+
+**Detected Patterns:**
+| Pattern | Type |
+|---------|------|
+| `AIza...` | Google API Key |
+| `AKIA...` | AWS Access Key |
+| `ghp_`, `gho_`, `ghs_` | GitHub Token |
+| `xoxb-`, `xoxa-` | Slack Token |
+| `-----BEGIN PRIVATE KEY-----` | Private Key |
+| Hardcoded passwords/secrets in quotes | Various |
+
+**If a secret is detected:**
+1. Commit will be blocked
+2. Rotate the exposed credential immediately
+3. If in git history, use BFG or git-filter-repo to remove
+
+**False Positives:**
+Add to `FALSE_POSITIVES` list in `scripts/check_secrets.py`
 
 ---
 

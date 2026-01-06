@@ -1,3 +1,7 @@
+# Check for secrets before committing
+# This prevents accidental API key leaks
+python scripts/check_secrets.py --staged-only
+
 # Run TypeScript type checking before committing
 # This prevents commits with TypeScript errors from being deployed
 npm run build
