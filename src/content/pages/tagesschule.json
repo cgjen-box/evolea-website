@@ -24,8 +24,8 @@
   "statusBanner": {
     "aktiv": true,
     "text": {
-      "de": "Dieses Programm befindet sich in der Aufbauphase - Interessensanmeldungen sind willkommen",
-      "en": "This program is in the development phase - expressions of interest are welcome"
+      "de": "Dieses Programm befindet sich in der Aufbauphase. Wir stehen noch am Anfang, es wird noch dauern. ",
+      "en": "This program is in the development phase. We just started, it will take time. "
     }
   },
   "infoKarten": [
@@ -72,20 +72,20 @@
   ],
   "wasIst": {
     "titel": {
-      "de": "Was ist die EVOLEA Tagesschule?",
-      "en": "What is the EVOLEA Day School?"
+      "de": "Was soll die Tagesschule beinhalten?",
+      "en": "What should the school cover?"
     },
     "text": {
-      "de": "Die EVOLEA Tagesschule bietet eine strukturierte Tagesbetreuung mit integrierter Lernförderung für Kinder im Autismus Spektrum. In kleinen Gruppen mit hohem Betreuungsschlüssel schaffen wir einen geschützten Rahmen, der individuelles Lernen und soziale Entwicklung ermöglicht.",
-      "en": "The EVOLEA Day School offers structured day care with integrated learning support for children on the autism spectrum. In small groups with a high staff-to-child ratio, we create a protected environment that enables individual learning and social development."
+      "de": "Die EVOLEA Tagesschule bietet eine strukturierte Tagesbetreuung mit integrierter Lernförderung für Kinder im Autismus Spektrum. In kleinen Gruppen schaffen wir einen geschützten Rahmen, der individuelles Lernen und soziale Entwicklung ermöglicht.",
+      "en": "The EVOLEA Day School offers structured day care with integrated learning support for children on the autism spectrum. In small groups we create a protected environment that enables individual learning and social development."
     },
     "konzeptTitel": {
       "de": "Unser Konzept",
       "en": "Our Concept"
     },
     "konzeptText": {
-      "de": "Evidenzbasierte Methoden + Individuelle Förderpläne + Strukturierter Tagesablauf - Diese Kombination ermöglicht es jedem Kind, in seinem eigenen Tempo zu lernen und seine Stärken zu entfalten.",
-      "en": "Evidence-based methods + Individual support plans + Structured daily routine - This combination enables each child to learn at their own pace and develop their strengths."
+      "de": "Evidenzbasierte Methoden + Individuelle Förderpläne + Strukturierter Tagesablauf. Diese Kombination ermöglicht es jedem Kind, in seinem eigenen Tempo zu lernen und seine Stärken zu entfalten.",
+      "en": "Evidence-based methods + Individual support plans + Structured daily routine. This combination enables each child to learn at their own pace and develop their strengths."
     }
   },
   "fuerWen": {
@@ -94,8 +94,8 @@
       "en": "Who is the Day School for?"
     },
     "text": {
-      "de": "Unser Angebot richtet sich an Kinder im Alter von 6-12 Jahren, die:",
-      "en": "Our program is aimed at children aged 6-12 who:"
+      "de": "Unser Angebot soll sich an Kinder im Alter von 6-12 Jahren richten, die:",
+      "en": "Our program shall be aimed at children aged 6-12 who:"
     },
     "kriterien": [
       {
@@ -122,13 +122,13 @@
       "en": "Our Approach"
     },
     "text": {
-      "de": "Die EVOLEA Tagesschule basiert auf bewährten, evidenzbasierten Methoden und verbindet strukturiertes Lernen mit individueller Förderung.",
-      "en": "The EVOLEA Day School is based on proven, evidence-based methods and combines structured learning with individual support."
+      "de": "Die EVOLEA Tagesschule soll auf videnzbasierten Methoden basieren und strukturiertes Lernen mit individueller Förderung verbinden.",
+      "en": "The EVOLEA Day School shall be based on proven, evidence-based methods and combine structured learning with individual support."
     },
     "features": [
       {
         "titel": {
-          "de": "Individuelle Lernpläne",
+          "de": "Individuelle und flexible Lernpläne (orientieren sich am Lernplant 21)",
           "en": "Individual learning plans"
         },
         "text": {
@@ -194,8 +194,8 @@
       "en": "A typical day"
     },
     "text": {
-      "de": "Unser strukturierter Tagesablauf bietet Sicherheit und Vorhersehbarkeit, während er gleichzeitig Raum für individuelle Bedürfnisse lässt.",
-      "en": "Our structured daily routine provides security and predictability while leaving room for individual needs."
+      "de": "Unser strukturierter Tagesablauf soll Sicherheit und Vorhersehbarkeit bieten, während er gleichzeitig Raum für individuelle Bedürfnisse lässt. Beispielhaft:",
+      "en": "Our structured daily routine shall provide security and predictability while leaving room for individual needs. Exemplary"
     },
     "ablauf": [
       {
