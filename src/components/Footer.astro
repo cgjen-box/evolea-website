@@ -25,6 +25,10 @@ const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
 const translatePath = useTranslatedPath(lang);
 
+// Helper to construct asset paths that work on both GitHub Pages and Cloudflare
+const baseUrl = import.meta.env.BASE_URL || '';
+const logoPath = `${baseUrl}/images/logo/evolea-logo-new.png`.replace('//', '/');
+
 const getText = (obj: { de?: string; en?: string } | undefined, fallback: string) => {
   if (!obj) return fallback;
   return lang === 'de' ? (obj.de || fallback) : (obj.en || obj.de || fallback);
@@ -68,7 +72,7 @@ const instagramUrl = siteSettings?.social?.instagram || 'https://www.instagram.c
         <div class="sm:col-span-2 lg:col-span-2">
           <a href={translatePath('/')} class="inline-block mb-4 group">
             <img
-              src={`${import.meta.env.BASE_URL}/images/logo/evolea-logo-new.png`}
+              src={logoPath}
               alt="EVOLEA"
               class="h-12 w-auto brightness-0 invert opacity-90 group-hover:opacity-100 transition-opacity"
             />
