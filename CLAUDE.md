@@ -319,6 +319,19 @@ BIC/SWIFT: UBSWCHZH80A
 - **Cloudflare Pages**: https://evolea-website.pages.dev/
 - **CMS (Keystatic)**: https://evolea-website.pages.dev/keystatic
 
+### GitHub Account (IMPORTANT)
+
+**Always use the `cgjen-box` GitHub account for this project.**
+
+Before any git operations, verify and switch to the correct account:
+```bash
+# Check current account
+gh auth status
+
+# Switch to cgjen-box if needed
+gh auth switch --user cgjen-box
+```
+
 ### Post-Commit Deployment (MANDATORY)
 
 **After every git push, ALWAYS do the following:**
