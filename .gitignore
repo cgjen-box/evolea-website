@@ -29,6 +29,7 @@ Thumbs.db
 .env.local
 .env.*.local
 .dev.vars
+scripts/.env.cloudflare
 
 # TypeScript
 *.tsbuildinfo

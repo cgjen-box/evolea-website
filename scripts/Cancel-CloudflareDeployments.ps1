@@ -1,9 +1,9 @@
 # Bulk Cancel/Delete Cloudflare Pages Deployments
-# Usage: .\Cancel-CloudflareDeployments.ps1
+# Usage: .\Cancel-CloudflareDeployments.ps1 -OnlyInProgress
 
 param(
-    [string]$AccountId = $env:CF_ACCOUNT_ID,
-    [string]$ApiToken = $env:CF_API_TOKEN,
+    [string]$AccountId,
+    [string]$ApiToken,
     [string]$ProjectName = "evolea-website",
     [switch]$OnlyInProgress,
     [switch]$Force,
@@ -11,6 +11,22 @@ param(
 )
 
 $ErrorActionPreference = "Stop"
+
+# Load .env.cloudflare if it exists
+$envFile = Join-Path $PSScriptRoot ".env.cloudflare"
+if (Test-Path $envFile) {
+    Get-Content $envFile | ForEach-Object {
+        if ($_ -match '^([^#][^=]+)=(.+)$') {
+            $key = $matches[1].Trim()
+            $value = $matches[2].Trim()
+            [Environment]::SetEnvironmentVariable($key, $value, 'Process')
+        }
+    }
+}
+
+# Use parameters if provided, otherwise fall back to environment variables
+if (-not $AccountId) { $AccountId = $env:CF_ACCOUNT_ID }
+if (-not $ApiToken) { $ApiToken = $env:CF_API_TOKEN }
 
 Write-Host "=== Cloudflare Pages Bulk Deployment Cancellation ===" -ForegroundColor Yellow
 Write-Host "Project: $ProjectName"
@@ -23,64 +39,89 @@ if (-not $AccountId -or -not $ApiToken) {
     Write-Host "Option 1: Pass as parameters:"
     Write-Host "  .\Cancel-CloudflareDeployments.ps1 -AccountId 'your-id' -ApiToken 'your-token'"
     Write-Host ""
-    Write-Host "Option 2: Set environment variables:"
-    Write-Host '  $env:CF_ACCOUNT_ID = "your-account-id"'
-    Write-Host '  $env:CF_API_TOKEN = "your-api-token"'
+    Write-Host "Option 2: Set environment variables or edit scripts/.env.cloudflare"
     Write-Host ""
-    Write-Host "Find your Account ID: Cloudflare Dashboard -> Pages -> evolea-website -> Settings"
-    Write-Host "Create API Token: Dashboard -> My Profile -> API Tokens (needs 'Cloudflare Pages:Edit')"
     exit 1
 }
 
-$headers = @{
-    "Authorization" = "Bearer $ApiToken"
-    "Content-Type" = "application/json"
-}
+Write-Host "Account ID: $AccountId" -ForegroundColor Cyan
+Write-Host "API Token: $($ApiToken.Substring(0,8))..." -ForegroundColor Cyan
 
 $baseUrl = "https://api.cloudflare.com/client/v4/accounts/$AccountId/pages/projects/$ProjectName"
+
+# Function to call Cloudflare API using curl
+function Invoke-CloudflareApi {
+    param(
+        [string]$Endpoint,
+        [string]$Method = "GET"
+    )
+
+    $url = "$baseUrl$Endpoint"
+    $authHeader = "Authorization: Bearer $ApiToken"
+
+    if ($Method -eq "GET") {
+        $result = curl.exe -s $url -H $authHeader
+    } else {
+        $result = curl.exe -s -X $Method $url -H $authHeader
+    }
+
+    return $result | ConvertFrom-Json
+}
 
 # Function to get all deployments
 function Get-AllDeployments {
     $allDeployments = @()
     $page = 1
-    $perPage = 100
+    $perPage = 25
+    $emptyPages = 0
+    $maxEmptyPages = 3  # Stop after 3 consecutive pages with no matches
 
     Write-Host "Fetching deployments..." -ForegroundColor Yellow
 
     do {
-        $url = "$baseUrl/deployments?page=$page&per_page=$perPage"
-
-        try {
-            $response = Invoke-RestMethod -Uri $url -Headers $headers -Method Get
-        }
-        catch {
-            Write-Host "API Error: $($_.Exception.Message)" -ForegroundColor Red
-            exit 1
-        }
+        $response = Invoke-CloudflareApi -Endpoint "/deployments?page=$page&per_page=$perPage"
 
         if (-not $response.success) {
             Write-Host "API Error: $($response.errors | ConvertTo-Json)" -ForegroundColor Red
             exit 1
         }
 
-        $deployments = $response.result
+        $deployments = @($response.result)
+        $filteredCount = 0
 
         if ($OnlyInProgress) {
-            $deployments = $deployments | Where-Object {
+            $filtered = @($deployments | Where-Object {
                 $_.latest_stage.status -in @("active", "idle", "queued", "pending")
-            }
+            })
+            $filteredCount = $filtered.Count
+            $allDeployments += $filtered
+        } else {
+            $filteredCount = $deployments.Count
+            $allDeployments += $deployments
         }
 
-        $allDeployments += $deployments
+        Write-Host "  Page $page`: Found $($deployments.Count) deployments (matched: $filteredCount, total collected: $($allDeployments.Count))"
 
-        Write-Host "  Page $page`: Found $($response.result.Count) deployments (total collected: $($allDeployments.Count))"
-
-        if ($response.result.Count -lt $perPage) {
+        # Stop if we've reached the end
+        if ($deployments.Count -lt $perPage) {
             break
         }
 
+        # Early exit optimization for -OnlyInProgress: stop after several empty pages
+        if ($OnlyInProgress) {
+            if ($filteredCount -eq 0) {
+                $emptyPages++
+                if ($emptyPages -ge $maxEmptyPages) {
+                    Write-Host "  (Stopping early - no more queued deployments found)" -ForegroundColor Gray
+                    break
+                }
+            } else {
+                $emptyPages = 0
+            }
+        }
+
         $page++
-        Start-Sleep -Milliseconds 500
+        Start-Sleep -Milliseconds 300
 
     } while ($true)
 
@@ -91,26 +132,14 @@ function Get-AllDeployments {
 function Remove-Deployment {
     param([string]$DeploymentId)
 
-    $url = "$baseUrl/deployments/$DeploymentId`?force=true"
+    $response = Invoke-CloudflareApi -Endpoint "/deployments/$DeploymentId`?force=true" -Method "DELETE"
 
-    try {
-        $response = Invoke-RestMethod -Uri $url -Headers $headers -Method Delete
-        if ($response.success) {
-            Write-Host "[OK] Deleted: $DeploymentId" -ForegroundColor Green
-            return $true
-        }
-        else {
-            Write-Host "[FAIL] $DeploymentId - $($response.errors[0].message)" -ForegroundColor Red
-            return $false
-        }
+    if ($response.success) {
+        Write-Host "[OK] Deleted: $DeploymentId" -ForegroundColor Green
+        return $true
     }
-    catch {
-        $errorMsg = $_.Exception.Message
-        # Try to parse error response
-        try {
-            $errorBody = $_.ErrorDetails.Message | ConvertFrom-Json
-            $errorMsg = $errorBody.errors[0].message
-        } catch {}
+    else {
+        $errorMsg = if ($response.errors) { $response.errors[0].message } else { "Unknown error" }
         Write-Host "[FAIL] $DeploymentId - $errorMsg" -ForegroundColor Red
         return $false
     }
@@ -139,14 +168,14 @@ if (-not $Force) {
 }
 
 Write-Host ""
-Write-Host "Deleting deployments (this may take a while)..." -ForegroundColor Yellow
+Write-Host "Deleting deployments..." -ForegroundColor Yellow
 Write-Host ""
 
 $deleted = 0
 $failed = 0
 $startTime = Get-Date
 
-# Process in batches to avoid rate limits
+# Process in batches
 $batchSize = $ThrottleLimit
 $batches = [math]::Ceiling($total / $batchSize)
 
