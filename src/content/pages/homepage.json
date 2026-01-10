@@ -53,7 +53,9 @@
       "de": "Unsere Angebote werden in Zukunft stets erweitert.",
       "en": "Our programs are constantly being expanded."
     },
-    "funding": {},
+    "funding": {
+      "de": "Wir finanzieren uns aus Elternbeiträgen und Spenden. "
+    },
     "weitereAngeboteLabel": {
       "de": "Weitere Angebote",
       "en": "More Programs"
@@ -74,7 +76,7 @@
         "en": "Movement, fun and motor skill development in a small, understanding group."
       },
       "startDatum": {
-        "de": "Start: Februar 2026 1",
+        "de": "Start: Februar 2026",
         "en": "Start: February 2026"
       },
       "zeit": {
