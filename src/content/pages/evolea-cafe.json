@@ -39,8 +39,8 @@
       }
     ],
     "hinweis": {
-      "de": "Keine Anmeldung erforderlich – einfach vorbeikommen!",
-      "en": "No registration required – just drop by!"
+      "de": "Keine Anmeldung erforderlich, einfach vorbeikommen!",
+      "en": "No registration required,  just drop by!"
     }
   },
   "aboutCards": [
@@ -135,8 +135,8 @@
     "daten": [
       {
         "datum": {
-          "de": "Mi, 8. Januar 2025",
-          "en": "Wed, January 8, 2025"
+          "de": "Mi, 14. Januar 2025",
+          "en": "Wed, January 15, 2025"
         },
         "uhrzeit": {
           "de": "19:00 Uhr",
