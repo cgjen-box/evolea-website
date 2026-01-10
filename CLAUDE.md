@@ -407,6 +407,7 @@ Available skills in `.claude/skills/`:
 - `/brand` - Brand guidelines reference
 - `/image` - Image generation guidance
 - `/generate-assets` - Asset generation
+- `/cloudflare` - Cloudflare Pages deployment management, cache purging, queue cleanup
 
 ---
 
@@ -424,6 +425,7 @@ Available skills in `.claude/skills/`:
 | Accessibility | `.claude/skills/Design skills/accessibility.md` | WCAG AA, neurodivergent-friendly patterns |
 | **Breakpoints** | `.claude/skills/breakpoints/SKILL.md` | Responsive breakpoint system, CSS specs |
 | Website Review | `.claude/skills/website-review/SKILL.md` | QA testing with Chrome DevTools MCP |
+| **Cloudflare** | `.claude/skills/cloudflare/SKILL.md` | Deployment management, cache purging, API |
 
 ### When to Consult Skills
 
@@ -433,6 +435,7 @@ Available skills in `.claude/skills/`:
 - **New program page** → Follow `angebote-structure.md` template
 - **Need illustrations** → Use prompts from `illustrations.md`
 - **Accessibility concerns** → Check `accessibility.md` for WCAG standards
+- **Deployment issues** → Check `cloudflare/SKILL.md` for queue cleanup, API usage
 
 ### CSS Changes Protocol
 
