@@ -56,7 +56,7 @@
       },
       "wert": {
         "de": "25. Februar 2026",
-        "en": "25th of Februa6ry 202"
+        "en": "25th February 2026"
       }
     },
     {
@@ -286,21 +286,18 @@
           "de": "hello@evolea.ch – Kostenlose Erstberatung möglich",
           "en": "hello@evolea.ch – Free initial consultation available"
         }
+      },
+      {
+        "icon": "money",
+        "label": {
+          "de": "Kosten",
+          "en": "Cost"
+        },
+        "wert": {
+          "de": "CHF 500 pro Semester und Kind",
+          "en": "CHF 500 per semester and child"
+        }
       }
     ]
-  },
-  "cta": {
-    "titel": {
-      "de": "Bereit für den ersten Schritt?",
-      "en": "Ready for the first step?"
-    },
-    "beschreibung": {
-      "de": "Kontaktieren Sie uns für ein unverbindliches Kennenlerngespräch. Dien Anmeldung.",
-      "en": "Contact us for a no-obligation introductory meeting."
-    },
-    "buttonText": {
-      "de": "Jetzt Kontakt aufnehmen",
-      "en": "Contact us now"
-    }
   }
 }
