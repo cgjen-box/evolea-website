@@ -332,17 +332,17 @@ gh auth status
 gh auth switch --user cgjen-box
 ```
 
-### Post-Commit Deployment (MANDATORY)
+### Automatic Deployment
 
-**After every git push, ALWAYS do the following:**
+**Both targets deploy automatically on push to main:**
 
-1. **Trigger Cloudflare Deploy Hook**:
-   ```bash
-   curl -X POST "https://api.cloudflare.com/client/v4/pages/webhooks/deploy_hooks/3e0b6230-6965-46cf-a7a2-176969101e48"
-   ```
+1. **GitHub Pages** - Deployed via `.github/workflows/deploy.yml`
+2. **Cloudflare Pages** - Deployed via Git integration (auto-detects push)
 
-2. **Check GitHub Actions**: https://github.com/cgjen-box/evolea-website/actions
+**After pushing, verify deployments:**
 
+1. **Check GitHub Actions**: https://github.com/cgjen-box/evolea-website/actions
+2. **Check Cloudflare Pages**: https://dash.cloudflare.com/ (Pages > evolea-website > Deployments)
 3. **Verify both sites are live**:
    - GitHub Pages: https://cgjen-box.github.io/evolea-website/
    - Cloudflare Pages: https://evolea-website.pages.dev/
@@ -350,7 +350,6 @@ gh auth switch --user cgjen-box
 **Common deployment issues:**
 - TypeScript errors (unused variables, wrong imports)
 - Missing dependencies
-- Cloudflare stuck on old commit (use deploy hook to fix)
 
 **Never assume a push succeeded - always verify!**
 
