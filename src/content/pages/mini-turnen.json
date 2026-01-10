@@ -261,8 +261,8 @@
           "en": "Start date"
         },
         "wert": {
-          "de": "25. Februar 2026",
-          "en": "25th February 2026"
+          "de": "25. Februar 2026. Anmeldung jeweils für ein Semester.",
+          "en": "25th February 2026. Commitment is one semester."
         }
       },
       {
@@ -295,7 +295,7 @@
       "en": "Ready for the first step?"
     },
     "beschreibung": {
-      "de": "Kontaktieren Sie uns für ein unverbindliches Kennenlerngespräch. Dien Anmeldung erfolgt j",
+      "de": "Kontaktieren Sie uns für ein unverbindliches Kennenlerngespräch. Dien Anmeldung.",
       "en": "Contact us for a no-obligation introductory meeting."
     },
     "buttonText": {
