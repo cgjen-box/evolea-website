@@ -1,0 +1,471 @@
+{
+  "hero": {
+    "badge": {
+      "de": "Kreatives Kunstprojekt",
+      "en": "Creative Art Project"
+    },
+    "titel": "Mini Museum",
+    "untertitel": {
+      "de": "Wir werden kreativ!",
+      "en": "Let's get creative!"
+    },
+    "beschreibung": {
+      "de": "In diesem inklusiven Projekt gestalten Kinder ihr eigenes Museum. Sie wählen Themen, sammeln Kunstwerke, erstellen Ausstellungen und führen Besucher durch ihre Galerie.",
+      "en": "In this inclusive project, children design their own museum. They choose themes, collect artworks, create exhibitions and guide visitors through their gallery."
+    },
+    "buttonText": {
+      "de": "Jetzt anmelden",
+      "en": "Register now"
+    },
+    "buttonLink": "#anmeldung",
+    "zweitButtonText": {
+      "de": "Programm ansehen",
+      "en": "View program"
+    },
+    "zweitButtonLink": "#programm",
+    "alter": "5-8"
+  },
+  "infoKarten": [
+    {
+      "icon": "sparkle",
+      "label": {
+        "de": "Alter",
+        "en": "Age"
+      },
+      "wert": {
+        "de": "5-8 Jahre",
+        "en": "5-8 years"
+      }
+    },
+    {
+      "icon": "calendar",
+      "label": {
+        "de": "Wann",
+        "en": "When"
+      },
+      "wert": {
+        "de": "Samstags, alle 1-2 Wochen",
+        "en": "Saturdays, every 1-2 weeks"
+      }
+    },
+    {
+      "icon": "chart",
+      "label": {
+        "de": "Dauer",
+        "en": "Duration"
+      },
+      "wert": {
+        "de": "09:00 - 12:00 Uhr",
+        "en": "09:00 - 12:00"
+      }
+    },
+    {
+      "icon": "location",
+      "label": {
+        "de": "Start",
+        "en": "Start"
+      },
+      "wert": {
+        "de": "28. Februar 2026",
+        "en": "28 February 2026"
+      }
+    }
+  ],
+  "konzept": {
+    "titel": {
+      "de": "Das Konzept",
+      "en": "The Concept"
+    },
+    "untertitel": {
+      "de": "Ein Ort an dem Kinder wachsen und Familien aufatmen können.",
+      "en": "A place where children can grow and families can breathe."
+    },
+    "absaetze": [
+      {
+        "de": "Ein inklusives Projekt für <strong class=\"text-evolea-purple\">junge Kunst-Profis.</strong> Viele Freizeitangebote sind für Kinder im Autismus-Spektrum oft schwer zugänglich – zu unübersichtlich, zu laut, zu wenig individuell.",
+        "en": "An inclusive project for <strong class=\"text-evolea-purple\">young art professionals.</strong> Many leisure activities are often difficult for children on the autism spectrum to access – too confusing, too loud, too impersonal."
+      },
+      {
+        "de": "Unser Mini Museum bietet einen sicheren, klar strukturierten Rahmen, in dem soziales Lernen spielerisch und alltagsnah gelingt. Die Kinder gestalten gemeinsam ein eigenes kleines Museum: Sie wählen ein Thema, sammeln Gegenstände und eigene Kunstwerke, gestalten Ausstellungsräume, erstellen Beschriftungen und üben, Besucher:innen durch die Ausstellung zu führen.",
+        "en": "Our Mini Museum offers a safe, clearly structured environment where social learning can happen playfully and in an everyday context. The children work together to create their own little museum: they choose a theme, collect objects and their own artworks, design exhibition spaces, create labels and practice guiding visitors through the exhibition."
+      },
+      {
+        "de": "Dabei werden sie individuell von unseren Fachpersonen begleitet, erhalten Orientierung und passende Unterstützung. So können sie soziale Kompetenzen entfalten, Verantwortung übernehmen und sich in neuen Rollen ausprobieren – als Künstler:in, Museumsführer:in oder Kurator:in – mit Freude, Struktur und echten Erfolgserlebnissen.",
+        "en": "They are individually supported by our specialists, receive guidance and appropriate support. This allows them to develop social skills, take responsibility and try out new roles – as artists, museum guides or curators – with joy, structure and real experiences of success."
+      },
+      {
+        "de": "Zum Abschluss öffnen sie ihr Mini Museum für Familie und Freunde, führen durch die Ausstellung und feiern gemeinsam, was sie geschaffen haben.",
+        "en": "At the end, they open their Mini Museum to family and friends, guide them through the exhibition and celebrate together what they have created."
+      }
+    ],
+    "faehigkeiten": [
+      {
+        "icon": "handshake",
+        "titel": {
+          "de": "Kommunikation",
+          "en": "Communication"
+        },
+        "beschreibung": {
+          "de": "Im Museum miteinander sprechen, Fragen stellen und Interessen verstehen.",
+          "en": "Talking together in the museum, asking questions and understanding interests."
+        },
+        "farbe": "mint"
+      },
+      {
+        "icon": "target",
+        "titel": {
+          "de": "Alltagsfähigkeiten",
+          "en": "Daily Life Skills"
+        },
+        "beschreibung": {
+          "de": "Materialien vorbereiten, sortieren, organisieren und aufräumen.",
+          "en": "Preparing, sorting, organizing and tidying up materials."
+        },
+        "farbe": "coral"
+      },
+      {
+        "icon": "sparkle",
+        "titel": {
+          "de": "Selbstwirksamkeit",
+          "en": "Self-efficacy"
+        },
+        "beschreibung": {
+          "de": "Feinmotorik und Selbstvertrauen durch kreatives Gestalten stärken.",
+          "en": "Strengthening fine motor skills and self-confidence through creative design."
+        },
+        "farbe": "purple"
+      },
+      {
+        "icon": "palette",
+        "titel": {
+          "de": "Kreativität",
+          "en": "Creativity"
+        },
+        "beschreibung": {
+          "de": "Als Künstler:in, Museumsführer:in oder Kurator:in neue Rollen entdecken.",
+          "en": "Discovering new roles as artist, museum guide or curator."
+        },
+        "farbe": "orange"
+      }
+    ]
+  },
+  "ablauf": {
+    "titel": {
+      "de": "Der Ablauf",
+      "en": "The Schedule"
+    },
+    "untertitel": {
+      "de": "6 Halbtage voller Kunst, Kreativität und Entdeckungen",
+      "en": "6 half days full of art, creativity and discoveries"
+    },
+    "termine": [
+      {
+        "tag": 1,
+        "titel": {
+          "de": "Wir entdecken die Welt der Kunst",
+          "en": "We discover the world of art"
+        },
+        "datum": {
+          "de": "Samstag, 28. Februar 2026",
+          "en": "Saturday, 28 February 2026"
+        },
+        "zeit": "09:00 - 12:00",
+        "fokus": {
+          "de": "Museumsbesuch & erste Kunstwerke",
+          "en": "Museum visit & first artworks"
+        },
+        "standort": {
+          "de": "Stapferstrasse 10, Zürich",
+          "en": "Stapferstrasse 10, Zurich"
+        },
+        "istBesonders": false
+      },
+      {
+        "tag": 2,
+        "titel": {
+          "de": "Wir gestalten Kunst aus der Natur",
+          "en": "We create art from nature"
+        },
+        "datum": {
+          "de": "Samstag, 14. März 2026",
+          "en": "Saturday, 14 March 2026"
+        },
+        "zeit": "09:00 - 12:00",
+        "fokus": {
+          "de": "Naturmaterialien sammeln & kreativ gestalten",
+          "en": "Collecting natural materials & creative design"
+        },
+        "standort": {
+          "de": "Stapferstrasse 10, Zürich",
+          "en": "Stapferstrasse 10, Zurich"
+        },
+        "istBesonders": false
+      },
+      {
+        "tag": 3,
+        "titel": {
+          "de": "Wir erforschen Farben",
+          "en": "We explore colors"
+        },
+        "datum": {
+          "de": "Samstag, 28. März 2026",
+          "en": "Saturday, 28 March 2026"
+        },
+        "zeit": "09:00 - 12:00",
+        "fokus": {
+          "de": "Farben mischen & Naturfarben herstellen",
+          "en": "Mixing colors & making natural dyes"
+        },
+        "standort": {
+          "de": "Stapferstrasse 10, Zürich",
+          "en": "Stapferstrasse 10, Zurich"
+        },
+        "istBesonders": false
+      },
+      {
+        "tag": 4,
+        "titel": {
+          "de": "Wir formen Skulpturen",
+          "en": "We create sculptures"
+        },
+        "datum": {
+          "de": "Samstag, 11. April 2026",
+          "en": "Saturday, 11 April 2026"
+        },
+        "zeit": "09:00 - 12:00",
+        "fokus": {
+          "de": "3D-Kunst & Modellieren",
+          "en": "3D art & modeling"
+        },
+        "standort": {
+          "de": "Stapferstrasse 10, Zürich",
+          "en": "Stapferstrasse 10, Zurich"
+        },
+        "istBesonders": false
+      },
+      {
+        "tag": 5,
+        "titel": {
+          "de": "Wir basteln Masken",
+          "en": "We craft masks"
+        },
+        "datum": {
+          "de": "Samstag, 25. April 2026",
+          "en": "Saturday, 25 April 2026"
+        },
+        "zeit": "09:00 - 12:00",
+        "fokus": {
+          "de": "Gesichter & Emotionen entdecken",
+          "en": "Discovering faces & emotions"
+        },
+        "standort": {
+          "de": "Stapferstrasse 10, Zürich",
+          "en": "Stapferstrasse 10, Zurich"
+        },
+        "istBesonders": false
+      },
+      {
+        "tag": 6,
+        "titel": {
+          "de": "Unsere eigenes Museum eröffnet",
+          "en": "Our own museum opens"
+        },
+        "datum": {
+          "de": "Sonntag, 26. April 2026",
+          "en": "Sunday, 26 April 2026"
+        },
+        "zeit": "13:00 - 17:00",
+        "fokus": {
+          "de": "Ausstellung & Feier mit Familie",
+          "en": "Exhibition & celebration with family"
+        },
+        "standort": {
+          "de": "Kemptpark 34, Kemptthal",
+          "en": "Kemptpark 34, Kemptthal"
+        },
+        "istBesonders": true
+      }
+    ],
+    "hinweis": {
+      "titel": {
+        "de": "Eröffnungsfeier im Kemptpark",
+        "en": "Opening celebration at Kemptpark"
+      },
+      "text": {
+        "de": "Der krönende Abschluss findet im Kemptpark 34, Kemptthal statt. Die Kinder eröffnen ihr Mini Museum für Familie und Freunde, führen durch die Ausstellung und feiern gemeinsam ihre Kunstwerke. Ein unvergessliches Erlebnis!",
+        "en": "The crowning finale takes place at Kemptpark 34, Kemptthal. The children open their Mini Museum for family and friends, guide them through the exhibition and celebrate their artworks together. An unforgettable experience!"
+      }
+    }
+  },
+  "ziele": {
+    "titel": {
+      "de": "Projekt Ziele",
+      "en": "Project Goals"
+    },
+    "untertitel": {
+      "de": "Kinder erleben bei uns, wie sie im Miteinander stark sein können – Schritt für Schritt, mit Freude und Erfolg.",
+      "en": "Children experience with us how they can be strong together – step by step, with joy and success."
+    },
+    "liste": [
+      {
+        "titel": {
+          "de": "Förderung von Kommunikation und sozialer Interaktion",
+          "en": "Promoting communication and social interaction"
+        },
+        "text": {
+          "de": "Die Kinder lernen, im Mini Museum miteinander zu sprechen, Fragen zu stellen und zu beantworten, Interessen der \"Besucher:innen\" zu verstehen und sich bei gemeinsamen Aufgaben abzustimmen.",
+          "en": "The children learn to talk together in the Mini Museum, to ask and answer questions, to understand visitors' interests and to coordinate on joint tasks."
+        }
+      },
+      {
+        "titel": {
+          "de": "Training von Alltagsfähigkeiten",
+          "en": "Training daily life skills"
+        },
+        "text": {
+          "de": "Sie üben Aufgaben wie Materialien vorbereiten, Ausstellungsstücke sortieren, Räume strukturieren und aufräumen sowie einfache organisatorische Tätigkeiten – Fähigkeiten, die auch im Alltag hilfreich sind.",
+          "en": "They practice tasks like preparing materials, sorting exhibits, structuring spaces and tidying up, as well as simple organizational activities – skills that are also helpful in everyday life."
+        }
+      },
+      {
+        "titel": {
+          "de": "Stärkung von Feinmotorik, Selbstständigkeit und Selbstwirksamkeit",
+          "en": "Strengthening fine motor skills, independence and self-efficacy"
+        },
+        "text": {
+          "de": "Beim Zeichnen, Basteln, Bauen von kleinen Ausstellungselementen oder beim Schreiben bzw. Malen von Beschriftungen verbessern die Kinder ihre motorischen Fähigkeiten und erleben, dass sie selbst etwas bewirken und gestalten können.",
+          "en": "When drawing, crafting, building small exhibition elements or writing and painting labels, children improve their motor skills and experience that they can make a difference and create something themselves."
+        }
+      },
+      {
+        "titel": {
+          "de": "Spielerisches Lernen in einem strukturierten, sicheren Rahmen",
+          "en": "Playful learning in a structured, safe environment"
+        },
+        "text": {
+          "de": "Durch klare Abläufe, Bildkarten und Rituale gewinnen die Kinder Sicherheit und Orientierung und können sich so auf das gemeinsame Ziel konzentrieren: ihr eigenes Mini Museum.",
+          "en": "Through clear procedures, picture cards and rituals, children gain security and orientation and can focus on the common goal: their own Mini Museum."
+        }
+      },
+      {
+        "titel": {
+          "de": "Einführung in die Welt des Museums",
+          "en": "Introduction to the world of museums"
+        },
+        "text": {
+          "de": "Die Kinder schlüpfen in verschiedene Rollen: Sie gestalten Exponate, richten Ausstellungsflächen ein, begrüssen Besucher:innen, erklären ihre Werke und führen durch die Räume. So erleben sie, wie aus vielen kleinen Aufgaben ein grosses Ganzes wird – ihr eigenes Museum.",
+          "en": "The children slip into different roles: they design exhibits, set up exhibition areas, welcome visitors, explain their works and guide through the rooms. This way they experience how many small tasks become a big whole – their own museum."
+        }
+      }
+    ]
+  },
+  "aufnahme": {
+    "titel": {
+      "de": "Aufnahmekriterien",
+      "en": "Admission Criteria"
+    },
+    "einleitung": {
+      "de": "Die Teilnahme an einem Mini Projekt erfolgt jeweils projektbezogen und beginnt mit einem persönlichen Gespräch mit den Bezugspersonen, sowie einem Kennenlernen des Kindes. Zur Orientierung stellen wir eine Checkliste zur Verfügung:",
+      "en": "Participation in a Mini Project is always project-specific and begins with a personal conversation with the caregivers, as well as getting to know the child. For guidance, we provide a checklist:"
+    },
+    "kriterien": [
+      {
+        "titel": {
+          "de": "Funktionelle Kommunikation",
+          "en": "Functional communication"
+        },
+        "text": {
+          "de": "verbal oder unterstützt",
+          "en": "verbal or supported"
+        }
+      },
+      {
+        "titel": {
+          "de": "Interesse an sozialen Kontakten",
+          "en": "Interest in social contacts"
+        },
+        "text": {
+          "de": "mit anderen Kindern",
+          "en": "with other children"
+        }
+      },
+      {
+        "titel": {
+          "de": "Verständnis von Anweisungen",
+          "en": "Understanding instructions"
+        },
+        "text": {
+          "de": "und Regeln",
+          "en": "and rules"
+        }
+      },
+      {
+        "titel": {
+          "de": "Grundlegende Selbstständigkeit",
+          "en": "Basic independence"
+        },
+        "text": {
+          "de": "Händewaschen, An- und Ausziehen",
+          "en": "Hand washing, dressing and undressing"
+        }
+      },
+      {
+        "titel": {
+          "de": "Keine selbst- oder fremdverletzenden Verhaltensweisen",
+          "en": "No self-harming or aggressive behaviors"
+        },
+        "text": {
+          "de": "",
+          "en": ""
+        }
+      }
+    ],
+    "hinweis": {
+      "de": "Diese Punkte dienen als Richtlinie und ersetzen keine individuelle Beurteilung. Die endgültige Entscheidung wird stets situationsbezogen und im Sinne des Kindes getroffen.",
+      "en": "These points serve as guidelines and do not replace individual assessment. The final decision is always made situationally and in the best interest of the child."
+    }
+  },
+  "praktischeInfos": {
+    "titel": {
+      "de": "Praktische Informationen",
+      "en": "Practical Information"
+    },
+    "standorte": {
+      "hauptstandort": {
+        "label": {
+          "de": "Tag 1-5:",
+          "en": "Day 1-5:"
+        },
+        "adresse": {
+          "de": "Stapferstrasse 10\n8006 Zürich",
+          "en": "Stapferstrasse 10\n8006 Zurich"
+        }
+      },
+      "eroeffnung": {
+        "label": {
+          "de": "Tag 6 (Eröffnungsfeier):",
+          "en": "Day 6 (Opening ceremony):"
+        },
+        "adresse": {
+          "de": "Kemptpark 34\n8310 Kemptthal",
+          "en": "Kemptpark 34\n8310 Kemptthal"
+        }
+      }
+    },
+    "kontakt": {
+      "titel": {
+        "de": "Kontakt & Anmeldung",
+        "en": "Contact & Registration"
+      },
+      "text": {
+        "de": "Für ein kostenloses Erstgespräch und Anmeldung:",
+        "en": "For a free initial consultation and registration:"
+      },
+      "email": "hello@evolea.ch"
+    },
+    "wichtig": {
+      "de": "Wichtig: Wir treffen uns jeweils um 09:00 Uhr. Bitte seid 5 Minuten vor Beginn vor Ort. Tag 6 beginnt um 13:00 Uhr und findet mit Begleitung der Eltern statt.",
+      "en": "Important: We meet at 09:00. Please be on site 5 minutes before the start. Day 6 starts at 13:00 and takes place with parental accompaniment."
+    }
+  }
+}

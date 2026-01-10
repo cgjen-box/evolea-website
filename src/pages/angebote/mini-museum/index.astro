@@ -2,12 +2,17 @@
 import Base from '@layouts/Base.astro';
 import FloatingShapes from '@components/FloatingShapes.astro';
 import Icon from '@components/Icon.astro';
+import EditLink from '@components/EditLink.astro';
 import { getLangFromUrl, useTranslatedPath } from '@i18n/utils';
 import { getEntry } from 'astro:content';
 
 const lang = getLangFromUrl(Astro.url);
 const translatePath = useTranslatedPath(lang);
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+
+// Get CMS content
+const pageEntry = await getEntry('pages', 'mini-museum');
+const page = pageEntry?.data;
 
 // Get site images from CMS
 const siteImagesEntry = await getEntry('settings', 'images');
@@ -16,61 +21,42 @@ const heroImage = siteImages?.programmeHeroes?.miniMuseum
   ? base + siteImages.programmeHeroes.miniMuseum
   : base + "/images/programs/mini-museum-hero.png";
 
-// Program schedule data
-const schedule = [
-  {
-    day: 1,
-    title: 'Wir entdecken die Welt der Kunst',
-    date: 'Samstag, 28. Februar 2026',
-    time: '09:00 - 12:00',
-    focus: 'Museumsbesuch & erste Kunstwerke',
-    location: 'Stapferstrasse 10, Zürich'
-  },
-  {
-    day: 2,
-    title: 'Wir gestalten Kunst aus der Natur',
-    date: 'Samstag, 14. März 2026',
-    time: '09:00 - 12:00',
-    focus: 'Naturmaterialien sammeln & kreativ gestalten',
-    location: 'Stapferstrasse 10, Zürich'
-  },
-  {
-    day: 3,
-    title: 'Wir erforschen Farben',
-    date: 'Samstag, 28. März 2026',
-    time: '09:00 - 12:00',
-    focus: 'Farben mischen & Naturfarben herstellen',
-    location: 'Stapferstrasse 10, Zürich'
-  },
-  {
-    day: 4,
-    title: 'Wir formen Skulpturen',
-    date: 'Samstag, 11. April 2026',
-    time: '09:00 - 12:00',
-    focus: '3D-Kunst & Modellieren',
-    location: 'Stapferstrasse 10, Zürich'
-  },
-  {
-    day: 5,
-    title: 'Wir basteln Masken',
-    date: 'Samstag, 25. April 2026',
-    time: '09:00 - 12:00',
-    focus: 'Gesichter & Emotionen entdecken',
-    location: 'Stapferstrasse 10, Zürich'
-  },
-  {
-    day: 6,
-    title: 'Unsere eigenes Museum eröffnet',
-    date: 'Sonntag, 26. April 2026',
-    time: '13:00 - 17:00',
-    focus: 'Ausstellung & Feier mit Familie',
-    location: 'Kemptpark 34, Kemptthal',
-    isSpecial: true
-  }
-];
+// Helper to get bilingual text
+const getText = (obj: { de?: string; en?: string } | undefined, fallback: string = '') => {
+  if (!obj) return fallback;
+  return lang === 'de' ? (obj.de || fallback) : (obj.en || obj.de || fallback);
+};
+
+// Page content with fallbacks
+const hero = page?.hero || {};
+const infoKarten = page?.infoKarten || [];
+const konzept = page?.konzept || {};
+const ablauf = page?.ablauf || {};
+const ziele = page?.ziele || {};
+const aufnahme = page?.aufnahme || {};
+const praktischeInfos = page?.praktischeInfos || {};
+
+// Schedule data from CMS
+const schedule = (ablauf.termine || []).map((termin: any) => ({
+  day: termin.tag,
+  title: getText(termin.titel),
+  date: getText(termin.datum),
+  time: termin.zeit,
+  focus: getText(termin.fokus),
+  location: getText(termin.standort),
+  isSpecial: termin.istBesonders
+}));
+
+// Color mappings for skills
+const skillColors: Record<string, string> = {
+  mint: 'bg-evolea-mint/20',
+  coral: 'bg-evolea-coral/20',
+  purple: 'bg-evolea-purple/20',
+  orange: 'bg-evolea-orange/20'
+};
 ---
 
-<Base title="Mini Museum - Mini Projekte" description="Mini Museum: Wir werden kreativ! Ein inklusives Kunstprojekt für Kinder im Autismus-Spektrum (5-8 Jahre). Gemeinsam ein eigenes Museum gestalten und eröffnen.">
+<Base title={`${hero.titel || 'Mini Museum'} - Mini Projekte`} description={getText(hero.beschreibung, 'Mini Museum: Wir werden kreativ! Ein inklusives Kunstprojekt für Kinder im Autismus-Spektrum (5-8 Jahre). Gemeinsam ein eigenes Museum gestalten und eröffnen.')}>
   <!-- Hero Section -->
   <section class="relative py-20 md:py-28 bg-gradient-to-br from-evolea-lavender/10 to-evolea-cream overflow-hidden">
     <FloatingShapes variant="minimal" />
@@ -82,44 +68,44 @@ const schedule = [
         <span class="mx-2">/</span>
         <a href={translatePath('/angebote/mini-projekte/')} class="hover:text-evolea-purple transition-colors">Mini Projekte</a>
         <span class="mx-2">/</span>
-        <span class="text-evolea-purple font-medium">Mini Museum</span>
+        <span class="text-evolea-purple font-medium">{hero.titel || 'Mini Museum'}</span>
       </nav>
 
       <div class="grid lg:grid-cols-2 gap-12 items-center">
         <div>
           <div class="inline-flex items-center gap-2 bg-evolea-lavender/20 text-evolea-lavender px-4 py-2 rounded-full text-sm font-medium mb-6">
             <Icon name="palette" size="sm" />
-            <span>Kreatives Kunstprojekt</span>
+            <span>{getText(hero.badge, 'Kreatives Kunstprojekt')}</span>
           </div>
           <h1 class="text-4xl md:text-5xl lg:text-6xl font-display font-bold text-evolea-purple mb-6 leading-tight">
-            Mini Museum
+            {hero.titel || 'Mini Museum'}
           </h1>
           <p class="text-xl md:text-2xl text-evolea-text-light mb-4 leading-relaxed">
-            Wir werden kreativ!
+            {getText(hero.untertitel, 'Wir werden kreativ!')}
           </p>
           <p class="text-lg text-evolea-text-light mb-8">
-            In diesem inklusiven Projekt gestalten Kinder ihr eigenes Museum. Sie wählen Themen, sammeln Kunstwerke, erstellen Ausstellungen und führen Besucher durch ihre Galerie.
+            {getText(hero.beschreibung, 'In diesem inklusiven Projekt gestalten Kinder ihr eigenes Museum. Sie wählen Themen, sammeln Kunstwerke, erstellen Ausstellungen und führen Besucher durch ihre Galerie.')}
           </p>
           <div class="flex flex-wrap gap-4">
-            <a href={`${base}/kontakt/?programm=mini-museum`} class="btn-primary">
-              Jetzt anmelden
+            <a href={hero.buttonLink || `${base}/kontakt/?programm=mini-museum`} class="btn-primary">
+              {getText(hero.buttonText, 'Jetzt anmelden')}
               <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
               </svg>
             </a>
-            <a href="#programm" class="btn-outline">
-              Programm ansehen
+            <a href={hero.zweitButtonLink || '#programm'} class="btn-outline">
+              {getText(hero.zweitButtonText, 'Programm ansehen')}
             </a>
           </div>
         </div>
         <div class="relative">
           <img
             src={heroImage}
-            alt="Kinder beim kreativen Gestalten im Mini Museum"
+            alt={getText(hero.untertitel, 'Kinder beim kreativen Gestalten im Mini Museum')}
             class="rounded-evolea-lg shadow-elevated w-full object-cover aspect-4/3"
           />
           <div class="absolute -bottom-4 -right-4 bg-white rounded-evolea p-4 shadow-card">
-            <div class="text-3xl font-display font-bold text-evolea-lavender">5-8</div>
+            <div class="text-3xl font-display font-bold text-evolea-lavender">{hero.alter || '5-8'}</div>
             <div class="text-sm text-evolea-text-light">{lang === 'de' ? 'Jahre' : 'Years'}</div>
           </div>
         </div>
@@ -131,26 +117,13 @@ const schedule = [
   <section class="py-16 bg-white">
     <div class="container mx-auto max-w-6xl px-4">
       <div class="grid md:grid-cols-4 gap-6">
-        <div class="bg-evolea-cream rounded-evolea-lg p-6 text-center">
-          <div class="flex justify-center mb-3"><Icon name="sparkle" size="lg" /></div>
-          <div class="font-display font-bold text-evolea-purple text-lg">Alter</div>
-          <div class="text-evolea-text-light">5-8 Jahre</div>
-        </div>
-        <div class="bg-evolea-cream rounded-evolea-lg p-6 text-center">
-          <div class="flex justify-center mb-3"><Icon name="calendar" size="lg" /></div>
-          <div class="font-display font-bold text-evolea-purple text-lg">Wann</div>
-          <div class="text-evolea-text-light">Samstags, alle 1-2 Wochen</div>
-        </div>
-        <div class="bg-evolea-cream rounded-evolea-lg p-6 text-center">
-          <div class="flex justify-center mb-3"><Icon name="chart" size="lg" /></div>
-          <div class="font-display font-bold text-evolea-purple text-lg">Dauer</div>
-          <div class="text-evolea-text-light">09:00 - 12:00 Uhr</div>
-        </div>
-        <div class="bg-evolea-cream rounded-evolea-lg p-6 text-center">
-          <div class="flex justify-center mb-3"><Icon name="location" size="lg" /></div>
-          <div class="font-display font-bold text-evolea-purple text-lg">Start</div>
-          <div class="text-evolea-text-light">28. Februar 2026</div>
-        </div>
+        {infoKarten.map((karte: any) => (
+          <div class="bg-evolea-cream rounded-evolea-lg p-6 text-center">
+            <div class="flex justify-center mb-3"><Icon name={karte.icon || 'sparkle'} size="lg" /></div>
+            <div class="font-display font-bold text-evolea-purple text-lg">{getText(karte.label, '')}</div>
+            <div class="text-evolea-text-light">{getText(karte.wert, '')}</div>
+          </div>
+        ))}
       </div>
     </div>
   </section>
@@ -160,77 +133,31 @@ const schedule = [
     <div class="container mx-auto max-w-4xl px-4">
       <div class="text-center mb-12">
         <h2 class="text-3xl md:text-4xl font-display font-bold text-evolea-purple mb-4">
-          Das Konzept
+          {getText(konzept.titel, 'Das Konzept')}
         </h2>
         <p class="text-lg text-evolea-text-light max-w-2xl mx-auto">
-          Ein Ort an dem Kinder wachsen und Familien aufatmen können.
+          {getText(konzept.untertitel, 'Ein Ort an dem Kinder wachsen und Familien aufatmen können.')}
         </p>
       </div>
 
       <div class="prose prose-lg max-w-none text-evolea-text-light mb-12">
-        <p>
-          Ein inklusives Projekt für <strong class="text-evolea-purple">junge Kunst-Profis.</strong>
-          Viele Freizeitangebote sind für Kinder im Autismus-Spektrum oft schwer
-          zugänglich – zu unübersichtlich, zu laut, zu wenig individuell.
-        </p>
-        <p>
-          Unser Mini Museum bietet einen sicheren, klar strukturierten Rahmen,
-          in dem soziales Lernen spielerisch und alltagsnah gelingt. Die Kinder
-          gestalten gemeinsam ein eigenes kleines Museum: Sie wählen ein Thema,
-          sammeln Gegenstände und eigene Kunstwerke, gestalten Ausstellungsräume,
-          erstellen Beschriftungen und üben, Besucher:innen durch die Ausstellung
-          zu führen.
-        </p>
-        <p>
-          Dabei werden sie individuell von unseren Fachpersonen begleitet, erhalten
-          Orientierung und passende Unterstützung. So können sie soziale Kompetenzen
-          entfalten, Verantwortung übernehmen und sich in neuen Rollen ausprobieren –
-          als Künstler:in, Museumsführer:in oder Kurator:in – mit Freude, Struktur
-          und echten Erfolgserlebnissen.
-        </p>
-        <p>
-          Zum Abschluss öffnen sie ihr Mini Museum für Familie und Freunde, führen
-          durch die Ausstellung und feiern gemeinsam, was sie geschaffen haben.
-        </p>
+        {(konzept.absaetze || []).map((absatz: any) => (
+          <p set:html={getText(absatz, '')} />
+        ))}
       </div>
 
       <div class="grid md:grid-cols-2 gap-6">
-        <div class="bg-white rounded-evolea-lg p-6 shadow-soft">
-          <div class="flex justify-center mb-4">
-            <div class="w-12 h-12 bg-evolea-mint/20 rounded-full flex items-center justify-center">
-              <Icon name="handshake" size="md" />
+        {(konzept.faehigkeiten || []).map((skill: any) => (
+          <div class="bg-white rounded-evolea-lg p-6 shadow-soft">
+            <div class="flex justify-center mb-4">
+              <div class={`w-12 h-12 ${skillColors[skill.farbe] || 'bg-evolea-purple/20'} rounded-full flex items-center justify-center`}>
+                <Icon name={skill.icon || 'sparkle'} size="md" />
+              </div>
             </div>
+            <h3 class="font-display font-bold text-evolea-purple text-lg mb-2 text-center">{getText(skill.titel, '')}</h3>
+            <p class="text-evolea-text-light text-center mb-0">{getText(skill.beschreibung, '')}</p>
           </div>
-          <h3 class="font-display font-bold text-evolea-purple text-lg mb-2 text-center">Kommunikation</h3>
-          <p class="text-evolea-text-light text-center mb-0">Im Museum miteinander sprechen, Fragen stellen und Interessen verstehen.</p>
-        </div>
-        <div class="bg-white rounded-evolea-lg p-6 shadow-soft">
-          <div class="flex justify-center mb-4">
-            <div class="w-12 h-12 bg-evolea-coral/20 rounded-full flex items-center justify-center">
-              <Icon name="target" size="md" />
-            </div>
-          </div>
-          <h3 class="font-display font-bold text-evolea-purple text-lg mb-2 text-center">Alltagsfähigkeiten</h3>
-          <p class="text-evolea-text-light text-center mb-0">Materialien vorbereiten, sortieren, organisieren und aufräumen.</p>
-        </div>
-        <div class="bg-white rounded-evolea-lg p-6 shadow-soft">
-          <div class="flex justify-center mb-4">
-            <div class="w-12 h-12 bg-evolea-purple/20 rounded-full flex items-center justify-center">
-              <Icon name="sparkle" size="md" />
-            </div>
-          </div>
-          <h3 class="font-display font-bold text-evolea-purple text-lg mb-2 text-center">Selbstwirksamkeit</h3>
-          <p class="text-evolea-text-light text-center mb-0">Feinmotorik und Selbstvertrauen durch kreatives Gestalten stärken.</p>
-        </div>
-        <div class="bg-white rounded-evolea-lg p-6 shadow-soft">
-          <div class="flex justify-center mb-4">
-            <div class="w-12 h-12 bg-evolea-orange/20 rounded-full flex items-center justify-center">
-              <Icon name="palette" size="md" />
-            </div>
-          </div>
-          <h3 class="font-display font-bold text-evolea-purple text-lg mb-2 text-center">Kreativität</h3>
-          <p class="text-evolea-text-light text-center mb-0">Als Künstler:in, Museumsführer:in oder Kurator:in neue Rollen entdecken.</p>
-        </div>
+        ))}
       </div>
     </div>
   </section>
@@ -240,15 +167,15 @@ const schedule = [
     <div class="container mx-auto max-w-4xl px-4">
       <div class="text-center mb-12">
         <h2 class="text-3xl md:text-4xl font-display font-bold text-evolea-purple mb-4">
-          Der Ablauf
+          {getText(ablauf.titel, 'Der Ablauf')}
         </h2>
         <p class="text-lg text-evolea-text-light">
-          6 Halbtage voller Kunst, Kreativität und Entdeckungen
+          {getText(ablauf.untertitel, '6 Halbtage voller Kunst, Kreativität und Entdeckungen')}
         </p>
       </div>
 
       <div class="space-y-4">
-        {schedule.map((session) => (
+        {schedule.map((session: { day: number; title: string; date: string; time: string; focus: string; location: string; isSpecial?: boolean }) => (
           <div class={`rounded-evolea-lg p-6 border-l-4 ${session.isSpecial ? 'bg-gradient-to-r from-evolea-magenta/10 to-evolea-coral/10 border-evolea-magenta' : 'bg-white border-evolea-purple shadow-soft'}`}>
             <div class="flex flex-col md:flex-row md:items-center gap-4">
               <div class={`flex-shrink-0 w-12 h-12 rounded-full flex items-center justify-center font-display font-bold text-lg ${session.isSpecial ? 'bg-evolea-magenta text-white' : 'bg-evolea-purple/20 text-evolea-purple'}`}>
@@ -281,19 +208,21 @@ const schedule = [
       </div>
 
       <!-- Special Note about Museum Opening -->
-      <div class="mt-8 bg-evolea-purple/5 rounded-evolea-lg p-6">
-        <div class="flex items-start gap-4">
-          <div class="flex-shrink-0">
-            <Icon name="heart" size="lg" />
-          </div>
-          <div>
-            <h4 class="font-display font-bold text-evolea-purple mb-2">Eröffnungsfeier im Kemptpark</h4>
-            <p class="text-evolea-text-light mb-0">
-              Der krönende Abschluss findet im <strong>Kemptpark 34, Kemptthal</strong> statt. Die Kinder eröffnen ihr Mini Museum für Familie und Freunde, führen durch die Ausstellung und feiern gemeinsam ihre Kunstwerke. Ein unvergessliches Erlebnis!
-            </p>
+      {ablauf.hinweis && (
+        <div class="mt-8 bg-evolea-purple/5 rounded-evolea-lg p-6">
+          <div class="flex items-start gap-4">
+            <div class="flex-shrink-0">
+              <Icon name="heart" size="lg" />
+            </div>
+            <div>
+              <h4 class="font-display font-bold text-evolea-purple mb-2">{getText(ablauf.hinweis.titel, 'Eröffnungsfeier im Kemptpark')}</h4>
+              <p class="text-evolea-text-light mb-0">
+                {getText(ablauf.hinweis.text, '')}
+              </p>
+            </div>
           </div>
         </div>
-      </div>
+      )}
     </div>
   </section>
 
@@ -301,34 +230,19 @@ const schedule = [
   <section class="py-16 bg-white">
     <div class="container mx-auto max-w-4xl px-4">
       <h2 class="text-3xl font-display font-bold text-evolea-purple mb-8 text-center">
-        Projekt Ziele
+        {getText(ziele.titel, 'Projekt Ziele')}
       </h2>
       <p class="text-lg text-evolea-text-light text-center mb-12 max-w-2xl mx-auto">
-        Kinder erleben bei uns, wie sie im Miteinander stark sein können –
-        Schritt für Schritt, mit Freude und Erfolg.
+        {getText(ziele.untertitel, 'Kinder erleben bei uns, wie sie im Miteinander stark sein können – Schritt für Schritt, mit Freude und Erfolg.')}
       </p>
 
       <div class="space-y-6">
-        <div class="bg-evolea-cream/50 rounded-evolea-lg p-6">
-          <h3 class="font-display font-bold text-evolea-purple mb-2">Förderung von Kommunikation und sozialer Interaktion</h3>
-          <p class="text-evolea-text-light mb-0">Die Kinder lernen, im Mini Museum miteinander zu sprechen, Fragen zu stellen und zu beantworten, Interessen der „Besucher:innen" zu verstehen und sich bei gemeinsamen Aufgaben abzustimmen.</p>
-        </div>
-        <div class="bg-evolea-cream/50 rounded-evolea-lg p-6">
-          <h3 class="font-display font-bold text-evolea-purple mb-2">Training von Alltagsfähigkeiten</h3>
-          <p class="text-evolea-text-light mb-0">Sie üben Aufgaben wie Materialien vorbereiten, Ausstellungsstücke sortieren, Räume strukturieren und aufräumen sowie einfache organisatorische Tätigkeiten – Fähigkeiten, die auch im Alltag hilfreich sind.</p>
-        </div>
-        <div class="bg-evolea-cream/50 rounded-evolea-lg p-6">
-          <h3 class="font-display font-bold text-evolea-purple mb-2">Stärkung von Feinmotorik, Selbstständigkeit und Selbstwirksamkeit</h3>
-          <p class="text-evolea-text-light mb-0">Beim Zeichnen, Basteln, Bauen von kleinen Ausstellungselementen oder beim Schreiben bzw. Malen von Beschriftungen verbessern die Kinder ihre motorischen Fähigkeiten und erleben, dass sie selbst etwas bewirken und gestalten können.</p>
-        </div>
-        <div class="bg-evolea-cream/50 rounded-evolea-lg p-6">
-          <h3 class="font-display font-bold text-evolea-purple mb-2">Spielerisches Lernen in einem strukturierten, sicheren Rahmen</h3>
-          <p class="text-evolea-text-light mb-0">Durch klare Abläufe, Bildkarten und Rituale gewinnen die Kinder Sicherheit und Orientierung und können sich so auf das gemeinsame Ziel konzentrieren: ihr eigenes Mini Museum.</p>
-        </div>
-        <div class="bg-evolea-cream/50 rounded-evolea-lg p-6">
-          <h3 class="font-display font-bold text-evolea-purple mb-2">Einführung in die Welt des Museums</h3>
-          <p class="text-evolea-text-light mb-0">Die Kinder schlüpfen in verschiedene Rollen: Sie gestalten Exponate, richten Ausstellungsflächen ein, begrüssen Besucher:innen, erklären ihre Werke und führen durch die Räume. So erleben sie, wie aus vielen kleinen Aufgaben ein grosses Ganzes wird – ihr eigenes Museum.</p>
-        </div>
+        {(ziele.liste || []).map((ziel: any) => (
+          <div class="bg-evolea-cream/50 rounded-evolea-lg p-6">
+            <h3 class="font-display font-bold text-evolea-purple mb-2">{getText(ziel.titel, '')}</h3>
+            <p class="text-evolea-text-light mb-0">{getText(ziel.text, '')}</p>
+          </div>
+        ))}
       </div>
     </div>
   </section>
@@ -337,40 +251,26 @@ const schedule = [
   <section class="py-16 bg-evolea-cream/30">
     <div class="container mx-auto max-w-4xl px-4">
       <h2 class="text-3xl font-display font-bold text-evolea-purple mb-8 text-center">
-        Aufnahmekriterien
+        {getText(aufnahme.titel, 'Aufnahmekriterien')}
       </h2>
 
       <div class="bg-white rounded-evolea-lg p-8 shadow-soft">
         <p class="text-evolea-text-light mb-6">
-          Die Teilnahme an einem Mini Projekt erfolgt jeweils projektbezogen und beginnt
-          mit einem persönlichen Gespräch mit den Bezugspersonen, sowie einem Kennenlernen
-          des Kindes. Zur Orientierung stellen wir eine Checkliste zur Verfügung:
+          {getText(aufnahme.einleitung, 'Die Teilnahme an einem Mini Projekt erfolgt jeweils projektbezogen und beginnt mit einem persönlichen Gespräch mit den Bezugspersonen, sowie einem Kennenlernen des Kindes. Zur Orientierung stellen wir eine Checkliste zur Verfügung:')}
         </p>
         <ul class="space-y-3 mb-6">
-          <li class="flex items-start gap-3">
-            <span class="flex-shrink-0 w-6 h-6 bg-evolea-mint/20 rounded-full flex items-center justify-center text-evolea-mint font-bold text-sm">✓</span>
-            <span class="text-evolea-text-light"><strong class="text-evolea-purple">Funktionelle Kommunikation</strong> - verbal oder unterstützt</span>
-          </li>
-          <li class="flex items-start gap-3">
-            <span class="flex-shrink-0 w-6 h-6 bg-evolea-mint/20 rounded-full flex items-center justify-center text-evolea-mint font-bold text-sm">✓</span>
-            <span class="text-evolea-text-light"><strong class="text-evolea-purple">Interesse an sozialen Kontakten</strong> mit anderen Kindern</span>
-          </li>
-          <li class="flex items-start gap-3">
-            <span class="flex-shrink-0 w-6 h-6 bg-evolea-mint/20 rounded-full flex items-center justify-center text-evolea-mint font-bold text-sm">✓</span>
-            <span class="text-evolea-text-light"><strong class="text-evolea-purple">Verständnis von Anweisungen</strong> und Regeln</span>
-          </li>
-          <li class="flex items-start gap-3">
-            <span class="flex-shrink-0 w-6 h-6 bg-evolea-mint/20 rounded-full flex items-center justify-center text-evolea-mint font-bold text-sm">✓</span>
-            <span class="text-evolea-text-light"><strong class="text-evolea-purple">Grundlegende Selbstständigkeit</strong> (Händewaschen, An- und Ausziehen)</span>
-          </li>
-          <li class="flex items-start gap-3">
-            <span class="flex-shrink-0 w-6 h-6 bg-evolea-mint/20 rounded-full flex items-center justify-center text-evolea-mint font-bold text-sm">✓</span>
-            <span class="text-evolea-text-light"><strong class="text-evolea-purple">Keine selbst- oder fremdverletzenden Verhaltensweisen</strong></span>
-          </li>
+          {(aufnahme.kriterien || []).map((kriterium: any) => (
+            <li class="flex items-start gap-3">
+              <span class="flex-shrink-0 w-6 h-6 bg-evolea-mint/20 rounded-full flex items-center justify-center text-evolea-mint font-bold text-sm">✓</span>
+              <span class="text-evolea-text-light">
+                <strong class="text-evolea-purple">{getText(kriterium.titel, '')}</strong>
+                {getText(kriterium.text, '') && ` - ${getText(kriterium.text, '')}`}
+              </span>
+            </li>
+          ))}
         </ul>
         <p class="text-sm text-evolea-text-light bg-evolea-purple/5 rounded-evolea p-4 mb-0">
-          Diese Punkte dienen als Richtlinie und ersetzen keine individuelle Beurteilung.
-          Die endgültige Entscheidung wird stets situationsbezogen und im Sinne des Kindes getroffen.
+          {getText(aufnahme.hinweis, 'Diese Punkte dienen als Richtlinie und ersetzen keine individuelle Beurteilung. Die endgültige Entscheidung wird stets situationsbezogen und im Sinne des Kindes getroffen.')}
         </p>
       </div>
     </div>
@@ -380,7 +280,7 @@ const schedule = [
   <section class="py-16 md:py-24" id="anmeldung">
     <div class="container mx-auto max-w-4xl px-4">
       <h2 class="text-3xl font-display font-bold text-evolea-purple mb-8 text-center">
-        Praktische Informationen
+        {getText(praktischeInfos.titel, 'Praktische Informationen')}
       </h2>
 
       <div class="grid md:grid-cols-2 gap-6 mb-12">
@@ -388,17 +288,19 @@ const schedule = [
           <div class="flex items-start gap-4">
             <Icon name="location" size="md" />
             <div>
-              <h4 class="font-display font-bold text-evolea-purple mb-2">Standorte</h4>
-              <p class="text-evolea-text-light text-sm mb-2">
-                <strong>Tag 1-5:</strong><br/>
-                Stapferstrasse 10<br/>
-                8006 Zürich
-              </p>
-              <p class="text-evolea-text-light text-sm mb-0">
-                <strong>Tag 6 (Eröffnungsfeier):</strong><br/>
-                Kemptpark 34<br/>
-                8310 Kemptthal
-              </p>
+              <h4 class="font-display font-bold text-evolea-purple mb-2">{lang === 'de' ? 'Standorte' : 'Locations'}</h4>
+              {praktischeInfos.standorte?.hauptstandort && (
+                <p class="text-evolea-text-light text-sm mb-2">
+                  <strong>{getText(praktischeInfos.standorte.hauptstandort.label, 'Tag 1-5:')}</strong><br/>
+                  <span set:html={getText(praktischeInfos.standorte.hauptstandort.adresse, '').replace(/\n/g, '<br/>')} />
+                </p>
+              )}
+              {praktischeInfos.standorte?.eroeffnung && (
+                <p class="text-evolea-text-light text-sm mb-0">
+                  <strong>{getText(praktischeInfos.standorte.eroeffnung.label, 'Tag 6 (Eröffnungsfeier):')}</strong><br/>
+                  <span set:html={getText(praktischeInfos.standorte.eroeffnung.adresse, '').replace(/\n/g, '<br/>')} />
+                </p>
+              )}
             </div>
           </div>
         </div>
@@ -406,12 +308,12 @@ const schedule = [
           <div class="flex items-start gap-4">
             <Icon name="mail" size="md" />
             <div>
-              <h4 class="font-display font-bold text-evolea-purple mb-2">Kontakt & Anmeldung</h4>
+              <h4 class="font-display font-bold text-evolea-purple mb-2">{getText(praktischeInfos.kontakt?.titel, 'Kontakt & Anmeldung')}</h4>
               <p class="text-evolea-text-light text-sm mb-2">
-                Für ein kostenloses Erstgespräch und Anmeldung:
+                {getText(praktischeInfos.kontakt?.text, 'Für ein kostenloses Erstgespräch und Anmeldung:')}
               </p>
-              <a href="mailto:hello@evolea.ch" class="text-evolea-magenta hover:text-evolea-purple transition-colors font-semibold">
-                hello@evolea.ch
+              <a href={`mailto:${praktischeInfos.kontakt?.email || 'hello@evolea.ch'}`} class="text-evolea-magenta hover:text-evolea-purple transition-colors font-semibold">
+                {praktischeInfos.kontakt?.email || 'hello@evolea.ch'}
               </a>
             </div>
           </div>
@@ -419,10 +321,7 @@ const schedule = [
       </div>
 
       <div class="bg-evolea-purple/5 rounded-evolea-lg p-6 text-center">
-        <p class="text-evolea-text-light mb-4">
-          <strong class="text-evolea-purple">Wichtig:</strong> Wir treffen uns jeweils um <strong>09:00 Uhr</strong>.
-          Bitte seid 5 Minuten vor Beginn vor Ort. Tag 6 beginnt um <strong>13:00 Uhr</strong> und findet mit Begleitung der Eltern statt.
-        </p>
+        <p class="text-evolea-text-light mb-4" set:html={getText(praktischeInfos.wichtig, '<strong class="text-evolea-purple">Wichtig:</strong> Wir treffen uns jeweils um <strong>09:00 Uhr</strong>. Bitte seid 5 Minuten vor Beginn vor Ort. Tag 6 beginnt um <strong>13:00 Uhr</strong> und findet mit Begleitung der Eltern statt.')} />
       </div>
     </div>
   </section>
@@ -434,8 +333,10 @@ const schedule = [
         <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16l-4-4m0 0l4-4m-4 4h18" />
         </svg>
-        Zurück zu Mini Projekte
+        {lang === 'de' ? 'Zurück zu Mini Projekte' : 'Back to Mini Projects'}
       </a>
     </div>
   </section>
+
+  <EditLink type="singleton" collection="miniMuseum" label={lang === 'de' ? 'Mini Museum bearbeiten' : 'Edit Mini Museum'} />
 </Base>
