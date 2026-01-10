@@ -64,3 +64,5 @@ export default defineConfig({
     },
   },
 });
+
+// Force Cloudflare rebuild: 2026-01-10T20:15
