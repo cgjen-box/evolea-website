@@ -171,8 +171,8 @@
           "en": "October - December 2025"
         },
         "status": {
-          "de": "Ausgebucht",
-          "en": "Fully booked"
+          "de": "Abgeschlossen",
+          "en": "Completed"
         },
         "statusFarbe": "magenta",
         "link": "/angebote/mini-projekte/mini-restaurant/",
