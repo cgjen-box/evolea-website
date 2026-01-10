@@ -82,7 +82,7 @@
     },
     "absaetze": [
       {
-        "de": "Ein inklusives Projekt für <strong class=\"text-evolea-purple\">junge Kunst-Profis.</strong> Viele Freizeitangebote sind für Kinder im Autismus-Spektrum oft schwer zugänglich – zu unübersichtlich, zu laut, zu wenig individuell.",
+        "de": "Ein inklusives Projekt für <strong class=\"text-evolea-purple\">junge Kunst-Profis.</strong> Viele Freizeitangebote sind für Kinder im Autismus-Spektrum oft schwer zugänglich zu unübersichtlich, zu laut, zu wenig individuell.",
         "en": "An inclusive project for <strong class=\"text-evolea-purple\">young art professionals.</strong> Many leisure activities are often difficult for children on the autism spectrum to access – too confusing, too loud, too impersonal."
       },
       {
@@ -414,10 +414,7 @@
           "de": "Keine selbst- oder fremdverletzenden Verhaltensweisen",
           "en": "No self-harming or aggressive behaviors"
         },
-        "text": {
-          "de": "",
-          "en": ""
-        }
+        "text": {}
       }
     ],
     "hinweis": {
