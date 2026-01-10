@@ -110,7 +110,7 @@ export default config({
     navigation: {
       Inhalte: ['blog', 'blogEn', 'team', 'principles'],
       Seiten: ['homepage', 'about', 'contact'],
-      Programme: ['angeboteIndex', 'miniGarten', 'miniProjekte', 'miniTurnen', 'evoleaCafe', 'tagesschule'],
+      Programme: ['angeboteIndex', 'miniGarten', 'miniProjekte', 'miniMuseum', 'miniTurnen', 'evoleaCafe', 'tagesschule'],
       Medien: ['siteImages'],
       Einstellungen: ['siteSettings'],
     },
@@ -1451,6 +1451,188 @@ export default config({
             }),
           },
           { label: 'Call-to-Action' }
+        ),
+      },
+    }),
+
+    // =========================================================================
+    // MINI MUSEUM SINGLETON
+    // =========================================================================
+    miniMuseum: singleton({
+      label: 'Mini Museum',
+      path: 'src/content/pages/mini-museum',
+      format: { data: 'json' },
+      schema: {
+        // --- HERO ---
+        hero: fields.object(
+          {
+            badge: bilingualText('Badge', 'Badge', { description: 'z.B. "Kreatives Kunstprojekt"' }),
+            titel: fields.text({ label: 'Titel', defaultValue: 'Mini Museum' }),
+            untertitel: bilingualText('Untertitel', 'Subtitle'),
+            beschreibung: bilingualText('Beschreibung', 'Description', { multiline: true }),
+            buttonText: bilingualText('Button Text', 'Button Text'),
+            buttonLink: fields.text({ label: 'Button Link', defaultValue: '#anmeldung' }),
+            zweitButtonText: bilingualText('Zweiter Button', 'Second Button'),
+            zweitButtonLink: fields.text({ label: 'Zweiter Button Link' }),
+            alter: fields.text({ label: 'Altersanzeige', description: 'z.B. "5-8"' }),
+          },
+          { label: 'Hero-Bereich' }
+        ),
+
+        // --- INFO KARTEN ---
+        infoKarten: fields.array(
+          fields.object({
+            icon: fields.select({ label: 'Icon', options: iconOptions, defaultValue: 'sparkle' }),
+            label: bilingualText('Label', 'Label'),
+            wert: bilingualText('Wert', 'Value'),
+          }),
+          {
+            label: 'Info-Karten (4 Stück)',
+            itemLabel: (props) => props.fields.label.fields.de.value as string || 'Neue Karte',
+          }
+        ),
+
+        // --- KONZEPT ---
+        konzept: fields.object(
+          {
+            titel: bilingualText('Titel', 'Title'),
+            untertitel: bilingualText('Untertitel', 'Subtitle'),
+            absaetze: fields.array(
+              bilingualText('Absatz', 'Paragraph', { multiline: true }),
+              {
+                label: 'Textabsätze',
+                itemLabel: (props) => (props.fields.de.value as string)?.slice(0, 40) + '...' || 'Neuer Absatz',
+              }
+            ),
+            faehigkeiten: fields.array(
+              fields.object({
+                icon: fields.select({ label: 'Icon', options: iconOptions, defaultValue: 'handshake' }),
+                titel: bilingualText('Titel', 'Title'),
+                beschreibung: bilingualText('Beschreibung', 'Description'),
+                farbe: fields.select({
+                  label: 'Farbe',
+                  options: [
+                    { label: 'Mint', value: 'mint' },
+                    { label: 'Coral', value: 'coral' },
+                    { label: 'Purple', value: 'purple' },
+                    { label: 'Orange', value: 'orange' },
+                  ],
+                  defaultValue: 'mint'
+                }),
+              }),
+              {
+                label: 'Fähigkeiten-Karten',
+                itemLabel: (props) => props.fields.titel.fields.de.value as string || 'Neue Fähigkeit',
+              }
+            ),
+          },
+          { label: 'Das Konzept' }
+        ),
+
+        // --- ABLAUF / SCHEDULE ---
+        ablauf: fields.object(
+          {
+            titel: bilingualText('Titel', 'Title'),
+            untertitel: bilingualText('Untertitel', 'Subtitle'),
+            termine: fields.array(
+              fields.object({
+                tag: fields.integer({ label: 'Tag Nummer', defaultValue: 1 }),
+                titel: bilingualText('Titel', 'Title'),
+                datum: bilingualText('Datum', 'Date'),
+                zeit: fields.text({ label: 'Zeit', defaultValue: '09:00 - 12:00' }),
+                fokus: bilingualText('Fokus', 'Focus'),
+                standort: bilingualText('Standort', 'Location'),
+                istBesonders: fields.checkbox({ label: 'Besonderer Termin (Eröffnung)', defaultValue: false }),
+              }),
+              {
+                label: 'Termine',
+                itemLabel: (props) => `Tag ${props.fields.tag.value}: ${props.fields.titel.fields.de.value}` || 'Neuer Termin',
+              }
+            ),
+            hinweis: fields.object(
+              {
+                titel: bilingualText('Titel', 'Title'),
+                text: bilingualText('Text', 'Text', { multiline: true }),
+              },
+              { label: 'Hinweis-Box' }
+            ),
+          },
+          { label: 'Der Ablauf' }
+        ),
+
+        // --- ZIELE ---
+        ziele: fields.object(
+          {
+            titel: bilingualText('Titel', 'Title'),
+            untertitel: bilingualText('Untertitel', 'Subtitle'),
+            liste: fields.array(
+              fields.object({
+                titel: bilingualText('Titel', 'Title'),
+                text: bilingualText('Text', 'Text', { multiline: true }),
+              }),
+              {
+                label: 'Ziele Liste',
+                itemLabel: (props) => props.fields.titel.fields.de.value as string || 'Neues Ziel',
+              }
+            ),
+          },
+          { label: 'Projekt Ziele' }
+        ),
+
+        // --- AUFNAHME ---
+        aufnahme: fields.object(
+          {
+            titel: bilingualText('Titel', 'Title'),
+            einleitung: bilingualText('Einleitung', 'Introduction', { multiline: true }),
+            kriterien: fields.array(
+              fields.object({
+                titel: bilingualText('Titel', 'Title'),
+                text: bilingualText('Text', 'Text'),
+              }),
+              {
+                label: 'Kriterien Liste',
+                itemLabel: (props) => props.fields.titel.fields.de.value as string || 'Neues Kriterium',
+              }
+            ),
+            hinweis: bilingualText('Hinweis', 'Note', { multiline: true }),
+          },
+          { label: 'Aufnahmekriterien' }
+        ),
+
+        // --- PRAKTISCHE INFOS ---
+        praktischeInfos: fields.object(
+          {
+            titel: bilingualText('Titel', 'Title'),
+            standorte: fields.object(
+              {
+                hauptstandort: fields.object(
+                  {
+                    label: bilingualText('Label', 'Label'),
+                    adresse: bilingualText('Adresse', 'Address', { multiline: true }),
+                  },
+                  { label: 'Hauptstandort' }
+                ),
+                eroeffnung: fields.object(
+                  {
+                    label: bilingualText('Label', 'Label'),
+                    adresse: bilingualText('Adresse', 'Address', { multiline: true }),
+                  },
+                  { label: 'Eröffnungsstandort' }
+                ),
+              },
+              { label: 'Standorte' }
+            ),
+            kontakt: fields.object(
+              {
+                titel: bilingualText('Titel', 'Title'),
+                text: bilingualText('Text', 'Text'),
+                email: fields.text({ label: 'E-Mail', defaultValue: 'hello@evolea.ch' }),
+              },
+              { label: 'Kontakt' }
+            ),
+            wichtig: bilingualText('Wichtiger Hinweis', 'Important Note', { multiline: true }),
+          },
+          { label: 'Praktische Informationen' }
         ),
       },
     }),

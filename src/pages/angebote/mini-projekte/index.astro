@@ -2,6 +2,7 @@
 import Base from '@layouts/Base.astro';
 import FloatingShapes from '@components/FloatingShapes.astro';
 import Icon from '@components/Icon.astro';
+import EditLink from '@components/EditLink.astro';
 import { getLangFromUrl, useTranslatedPath } from '@i18n/utils';
 import { getEntry } from 'astro:content';
 
@@ -367,4 +368,6 @@ const textColors: Record<string, string> = {
       </div>
     </div>
   </section>
+
+  <EditLink type="singleton" collection="miniProjekte" label={lang === 'de' ? 'Mini Projekte bearbeiten' : 'Edit Mini Projekte'} />
 </Base>
