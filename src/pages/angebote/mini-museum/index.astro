@@ -140,12 +140,53 @@ const skillColors: Record<string, string> = {
         </p>
       </div>
 
-      <div class="prose prose-lg max-w-none text-evolea-text-light mb-12">
-        {(konzept.absaetze || []).map((absatz: any) => (
-          <p set:html={getText(absatz, '')} />
-        ))}
+      <!-- Lead paragraph - the challenge -->
+      <div class="bg-white rounded-evolea-lg p-8 shadow-soft mb-8">
+        <p class="text-xl md:text-2xl text-evolea-purple font-display font-semibold leading-relaxed mb-4" set:html={getText(konzept.absaetze?.[0], '')} />
       </div>
 
+      <!-- What we offer - main content -->
+      <div class="grid md:grid-cols-2 gap-6 mb-8">
+        <div class="bg-evolea-lavender/10 rounded-evolea-lg p-6 border-l-4 border-evolea-lavender">
+          <div class="flex items-start gap-4">
+            <div class="flex-shrink-0">
+              <Icon name="museum" size="lg" />
+            </div>
+            <div>
+              <h3 class="font-display font-bold text-evolea-purple text-lg mb-3">{lang === 'de' ? 'Das Mini Museum' : 'The Mini Museum'}</h3>
+              <p class="text-evolea-text-light leading-relaxed mb-0" set:html={getText(konzept.absaetze?.[1], '')} />
+            </div>
+          </div>
+        </div>
+
+        <div class="bg-evolea-mint/10 rounded-evolea-lg p-6 border-l-4 border-evolea-mint">
+          <div class="flex items-start gap-4">
+            <div class="flex-shrink-0">
+              <Icon name="heart" size="lg" />
+            </div>
+            <div>
+              <h3 class="font-display font-bold text-evolea-purple text-lg mb-3">{lang === 'de' ? 'Individuelle Begleitung' : 'Individual Support'}</h3>
+              <p class="text-evolea-text-light leading-relaxed mb-0" set:html={getText(konzept.absaetze?.[2], '')} />
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Highlight: The culmination -->
+      <div class="bg-gradient-to-r from-evolea-magenta/10 to-evolea-coral/10 rounded-evolea-lg p-6 mb-12 border border-evolea-magenta/20">
+        <div class="flex items-center gap-4">
+          <div class="flex-shrink-0 w-16 h-16 bg-evolea-magenta/20 rounded-full flex items-center justify-center">
+            <Icon name="sparkle" size="lg" />
+          </div>
+          <div>
+            <h3 class="font-display font-bold text-evolea-magenta text-lg mb-1">{lang === 'de' ? 'Der krönende Abschluss' : 'The Grand Finale'}</h3>
+            <p class="text-evolea-text leading-relaxed mb-0" set:html={getText(konzept.absaetze?.[3], '')} />
+          </div>
+        </div>
+      </div>
+
+      <!-- Skills grid -->
+      <h3 class="text-2xl font-display font-bold text-evolea-purple mb-6 text-center">{lang === 'de' ? 'Was die Kinder lernen' : 'What children learn'}</h3>
       <div class="grid md:grid-cols-2 gap-6">
         {(konzept.faehigkeiten || []).map((skill: any) => (
           <div class="bg-white rounded-evolea-lg p-6 shadow-soft">
