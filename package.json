@@ -10,7 +10,9 @@
     "build:cloudflare": "npm install @astrojs/cloudflare --no-save && astro check && astro build",
     "preview": "astro preview",
     "astro": "astro",
-    "prepare": "husky || true"
+    "prepare": "husky || true",
+    "cf:clean-queue": "powershell -ExecutionPolicy Bypass -File scripts/Cancel-CloudflareDeployments.ps1 -OnlyInProgress",
+    "cf:clean-all": "powershell -ExecutionPolicy Bypass -File scripts/Cancel-CloudflareDeployments.ps1"
   },
   "dependencies": {
     "@astrojs/check": "^0.9.4",
