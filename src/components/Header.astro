@@ -97,14 +97,15 @@ const donatePath = lang === 'de' ? '/spenden/' : '/donate/';
       <a
         href={translatePath('/')}
         class:list={[
-          'logo-link flex items-center gap-2 font-display font-bold text-xl transition-colors',
-          transparent ? 'text-white' : 'text-evolea-purple',
+          'logo-link flex items-center transition-all',
+          transparent && 'logo-white',
         ]}
       >
-        <span class="logo-text">EVOLEA</span>
-        <span class="logo-butterfly">
-          <Butterfly size="sm" variant={transparent ? 'white' : 'spectrum'} />
-        </span>
+        <img
+          src={`${import.meta.env.BASE_URL}images/logo/Evolea New Logo_small.PNG`}
+          alt="EVOLEA"
+          class="h-10 md:h-12 w-auto"
+        />
       </a>
 
       <!-- Desktop Navigation -->
@@ -190,9 +191,12 @@ const donatePath = lang === 'de' ? '/spenden/' : '/donate/';
       </svg>
     </button>
 
-    <a href={translatePath('/')} class="flex items-center gap-3 mb-12">
-      <span class="font-display font-bold text-3xl text-white">EVOLEA</span>
-      <Butterfly size="md" variant="white" />
+    <a href={translatePath('/')} class="inline-block mb-12">
+      <img
+        src={`${import.meta.env.BASE_URL}images/logo/Evolea New Logo_small.PNG`}
+        alt="EVOLEA"
+        class="h-14 w-auto brightness-0 invert"
+      />
     </a>
 
     <nav class="flex flex-col gap-2 mb-auto">
@@ -454,12 +458,9 @@ const donatePath = lang === 'de' ? '/spenden/' : '/donate/';
     z-index: 10;
   }
 
-  /* Text styles when scrolled */
-  .navbar-wrapper.visible:not(.at-top) .logo-text {
-    background: white !important;
-    -webkit-background-clip: text !important;
-    -webkit-text-fill-color: transparent !important;
-    background-clip: text !important;
+  /* Logo white filter when scrolled on transparent headers */
+  .navbar-wrapper.visible:not(.at-top) .logo-link img {
+    filter: brightness(0) invert(1);
   }
 
   .navbar-wrapper.visible:not(.at-top) .nav-link {
@@ -726,19 +727,9 @@ const donatePath = lang === 'de' ? '/spenden/' : '/donate/';
      SCOPED STYLES
      =========================================== */
 
-  /* Logo gradient text */
-  .logo-text {
-    background: linear-gradient(90deg, #7BEDD5 0%, #FFE066 25%, #FF7E5D 50%, #E97BF1 75%, #CD87F8 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-  }
-
-  .header-transparent .logo-text {
-    background: white;
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
+  /* Logo white filter for transparent headers */
+  .logo-white img {
+    filter: brightness(0) invert(1);
   }
 
   /* Nav link with spectrum underline on active */
