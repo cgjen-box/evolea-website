@@ -19,8 +19,8 @@
       "en": "Every child deserves the chance to reach their full potential"
     },
     "text1": {
-      "de": "EVOLEA entstand aus der Überzeugung, dass Kinder im Autismus Spektrum oder mit ADHS spezielle Unterstützung verdienen - aber keine, die sie ausgrenzt. Unsere Programme ergänzen die Regelschule und schaffen geschützte Räume zum Wachsen.",
-      "en": "EVOLEA was born from the conviction that children on the autism spectrum or with ADHD deserve special support - but not one that excludes them. Our programs complement regular school and create protected spaces for growth."
+      "de": "EVOLEA entstand aus der Überzeugung, dass Kinder im Autismus Spektrum oder mit ADHS spezielle Unterstützung verdienen. Aber keine, die sie ausgrenzt. Unsere Programme ergänzen die Regelschule und schaffen geschützte Räume zum Wachsen.",
+      "en": "EVOLEA was born from the conviction that children on the autism spectrum or with ADHD deserve special support. But not one that excludes them. Our programs complement regular school and create protected spaces for growth."
     },
     "text2": {
       "de": "Wir glauben an die Stärken jedes Kindes. Nicht Defizite stehen im Vordergrund, sondern die einzigartigen Fähigkeiten und Potenziale, die jedes Kind mitbringt.",
@@ -42,8 +42,8 @@
       "en": "A society that celebrates diversity"
     },
     "zitat": {
-      "de": "Wir träumen von einer Welt, in der neurotypische Entwicklung nicht die einzige Norm ist - in der jedes Kind, unabhängig von seiner Art zu denken und zu lernen, die gleichen Chancen hat.",
-      "en": "We dream of a world where neurotypical development is not the only norm - where every child, regardless of how they think and learn, has equal opportunities."
+      "de": "Wir träumen von einer Welt, in der neurotypische Entwicklung nicht die einzige Norm ist. In der jedes Kind, unabhängig von seiner Art zu denken und zu lernen, die gleichen Chancen hat.",
+      "en": "We dream of a world where neurotypical development is not the only norm. Where every child, regardless of how they think and learn, has equal opportunities."
     }
   },
   "fuerWen": {
@@ -120,8 +120,8 @@
       "en": "The Association"
     },
     "kartenText": {
-      "de": "EVOLEA Verein ist ein gemeinnütziger Verein mit Sitz in Zürich. Wir sind politisch und konfessionell unabhängig. Der Name EVOLEA verbindet Evolution (Entwicklung) mit LEA (Lernen, Erleben, Aufblühen) - ein Sinnbild für die transformative Reise, die jedes Kind bei uns erleben kann.",
-      "en": "EVOLEA Association is a non-profit based in Zurich. We are politically and religiously independent. The name EVOLEA combines Evolution with LEA (Learn, Experience, Flourish) - a symbol for the transformative journey every child can experience with us."
+      "de": "EVOLEA Verein ist ein gemeinnütziger Verein mit Sitz in Zürich. Wir sind politisch und konfessionell unabhängig. Der Name EVOLEA verbindet Evolution (Entwicklung) mit LEA (Lernen, Erleben, Aufblühen). Ein Sinnbild für die transformative Reise, die jedes Kind bei uns erleben kann.",
+      "en": "EVOLEA Association is a non-profit based in Zurich. We are politically and religiously independent. The name EVOLEA combines Evolution with LEA (Learn, Experience, Flourish). A symbol for the transformative journey every child can experience with us."
     },
     "gruendung": "2025",
     "standort": "Zürich"
