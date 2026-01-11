@@ -1,6 +1,7 @@
 ---
 import { getLangFromUrl, useTranslations, useTranslatedPath } from '@i18n/utils';
 import Butterfly from './Butterfly.astro';
+import LanguagePicker from './LanguagePicker.astro';
 
 interface Props {
   siteSettings?: {
@@ -177,6 +178,9 @@ const instagramUrl = siteSettings?.social?.instagram || 'https://www.instagram.c
           <p class="text-white/60 text-sm">
             {footerCopyright}
           </p>
+          <div class="footer-language-picker">
+            <LanguagePicker />
+          </div>
           <div class="flex gap-6 text-sm">
             <a href={translatePath('/datenschutz/')} class="text-white/60 hover:text-white transition-colors">
               {footerPrivacy}
@@ -205,6 +209,21 @@ const instagramUrl = siteSettings?.social?.instagram || 'https://www.instagram.c
   /* Spectrum gradient for decorative line */
   .bg-gradient-spectrum {
     background: linear-gradient(90deg, #7BEDD5 0%, #FFE066 25%, #FF7E5D 50%, #E97BF1 75%, #CD87F8 100%);
+  }
+
+  /* Footer language picker - override default purple colors for dark background */
+  .footer-language-picker :global(a) {
+    color: rgba(255, 255, 255, 0.7);
+  }
+
+  .footer-language-picker :global(a:hover) {
+    color: white;
+    background: rgba(255, 255, 255, 0.1);
+  }
+
+  .footer-language-picker :global(span:not(.sr-only)) {
+    background: rgba(255, 255, 255, 0.15);
+    color: rgba(255, 255, 255, 0.9);
   }
 
   /* Reduce motion preferences */
