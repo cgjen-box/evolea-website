@@ -134,7 +134,8 @@ npm run preview     # Preview production build
 ## CMS (Keystatic)
 
 ### Access
-- **CMS URL**: https://evolea-website.pages.dev/keystatic
+- **CMS URL (Production)**: https://www.evolea.ch/keystatic
+- **CMS URL (Staging)**: https://evolea-website.pages.dev/keystatic
 - **Local**: http://localhost:4321/keystatic (when running dev server)
 - **Authentication**: GitHub OAuth
 
@@ -310,14 +311,30 @@ BIC/SWIFT: UBSWCHZH80A
 - [ ] No secrets in staged files (`python scripts/check_secrets.py --staged-only`)
 - [ ] No secrets in git history (`python scripts/check_secrets.py --history`)
 
+### Domain & SEO Verification
+- [ ] https://www.evolea.ch loads correctly
+- [ ] https://evolea.ch redirects to https://www.evolea.ch (301)
+- [ ] Canonical URLs use `www.evolea.ch` (view source: `<link rel="canonical">`)
+- [ ] Sitemap at https://www.evolea.ch/sitemap-index.xml shows correct domain
+- [ ] SSL certificate valid (green lock)
+- [ ] Keystatic CMS accessible at https://www.evolea.ch/keystatic
+
 ---
 
 ## Deployment
 
 ### Deployment Targets
-- **GitHub Pages**: https://cgjen-box.github.io/evolea-website/
-- **Cloudflare Pages**: https://evolea-website.pages.dev/
-- **CMS (Keystatic)**: https://evolea-website.pages.dev/keystatic
+- **Production**: https://www.evolea.ch/ (primary - Cloudflare Pages with custom domain)
+- **Staging/Dev**: https://evolea-website.pages.dev/ (Cloudflare Pages default)
+- **GitHub Pages**: https://cgjen-box.github.io/evolea-website/ (static fallback)
+- **CMS (Keystatic)**: https://www.evolea.ch/keystatic (or https://evolea-website.pages.dev/keystatic)
+
+### Domain Configuration
+- **Primary domain**: `www.evolea.ch` (canonical URL for SEO)
+- **Apex redirect**: `evolea.ch` → `www.evolea.ch` (301 redirect)
+- **DNS**: Managed via Cloudflare (zone: evolea.ch)
+- **SSL**: Automatic via Cloudflare
+- **Cloudflare Zone ID**: `31692bef127b39a14d1bd5787aafdd12`
 
 ### GitHub Account (IMPORTANT)
 
@@ -343,9 +360,10 @@ gh auth switch --user cgjen-box
 
 1. **Check GitHub Actions**: https://github.com/cgjen-box/evolea-website/actions
 2. **Check Cloudflare Pages**: https://dash.cloudflare.com/ (Pages > evolea-website > Deployments)
-3. **Verify both sites are live**:
+3. **Verify sites are live**:
+   - Production: https://www.evolea.ch/
+   - Staging: https://evolea-website.pages.dev/
    - GitHub Pages: https://cgjen-box.github.io/evolea-website/
-   - Cloudflare Pages: https://evolea-website.pages.dev/
 
 **Common deployment issues:**
 - TypeScript errors (unused variables, wrong imports)
