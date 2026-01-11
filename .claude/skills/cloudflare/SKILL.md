@@ -225,7 +225,18 @@ The live production deployment cannot be deleted via API. To replace it:
 | Cloudflare Dashboard | https://dash.cloudflare.com/ |
 | Pages Project | https://dash.cloudflare.com/861cf040c6bd6d5977d6a93bc1bb6d2e/pages/view/evolea-website |
 | Deployments | https://dash.cloudflare.com/861cf040c6bd6d5977d6a93bc1bb6d2e/pages/view/evolea-website/deployments |
+| DNS Zone (evolea.ch) | https://dash.cloudflare.com/861cf040c6bd6d5977d6a93bc1bb6d2e/evolea.ch |
 | API Tokens | https://dash.cloudflare.com/profile/api-tokens |
+
+## Domain Configuration
+
+| Domain | Type | Target | Status |
+|--------|------|--------|--------|
+| www.evolea.ch | CNAME | evolea-website.pages.dev | Primary (canonical) |
+| evolea.ch | CNAME | evolea-website.pages.dev | Redirects to www (301) |
+
+**Zone ID:** `31692bef127b39a14d1bd5787aafdd12`
+**Nameservers:** `elias.ns.cloudflare.com`, `rachel.ns.cloudflare.com`
 
 ---
 

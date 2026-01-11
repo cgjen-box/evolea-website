@@ -20,7 +20,8 @@ This skill enables comprehensive QA workflows for EVOLEA web properties using Ch
    - If not connected, restart Claude Code (MCP servers load on startup)
 
 3. **For Keystatic CMS**
-   - Navigate to https://evolea-website.pages.dev/keystatic for CMS access
+   - Production: https://www.evolea.ch/keystatic
+   - Staging: https://evolea-website.pages.dev/keystatic
    - Auth state persists in `%USERPROFILE%\.chrome-debug-profile`
 
 ## Target Sites
@@ -28,9 +29,11 @@ This skill enables comprehensive QA workflows for EVOLEA web properties using Ch
 | Site | URL | Auth Required | Notes |
 |------|-----|---------------|-------|
 | Local Dev | http://localhost:4321 | No | Run `npm run dev` |
-| GitHub Pages | https://cgjen-box.github.io/evolea-website/ | No | Static deployment |
-| Cloudflare Pages | https://evolea-website.pages.dev | No | Cloudflare deployment |
-| Production | https://evolea.ch | No | Custom domain |
+| Production | https://www.evolea.ch | No | Primary custom domain |
+| Staging | https://evolea-website.pages.dev | No | Cloudflare Pages default |
+| GitHub Pages | https://cgjen-box.github.io/evolea-website/ | No | Static fallback |
+
+**Note:** `https://evolea.ch` redirects to `https://www.evolea.ch` (301)
 
 ## Workflow Overview
 

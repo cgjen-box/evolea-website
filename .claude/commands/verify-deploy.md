@@ -12,8 +12,10 @@ After every git push, verify that the deployment succeeded:
 2. **If GitHub Actions failed**, analyze the error and fix it immediately.
 
 3. **If GitHub Actions passed**, verify the live sites:
+   - Production: https://www.evolea.ch/
+   - Staging: https://evolea-website.pages.dev/
    - GitHub Pages: https://cgjen-box.github.io/evolea-website/
-   - Cloudflare CMS: https://evolea-website.pages.dev/keystatic
+   - Keystatic CMS: https://www.evolea.ch/keystatic
 
 4. **Report the results** to the user with:
    - Build status
