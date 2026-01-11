@@ -1,6 +1,5 @@
 ---
 import { getLangFromUrl, useTranslations, useTranslatedPath } from '@i18n/utils';
-import LanguagePicker from './LanguagePicker.astro';
 import Butterfly from './Butterfly.astro';
 import LogoWithSparkles from './LogoWithSparkles.astro';
 
@@ -131,7 +130,6 @@ const donatePath = lang === 'de' ? '/spenden/' : '/donate/';
             </a>
           );
         })}
-        <LanguagePicker />
         <a
           href={translatePath(donatePath)}
           class="nav-donate"
@@ -220,17 +218,13 @@ const donatePath = lang === 'de' ? '/spenden/' : '/donate/';
     <div class="mt-auto pt-8">
       <a
         href={translatePath(donatePath)}
-        class="mobile-donate flex items-center justify-center gap-2.5 w-full py-4 px-6 font-display font-bold text-lg rounded-full shadow-xl hover:shadow-2xl transition-all mb-6"
+        class="mobile-donate flex items-center justify-center gap-2.5 w-full py-4 px-6 font-display font-bold text-lg rounded-full shadow-xl hover:shadow-2xl transition-all"
       >
         <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
           <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
         </svg>
         {t('nav.donate')}
       </a>
-      <div class="flex items-center justify-center gap-3 text-white/60 text-sm">
-        <span>{lang === 'de' ? 'Sprache' : 'Language'}</span>
-        <LanguagePicker />
-      </div>
     </div>
   </div>
 </div>
