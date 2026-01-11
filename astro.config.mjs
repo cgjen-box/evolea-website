@@ -30,7 +30,7 @@ if (!isGitHubPages) {
 
 // https://astro.build/config
 export default defineConfig({
-  site: isGitHubPages || !useCloudflare ? 'https://cgjen-box.github.io' : 'https://evolea-website.pages.dev',
+  site: isGitHubPages || !useCloudflare ? 'https://cgjen-box.github.io' : 'https://www.evolea.ch',
   base: isGitHubPages || !useCloudflare ? '/evolea-website' : '/',
   output: useCloudflare ? 'server' : 'static',
   adapter: cloudflareAdapter,
