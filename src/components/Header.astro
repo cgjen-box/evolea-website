@@ -462,9 +462,9 @@ const donatePath = lang === 'de' ? '/spenden/' : '/donate/';
     z-index: 10;
   }
 
-  /* Logo white filter when scrolled on transparent headers */
+  /* Logo saturated rainbow filter when scrolled on transparent headers */
   .navbar-wrapper.visible:not(.at-top) .logo-link img {
-    filter: brightness(0) invert(1);
+    filter: saturate(1.4) contrast(1.1) drop-shadow(0 2px 10px rgba(0,0,0,0.7));
   }
 
   .navbar-wrapper.visible:not(.at-top) .nav-link {
@@ -731,9 +731,9 @@ const donatePath = lang === 'de' ? '/spenden/' : '/donate/';
      SCOPED STYLES
      =========================================== */
 
-  /* Logo white filter for transparent headers */
+  /* Logo saturated rainbow filter for transparent headers */
   .logo-white img {
-    filter: brightness(0) invert(1);
+    filter: saturate(1.4) contrast(1.1) drop-shadow(0 2px 10px rgba(0,0,0,0.7));
   }
 
   /* Nav link with spectrum underline on active */
