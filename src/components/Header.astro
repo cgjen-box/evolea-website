@@ -2,6 +2,7 @@
 import { getLangFromUrl, useTranslations, useTranslatedPath } from '@i18n/utils';
 import LanguagePicker from './LanguagePicker.astro';
 import Butterfly from './Butterfly.astro';
+import LogoWithSparkles from './LogoWithSparkles.astro';
 
 interface Props {
   transparent?: boolean;
@@ -105,10 +106,10 @@ const donatePath = lang === 'de' ? '/spenden/' : '/donate/';
           transparent && 'logo-white',
         ]}
       >
-        <img
-          src={logoPath}
+        <LogoWithSparkles
+          logoPath={logoPath}
           alt="EVOLEA"
-          class="h-10 md:h-12 w-auto"
+          imgClass="h-10 md:h-12 w-auto"
         />
       </a>
 
@@ -196,10 +197,11 @@ const donatePath = lang === 'de' ? '/spenden/' : '/donate/';
     </button>
 
     <a href={translatePath('/')} class="inline-block mb-12">
-      <img
-        src={logoPath}
+      <LogoWithSparkles
+        logoPath={logoPath}
         alt="EVOLEA"
-        class="h-14 w-auto brightness-0 invert"
+        imgClass="h-14 w-auto"
+        variant="inverted"
       />
     </a>
 
