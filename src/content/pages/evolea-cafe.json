@@ -19,8 +19,8 @@
       "en": "EVOLEA Cafe"
     },
     "tagline": {
-      "de": "Ein Ort für Austausch, Verständnis und Verbundenheit – von Eltern für Eltern.",
-      "en": "A place for exchange, understanding and connection – by parents, for parents."
+      "de": "Ein Ort für Austausch, Verständnis und Verbundenheit . Von Eltern für Eltern.",
+      "en": "A place for exchange, understanding and connection. By parents, for parents."
     }
   },
   "about": {
@@ -94,8 +94,8 @@
       {
         "icon": "clock",
         "titel": {
-          "de": "19:00 – 21:00 Uhr",
-          "en": "7:00 – 9:00 PM"
+          "de": "20:00 Uhr",
+          "en": "8:00 PM"
         },
         "text": {
           "de": "Abends",
