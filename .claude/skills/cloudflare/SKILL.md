@@ -216,6 +216,56 @@ The live production deployment cannot be deleted via API. To replace it:
 2. Wait for it to complete
 3. Then you can delete the old deployment
 
+### Custom Domain Shows Old Content (IMPORTANT)
+
+**Symptoms:**
+- `evolea-website.pages.dev` shows new content
+- `www.evolea.ch` shows old/stale content
+- Cache purge doesn't help
+- `CF-Cache-Status: HIT` with very high `Age` value
+
+**Root Cause:** Custom domain in Cloudflare Pages became deactivated/errored.
+
+**Diagnosis:**
+```bash
+# Check custom domain status
+curl -s "https://api.cloudflare.com/client/v4/accounts/$CF_ACCOUNT_ID/pages/projects/evolea-website/domains" \
+  -H "Authorization: Bearer $CF_API_TOKEN"
+```
+
+Look for:
+- `"status": "deactivated"` - Domain needs reactivation
+- `"validation_data": {"status": "error"}` - Validation failed
+
+**Fix:**
+```bash
+# Reactivate the domain (sends PATCH request)
+curl -s -X PATCH "https://api.cloudflare.com/client/v4/accounts/$CF_ACCOUNT_ID/pages/projects/evolea-website/domains/www.evolea.ch" \
+  -H "Authorization: Bearer $CF_API_TOKEN" \
+  -H "Content-Type: application/json"
+```
+
+Wait 10-30 seconds for status to change to "active", then verify site.
+
+### Cache Purge Not Working
+
+If `purge_everything` doesn't clear the cache:
+
+1. **Check if it's actually a cache issue:**
+   ```bash
+   curl -sI https://www.evolea.ch/ | grep -i "cf-cache\|age:"
+   ```
+
+2. **Try purging by host:**
+   ```bash
+   curl -s -X POST "https://api.cloudflare.com/client/v4/zones/$CF_ZONE_ID/purge_cache" \
+     -H "Authorization: Bearer $CF_API_TOKEN" \
+     -H "Content-Type: application/json" \
+     --data '{"hosts":["www.evolea.ch","evolea.ch"]}'
+   ```
+
+3. **If cache still shows old content**, the issue is likely the Pages custom domain, not caching!
+
 ---
 
 ## Dashboard Links

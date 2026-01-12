@@ -67,7 +67,7 @@ export const ui = {
     'footer.tagline': 'EVOLEA schafft Räume, damit sich Kinder im Spektrum entfalten und ihren Weg glücklich und selbstbestimmt gehen können.',
     'footer.privacy': 'Datenschutz',
     'footer.imprint': 'Impressum',
-    'footer.copyright': '© 2025 EVOLEA Verein. Alle Rechte vorbehalten.',
+    'footer.copyright': '© 2026 EVOLEA Verein. Alle Rechte vorbehalten.',
     'footer.location': 'Zürich, Schweiz',
 
     // Common
@@ -168,7 +168,7 @@ export const ui = {
     'footer.tagline': 'EVOLEA creates spaces for children on the spectrum to flourish and go their own way happily and self-determined.',
     'footer.privacy': 'Privacy Policy',
     'footer.imprint': 'Legal Notice',
-    'footer.copyright': '© 2025 EVOLEA Verein. All rights reserved.',
+    'footer.copyright': '© 2026 EVOLEA Verein. All rights reserved.',
     'footer.location': 'Zürich, Switzerland',
 
     // Common

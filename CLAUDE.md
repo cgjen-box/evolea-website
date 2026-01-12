@@ -198,8 +198,8 @@ Use the `Icon.astro` component for all icons. NEVER use emojis.
 | Component | Purpose |
 |-----------|---------|
 | `Base.astro` | Main layout with head, nav, footer |
-| `Header.astro` | Navigation with language picker |
-| `Footer.astro` | Site footer with links |
+| `Header.astro` | Navigation (navbar) |
+| `Footer.astro` | Site footer with links and language picker |
 | `Icon.astro` | SVG icon system |
 | `VideoHero.astro` | Homepage video hero |
 | `InnerPageHero.astro` | Inner page hero with gradient |
@@ -368,8 +368,62 @@ gh auth switch --user cgjen-box
 **Common deployment issues:**
 - TypeScript errors (unused variables, wrong imports)
 - Missing dependencies
+- Custom domain deactivated in Cloudflare Pages (see troubleshooting below)
 
 **Never assume a push succeeded - always verify!**
+
+### Cloudflare Troubleshooting
+
+#### Custom Domain Shows Old Content
+
+If www.evolea.ch shows old content but evolea-website.pages.dev shows new content:
+
+1. **Check custom domain status:**
+   ```bash
+   curl -s "https://api.cloudflare.com/client/v4/accounts/861cf040c6bd6d5977d6a93bc1bb6d2e/pages/projects/evolea-website/domains" \
+     -H "Authorization: Bearer $CF_API_TOKEN"
+   ```
+   Look for `"status": "deactivated"` or `"status": "error"`
+
+2. **Reactivate the domain:**
+   ```bash
+   curl -s -X PATCH "https://api.cloudflare.com/client/v4/accounts/861cf040c6bd6d5977d6a93bc1bb6d2e/pages/projects/evolea-website/domains/www.evolea.ch" \
+     -H "Authorization: Bearer $CF_API_TOKEN" \
+     -H "Content-Type: application/json"
+   ```
+
+3. **Wait for status to change to "active"** (usually 10-30 seconds)
+
+#### Cache Not Clearing
+
+If content is stale even after purging:
+
+1. **Check cache age:**
+   ```bash
+   curl -sI https://www.evolea.ch/ | grep -i "cf-cache\|age:"
+   ```
+   High `Age` value (e.g., 200000+ seconds) indicates very stale cache.
+
+2. **Purge entire zone:**
+   ```bash
+   curl -s -X POST "https://api.cloudflare.com/client/v4/zones/31692bef127b39a14d1bd5787aafdd12/purge_cache" \
+     -H "Authorization: Bearer $CF_API_TOKEN" \
+     -H "Content-Type: application/json" \
+     --data '{"purge_everything":true}'
+   ```
+
+3. **If still not working**, the issue is likely the Pages custom domain, not caching. Check domain status first.
+
+#### Verify Latest Deployment
+
+Check if the latest Pages deployment has your changes:
+```bash
+# Get latest deployment preview URL
+curl -s "https://api.cloudflare.com/client/v4/accounts/861cf040c6bd6d5977d6a93bc1bb6d2e/pages/projects/evolea-website/deployments?per_page=1" \
+  -H "Authorization: Bearer $CF_API_TOKEN" | grep -o '"url": "[^"]*"' | head -1
+
+# Then fetch that URL directly to verify content
+```
 
 ---
 
