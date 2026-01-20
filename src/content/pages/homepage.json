@@ -124,8 +124,8 @@
     },
     "miniGarten": {
       "status": {
-        "de": "Anmeldung offen",
-        "en": "Registration open"
+        "de": "Keine neuen Anmeldungen",
+        "en": "No new registrations"
       },
       "titel": {
         "de": "Mini Garten",
