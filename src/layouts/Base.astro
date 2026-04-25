@@ -5,16 +5,6 @@ import Header from '@components/Header.astro';
 import Footer from '@components/Footer.astro';
 import FooterDonationCTA from '@components/FooterDonationCTA.astro';
 
-// Import fonts
-import '@fontsource/poppins/400.css';
-import '@fontsource/poppins/500.css';
-import '@fontsource/poppins/600.css';
-import '@fontsource/poppins/700.css';
-import '@fontsource/fredoka/400.css';
-import '@fontsource/fredoka/500.css';
-import '@fontsource/fredoka/600.css';
-import '@fontsource/fredoka/700.css';
-
 import '../styles/global.css';
 
 interface Props {
@@ -86,6 +76,10 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
     <!-- Preload critical assets -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Fredoka:wght@600;700&family=Poppins:wght@400;500;600;700&display=swap"
+    />
 
     <!-- Hero video is preloaded by the video element itself -->
   </head>

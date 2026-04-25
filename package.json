@@ -20,8 +20,6 @@
     "@astrojs/react": "^4.4.2",
     "@astrojs/sitemap": "^3.2.1",
     "@astrojs/tailwind": "^6.0.2",
-    "@fontsource/fredoka": "^5.2.10",
-    "@fontsource/poppins": "^5.1.0",
     "@keystatic/astro": "^5.0.6",
     "@keystatic/core": "^0.5.48",
     "astro": "^5.1.1",
