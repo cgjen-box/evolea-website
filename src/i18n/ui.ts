@@ -16,6 +16,7 @@ export const ui = {
     'nav.about': 'Über uns',
     'nav.team': 'Team',
     'nav.blog': 'Blog',
+    'nav.brand': 'Brand & Presse',
     'nav.contact': 'Kontakt',
 
     // Hero
@@ -117,6 +118,7 @@ export const ui = {
     'nav.about': 'About Us',
     'nav.team': 'Team',
     'nav.blog': 'Blog',
+    'nav.brand': 'Brand & Press',
     'nav.contact': 'Contact',
 
     // Hero
