@@ -5,43 +5,60 @@ export default {
     extend: {
       colors: {
         evolea: {
-          // TRUE evolea.ch Colors - BOLD SPECTRUM
-          // Primary Magenta/Fuchsia Family
-          magenta: '#DD48E0',
-          'magenta-light': '#EF5EDB',
-          'magenta-vivid': '#E97BF1',
+          // ==========================================================
+          // EVOLEA brand colors — aligned with brand spec v2.6
+          // (April 2026). Source: EVOLEA-CLAUDE-DESIGN-SYSTEM.md.
+          //
+          // Hex literals are duplicated in src/styles/global.css :root
+          // as CSS vars to preserve Tailwind opacity-modifier support
+          // (bg-evolea-X/10). When updating a hex, update both files.
+          // ==========================================================
 
-          // Lavender/Purple Family
-          purple: '#BA53AD',
-          'purple-light': '#CD87F8',
-          'purple-dark': '#8A3D9E',
+          // PRIMARY — Magenta / Deep Purple / Lavender
+          magenta: '#DD48E0',
+          'deep-purple': '#BA53AD',         // canonical (spec)
+          purple: '#BA53AD',                // alias of deep-purple
+          lavender: '#CD87F8',              // canonical (spec)
+          'purple-light': '#CD87F8',        // alias of lavender
+          'purple-dark': '#8A3D7E',         // spec "Deep Purple Mid" (was #8A3D9E)
+          'purple-deepest': '#5C2854',      // spec "Deep Purple Dark"
+
+          // SPECTRUM — equally weighted
+          mint: '#7BEDD5',
+          sunshine: '#FFE066',              // canonical (spec)
+          yellow: '#FFE066',                // alias of sunshine
+          coral: '#FF7E5D',
+          blush: '#EF8EAE',                 // canonical (spec)
+          pink: '#EF8EAE',                  // alias of blush
+          'pink-hi': '#FF9ECC',             // spec "Pink Highlight"
+          'bright-pink': '#E97BF1',         // canonical (spec)
+          'magenta-vivid': '#E97BF1',       // alias of bright-pink
+          sky: '#5DADE2',
+          green: '#2D7A57',                 // success/WhatsApp green; fixes silent-failure of bg-evolea-green/* used in Footer/kontakt/mini-turnen/spenden
+
+          // GOLD — Spenden CTAs only
+          gold: '#E8B86D',                  // spec (was #DCD49F)
 
           // Base
           cream: '#FFFBF7',
           white: '#FFFFFF',
 
-          // Spectrum Colors - EXACT evolea.ch
-          mint: '#7BEDD5',
-          'mint-light': '#A3F4E6',
-          coral: '#FF7E5D',
-          'coral-light': '#FF9B82',
-          'coral-dark': '#C96861',
-          gold: '#DCD49F',
-          yellow: '#FFE066',
-          'yellow-vivid': '#FFD23F',
-          pink: '#EF8EAE',
-          'pink-light': '#FFDEDE',
-          sky: '#5DADE2',
-          'sky-vivid': '#3A86FF',
-          teal: '#2EC4B6',
-          orange: '#FF6B35',
-
           // Text
           text: '#2D2A32',
           'text-light': '#5C5762',
-
-          // Dark Mode / Vision - per Brand Guide v3
           charcoal: '#1A1A2E',
+
+          // LEGACY — kept for back-compat with existing class usage.
+          // Audit + remove after grep-confirmed migration.
+          'magenta-light': '#EF5EDB',
+          'mint-light': '#A3F4E6',
+          'coral-light': '#FF9B82',
+          'coral-dark': '#C96861',
+          'yellow-vivid': '#FFD23F',
+          'pink-light': '#FFDEDE',
+          'sky-vivid': '#3A86FF',
+          teal: '#2EC4B6',
+          orange: '#FF6B35',
           'charcoal-light': '#2D2A32',
         },
       },
@@ -72,35 +89,34 @@ export default {
         'glow-mint': '0 0 60px rgba(123, 237, 213, 0.5)',
         'glow-coral': '0 0 60px rgba(255, 126, 93, 0.5)',
         'glow-pink': '0 0 60px rgba(239, 142, 174, 0.5)',
-        'glow-gold': '0 0 60px rgba(220, 212, 159, 0.6)',
+        'glow-gold': '0 0 60px rgba(232, 184, 109, 0.6)',     // updated to spec gold #E8B86D
         'spectrum': '0 0 80px rgba(221, 72, 224, 0.4), 0 0 120px rgba(123, 237, 213, 0.3)',
         'prism': '0 0 100px rgba(233, 123, 241, 0.4), 0 0 150px rgba(123, 237, 213, 0.3)',
+        'btn-rest': '0 2px 8px rgba(186, 83, 173, 0.30)',     // spec §5.6
+        'btn-hover': '0 4px 12px rgba(186, 83, 173, 0.40)',   // spec §5.6
       },
       backgroundImage: {
-        // THE evolea.ch SIGNATURE PRISM GRADIENT
-        'gradient-prism': 'linear-gradient(118deg, #7BEDD5 0%, #FFE066 21%, #FFFFFF 48%, #E97BF1 81%, #CD87F8 100%)',
+        // ==========================================================
+        // SIGNATURE GRADIENTS — verbatim spec values (April 2026).
+        // Mirror of the --gradient-* CSS vars in global.css :root.
+        // ==========================================================
+        'gradient-prism': 'linear-gradient(90deg, #7BEDD5, #FFE066, #FF9ECC, #E97BF1, #CD87F8)',
+        'gradient-spectrum': 'linear-gradient(90deg, #7BEDD5, #FFE066, #FF7E5D, #EF8EAE, #E97BF1, #CD87F8 80%, #7BEDD5)',  // spec "Prism Extended"
+        'gradient-magenta': 'linear-gradient(135deg, #BA53AD, #DD48E0)',                                                  // spec primary
+        'gradient-magenta-hover': 'linear-gradient(135deg, #DD48E0, #BA53AD)',                                            // spec primary inverted
+        'gradient-spenden': 'linear-gradient(135deg, #BA53AD, #8A3D7E, #5C2854)',                                         // /spenden/ closer
+        'gradient-portrait': 'linear-gradient(135deg, #FF9ECC, #DD48E0)',                                                 // team-portrait backplate
+        'gradient-vision-dark': 'linear-gradient(180deg, #1A1A2E, #2D2A32)',                                              // vision/philosophy
+
+        // LEGACY — back-compat. Audit + prune in a follow-up.
         'gradient-prism-vivid': 'linear-gradient(118deg, #7BEDD5 0%, #FFE066 15%, #FFDEDE 35%, #E97BF1 65%, #CD87F8 85%, #DD48E0 100%)',
-
-        // Hero gradient - full spectrum
         'gradient-hero': 'linear-gradient(135deg, #7BEDD5 0%, #FFE066 25%, #E97BF1 50%, #CD87F8 75%, #DD48E0 100%)',
-
-        // Spectrum - cycling through all colors
-        'gradient-spectrum': 'linear-gradient(90deg, #7BEDD5 0%, #FFE066 16%, #FF7E5D 32%, #EF8EAE 48%, #E97BF1 64%, #CD87F8 80%, #7BEDD5 100%)',
-
-        // Warm gradients
         'gradient-sunset': 'linear-gradient(135deg, #FF7E5D 0%, #EF8EAE 50%, #E97BF1 100%)',
         'gradient-warmth': 'linear-gradient(135deg, #FFE066 0%, #FF7E5D 50%, #C96861 100%)',
-
-        // Cool gradients
         'gradient-ocean': 'linear-gradient(135deg, #7BEDD5 0%, #5DADE2 50%, #CD87F8 100%)',
         'gradient-dream': 'linear-gradient(135deg, #EF8EAE 0%, #CD87F8 50%, #7BEDD5 100%)',
-
-        // Magenta family
-        'gradient-magenta': 'linear-gradient(135deg, #BA53AD 0%, #DD48E0 50%, #E97BF1 100%)',
         'gradient-lavender': 'linear-gradient(135deg, #CD87F8 0%, #E97BF1 50%, #EF8EAE 100%)',
-
-        // Mint family
-        'gradient-mint': 'linear-gradient(135deg, #7BEDD5 0%, #A3F4E6 50%, #DCD49F 100%)',
+        'gradient-mint': 'linear-gradient(135deg, #7BEDD5 0%, #A3F4E6 50%, #E8B86D 100%)',
 
         // Mesh gradients - TRUE evolea.ch style
         'mesh-spectrum': 'radial-gradient(at 0% 0%, rgba(123, 237, 213, 0.5) 0px, transparent 50%), radial-gradient(at 80% 20%, rgba(255, 224, 102, 0.4) 0px, transparent 50%), radial-gradient(at 100% 60%, rgba(233, 123, 241, 0.5) 0px, transparent 50%), radial-gradient(at 20% 100%, rgba(205, 135, 248, 0.4) 0px, transparent 50%), radial-gradient(at 60% 80%, rgba(221, 72, 224, 0.4) 0px, transparent 50%)',
