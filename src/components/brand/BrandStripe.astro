@@ -1,0 +1,41 @@
+---
+/**
+ * BrandStripe — thin gradient divider used in section headers, hero
+ * eyebrows (::before), and as visual separators.
+ *
+ * Variants per brand spec v2.6 §3.4:
+ *   - prism:           90deg 5-stop spectrum (Mint→Sun→PinkHi→BrightPink→Lavender)
+ *   - prism-extended:  7-stop "Prism Extended" (used on page-closers)
+ *   - magenta:         primary 2-stop (BA53AD → DD48E0)
+ */
+interface Props {
+  variant?: 'prism' | 'prism-extended' | 'magenta';
+  height?: string;
+  class?: string;
+}
+
+const {
+  variant = 'prism',
+  height = '2px',
+  class: className,
+} = Astro.props;
+---
+
+<span
+  class:list={['brand-stripe', `brand-stripe--${variant}`, className]}
+  style={`--brand-stripe-h: ${height}`}
+  aria-hidden="true"
+></span>
+
+<style>
+  .brand-stripe {
+    display: inline-block;
+    width: 40px;
+    height: var(--brand-stripe-h, 2px);
+    border-radius: 2px;
+    vertical-align: middle;
+  }
+  .brand-stripe--prism          { background: var(--gradient-prism); }
+  .brand-stripe--prism-extended { background: var(--gradient-spectrum); }
+  .brand-stripe--magenta        { background: var(--gradient-magenta); }
+</style>

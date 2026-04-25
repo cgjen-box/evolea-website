@@ -1,0 +1,178 @@
+---
+/**
+ * BrandButton — canonical EVOLEA button.
+ *
+ * Variants per brand spec v2.6 (April 2026) §6.3:
+ *   - primary: magenta gradient pill, white text. Default for non-donate CTAs.
+ *   - donate:  animated gold gradient + halo. ONLY for Spenden CTAs (spec §3.5).
+ *              Halo + gradient-shift respect prefers-reduced-motion.
+ *   - ghost:   white surface, deep-purple text, soft border.
+ *   - outline: transparent + magenta border + magenta text.
+ *
+ * Renders <a> when `href` is set, otherwise <button>.
+ *
+ * This is the canonical button for the project — new buttons should
+ * prefer this component over inline-styled <button>/<a>. Existing
+ * inline buttons can migrate incrementally.
+ */
+interface Props {
+  variant?: 'primary' | 'donate' | 'ghost' | 'outline';
+  href?: string;
+  type?: 'button' | 'submit' | 'reset';
+  class?: string;
+  toast?: string;        // optional data-toast hook for page-level handlers
+  ariaLabel?: string;
+  rel?: string;
+  target?: string;
+}
+
+const {
+  variant = 'primary',
+  href,
+  type = 'button',
+  class: className,
+  toast,
+  ariaLabel,
+  rel,
+  target,
+} = Astro.props;
+
+const Tag = href ? 'a' : 'button';
+---
+
+<Tag
+  href={href}
+  type={!href ? type : undefined}
+  class:list={['brand-btn', `brand-btn--${variant}`, className]}
+  data-toast={toast}
+  aria-label={ariaLabel}
+  rel={rel}
+  target={target}
+>
+  <slot />
+</Tag>
+
+<style>
+  .brand-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 14px 22px;
+    border-radius: 9999px;
+    font-family: 'Poppins', system-ui, sans-serif;
+    font-weight: 600;
+    font-size: 15px;
+    line-height: 1;
+    text-decoration: none;
+    cursor: pointer;
+    border: 0;
+    transition:
+      transform 140ms cubic-bezier(0.22, 0.61, 0.36, 1),
+      box-shadow 260ms cubic-bezier(0.22, 0.61, 0.36, 1),
+      background 140ms;
+  }
+  .brand-btn:focus-visible {
+    outline: 2px solid var(--evolea-magenta);
+    outline-offset: 3px;
+  }
+
+  /* primary — magenta */
+  .brand-btn--primary {
+    background: var(--gradient-magenta);
+    color: #fff;
+    box-shadow: var(--shadow-btn-rest);
+  }
+  .brand-btn--primary:hover {
+    background: var(--gradient-magenta-hover);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-btn-hover);
+  }
+
+  /* ghost — white surface, deep-purple text */
+  .brand-btn--ghost {
+    background: var(--evolea-white);
+    color: var(--evolea-deep-purple);
+    border: 1px solid rgba(45, 42, 50, 0.12);
+  }
+  .brand-btn--ghost:hover {
+    background: #FBE3F7;     /* accent-soft-bg per spec */
+    border-color: transparent;
+  }
+
+  /* outline — transparent + magenta border */
+  .brand-btn--outline {
+    background: transparent;
+    border: 2px solid var(--evolea-magenta);
+    color: var(--evolea-magenta);
+  }
+  .brand-btn--outline:hover {
+    background: var(--evolea-magenta);
+    color: #fff;
+  }
+
+  /* donate — special animated gold (spec §6.3, design HTML lines 125-173) */
+  .brand-btn--donate {
+    position: relative;
+    padding: 18px 34px;
+    font-family: 'Fredoka', 'Poppins', system-ui, sans-serif;
+    font-weight: 700;
+    font-size: 17px;
+    letter-spacing: 0.005em;
+    color: #FFFFFF;
+    background: linear-gradient(115deg, #FFD24A 0%, #FFB627 22%, #FFD24A 50%, #FFB627 78%, #FFD24A 100%);
+    background-size: 250% 250%;
+    animation: brand-btn-donate-shift 6s ease-in-out infinite;
+    box-shadow:
+      0 14px 30px -10px rgba(241, 168, 12, 0.55),
+      0 6px 14px -6px rgba(186, 83, 173, 0.25),
+      inset 0 1px 0 rgba(255, 255, 255, 0.55),
+      inset 0 -2px 0 rgba(180, 100, 0, 0.15);
+    text-shadow: 0 1px 0 rgba(180, 100, 0, 0.25);
+    overflow: hidden;
+  }
+  .brand-btn--donate::before {
+    /* glossy diagonal sheen */
+    content: '';
+    position: absolute;
+    inset: 2px;
+    border-radius: inherit;
+    pointer-events: none;
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.55) 0%, rgba(255, 255, 255, 0) 55%);
+    mix-blend-mode: screen;
+    opacity: 0.65;
+  }
+  .brand-btn--donate::after {
+    /* soft outer halo */
+    content: '';
+    position: absolute;
+    inset: -8px;
+    border-radius: inherit;
+    z-index: -1;
+    pointer-events: none;
+    background: radial-gradient(closest-side, rgba(255, 196, 64, 0.55), rgba(255, 196, 64, 0) 70%);
+    filter: blur(10px);
+    opacity: 0.9;
+    animation: brand-btn-donate-halo 4s ease-in-out infinite;
+  }
+  .brand-btn--donate:hover { transform: translateY(-2px); }
+  .brand-btn--donate:hover::after { opacity: 1; }
+
+  @keyframes brand-btn-donate-shift {
+    0%   { background-position:   0% 50%; }
+    50%  { background-position: 100% 50%; }
+    100% { background-position:   0% 50%; }
+  }
+  @keyframes brand-btn-donate-halo {
+    0%, 100% { transform: scale(1);    opacity: 0.85; }
+    50%      { transform: scale(1.06); opacity: 1; }
+  }
+
+  /* Reduced-motion: kill the gold-button animations */
+  @media (prefers-reduced-motion: reduce) {
+    .brand-btn--donate,
+    .brand-btn--donate::after {
+      animation: none;
+    }
+    .brand-btn:hover { transform: none; }
+  }
+</style>
