@@ -1,0 +1,1946 @@
+---
+/**
+ * BrandPageBody — the rendered body of the Brand & Press page.
+ *
+ * Used by both src/pages/brand/index.astro (DE) and
+ * src/pages/en/brand/index.astro (EN). Language is derived from the
+ * request URL via getLangFromUrl(Astro.url) — Astro.url is the
+ * page-level URL even when this component is included from a wrapper.
+ */
+import Butterfly from '@components/Butterfly.astro';
+import BrandButton from '@components/brand/BrandButton.astro';
+import BrandStripe from '@components/brand/BrandStripe.astro';
+import BrandSwatch from '@components/brand/BrandSwatch.astro';
+import { getLangFromUrl } from '@i18n/utils';
+
+const lang = getLangFromUrl(Astro.url);
+const isDE = lang === 'de';
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+
+// /spenden/ in DE, /donate/ in EN (special-cased route)
+const donatePath = isDE ? `${base}/spenden/` : `${base}/en/donate/`;
+
+// ----------------------------------------------------------------
+// Bilingual copy. DE/EN strings ported from the brand spec design HTML.
+// ----------------------------------------------------------------
+const copy = {
+  hero: {
+    eyebrow: { de: 'Brand Guide · v2.6 · April 2026', en: 'Brand Guide · v2.6 · April 2026' },
+    title1: { de: 'Ein Spektrum', en: 'A spectrum' },
+    title2: { de: 'voller Möglichkeiten.', en: 'of possibilities.' },
+    lede: {
+      de: 'Logos, Farben, Typografie und Bildwelt zum Herunterladen — und ein lebendiger Leitfaden für alle, die mit uns Räume schaffen, in denen Kinder im Spektrum und mit ADHS sich entfalten.',
+      en: 'Logos, colors, typography and imagery to download — and a living guide for everyone helping us create spaces where children on the spectrum and with ADHD can flourish.',
+    },
+    ctaDonate: { de: 'Jetzt spenden', en: 'Donate now' },
+    ctaPrimary: { de: 'Brand-Kit anfragen', en: 'Request brand kit' },
+    ctaSecondary: { de: 'Stimme & Werte', en: 'Voice & values' },
+  },
+  phil: {
+    eyebrow: { de: 'Wer wir sind', en: 'Who we are' },
+    titleA: { de: 'Wir öffnen ', en: 'We open ' },
+    titleB: { de: 'neue Wege', en: 'new paths' },
+    titleC: { de: ', damit sich Kinder entfalten können.', en: ' so children can flourish.' },
+    lede: {
+      de: 'Drei Prinzipien tragen jede Marken-Entscheidung — von der Wahl des Cremetons im Hintergrund bis zum Ton einer Spendenkampagne.',
+      en: 'Three principles guide every brand decision — from the cream tone in the background to the voice of a fundraising campaign.',
+    },
+    p1Title: { de: 'Warm, kompetent, geerdet', en: 'Warm, confident, grounded' },
+    p1Body: {
+      de: 'Die Marke spricht in Hochdeutsch mit der formellen Sie-Anrede zu Eltern und Fachpersonen. Wir sind empathisch — nie zuckersüss. Evidenzbasiert — nie klinisch.',
+      en: 'The brand speaks in formal English to parents and professionals. Empathetic — never saccharine. Evidence-based — never clinical.',
+    },
+    p2Title: { de: 'Das Spektrum als Versprechen', en: 'The spectrum as a promise' },
+    p2Body: {
+      de: 'Unsere Farben fliessen wie Licht durch ein Prisma: Mint, Sonne, Pfirsich, Rosa, Magenta, Lavendel, Himmel. Sie symbolisieren das volle Spektrum kindlichen Potenzials — gleichgewichtig, nie hierarchisch.',
+      en: 'Our colors flow like light through a prism: mint, sun, peach, rose, magenta, lavender, sky. They symbolise the full spectrum of childhood potential — never hierarchical.',
+    },
+    p3Title: { de: 'Der Schmetterling, ein einziges Symbol', en: 'The butterfly, our single symbol' },
+    p3Body: {
+      de: 'Verwandlung, Leichtigkeit, Inklusion. Der Schmetterling ist Evoleas einziges piktografisches Zeichen — wir ersetzen ihn nie durch Emojis oder Standard-Icons.',
+      en: "Transformation, lightness, inclusion. The butterfly is EVOLEA's only pictographic mark — never replaced by emoji or stock icons.",
+    },
+  },
+  logo: {
+    eyebrow: { de: 'Logo & Wortmarke', en: 'Logo & wordmark' },
+    title: { de: 'Eine Marke, drei Auftritte.', en: 'One brand, three appearances.' },
+    lede: {
+      de: 'Verwendet die Vollfarb-Variante auf hellem Hintergrund. Auf dunklen oder bewegten Bildern wechselt zur weissen Variante — nicht zur farbigen.',
+      en: 'Use the full-color version on light backgrounds. On dark or busy imagery, switch to white — never to a recolored version.',
+    },
+    creamLabel: { de: 'Auf Creme · Standard', en: 'On cream · default' },
+    creamNote: { de: 'Hauptanwendung', en: 'Primary use' },
+    darkLabel: { de: 'Auf Dunkel', en: 'On dark' },
+    darkNote: { de: 'Vollfarbe bleibt', en: 'Full color stays' },
+    prismLabel: { de: 'Auf Prisma-Verlauf', en: 'On prism gradient' },
+    prismNote: { de: 'Weisse Wortmarke', en: 'White wordmark' },
+  },
+  dl: {
+    eyebrow: { de: 'Downloads für Partner & Presse', en: 'Downloads for partners & press' },
+    titleA: { de: 'Alle Brand-', en: 'Every brand ' },
+    titleB: { de: 'Assets', en: 'asset' },
+    titleC: { de: ', fertig zum Einsatz.', en: ', ready to use.' },
+    lede: {
+      de: 'Bitte respektiert die Verwendungshinweise. Bei Fragen: hello@evolea.ch — wir antworten in der Regel innerhalb von 24 Stunden.',
+      en: 'Please respect the usage notes. Questions: hello@evolea.ch — we usually answer within 24 hours.',
+    },
+    onRequest: { de: 'Auf Anfrage', en: 'On request' },
+    requestKit: { de: 'Brand-Kit anfragen', en: 'Request brand kit' },
+    megaTitle: { de: 'Das komplette Brand-Kit per E-Mail', en: 'The complete brand kit via email' },
+    megaBody: {
+      de: 'Logos (PNG & SVG), Schmetterling-Symbole, Schriften (Fredoka + Poppins), Aquarell-Illustrationen, Team-Porträts und das vollständige PDF-Manual. Schreibt uns — wir senden ein kuratiertes ZIP-Paket zu.',
+      en: 'Logos (PNG & SVG), butterfly icons, fonts (Fredoka + Poppins), watercolor illustrations, team portraits and the full PDF manual. Write to us — we send a curated ZIP package.',
+    },
+  },
+  col: {
+    eyebrow: { de: 'Farbsystem', en: 'Color system' },
+    title: { de: 'Sieben Spektrumfarben, drei warme Neutralen.', en: 'Seven spectrum colors, three warm neutrals.' },
+    lede: {
+      de: 'Die Spektrumfarben gehören zusammen — wir verwenden sie nie als grosse Vollflächen, sondern als Verlaufsakzente. Klick auf einen Hex-Wert kopiert ihn.',
+      en: 'Spectrum colors belong together — never as large solid fills, only as gradient accents. Click a hex value to copy.',
+    },
+    primary: { de: 'Primär — Magenta & Lila', en: 'Primary — magenta & purple' },
+    spectrum: { de: 'Spektrum — gleichgewichtig', en: 'Spectrum — equally weighted' },
+    neutral: { de: 'Warme Neutralen', en: 'Warm neutrals' },
+  },
+  grad: {
+    eyebrow: { de: 'Verläufe', en: 'Gradients' },
+    title: { de: 'Verläufe sind die Seele der Marke.', en: 'Gradients are the soul of the brand.' },
+    lede: {
+      de: 'Vier kuratierte Verläufe — pro Anwendung nur einen. Misch sie nicht; wechsle nicht eigenständig die Stops.',
+      en: "Four curated gradients — one per use case. Don't mix them; don't change the stops yourself.",
+    },
+  },
+  typo: {
+    eyebrow: { de: 'Typografie', en: 'Typography' },
+    title: { de: 'Fredoka schreibt laut, Poppins flüstert sanft.', en: 'Fredoka shouts, Poppins whispers softly.' },
+    lede: {
+      de: 'Beide unter SIL Open Font License. Im Brand-Kit liegen .woff2-Dateien plus Web-CSS.',
+      en: 'Both under SIL Open Font License. The brand kit ships .woff2 files plus web CSS.',
+    },
+    weights: { de: 'Gewichte', en: 'Weights' },
+    usage: { de: 'Verwendung', en: 'Usage' },
+    minSize: { de: 'Mindestgrösse', en: 'Min size' },
+    lineHeight: { de: 'Zeilenhöhe', en: 'Line-height' },
+    fredokaUse: { de: 'Headlines, Eyebrow, Buttons', en: 'Headlines, eyebrow, buttons' },
+    poppinsUse: { de: 'Body, UI, lange Lesetexte', en: 'Body, UI, long-form reading' },
+    poppinsLine: { de: '1.65 (Lese-Optimum DE)', en: '1.65 (reading optimum)' },
+    sampleBody: {
+      de: 'Wir schaffen Räume, damit sich Kinder im Spektrum und mit ADHS entfalten.',
+      en: 'We create spaces so children on the spectrum and with ADHD can flourish.',
+    },
+    scaleDisplay: { de: 'Display', en: 'Display' },
+    scaleDisplayDemo: { de: 'Wo Kinder sich entfalten.', en: 'Where children flourish.' },
+    scaleH1Demo: { de: 'Räume schaffen, neue Wege öffnen.', en: 'Create spaces, open new paths.' },
+    scaleH2Demo: { de: 'Evidenzbasiert, partizipativ, individuell.', en: 'Evidence-based, participatory, individual.' },
+    scaleH3Demo: { de: 'Mini-Projekte für grosse Entdecker.', en: 'Mini projects for big explorers.' },
+    scaleBodyDemo: {
+      de: 'Alle Angebote sind individuell auf das Kind zugeschnitten.',
+      en: 'Every program is individually tailored to the child.',
+    },
+    scaleEyebrowDemo: { de: 'Wo Kinder sich entfalten', en: 'Where children flourish' },
+  },
+  img: {
+    eyebrow: { de: 'Bildwelt', en: 'Imagery' },
+    titleA: { de: 'Aquarell trifft ', en: 'Watercolor meets ' },
+    titleB: { de: 'echte Kinderalltage', en: "real children's lives" },
+    titleC: { de: '.', en: '.' },
+    lede: {
+      de: 'Wir kombinieren weiche Aquarell-Illustrationen mit warmer, natürlich beleuchteter Fotografie. Stockfotos vermeiden wir konsequent — alles, was ihr seht, ist real.',
+      en: 'We combine soft watercolor illustrations with warm, naturally lit photography. We avoid stock photos — everything you see is real.',
+    },
+    water: { de: 'Aquarell-Illustrationen', en: 'Watercolor illustrations' },
+    team: { de: 'Team-Porträts auf Verlauf', en: 'Team portraits on gradient' },
+  },
+  comp: {
+    eyebrow: { de: 'Komponenten', en: 'Components' },
+    title: { de: 'Bausteine in Aktion.', en: 'Building blocks in action.' },
+    lede: {
+      de: 'Genau die Patterns, die ihr auf evolea.ch wiederfindet — nicht abstrakt, sondern direkt einsetzbar.',
+      en: "The exact patterns you'll find on evolea.ch — not abstract, ready to use.",
+    },
+    btnHeading: { de: 'Buttons', en: 'Buttons' },
+    btnPrimary: { de: 'Mehr erfahren', en: 'Learn more' },
+    btnGhost: { de: 'Kontakt', en: 'Contact' },
+    btnOutline: { de: 'Outline', en: 'Outline' },
+    btnDonate: { de: 'Jetzt spenden', en: 'Donate now' },
+    btnNote: {
+      de: 'Pill-Form (radius 999px), 14×22px Padding, Magenta-Verlauf für primär. „Jetzt spenden" ist die einzige goldene CTA — bewegter Verlauf, weiche Halo, ausschliesslich für Spenden-Aufrufe.',
+      en: 'Pill shape (radius 999px), 14×22px padding, magenta gradient for primary. "Donate now" is the only gold CTA — animated gradient, soft halo, exclusively for fundraising appeals.',
+    },
+    chipsHeading: { de: 'Chips & Tags', en: 'Chips & tags' },
+    chipInclusive: { de: 'Inklusiv', en: 'Inclusive' },
+    chipEvidence: { de: 'Evidenzbasiert', en: 'Evidence-based' },
+    chipFamily: { de: 'Familienzentriert', en: 'Family-centered' },
+    chipParticipatory: { de: 'Partizipativ', en: 'Participatory' },
+    cardHeading: { de: 'Story-Card', en: 'Story card' },
+    cardEyebrow: { de: 'Mini-Projekt', en: 'Mini project' },
+    cardTitle: { de: 'Soziale Kompetenzen spielerisch stärken', en: 'Build social skills through play' },
+    cardBody: {
+      de: 'Eine kleine Gruppe, viel Raum, klare Strukturen — und ganz viel Eigeninitiative.',
+      en: 'A small group, plenty of room, clear structure — and a lot of self-direction.',
+    },
+    ctaHeading: { de: 'CTA-Block', en: 'CTA block' },
+    ctaEyebrow: { de: 'Spenden', en: 'Donate' },
+    ctaTitle: { de: 'Helfen Sie uns, Räume zu öffnen.', en: 'Help us open spaces.' },
+    ctaBody: {
+      de: 'Jeder Beitrag wirkt — direkt und langfristig.',
+      en: 'Every contribution makes a difference — directly and long-term.',
+    },
+  },
+  voice: {
+    qA: { de: 'Wir handeln ', en: 'We act ' },
+    qB: { de: 'empathisch, offen und inklusiv', en: 'empathetically, openly, inclusively' },
+    qC: { de: ' — und sprechen so, wie wir handeln.', en: ' — and we speak how we act.' },
+    tone: { de: 'Tonalität', en: 'Tone of voice' },
+    t1: { de: 'Hochdeutsch, Schweizer Schreibweise (ss statt ß).', en: 'Formal English. Sentence-case headlines.' },
+    t2: { de: 'Wir = Evolea. Sie = Eltern, Fachpersonen, Spendende.', en: 'We = EVOLEA. You = parents, professionals, donors.' },
+    t3: { de: 'Kinder bezeichnen wir warm in der dritten Person.', en: 'Children referred to warmly in the third person.' },
+    t4: { de: 'Sätze kurz halten. Komposita sind erwünscht.', en: 'Short sentences. Concrete nouns are welcome.' },
+    do: { de: 'Sprache', en: 'Language' },
+    do1: { de: 'Potenzial · Entfaltung · Begleitung · Inklusion.', en: 'Potential · flourishing · companionship · inclusion.' },
+    do2: { de: 'Evidenzbasiert · individuell · ressourcenorientiert.', en: 'Evidence-based · individual · resource-oriented.' },
+    do3: { de: 'Räume schaffen · Wege öffnen · Brücken bauen.', en: 'Create spaces · open paths · build bridges.' },
+    dont: { de: 'Vermeiden', en: 'Avoid' },
+    dont1: { de: 'Defizit-Sprache („Störung", „leiden an").', en: 'Deficit language ("disorder", "suffering from").' },
+    dont2: { de: 'Klinischer Jargon ohne Kontext.', en: 'Clinical jargon without context.' },
+    dont3: { de: 'Du-Anrede an Erwachsene.', en: 'Casual address to adults.' },
+    dont4: { de: 'Emojis und Standard-Icons als Schmuck.', en: 'Emojis or stock icons as decoration.' },
+  },
+  dd: {
+    eyebrow: { de: "Do & Don't", en: "Do & don't" },
+    title: { de: 'Visuelle Leitplanken.', en: 'Visual guardrails.' },
+    doTitle: { de: 'Tu das', en: 'Do' },
+    do1: { de: 'Cremefarbenen Hintergrund (#FFFBF7) verwenden, nie reinweiss.', en: 'Use cream backgrounds (#FFFBF7), never pure white.' },
+    do2: { de: 'Verläufe als Akzent, nicht als Vollfläche grosser Bereiche.', en: 'Gradients as accents, not as fills for large areas.' },
+    do3: { de: 'Schmetterling als Marker, Bullet oder dekorative Bewegung.', en: 'Butterfly as marker, bullet or decorative motion.' },
+    do4: { de: 'Weichen Bewegungen (260ms, ease-out, nie Bounce).', en: 'Soft motion (260ms, ease-out, never bouncy).' },
+    do5: { de: 'Grosszügiger Weissraum — deutsche Komposita brauchen Luft.', en: 'Generous white space — German compounds need air.' },
+    dontTitle: { de: 'Lass das', en: "Don't" },
+    dont1: { de: 'Keine grossen Vollflächen aus Spektrumfarben (Mint, Sonne, Rosa).', en: 'No large solid fills of spectrum colors.' },
+    dont2: { de: 'Keine Emojis — der Schmetterling ist unser einziges Symbol.', en: 'No emoji — the butterfly is our only symbol.' },
+    dont3: { de: 'Keine Stockfotos „glücklicher Familien".', en: 'No stock photos of "happy families".' },
+    dont4: { de: 'Keine harten Schatten — wir bleiben warm und weich.', en: 'No hard shadows — we stay warm and soft.' },
+    dont5: { de: 'Keine Defizit-Sprache wie „Störung" oder „leiden an".', en: 'No deficit language like "disorder".' },
+  },
+  press: {
+    eyebrow: { de: 'Presse & Partnerschaften', en: 'Press & partnerships' },
+    title: { de: 'Was nicht im Kit ist, schicken wir gerne zu.', en: "What's not in the kit, we'll send you." },
+    body: {
+      de: 'Spezielle Formate, Originalauflösungen, Interviewtermine oder eine kuratierte Bildauswahl für eine konkrete Geschichte — schreibt uns direkt. Wir antworten meist innerhalb eines Werktags.',
+      en: 'Special formats, original resolutions, interview slots or curated imagery for a specific story — write to us directly. We usually answer within one working day.',
+    },
+    role: { de: 'Kommunikation & Presse', en: 'Communications & press' },
+    affil: { de: 'Mitgründer, Verein Evolea', en: 'Co-founder, Verein Evolea' },
+    location: { de: 'Verein Evolea · Zürich', en: 'Verein Evolea · Zurich' },
+  },
+  toast: {
+    copied: { de: ' kopiert', en: ' copied' },
+    requestSent: { de: 'E-Mail-Programm öffnet …', en: 'Opening email …' },
+  },
+} as const;
+
+const t = <K extends keyof typeof copy>(group: K, key: keyof typeof copy[K]): string => {
+  // @ts-ignore — index access is safe given the dictionary shape
+  return copy[group][key][lang];
+};
+
+// ----------------------------------------------------------------
+// Data arrays
+// ----------------------------------------------------------------
+const PRIMARY = [
+  { name: 'Magenta', hex: '#DD48E0', use: isDE ? 'CTAs, Akzente' : 'CTAs, accents' },
+  { name: 'Deep Purple', hex: '#BA53AD', use: isDE ? 'Headlines, Footer' : 'Headlines, footer' },
+  { name: 'Lavender', hex: '#CD87F8', use: isDE ? 'Sanfte Akzente' : 'Soft accents' },
+];
+
+const SPECTRUM = [
+  { name: 'Mint', hex: '#7BEDD5' },
+  { name: 'Sunshine', hex: '#FFE066' },
+  { name: 'Coral', hex: '#FF7E5D' },
+  { name: 'Pink Hi', hex: '#FF9ECC' },
+  { name: 'Bright Pink', hex: '#E97BF1' },
+  { name: 'Blush', hex: '#EF8EAE' },
+  { name: 'Sky', hex: '#5DADE2' },
+  { name: 'Gold', hex: '#E8B86D' },
+];
+
+const NEUTRAL = [
+  { name: 'Cream', hex: '#FFFBF7', use: isDE ? 'Page-Hintergrund' : 'Page background' },
+  { name: 'White', hex: '#FFFFFF', use: isDE ? 'Karten, Nav' : 'Cards, nav' },
+  { name: 'Dark Text', hex: '#2D2A32', use: 'Body' },
+  { name: 'Light Text', hex: '#5C5762', use: isDE ? 'Sekundär' : 'Secondary' },
+  { name: 'Charcoal', hex: '#1A1A2E', use: isDE ? 'Dunkle Sektionen' : 'Dark sections' },
+];
+
+const GRADIENTS = [
+  {
+    name: isDE ? 'Prism · Spektrum' : 'Prism · Spectrum',
+    css: 'linear-gradient(90deg, #7BEDD5, #FFE066, #FF7E5D, #EF8EAE, #E97BF1, #CD87F8 80%, #7BEDD5)',
+    use: isDE ? 'Hero, dekorative Bänder' : 'Hero, decorative bands',
+    var: '--gradient-spectrum',
+  },
+  {
+    name: isDE ? 'Primary · Magenta' : 'Primary · Magenta',
+    css: 'linear-gradient(135deg, #BA53AD, #DD48E0)',
+    use: isDE ? 'Primäre Buttons, Highlights' : 'Primary buttons, highlights',
+    var: '--gradient-magenta',
+  },
+  {
+    name: isDE ? 'Spenden · Deep' : 'Donate · Deep',
+    css: 'linear-gradient(135deg, #BA53AD, #8A3D7E, #5C2854)',
+    use: isDE ? 'Spenden-Bereich, Vereins-Sektion' : 'Donate section, Verein section',
+    var: '--gradient-spenden',
+  },
+  {
+    name: isDE ? 'Portrait · Sunset' : 'Portrait · Sunset',
+    css: 'linear-gradient(135deg, #FF9ECC, #DD48E0)',
+    use: isDE ? 'Hinter Team-Porträts (immer)' : 'Behind team portraits (always)',
+    var: '--gradient-portrait',
+  },
+];
+
+// Downloads — only assets that actually exist in /public are linked.
+// Missing assets (SVG variants, font WOFF2 bundle, full ZIP) become
+// "Auf Anfrage" / "On request" mailto: CTAs.
+const requestKitMailto = `mailto:hello@evolea.ch?subject=${encodeURIComponent(isDE ? 'Brand-Kit Anfrage' : 'Brand kit request')}`;
+const DOWNLOADS = [
+  {
+    id: 'logo-color',
+    name: isDE ? 'Logo · Vollfarbe' : 'Logo · full color',
+    desc: isDE ? 'Wortmarke mit Schmetterling, transparenter Hintergrund.' : 'Wordmark with butterfly, transparent background.',
+    tag: 'Logo',
+    thumb: { src: `${base}/images/logo/evolea-logo-new.png`, mode: 'contain gradient' as const },
+    formats: [
+      { label: 'PNG', size: '2400 × 920', url: `${base}/images/logo/evolea-logo-new.png`, primary: true, isFile: true },
+      { label: 'SVG', size: isDE ? 'auf Anfrage' : 'on request', url: requestKitMailto, primary: false, isFile: false },
+    ],
+  },
+  {
+    id: 'logo-circle',
+    name: isDE ? 'Logo · Circle' : 'Logo · circle',
+    desc: isDE ? 'Quadratische Variante für Avatar, Favicon und Social-Media-Profile.' : 'Square variant for avatars, favicon and social media profiles.',
+    tag: 'Logo',
+    thumb: { src: `${base}/images/logo/evolea-logo-circle.png`, mode: 'contain gradient' as const },
+    formats: [
+      { label: 'PNG', size: '1024 × 1024', url: `${base}/images/logo/evolea-logo-circle.png`, primary: true, isFile: true },
+    ],
+  },
+  {
+    id: 'butterfly-color',
+    name: isDE ? 'Schmetterling · Farbe' : 'Butterfly · color',
+    desc: isDE ? 'Unser Symbol als alleinstehende Marke (App-Icon, Favicon).' : 'Our symbol as a standalone mark (app icon, favicon).',
+    tag: 'Icon',
+    thumb: { butterfly: 'spectrum' as const, mode: 'gradient' as const },
+    formats: [
+      { label: 'SVG', size: isDE ? 'Vektor' : 'Vector', url: `${base}/images/logo/evolea-butterfly.svg`, primary: true, isFile: true },
+    ],
+  },
+  {
+    id: 'butterfly-white',
+    name: isDE ? 'Schmetterling · Weiss' : 'Butterfly · white',
+    desc: isDE ? 'Für Verläufe, dunkle Sektionen und bewegte Hintergründe.' : 'For gradients, dark sections and busy backgrounds.',
+    tag: 'Icon',
+    thumb: { butterfly: 'white' as const, mode: 'prism' as const },
+    formats: [
+      { label: 'SVG', size: isDE ? 'Vektor' : 'Vector', url: `${base}/images/logo/evolea-butterfly-white.svg`, primary: true, isFile: true },
+    ],
+  },
+  {
+    id: 'wc-spenden',
+    name: isDE ? 'Aquarell · Schloss' : 'Watercolor · castle',
+    desc: isDE ? 'Märchen-Schloss-Illustration für Spenden- und Vereins-Seiten.' : 'Fairytale-castle illustration for donate and Verein pages.',
+    tag: 'Aquarell',
+    thumb: { src: `${base}/images/hero/spenden-hero.png`, mode: 'cover' as const },
+    formats: [
+      { label: 'PNG', size: 'Web', url: `${base}/images/hero/spenden-hero.png`, primary: true, isFile: true },
+    ],
+  },
+  {
+    id: 'wc-im-spek',
+    name: isDE ? 'Aquarell · Im Spektrum' : 'Watercolor · in the spectrum',
+    desc: isDE ? 'Schmetterlinge, Sonne, Sanftheit — die Hero-Watercolor.' : 'Butterflies, sun, softness — the hero watercolor.',
+    tag: 'Aquarell',
+    thumb: { src: `${base}/images/blog/im-spektrum.webp`, mode: 'cover' as const },
+    formats: [
+      { label: 'WEBP', size: 'Web', url: `${base}/images/blog/im-spektrum.webp`, primary: true, isFile: true },
+    ],
+  },
+  {
+    id: 'wc-angebote',
+    name: isDE ? 'Aquarell · Angebote' : 'Watercolor · programs',
+    desc: isDE ? 'Übersichts-Illustration für die Angebote-Landing.' : 'Overview illustration for the programs landing.',
+    tag: 'Aquarell',
+    thumb: { src: `${base}/images/hero/angebote-hero.png`, mode: 'cover' as const },
+    formats: [
+      { label: 'PNG', size: 'Web', url: `${base}/images/hero/angebote-hero.png`, primary: true, isFile: true },
+    ],
+  },
+  {
+    id: 'team-pack',
+    name: isDE ? 'Team-Porträts (4 Bilder)' : 'Team portraits (4 photos)',
+    desc: isDE ? 'Alle vier Team-Porträts — als Paket per E-Mail.' : 'All four team portraits — as a package via email.',
+    tag: isDE ? 'Porträt' : 'Portrait',
+    thumb: { teamPack: true as const, mode: 'cover' as const },
+    formats: [
+      { label: 'ZIP', size: isDE ? 'auf Anfrage' : 'on request', url: requestKitMailto, primary: true, isFile: false },
+    ],
+  },
+  {
+    id: 'fonts',
+    name: isDE ? 'Schriften · Fredoka + Poppins' : 'Fonts · Fredoka + Poppins',
+    desc: isDE ? 'Beide Schriften unter SIL Open Font License — wir verlinken die offiziellen Quellen.' : 'Both under SIL Open Font License — we link the official sources.',
+    tag: 'Type',
+    thumb: { fontPreview: true as const, mode: 'gradient' as const },
+    formats: [
+      { label: 'Fredoka ↗', size: 'Google Fonts', url: 'https://fonts.google.com/specimen/Fredoka', primary: true, isFile: false, external: true },
+      { label: 'Poppins ↗', size: 'Google Fonts', url: 'https://fonts.google.com/specimen/Poppins', primary: false, isFile: false, external: true },
+    ],
+  },
+];
+
+const WATERCOLORS = [
+  { src: `${base}/images/blog/im-spektrum.webp`, name: isDE ? 'Im Spektrum' : 'In the spectrum' },
+  { src: `${base}/images/hero/spenden-hero.png`, name: isDE ? 'Spenden · Schloss' : 'Donate · castle' },
+  { src: `${base}/images/hero/angebote-hero.png`, name: isDE ? 'Angebote' : 'Programs' },
+];
+
+const TEAM = [
+  { src: `${base}/images/team/alexandra-aleksic.jpg`, name: 'Alexandra Aleksic' },
+  { src: `${base}/images/team/annemarie-elias.png`, name: 'Annemarie Elias' },
+  { src: `${base}/images/team/christoph-jenny.png`, name: 'Christoph Jenny' },
+  { src: `${base}/images/team/gianna-spiess.png`, name: 'Gianna Spiess' },
+];
+---
+
+<div class="brand-page">
+    <!-- ===================== HERO ====================================== -->
+    <header id="top" class="brand-hero">
+      <div class="brand-hero__canvas" aria-hidden="true">
+        <div class="brand-blob brand-blob--b1"></div>
+        <div class="brand-blob brand-blob--b2"></div>
+        <div class="brand-blob brand-blob--b3"></div>
+      </div>
+
+      <div class="brand-hero__grid">
+        <div class="brand-hero__copy">
+          <span class="brand-hero__eyebrow">
+            <BrandStripe variant="prism" height="2px" />
+            <span>{t('hero', 'eyebrow')}</span>
+          </span>
+          <h1 class="brand-hero__title">
+            <span>{t('hero', 'title1')}</span><br />
+            <span class="brand-hero__title-accent">{t('hero', 'title2')}</span>
+          </h1>
+          <p class="brand-hero__lede">{t('hero', 'lede')}</p>
+          <div class="brand-hero__actions">
+            <BrandButton variant="donate" href={donatePath}>
+              <span>{t('hero', 'ctaDonate')}</span>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+            </BrandButton>
+            <BrandButton variant="primary" href="#downloads">
+              <span>{t('hero', 'ctaPrimary')}</span>
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+            </BrandButton>
+            <BrandButton variant="ghost" href="#voice">{t('hero', 'ctaSecondary')}</BrandButton>
+          </div>
+        </div>
+
+        <div class="brand-hero__art" aria-hidden="true">
+          <div class="brand-frame brand-frame--f1">
+            <img src={`${base}/images/blog/im-spektrum.webp`} alt="" loading="lazy" />
+          </div>
+          <div class="brand-frame brand-frame--f2">
+            <img src={`${base}/images/hero/spenden-hero.png`} alt="" loading="lazy" />
+          </div>
+          <div class="brand-frame brand-frame--f3">
+            <img src={`${base}/images/team/gianna-spiess.png`} alt="" loading="lazy" />
+          </div>
+          <div class="brand-fly brand-fly--a"><Butterfly variant="spectrum" size="md" /></div>
+          <div class="brand-fly brand-fly--b"><Butterfly variant="spectrum" size="sm" /></div>
+        </div>
+      </div>
+    </header>
+
+    <!-- ===================== PHILOSOPHY ================================ -->
+    <section id="philosophie" class="brand-sect brand-philosophy">
+      <div class="brand-wrap">
+        <div class="brand-sect-head">
+          <div>
+            <span class="brand-eyebrow-mini">{t('phil', 'eyebrow')}</span>
+            <h2>{t('phil', 'titleA')}<em>{t('phil', 'titleB')}</em>{t('phil', 'titleC')}</h2>
+          </div>
+          <p>{t('phil', 'lede')}</p>
+        </div>
+
+        <div class="brand-pillars">
+          <article class="brand-pillar">
+            <div class="brand-pillar__num">01 / Warm</div>
+            <h3>{t('phil', 'p1Title')}</h3>
+            <p>{t('phil', 'p1Body')}</p>
+          </article>
+          <article class="brand-pillar brand-pillar--feat">
+            <div class="brand-pillar__num">{isDE ? '02 / Spektrum' : '02 / Spectrum'}</div>
+            <h3>{t('phil', 'p2Title')}</h3>
+            <p>{t('phil', 'p2Body')}</p>
+          </article>
+          <article class="brand-pillar">
+            <div class="brand-pillar__num">{isDE ? '03 / Schmetterling' : '03 / Butterfly'}</div>
+            <h3>{t('phil', 'p3Title')}</h3>
+            <p>{t('phil', 'p3Body')}</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== LOGO + DOWNLOADS ========================== -->
+    <section id="logo" class="brand-sect">
+      <div class="brand-wrap">
+        <div class="brand-sect-head">
+          <div>
+            <span class="brand-eyebrow-mini">{t('logo', 'eyebrow')}</span>
+            <h2>{t('logo', 'title')}</h2>
+          </div>
+          <p>{t('logo', 'lede')}</p>
+        </div>
+
+        <div class="brand-logo-board">
+          <div>
+            <div class="brand-logo-stage">
+              <img src={`${base}/images/logo/evolea-logo-new.png`} alt="EVOLEA Logo" loading="lazy" />
+            </div>
+            <div class="brand-logo-label">
+              <span class="brand-logo-label__name">{t('logo', 'creamLabel')}</span>
+              <span>{t('logo', 'creamNote')}</span>
+            </div>
+          </div>
+          <div>
+            <div class="brand-logo-stage brand-logo-stage--dark">
+              <img src={`${base}/images/logo/evolea-logo-new.png`} alt="EVOLEA Logo on dark" loading="lazy" />
+            </div>
+            <div class="brand-logo-label">
+              <span class="brand-logo-label__name">{t('logo', 'darkLabel')}</span>
+              <span>{t('logo', 'darkNote')}</span>
+            </div>
+          </div>
+          <div>
+            <div class="brand-logo-stage brand-logo-stage--prism">
+              <svg viewBox="0 0 220 100" aria-hidden="true">
+                <text x="110" y="68" text-anchor="middle" fill="#fff" font-family="Fredoka" font-weight="700" font-size="58" letter-spacing="2" style="filter: drop-shadow(0 3px 8px rgba(0,0,0,.18))">EVOLEA</text>
+              </svg>
+            </div>
+            <div class="brand-logo-label">
+              <span class="brand-logo-label__name">{t('logo', 'prismLabel')}</span>
+              <span>{t('logo', 'prismNote')}</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- DOWNLOADS -->
+        <div id="downloads" class="brand-downloads">
+          <div class="brand-sect-head" style="margin-top:80px">
+            <div>
+              <span class="brand-eyebrow-mini">{t('dl', 'eyebrow')}</span>
+              <h2>{t('dl', 'titleA')}<em>{t('dl', 'titleB')}</em>{t('dl', 'titleC')}</h2>
+            </div>
+            <p>{t('dl', 'lede')}</p>
+          </div>
+
+          <div class="brand-dl-grid">
+            {DOWNLOADS.map((d) => (
+              <article class="brand-dl-card" data-id={d.id}>
+                <div class:list={['brand-dl-thumb', ...d.thumb.mode.split(' '), { 'brand-dl-thumb--has-fontpreview': 'fontPreview' in d.thumb && d.thumb.fontPreview, 'brand-dl-thumb--has-teampack': 'teamPack' in d.thumb && d.thumb.teamPack }]}>
+                  {d.tag && <span class:list={['brand-dl-tag', { 'brand-dl-tag--dark': d.thumb.mode.includes('dark') || d.thumb.mode.includes('prism') }]}>{d.tag}</span>}
+                  {'butterfly' in d.thumb ? (
+                    <Butterfly variant={d.thumb.butterfly} size="lg" />
+                  ) : 'fontPreview' in d.thumb && d.thumb.fontPreview ? (
+                    <div class="brand-dl-fontpreview">
+                      <div class="brand-dl-fontpreview__aa">Aa</div>
+                      <div class="brand-dl-fontpreview__cap">Fredoka + Poppins</div>
+                    </div>
+                  ) : 'teamPack' in d.thumb && d.thumb.teamPack ? (
+                    <div class="brand-dl-teampack">
+                      {TEAM.map((p) => <div style={`background-image: url('${p.src}'); background-size: cover; background-position: center;`} aria-hidden="true"></div>)}
+                    </div>
+                  ) : 'src' in d.thumb && d.thumb.src ? (
+                    <img src={d.thumb.src} alt={d.name} loading="lazy" />
+                  ) : null}
+                </div>
+                <div class="brand-dl-meta">
+                  <div class="brand-dl-info">
+                    <h3 class="brand-dl-name">{d.name}</h3>
+                    <p class="brand-dl-desc">{d.desc}</p>
+                  </div>
+                  <div class="brand-dl-btns">
+                    {d.formats.map((f) => (
+                      <a
+                        class:list={['brand-dl-btn', { 'brand-dl-btn--primary': f.primary }]}
+                        href={f.url}
+                        download={f.isFile ? '' : undefined}
+                        rel={'external' in f && f.external ? 'noopener noreferrer' : undefined}
+                        target={'external' in f && f.external ? '_blank' : undefined}
+                      >
+                        {f.isFile ? (
+                          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                        ) : (
+                          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+                        )}
+                        <span>{f.label}</span><span style="opacity:.6;font-weight:500">· {f.size}</span>
+                      </a>
+                    ))}
+                  </div>
+                </div>
+              </article>
+            ))}
+          </div>
+
+          <!-- Mega request bar -->
+          <div class="brand-megadown">
+            <div class="brand-megadown__copy">
+              <h3>{t('dl', 'megaTitle')}</h3>
+              <p>{t('dl', 'megaBody')}</p>
+            </div>
+            <BrandButton variant="primary" href={requestKitMailto}>
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+              <span>{t('dl', 'requestKit')}</span>
+            </BrandButton>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== FARBEN ==================================== -->
+    <section id="farben" class="brand-sect brand-sect--white">
+      <div class="brand-wrap">
+        <div class="brand-sect-head">
+          <div>
+            <span class="brand-eyebrow-mini">{t('col', 'eyebrow')}</span>
+            <h2>{t('col', 'title')}</h2>
+          </div>
+          <p>{t('col', 'lede')}</p>
+        </div>
+
+        <h4 class="brand-pal-heading">{t('col', 'primary')}</h4>
+        <div class="brand-palette brand-palette--prim">
+          {PRIMARY.map((s) => <BrandSwatch name={s.name} hex={s.hex} use={s.use} />)}
+        </div>
+
+        <h4 class="brand-pal-heading">{t('col', 'spectrum')}</h4>
+        <div class="brand-palette brand-palette--spec">
+          {SPECTRUM.map((s) => <BrandSwatch name={s.name} hex={s.hex} />)}
+        </div>
+
+        <h4 class="brand-pal-heading">{t('col', 'neutral')}</h4>
+        <div class="brand-palette brand-palette--neut">
+          {NEUTRAL.map((s) => <BrandSwatch name={s.name} hex={s.hex} use={s.use} />)}
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== GRADIENTS ================================= -->
+    <section id="gradients" class="brand-sect">
+      <div class="brand-wrap">
+        <div class="brand-sect-head">
+          <div>
+            <span class="brand-eyebrow-mini">{t('grad', 'eyebrow')}</span>
+            <h2>{t('grad', 'title')}</h2>
+          </div>
+          <p>{t('grad', 'lede')}</p>
+        </div>
+        <div class="brand-grad-grid">
+          {GRADIENTS.map((g) => (
+            <article class="brand-gradcard">
+              <div class="brand-gradcard__strip" style={`background:${g.css};`}></div>
+              <div class="brand-gradcard__body">
+                <h4>{g.name}</h4>
+                <p>{g.use}</p>
+                <code>{g.css}</code>
+              </div>
+            </article>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== TYPOGRAFIE ================================ -->
+    <section id="typo" class="brand-sect brand-sect--white">
+      <div class="brand-wrap">
+        <div class="brand-sect-head">
+          <div>
+            <span class="brand-eyebrow-mini">{t('typo', 'eyebrow')}</span>
+            <h2>{t('typo', 'title')}</h2>
+          </div>
+          <p>{t('typo', 'lede')}</p>
+        </div>
+
+        <div class="brand-typo-grid">
+          <article class="brand-typo-card">
+            <div class="brand-typo-card__label">
+              <span>Fredoka · Display</span><span>Aa</span>
+            </div>
+            <p class="brand-typo-card__display">
+              Aa <span class="brand-typo-card__ax">Bb</span> Cc Üü
+            </p>
+            <p class="brand-typo-card__glyphs">ABCDEFGHIJKLMNOPQRSTUVWXYZ &nbsp; abcdefghijklmnopqrstuvwxyz &nbsp; 0123456789 &nbsp; ÄÖÜß</p>
+            <div class="brand-typo-card__specifics">
+              <div><b>{t('typo', 'weights')}</b>SemiBold 600 · Bold 700</div>
+              <div><b>{t('typo', 'usage')}</b>{t('typo', 'fredokaUse')}</div>
+              <div><b>{t('typo', 'minSize')}</b>20px Display</div>
+            </div>
+          </article>
+          <article class="brand-typo-card">
+            <div class="brand-typo-card__label">
+              <span>Poppins · Body</span><span>Aa</span>
+            </div>
+            <p class="brand-typo-card__body-spec">{t('typo', 'sampleBody')}</p>
+            <p class="brand-typo-card__glyphs brand-typo-card__glyphs--sans">ABCDEFGHIJKLMNOPQRSTUVWXYZ &nbsp; abcdefghijklmnopqrstuvwxyz &nbsp; 0123456789 &nbsp; ÄÖÜß</p>
+            <div class="brand-typo-card__specifics">
+              <div><b>{t('typo', 'weights')}</b>Regular 400 · Medium 500 · SemiBold 600</div>
+              <div><b>{t('typo', 'usage')}</b>{t('typo', 'poppinsUse')}</div>
+              <div><b>{t('typo', 'lineHeight')}</b>{t('typo', 'poppinsLine')}</div>
+            </div>
+          </article>
+        </div>
+
+        <div class="brand-scale">
+          <div class="brand-scale__row"><span class="brand-scale__role">{t('typo', 'scaleDisplay')}</span><span class="brand-scale__size">clamp(44, 7vw, 80)</span><span class="brand-scale__demo" style="font-size:32px; line-height:1;">{t('typo', 'scaleDisplayDemo')}</span></div>
+          <div class="brand-scale__row"><span class="brand-scale__role">H1</span><span class="brand-scale__size">clamp(32, 5vw, 56)</span><span class="brand-scale__demo" style="font-size:26px;">{t('typo', 'scaleH1Demo')}</span></div>
+          <div class="brand-scale__row"><span class="brand-scale__role">H2</span><span class="brand-scale__size">clamp(28, 4vw, 44)</span><span class="brand-scale__demo" style="font-size:22px;">{t('typo', 'scaleH2Demo')}</span></div>
+          <div class="brand-scale__row"><span class="brand-scale__role">H3</span><span class="brand-scale__size">28 / 1.25</span><span class="brand-scale__demo" style="font-size:18px;">{t('typo', 'scaleH3Demo')}</span></div>
+          <div class="brand-scale__row"><span class="brand-scale__role">Body</span><span class="brand-scale__size">16 / 1.65</span><span class="brand-scale__demo brand-scale__demo--sans">{t('typo', 'scaleBodyDemo')}</span></div>
+          <div class="brand-scale__row"><span class="brand-scale__role">Eyebrow</span><span class="brand-scale__size">14 / .16em ↔</span><span class="brand-scale__demo brand-scale__demo--eyebrow">{t('typo', 'scaleEyebrowDemo')}</span></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== BILDWELT ================================== -->
+    <section id="bildwelt" class="brand-sect">
+      <div class="brand-wrap">
+        <div class="brand-sect-head">
+          <div>
+            <span class="brand-eyebrow-mini">{t('img', 'eyebrow')}</span>
+            <h2>{t('img', 'titleA')}<em>{t('img', 'titleB')}</em>{t('img', 'titleC')}</h2>
+          </div>
+          <p>{t('img', 'lede')}</p>
+        </div>
+
+        <h4 class="brand-imagery-heading">{t('img', 'water')}</h4>
+        <div class="brand-img-grid">
+          {WATERCOLORS.map((w) => (
+            <article class="brand-img-tile">
+              <img src={w.src} alt={w.name} loading="lazy" />
+              <div class="brand-img-tile__cap">
+                <span>{w.name}</span>
+                <a href={w.src} download class="brand-img-tile__dl">↓ {isDE ? 'Bild' : 'image'}</a>
+              </div>
+            </article>
+          ))}
+        </div>
+
+        <h4 class="brand-imagery-heading" style="margin-top: 32px">{t('img', 'team')}</h4>
+        <div class="brand-team-grid">
+          {TEAM.map((p) => (
+            <article class="brand-team-card">
+              <div class="brand-team-card__photo">
+                <img src={p.src} alt={p.name} loading="lazy" />
+              </div>
+              <div class="brand-team-card__meta">
+                <span class="brand-team-card__name">{p.name}</span>
+                <a href={p.src} download class="brand-team-card__dl">↓ {isDE ? 'Foto' : 'photo'}</a>
+              </div>
+            </article>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== COMPONENTS ================================ -->
+    <section id="components" class="brand-sect brand-sect--white">
+      <div class="brand-wrap">
+        <div class="brand-sect-head">
+          <div>
+            <span class="brand-eyebrow-mini">{t('comp', 'eyebrow')}</span>
+            <h2>{t('comp', 'title')}</h2>
+          </div>
+          <p>{t('comp', 'lede')}</p>
+        </div>
+
+        <div class="brand-comp-grid">
+          <article class="brand-comp-card">
+            <h4>{t('comp', 'btnHeading')}</h4>
+            <div class="brand-comp-row">
+              <BrandButton variant="primary">{t('comp', 'btnPrimary')}</BrandButton>
+              <BrandButton variant="ghost">{t('comp', 'btnGhost')}</BrandButton>
+              <BrandButton variant="donate">
+                <span>{t('comp', 'btnDonate')}</span>
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+              </BrandButton>
+              <BrandButton variant="outline">{t('comp', 'btnOutline')}</BrandButton>
+            </div>
+            <p class="brand-comp-card__note">{t('comp', 'btnNote')}</p>
+          </article>
+
+          <article class="brand-comp-card">
+            <h4>{t('comp', 'chipsHeading')}</h4>
+            <div class="brand-comp-row">
+              <span class="brand-chip brand-chip--magenta">
+                <Butterfly variant="spectrum" size="xs" />
+                {t('comp', 'chipInclusive')}
+              </span>
+              <span class="brand-chip brand-chip--green">{t('comp', 'chipEvidence')}</span>
+              <span class="brand-chip brand-chip--gold">{t('comp', 'chipFamily')}</span>
+              <span class="brand-chip brand-chip--purple">{t('comp', 'chipParticipatory')}</span>
+            </div>
+          </article>
+
+          <article class="brand-comp-card">
+            <h4>{t('comp', 'cardHeading')}</h4>
+            <div class="brand-story-card">
+              <div class="brand-story-card__img" style={`background-image: url('${base}/images/blog/im-spektrum.webp')`}></div>
+              <div class="brand-story-card__body">
+                <span class="brand-story-card__eyebrow">{t('comp', 'cardEyebrow')}</span>
+                <h4>{t('comp', 'cardTitle')}</h4>
+                <p>{t('comp', 'cardBody')}</p>
+              </div>
+            </div>
+          </article>
+
+          <article class="brand-comp-card">
+            <h4>{t('comp', 'ctaHeading')}</h4>
+            <div class="brand-cta-block">
+              <span class="brand-cta-block__eyebrow">{t('comp', 'ctaEyebrow')}</span>
+              <h4>{t('comp', 'ctaTitle')}</h4>
+              <p>{t('comp', 'ctaBody')}</p>
+              <BrandButton variant="donate" href={donatePath}>
+                <span>{t('comp', 'btnDonate')}</span>
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+              </BrandButton>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== VOICE ===================================== -->
+    <section id="voice" class="brand-sect">
+      <div class="brand-wrap">
+        <div class="brand-voice-box">
+          <p class="brand-voice-box__quote">
+            <span>{t('voice', 'qA')}</span>
+            <span class="brand-voice-box__accent">{t('voice', 'qB')}</span>
+            <span>{t('voice', 'qC')}</span>
+          </p>
+          <div class="brand-voice-cols">
+            <div>
+              <h5>{t('voice', 'tone')}</h5>
+              <ul>
+                <li>{t('voice', 't1')}</li>
+                <li>{t('voice', 't2')}</li>
+                <li>{t('voice', 't3')}</li>
+                <li>{t('voice', 't4')}</li>
+              </ul>
+            </div>
+            <div>
+              <h5>{t('voice', 'do')}</h5>
+              <ul>
+                <li>{t('voice', 'do1')}</li>
+                <li>{t('voice', 'do2')}</li>
+                <li>{t('voice', 'do3')}</li>
+              </ul>
+            </div>
+            <div>
+              <h5>{t('voice', 'dont')}</h5>
+              <ul>
+                <li>{t('voice', 'dont1')}</li>
+                <li>{t('voice', 'dont2')}</li>
+                <li>{t('voice', 'dont3')}</li>
+                <li>{t('voice', 'dont4')}</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== DO / DON'T ================================ -->
+    <section id="dodont" class="brand-sect brand-sect--white">
+      <div class="brand-wrap">
+        <div class="brand-sect-head">
+          <div>
+            <span class="brand-eyebrow-mini">{t('dd', 'eyebrow')}</span>
+            <h2>{t('dd', 'title')}</h2>
+          </div>
+        </div>
+        <div class="brand-dd-grid">
+          <article class="brand-dd brand-dd--do">
+            <h4>
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><polyline points="9 12 11 14 15 10"/></svg>
+              <span>{t('dd', 'doTitle')}</span>
+            </h4>
+            <ul>
+              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg><span>{t('dd', 'do1')}</span></li>
+              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg><span>{t('dd', 'do2')}</span></li>
+              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg><span>{t('dd', 'do3')}</span></li>
+              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg><span>{t('dd', 'do4')}</span></li>
+              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg><span>{t('dd', 'do5')}</span></li>
+            </ul>
+          </article>
+          <article class="brand-dd brand-dd--dont">
+            <h4>
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><line x1="9" y1="9" x2="15" y2="15"/><line x1="15" y1="9" x2="9" y2="15"/></svg>
+              <span>{t('dd', 'dontTitle')}</span>
+            </h4>
+            <ul>
+              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg><span>{t('dd', 'dont1')}</span></li>
+              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg><span>{t('dd', 'dont2')}</span></li>
+              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg><span>{t('dd', 'dont3')}</span></li>
+              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg><span>{t('dd', 'dont4')}</span></li>
+              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg><span>{t('dd', 'dont5')}</span></li>
+            </ul>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== PRESSE ==================================== -->
+    <section id="presse" class="brand-sect">
+      <div class="brand-wrap">
+        <div class="brand-press">
+          <div>
+            <span class="brand-eyebrow-mini">{t('press', 'eyebrow')}</span>
+            <h2>{t('press', 'title')}</h2>
+            <p>{t('press', 'body')}</p>
+            <BrandButton variant="primary" href="mailto:hello@evolea.ch">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+              <span>hello@evolea.ch</span>
+            </BrandButton>
+          </div>
+          <div class="brand-press__contact">
+            <span class="brand-press__role">{t('press', 'role')}</span>
+            <span class="brand-press__who">Christoph Jenny</span>
+            <span class="brand-press__affil">{t('press', 'affil')}</span>
+            <a href="mailto:christoph@evolea.ch" class="brand-press__mail">christoph@evolea.ch</a>
+            <span class="brand-press__loc">{t('press', 'location')}</span>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+
+<div class="brand-toast" id="brand-toast" role="status" aria-live="polite">{isDE ? 'Kopiert' : 'Copied'}</div>
+
+<script is:inline define:vars={{ copiedSuffix: copy.toast.copied[lang] }}>
+  // Hex copy + toast handler. Listens globally for [data-copy] activations.
+  const toast = document.getElementById('brand-toast');
+  let toastTimer;
+  function showToast(msg) {
+    if (!toast) return;
+    toast.textContent = msg;
+    toast.classList.add('brand-toast--show');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(() => toast.classList.remove('brand-toast--show'), 1800);
+  }
+  document.addEventListener('click', (e) => {
+    const target = /** @type {HTMLElement | null} */ (e.target);
+    if (!target) return;
+    const cp = target.closest('[data-copy]');
+    if (cp instanceof HTMLElement) {
+      const value = cp.dataset.copy ?? '';
+      if (navigator.clipboard) {
+        navigator.clipboard.writeText(value).catch(() => {});
+      }
+      showToast(`${value}${copiedSuffix}`);
+    }
+  });
+</script>
+
+<style>
+  /* ============================================================
+     Brand & Press page — local layout styles.
+     Tokens (--evolea-*, --gradient-*, --shadow-btn-*) come from
+     src/styles/global.css :root. Brand atoms (BrandButton,
+     BrandStripe, BrandSwatch) ship their own scoped styles.
+     ============================================================ */
+  .brand-page {
+    --rail: clamp(20px, 4vw, 56px);
+    --section-y: clamp(72px, 9vw, 128px);
+    --max: 1200px;
+    background:
+      radial-gradient(120% 60% at 80% -10%, rgba(233, 123, 241, 0.12), transparent 60%),
+      radial-gradient(80% 50% at 0% 10%, rgba(123, 237, 213, 0.10), transparent 60%),
+      var(--evolea-cream);
+    overflow-x: hidden;
+  }
+  .brand-page :global(::selection) { background: rgba(221, 72, 224, 0.25); }
+  .brand-page img { max-width: 100%; display: block; }
+
+  .brand-wrap { max-width: var(--max); margin: 0 auto; }
+
+  /* ----- Hero ----- */
+  .brand-hero {
+    position: relative;
+    padding: clamp(60px, 9vw, 120px) var(--rail) clamp(80px, 10vw, 140px);
+    max-width: var(--max);
+    margin: 0 auto;
+    overflow: hidden;
+  }
+  .brand-hero__canvas { position: absolute; inset: 0; pointer-events: none; z-index: 0; }
+  .brand-blob { position: absolute; border-radius: 50%; filter: blur(50px); opacity: 0.55; }
+  .brand-blob--b1 { width: 520px; height: 520px; right: -120px; top: -160px;
+    background: radial-gradient(circle, #FF9ECC, transparent 60%); }
+  .brand-blob--b2 { width: 420px; height: 420px; right: 120px; top: 80px;
+    background: radial-gradient(circle, #FFE066, transparent 60%); opacity: 0.45; }
+  .brand-blob--b3 { width: 360px; height: 360px; left: -100px; bottom: -80px;
+    background: radial-gradient(circle, #7BEDD5, transparent 60%); opacity: 0.5; }
+
+  .brand-hero__grid {
+    display: grid;
+    grid-template-columns: 1.05fr 0.95fr;
+    gap: 40px;
+    align-items: center;
+    position: relative;
+    z-index: 1;
+  }
+  .brand-hero__copy { min-width: 0; }
+  .brand-hero__eyebrow {
+    display: inline-flex; align-items: center; gap: 10px;
+    font-size: 12px; letter-spacing: 0.18em; text-transform: uppercase; font-weight: 700;
+    color: var(--evolea-magenta); margin-bottom: 24px;
+  }
+  .brand-hero__title {
+    font-family: 'Fredoka', sans-serif;
+    font-size: clamp(48px, 8vw, 104px);
+    line-height: 0.96;
+    letter-spacing: -0.025em;
+    margin: 0 0 28px;
+    font-weight: 700;
+    color: var(--evolea-deep-purple);
+    max-width: 14ch;
+  }
+  .brand-hero__title-accent {
+    background: var(--gradient-spectrum);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    background-size: 220% 100%;
+    animation: brand-drift 14s ease-in-out infinite alternate;
+  }
+  @keyframes brand-drift {
+    from { background-position: 0% 50%; }
+    to   { background-position: 100% 50%; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .brand-hero__title-accent { animation: none; }
+  }
+  .brand-hero__lede {
+    font-size: clamp(18px, 1.5vw, 22px);
+    line-height: 1.55;
+    color: var(--evolea-text-light);
+    max-width: 56ch;
+    margin: 0 0 36px;
+  }
+  .brand-hero__actions {
+    display: flex; gap: 12px; flex-wrap: wrap;
+  }
+
+  .brand-hero__art {
+    position: relative;
+    aspect-ratio: 1 / 1;
+    max-width: 540px;
+    margin-left: auto;
+  }
+  .brand-frame {
+    position: absolute;
+    border-radius: 28px;
+    overflow: hidden;
+    box-shadow: 0 30px 60px -20px rgba(45, 42, 50, 0.25);
+    background: var(--evolea-white);
+  }
+  .brand-frame img { width: 100%; height: 100%; object-fit: cover; }
+  .brand-frame--f1 { inset: 0 32% 28% 0; transform: rotate(-3deg); }
+  .brand-frame--f2 { inset: 18% 0 0 38%; transform: rotate(4deg); }
+  .brand-frame--f3 { bottom: 0; left: 8%; width: 44%; aspect-ratio: 1/1; transform: rotate(-2deg); }
+
+  .brand-fly { position: absolute; pointer-events: none; }
+  .brand-fly--a { top: 14%; left: 6%; width: 64px; transform: rotate(-8deg); opacity: 0.85; animation: brand-bob 7s ease-in-out infinite; }
+  .brand-fly--b { bottom: 18%; right: 6%; width: 50px; transform: rotate(12deg); opacity: 0.7; animation: brand-bob 9s ease-in-out infinite reverse; }
+  @keyframes brand-bob {
+    0%, 100% { transform: translateY(0) rotate(var(--r, 0deg)); }
+    50%      { transform: translateY(-10px) rotate(var(--r, 0deg)); }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .brand-fly { animation: none; }
+  }
+
+  /* ----- Section scaffolding ----- */
+  .brand-sect {
+    padding: var(--section-y) var(--rail);
+    position: relative;
+  }
+  .brand-sect--white { background: var(--evolea-white); }
+  .brand-philosophy {
+    background: var(--evolea-white);
+    border-top: 1px solid rgba(45, 42, 50, 0.06);
+    border-bottom: 1px solid rgba(45, 42, 50, 0.06);
+  }
+  .brand-sect-head {
+    display: flex;
+    align-items: end;
+    justify-content: space-between;
+    gap: 24px;
+    margin-bottom: 48px;
+    flex-wrap: wrap;
+  }
+  .brand-sect-head h2 {
+    margin: 0;
+    font-family: 'Fredoka', sans-serif;
+    font-size: clamp(32px, 4.2vw, 56px);
+    letter-spacing: -0.02em;
+    color: var(--evolea-deep-purple);
+    font-weight: 700;
+    line-height: 1.15;
+  }
+  .brand-sect-head h2 em {
+    font-style: normal;
+    background: var(--gradient-spectrum);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+  .brand-sect-head p {
+    max-width: 48ch;
+    color: var(--evolea-text-light);
+    margin: 0;
+  }
+  .brand-eyebrow-mini {
+    display: inline-block;
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--evolea-magenta);
+    font-weight: 700;
+    margin-bottom: 14px;
+  }
+
+  /* ----- Philosophy ----- */
+  .brand-pillars {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+  }
+  .brand-pillar {
+    border-radius: 24px;
+    padding: 32px;
+    background: var(--evolea-cream);
+    border: 1px solid rgba(45, 42, 50, 0.06);
+    transition: transform 260ms cubic-bezier(0.22, 0.61, 0.36, 1), box-shadow 260ms;
+  }
+  .brand-pillar:hover {
+    transform: translateY(-3px);
+    box-shadow: var(--shadow-card);
+  }
+  .brand-pillar__num {
+    font-family: 'Fredoka', sans-serif;
+    font-weight: 700;
+    font-size: 14px;
+    color: var(--evolea-magenta);
+    letter-spacing: 0.1em;
+    margin-bottom: 18px;
+  }
+  .brand-pillar h3 {
+    margin: 0 0 10px;
+    font-family: 'Fredoka', sans-serif;
+    font-size: 24px;
+    color: var(--evolea-deep-purple);
+    font-weight: 700;
+  }
+  .brand-pillar p {
+    margin: 0;
+    color: var(--evolea-text-light);
+    font-size: 15px;
+    line-height: 1.6;
+  }
+  .brand-pillar--feat {
+    background: var(--gradient-magenta);
+    border-color: transparent;
+  }
+  .brand-pillar--feat .brand-pillar__num,
+  .brand-pillar--feat h3,
+  .brand-pillar--feat p { color: #fff; }
+  .brand-pillar--feat .brand-pillar__num { opacity: 0.9; }
+  .brand-pillar--feat p { opacity: 0.92; }
+
+  /* ----- Logo board ----- */
+  .brand-logo-board {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+  }
+  .brand-logo-stage {
+    aspect-ratio: 1.4 / 1;
+    background:
+      radial-gradient(60% 80% at 30% 40%, rgba(255, 224, 102, 0.30), transparent 70%),
+      radial-gradient(60% 80% at 70% 30%, rgba(233, 123, 241, 0.28), transparent 70%),
+      radial-gradient(60% 80% at 50% 80%, rgba(123, 237, 213, 0.25), transparent 70%),
+      var(--evolea-cream);
+    border-radius: 32px;
+    padding: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid rgba(45, 42, 50, 0.06);
+    overflow: hidden;
+  }
+  .brand-logo-stage img { max-width: 70%; height: auto; }
+  .brand-logo-stage--dark {
+    background: radial-gradient(70% 90% at 50% 50%, rgba(221, 72, 224, 0.4), transparent 70%), var(--evolea-charcoal);
+    border-color: transparent;
+  }
+  .brand-logo-stage--dark img { filter: drop-shadow(0 8px 24px rgba(0, 0, 0, 0.4)); }
+  .brand-logo-stage--prism {
+    background: var(--gradient-spectrum);
+    background-size: 200% 100%;
+    animation: brand-drift 18s ease-in-out infinite alternate;
+    border-color: transparent;
+  }
+  .brand-logo-stage--prism svg { width: 60%; max-width: 220px; }
+  .brand-logo-label {
+    margin-top: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+    font-size: 13px;
+    color: var(--evolea-text-light);
+  }
+  .brand-logo-label__name { font-weight: 600; color: var(--evolea-text); }
+
+  /* ----- Downloads ----- */
+  .brand-downloads { margin-top: 48px; }
+  .brand-dl-grid {
+    display: grid;
+    gap: 18px;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  }
+  .brand-dl-card {
+    position: relative;
+    border-radius: 24px;
+    overflow: hidden;
+    background: var(--evolea-white);
+    border: 1px solid rgba(45, 42, 50, 0.06);
+    transition: transform 260ms cubic-bezier(0.22, 0.61, 0.36, 1), box-shadow 260ms;
+    display: flex;
+    flex-direction: column;
+  }
+  .brand-dl-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 16px 40px rgba(45, 42, 50, 0.14);
+  }
+  .brand-dl-thumb {
+    aspect-ratio: 4 / 3;
+    position: relative;
+    overflow: hidden;
+    background: var(--evolea-cream);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .brand-dl-thumb img {
+    width: 100%; height: 100%;
+    object-fit: cover;
+    transition: transform 520ms cubic-bezier(0.22, 0.61, 0.36, 1);
+  }
+  .brand-dl-card:hover .brand-dl-thumb img { transform: scale(1.04); }
+  .brand-dl-thumb.contain img { object-fit: contain; padding: 28px; }
+  .brand-dl-thumb.gradient {
+    background:
+      radial-gradient(60% 80% at 30% 40%, rgba(255, 224, 102, 0.30), transparent 70%),
+      radial-gradient(60% 80% at 70% 30%, rgba(233, 123, 241, 0.28), transparent 70%),
+      radial-gradient(60% 80% at 50% 80%, rgba(123, 237, 213, 0.25), transparent 70%),
+      var(--evolea-cream);
+  }
+  .brand-dl-thumb.dark { background: var(--evolea-charcoal); }
+  .brand-dl-thumb.prism {
+    background: var(--gradient-spectrum);
+    background-size: 200% 100%;
+    animation: brand-drift 18s ease-in-out infinite alternate;
+  }
+  .brand-dl-tag {
+    position: absolute;
+    top: 12px;
+    left: 12px;
+    font-size: 10px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    font-weight: 700;
+    padding: 5px 9px;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.92);
+    color: var(--evolea-deep-purple);
+    backdrop-filter: blur(6px);
+  }
+  .brand-dl-tag--dark { background: rgba(0, 0, 0, 0.5); color: #fff; }
+  .brand-dl-fontpreview {
+    text-align: center;
+    padding: 14px;
+    color: var(--evolea-deep-purple);
+  }
+  .brand-dl-fontpreview__aa { font-family: 'Fredoka', sans-serif; font-weight: 700; font-size: 48px; line-height: 1; }
+  .brand-dl-fontpreview__cap { font-family: 'Poppins', sans-serif; font-size: 12px; letter-spacing: 0.06em; margin-top: 6px; }
+  .brand-dl-teampack {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    width: 100%;
+    height: 100%;
+    background: var(--gradient-portrait);
+  }
+  .brand-dl-meta {
+    padding: 18px 20px 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    flex: 1;
+  }
+  .brand-dl-name {
+    font-family: 'Fredoka', sans-serif;
+    font-weight: 700;
+    font-size: 18px;
+    color: var(--evolea-deep-purple);
+    margin: 0;
+  }
+  .brand-dl-desc {
+    margin: 0;
+    font-size: 13px;
+    color: var(--evolea-text-light);
+    line-height: 1.5;
+  }
+  .brand-dl-btns {
+    display: flex;
+    gap: 6px;
+    flex-wrap: wrap;
+    margin-top: auto;
+  }
+  .brand-dl-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 7px 12px;
+    border-radius: 999px;
+    background: var(--evolea-cream);
+    color: var(--evolea-deep-purple);
+    border: 1px solid rgba(45, 42, 50, 0.06);
+    font-size: 12px;
+    font-weight: 600;
+    text-decoration: none;
+    transition: background 140ms, color 140ms, border-color 140ms;
+  }
+  .brand-dl-btn:hover {
+    background: var(--evolea-deep-purple);
+    color: #fff;
+    border-color: transparent;
+  }
+  .brand-dl-btn--primary {
+    background: var(--gradient-magenta);
+    color: #fff;
+    border-color: transparent;
+    box-shadow: var(--shadow-btn-rest);
+  }
+  .brand-dl-btn--primary:hover { box-shadow: var(--shadow-btn-hover); }
+  .brand-dl-btn svg { width: 12px; height: 12px; }
+
+  /* Mega request bar */
+  .brand-megadown {
+    margin-top: 56px;
+    padding: 28px 32px;
+    border-radius: 24px;
+    background:
+      radial-gradient(60% 100% at 100% 0%, rgba(221, 72, 224, 0.45), transparent 60%),
+      radial-gradient(40% 80% at 0% 100%, rgba(123, 237, 213, 0.28), transparent 60%),
+      var(--evolea-charcoal);
+    color: #fff;
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    flex-wrap: wrap;
+    box-shadow: 0 30px 60px -20px rgba(45, 42, 50, 0.4);
+  }
+  .brand-megadown__copy { flex: 1; min-width: 240px; }
+  .brand-megadown h3 {
+    margin: 0 0 6px;
+    font-family: 'Fredoka', sans-serif;
+    font-weight: 700;
+    color: #fff;
+    font-size: 24px;
+  }
+  .brand-megadown p { margin: 0; color: rgba(255, 255, 255, 0.75); font-size: 14px; max-width: 56ch; }
+
+  /* ----- Color palette ----- */
+  .brand-pal-heading {
+    margin: 0 0 16px;
+    color: var(--evolea-magenta);
+    font-size: 13px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    font-weight: 700;
+  }
+  .brand-palette {
+    display: grid;
+    gap: 14px;
+    margin-bottom: 32px;
+  }
+  .brand-palette--prim { grid-template-columns: repeat(3, 1fr); }
+  .brand-palette--spec { grid-template-columns: repeat(8, 1fr); }
+  .brand-palette--neut { grid-template-columns: repeat(5, 1fr); }
+
+  /* ----- Gradients ----- */
+  .brand-grad-grid {
+    display: grid;
+    gap: 18px;
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .brand-gradcard {
+    border-radius: 24px;
+    overflow: hidden;
+    border: 1px solid rgba(45, 42, 50, 0.06);
+    background: var(--evolea-white);
+  }
+  .brand-gradcard__strip { height: 160px; }
+  .brand-gradcard__body { padding: 20px 22px; }
+  .brand-gradcard h4 {
+    margin: 0 0 6px;
+    font-family: 'Fredoka', sans-serif;
+    font-weight: 700;
+    font-size: 18px;
+    color: var(--evolea-deep-purple);
+  }
+  .brand-gradcard p { margin: 0 0 12px; font-size: 13px; color: var(--evolea-text-light); }
+  .brand-gradcard code {
+    display: block;
+    font-family: 'JetBrains Mono', ui-monospace, Menlo, monospace;
+    font-size: 11px;
+    background: var(--evolea-cream);
+    border-radius: 10px;
+    padding: 10px 12px;
+    color: var(--evolea-deep-purple);
+    overflow-x: auto;
+    border: 1px solid rgba(45, 42, 50, 0.06);
+    word-break: break-all;
+  }
+
+  /* ----- Typography ----- */
+  .brand-typo-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 32px;
+    align-items: start;
+  }
+  .brand-typo-card {
+    border-radius: 24px;
+    padding: 36px;
+    background: var(--evolea-white);
+    border: 1px solid rgba(45, 42, 50, 0.06);
+  }
+  .brand-typo-card__label {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    font-size: 12px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--evolea-magenta);
+    font-weight: 700;
+    margin-bottom: 24px;
+  }
+  .brand-typo-card__display {
+    font-family: 'Fredoka', sans-serif;
+    font-weight: 700;
+    font-size: clamp(56px, 7vw, 96px);
+    line-height: 0.95;
+    color: var(--evolea-deep-purple);
+    margin: 0 0 18px;
+  }
+  .brand-typo-card__ax {
+    background: var(--gradient-spectrum);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+  .brand-typo-card__body-spec {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 500;
+    font-size: 28px;
+    line-height: 1.45;
+    color: var(--evolea-deep-purple);
+    margin: 0 0 18px;
+  }
+  .brand-typo-card__glyphs {
+    font-family: 'Fredoka', sans-serif;
+    font-weight: 600;
+    font-size: 22px;
+    color: var(--evolea-text-light);
+    letter-spacing: 0.04em;
+    border-top: 1px solid rgba(45, 42, 50, 0.06);
+    padding-top: 14px;
+  }
+  .brand-typo-card__glyphs--sans { font-family: 'Poppins', sans-serif; }
+  .brand-typo-card__specifics {
+    margin-top: 20px;
+    display: flex;
+    gap: 18px;
+    flex-wrap: wrap;
+    font-size: 12px;
+    color: var(--evolea-text-light);
+  }
+  .brand-typo-card__specifics b {
+    color: var(--evolea-deep-purple);
+    font-weight: 600;
+    display: block;
+  }
+
+  .brand-scale {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    margin-top: 32px;
+    background: var(--evolea-white);
+    border-radius: 24px;
+    padding: 20px 28px;
+    border: 1px solid rgba(45, 42, 50, 0.06);
+  }
+  .brand-scale__row {
+    display: grid;
+    grid-template-columns: 110px 80px 1fr;
+    gap: 18px;
+    align-items: baseline;
+    padding: 12px 0;
+    border-bottom: 1px dashed rgba(45, 42, 50, 0.06);
+  }
+  .brand-scale__row:last-child { border-bottom: 0; }
+  .brand-scale__role {
+    font-size: 11px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--evolea-magenta);
+    font-weight: 700;
+  }
+  .brand-scale__size {
+    font-family: 'JetBrains Mono', ui-monospace, Menlo, monospace;
+    font-size: 13px;
+    color: var(--evolea-text-light);
+  }
+  .brand-scale__demo {
+    font-family: 'Fredoka', sans-serif;
+    color: var(--evolea-deep-purple);
+    font-weight: 600;
+  }
+  .brand-scale__demo--sans {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 400;
+    color: var(--evolea-text);
+    font-size: 14px;
+  }
+  .brand-scale__demo--eyebrow {
+    font-family: 'Poppins', sans-serif;
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--evolea-magenta);
+  }
+
+  /* ----- Imagery ----- */
+  .brand-imagery-heading {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 600;
+    font-size: 14px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--evolea-magenta);
+    margin: 24px 0 12px;
+  }
+  .brand-img-grid {
+    display: grid;
+    gap: 14px;
+    grid-template-columns: repeat(4, 1fr);
+  }
+  .brand-img-tile {
+    aspect-ratio: 1 / 1;
+    border-radius: 20px;
+    overflow: hidden;
+    position: relative;
+    border: 1px solid rgba(45, 42, 50, 0.06);
+    background: var(--evolea-white);
+  }
+  .brand-img-tile img { width: 100%; height: 100%; object-fit: cover; }
+  .brand-img-tile__cap {
+    position: absolute;
+    left: 10px;
+    bottom: 10px;
+    right: 10px;
+    background: rgba(255, 251, 247, 0.92);
+    backdrop-filter: blur(8px);
+    border-radius: 10px;
+    padding: 8px 10px;
+    font-size: 11px;
+    color: var(--evolea-deep-purple);
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 8px;
+  }
+  .brand-img-tile__dl {
+    color: var(--evolea-magenta);
+    text-decoration: none;
+  }
+
+  .brand-team-grid {
+    display: grid;
+    gap: 14px;
+    grid-template-columns: repeat(4, 1fr);
+  }
+  .brand-team-card {
+    border-radius: 20px;
+    overflow: hidden;
+    border: 1px solid rgba(45, 42, 50, 0.06);
+    background: var(--evolea-white);
+  }
+  .brand-team-card__photo {
+    aspect-ratio: 4 / 5;
+    background: var(--gradient-portrait);
+    position: relative;
+    overflow: hidden;
+  }
+  .brand-team-card__photo img { width: 100%; height: 100%; object-fit: cover; }
+  .brand-team-card__meta {
+    padding: 14px 18px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .brand-team-card__name {
+    font-family: 'Fredoka', sans-serif;
+    font-weight: 600;
+    font-size: 15px;
+    color: var(--evolea-deep-purple);
+  }
+  .brand-team-card__dl {
+    font-size: 12px;
+    color: var(--evolea-magenta);
+    text-decoration: none;
+    font-weight: 600;
+  }
+
+  /* ----- Components ----- */
+  .brand-comp-grid {
+    display: grid;
+    gap: 24px;
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .brand-comp-card {
+    border-radius: 24px;
+    padding: 28px;
+    background: var(--evolea-white);
+    border: 1px solid rgba(45, 42, 50, 0.06);
+  }
+  .brand-comp-card h4 {
+    margin: 0 0 18px;
+    font-family: 'Poppins', sans-serif;
+    font-size: 14px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--evolea-magenta);
+    font-weight: 700;
+  }
+  .brand-comp-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 14px;
+    align-items: center;
+  }
+  .brand-comp-card__note {
+    font-size: 13px;
+    color: var(--evolea-text-light);
+    margin: 8px 0 0;
+  }
+
+  .brand-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 12px;
+    border-radius: 999px;
+    font-size: 13px;
+    font-weight: 600;
+  }
+  .brand-chip--magenta { background: #FBE3F7; color: var(--evolea-magenta); }
+  .brand-chip--green   { background: #E0F8F1; color: #1F8268; }
+  .brand-chip--gold    { background: #FFF4DB; color: #B07A1E; }
+  .brand-chip--purple  { background: #F2E8FF; color: #6E3FB0; }
+
+  .brand-story-card {
+    border-radius: 18px;
+    overflow: hidden;
+    border: 1px solid rgba(45, 42, 50, 0.06);
+    background: var(--evolea-cream);
+  }
+  .brand-story-card__img {
+    aspect-ratio: 16 / 9;
+    background-size: cover;
+    background-position: center;
+  }
+  .brand-story-card__body { padding: 18px 20px; }
+  .brand-story-card__eyebrow {
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--evolea-magenta);
+    font-weight: 700;
+  }
+  .brand-story-card__body h4 {
+    margin: 6px 0 4px;
+    font-family: 'Fredoka', sans-serif;
+    font-size: 18px;
+    color: var(--evolea-deep-purple);
+    letter-spacing: normal;
+    text-transform: none;
+  }
+  .brand-story-card__body p {
+    margin: 0;
+    font-size: 13px;
+    color: var(--evolea-text-light);
+  }
+
+  .brand-cta-block {
+    background: var(--gradient-spenden);
+    border-radius: 18px;
+    padding: 24px;
+    color: #fff;
+  }
+  .brand-cta-block__eyebrow {
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    opacity: 0.85;
+    font-weight: 700;
+  }
+  .brand-cta-block h4 {
+    margin: 8px 0 6px;
+    font-family: 'Fredoka', sans-serif;
+    color: #fff;
+    font-size: 18px;
+    letter-spacing: normal;
+    text-transform: none;
+  }
+  .brand-cta-block p {
+    margin: 0 0 14px;
+    font-size: 13px;
+    opacity: 0.85;
+  }
+
+  /* ----- Voice ----- */
+  .brand-voice-box {
+    border-radius: 32px;
+    padding: 56px;
+    background:
+      radial-gradient(60% 100% at 100% 0%, rgba(255, 158, 204, 0.18), transparent 60%),
+      radial-gradient(40% 80% at 0% 100%, rgba(123, 237, 213, 0.16), transparent 60%),
+      var(--evolea-charcoal);
+    color: #fff;
+    overflow: hidden;
+  }
+  .brand-voice-box__quote {
+    font-family: 'Fredoka', sans-serif;
+    font-weight: 700;
+    font-size: clamp(28px, 3.4vw, 44px);
+    line-height: 1.2;
+    color: #fff;
+    margin: 0 0 32px;
+    max-width: 24ch;
+    text-wrap: balance;
+  }
+  .brand-voice-box__accent {
+    background: var(--gradient-spectrum);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+  .brand-voice-cols {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 32px;
+  }
+  .brand-voice-cols h5 {
+    margin: 0 0 8px;
+    font-size: 12px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: rgba(255, 255, 255, 0.5);
+    font-weight: 700;
+  }
+  .brand-voice-cols ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  .brand-voice-cols li {
+    font-size: 14px;
+    color: rgba(255, 255, 255, 0.85);
+    line-height: 1.5;
+  }
+  .brand-voice-cols li::before {
+    content: '— ';
+    color: var(--evolea-bright-pink);
+  }
+
+  /* ----- Do/Don't ----- */
+  .brand-dd-grid {
+    display: grid;
+    gap: 18px;
+    grid-template-columns: 1fr 1fr;
+  }
+  .brand-dd {
+    border-radius: 24px;
+    padding: 28px 32px;
+    border: 1px solid rgba(45, 42, 50, 0.06);
+    background: var(--evolea-white);
+  }
+  .brand-dd h4 {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin: 0 0 16px;
+    font-family: 'Fredoka', sans-serif;
+    font-size: 18px;
+  }
+  .brand-dd--do h4   { color: #2D7A57; }
+  .brand-dd--dont h4 { color: #B23B3B; }
+  .brand-dd ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .brand-dd li {
+    display: grid;
+    grid-template-columns: 18px 1fr;
+    gap: 10px;
+    font-size: 14px;
+    line-height: 1.5;
+    color: var(--evolea-text);
+  }
+  .brand-dd li svg {
+    width: 16px;
+    height: 16px;
+    margin-top: 3px;
+  }
+  .brand-dd--do li svg   { color: #2D7A57; }
+  .brand-dd--dont li svg { color: #B23B3B; }
+
+  /* ----- Press ----- */
+  .brand-press {
+    border-radius: 32px;
+    padding: 64px 56px;
+    background:
+      radial-gradient(60% 100% at 0% 0%, rgba(255, 224, 102, 0.18), transparent 60%),
+      radial-gradient(50% 80% at 100% 100%, rgba(233, 123, 241, 0.18), transparent 60%),
+      var(--evolea-white);
+    border: 1px solid rgba(45, 42, 50, 0.06);
+    display: grid;
+    grid-template-columns: 1.1fr 1fr;
+    gap: 48px;
+    align-items: center;
+    overflow: hidden;
+  }
+  .brand-press h2 {
+    margin: 0 0 16px;
+    font-family: 'Fredoka', sans-serif;
+    font-size: clamp(28px, 3.4vw, 44px);
+    color: var(--evolea-deep-purple);
+    line-height: 1.2;
+  }
+  .brand-press p {
+    color: var(--evolea-text-light);
+    margin: 0 0 24px;
+    max-width: 48ch;
+  }
+  .brand-press__contact {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    padding: 20px 24px;
+    border-radius: 20px;
+    border: 1px solid rgba(45, 42, 50, 0.06);
+    background: var(--evolea-cream);
+  }
+  .brand-press__role {
+    font-size: 12px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--evolea-magenta);
+    font-weight: 700;
+  }
+  .brand-press__who {
+    font-family: 'Fredoka', sans-serif;
+    font-weight: 700;
+    color: var(--evolea-deep-purple);
+  }
+  .brand-press__affil { font-size: 13px; color: var(--evolea-text-light); }
+  .brand-press__mail {
+    margin-top: 10px;
+    font-size: 13px;
+    color: var(--evolea-deep-purple);
+    font-weight: 600;
+    text-decoration: none;
+  }
+  .brand-press__mail:hover { color: var(--evolea-magenta); }
+  .brand-press__loc { font-size: 13px; color: var(--evolea-text-light); }
+
+  /* ----- Toast ----- */
+  .brand-toast {
+    position: fixed;
+    left: 50%;
+    bottom: 24px;
+    transform: translateX(-50%) translateY(120%);
+    background: var(--evolea-charcoal);
+    color: #fff;
+    padding: 12px 18px;
+    border-radius: 999px;
+    font-size: 13px;
+    font-weight: 600;
+    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.3);
+    transition: transform 260ms cubic-bezier(0.22, 0.61, 0.36, 1);
+    z-index: 100;
+    pointer-events: none;
+  }
+  .brand-toast--show { transform: translateX(-50%) translateY(0); }
+
+  /* ----- Responsive ----- */
+  @media (max-width: 980px) {
+    .brand-hero__grid { grid-template-columns: 1fr; }
+    .brand-hero__art { margin: 0 auto; max-width: 420px; }
+    .brand-pillars { grid-template-columns: 1fr; }
+    .brand-grad-grid,
+    .brand-comp-grid,
+    .brand-dd-grid { grid-template-columns: 1fr; }
+    .brand-img-grid,
+    .brand-team-grid { grid-template-columns: repeat(2, 1fr); }
+    .brand-palette--prim { grid-template-columns: 1fr; }
+    .brand-palette--spec { grid-template-columns: repeat(4, 1fr); }
+    .brand-palette--neut { grid-template-columns: repeat(2, 1fr); }
+    .brand-logo-board { grid-template-columns: 1fr; }
+    .brand-voice-cols { grid-template-columns: 1fr; }
+    .brand-press {
+      padding: 40px 28px;
+      grid-template-columns: 1fr;
+    }
+    .brand-typo-grid { grid-template-columns: 1fr; }
+    .brand-megadown { padding: 24px; }
+  }
+</style>
