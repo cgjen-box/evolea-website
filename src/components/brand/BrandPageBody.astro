@@ -1009,13 +1009,16 @@ const TEAM = [
   }
   .brand-hero__title {
     font-family: 'Fredoka', sans-serif;
-    font-size: clamp(48px, 8vw, 104px);
-    line-height: 0.96;
-    letter-spacing: -0.025em;
+    /* Cap reduced from 104px to 84px so "voller Möglichkeiten." stays
+       inside the left grid column at desktop widths and doesn't overlap
+       the photo collage. Lower vw scaling for the same reason. */
+    font-size: clamp(44px, 6.2vw, 84px);
+    line-height: 0.98;
+    letter-spacing: -0.02em;
     margin: 0 0 28px;
     font-weight: 700;
     color: var(--evolea-deep-purple);
-    max-width: 14ch;
+    max-width: 13ch;
   }
   .brand-hero__title-accent {
     background: var(--gradient-spectrum);
@@ -1202,7 +1205,13 @@ const TEAM = [
     background: var(--gradient-spectrum);
     background-size: 200% 100%;
     animation: brand-drift 18s ease-in-out infinite alternate;
-    border-color: transparent;
+    /* Drop the 1px transparent border (it lets sub-pixel rendering
+       leak the inner gradient against the rounded corner) and force
+       GPU compositing so the rounded edge stays anti-aliased while
+       the background animates. */
+    border: 0;
+    transform: translateZ(0);
+    isolation: isolate;
   }
   .brand-logo-stage--prism svg { width: 60%; max-width: 220px; }
   .brand-logo-label {
