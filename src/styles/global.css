@@ -4,79 +4,97 @@
 
 @layer base {
   :root {
-    /* ========================================
-       TRUE evolea.ch SPECTRUM COLORS
-       Bold, vivid, and full of energy
-       ======================================== */
+    /* ============================================================
+       EVOLEA brand tokens — aligned with brand spec v2.6 (April 2026)
+       Source: EVOLEA-CLAUDE-DESIGN-SYSTEM.md (repo root) + brand
+       package colors_and_type.css.
 
-    /* Primary Magenta/Fuchsia Family */
+       SYNC RULE: hex values here are duplicated as literals in
+       tailwind.config.mjs to preserve Tailwind opacity-modifier
+       support (bg-evolea-X/10). When updating a hex, update both.
+       ============================================================ */
+
+    /* PRIMARY — Magenta / Deep Purple / Lavender */
     --evolea-magenta: #DD48E0;
-    --evolea-magenta-light: #EF5EDB;
-    --evolea-magenta-vivid: #E97BF1;
+    --evolea-deep-purple: #BA53AD;          /* canonical (spec) */
+    --evolea-purple: var(--evolea-deep-purple);  /* alias — back-compat */
+    --evolea-lavender: #CD87F8;             /* canonical (spec) */
+    --evolea-purple-light: var(--evolea-lavender);  /* alias */
+    --evolea-purple-dark: #8A3D7E;          /* spec "Deep Purple Mid" */
+    --evolea-purple-deepest: #5C2854;       /* spec "Deep Purple Dark" */
 
-    /* Lavender/Purple Family */
-    --evolea-purple: #BA53AD;
-    --evolea-purple-light: #CD87F8;
-    --evolea-purple-dark: #8A3D9E;
+    /* SPECTRUM — equally weighted, the gradient soul */
+    --evolea-mint: #7BEDD5;
+    --evolea-sunshine: #FFE066;             /* canonical (spec) */
+    --evolea-yellow: var(--evolea-sunshine);  /* alias */
+    --evolea-coral: #FF7E5D;
+    --evolea-blush: #EF8EAE;                /* canonical (spec) */
+    --evolea-pink: var(--evolea-blush);     /* alias */
+    --evolea-pink-hi: #FF9ECC;              /* spec "Pink Highlight" */
+    --evolea-bright-pink: #E97BF1;          /* canonical (spec) */
+    --evolea-magenta-vivid: var(--evolea-bright-pink);  /* alias */
+    --evolea-sky: #5DADE2;
+    --evolea-green: #2D7A57;                /* spec do/don't success green; success/WhatsApp accents */
+
+    /* GOLD — Spenden CTAs only */
+    --evolea-gold: #E8B86D;                 /* spec — fixed from prior #DCD49F */
+
+    /* Butterfly wings (live-site exact) */
+    --evolea-butterfly-l-start: #5DADE2;
+    --evolea-butterfly-l-end:   #CD87F8;
+    --evolea-butterfly-r-start: #EF8EAE;
+    --evolea-butterfly-r-end:   #DD48E0;
 
     /* Base */
     --evolea-cream: #FFFBF7;
     --evolea-white: #FFFFFF;
 
-    /* Spectrum Colors - EXACT evolea.ch */
-    --evolea-mint: #7BEDD5;
-    --evolea-mint-light: #A3F4E6;
-    --evolea-coral: #FF7E5D;
-    --evolea-coral-light: #FF9B82;
-    --evolea-coral-dark: #C96861;
-    --evolea-gold: #DCD49F;
-    --evolea-yellow: #FFE066;
-    --evolea-yellow-vivid: #FFD23F;
-    --evolea-pink: #EF8EAE;
-    --evolea-pink-light: #FFDEDE;
-    --evolea-sky: #5DADE2;
-    --evolea-sky-vivid: #3A86FF;
-    --evolea-teal: #2EC4B6;
-    --evolea-orange: #FF6B35;
-
     /* Text */
     --evolea-text: #2D2A32;
     --evolea-text-light: #5C5762;
+    --evolea-charcoal: #1A1A2E;             /* dark sections, vision statements */
 
-    /* Dark Mode / Vision Statements - per Brand Guide v3 */
-    --evolea-charcoal: #1A1A2E;
+    /* LEGACY — kept for back-compat with existing class consumers.
+       Audit + remove in a follow-up after grep-confirmed migration. */
+    --evolea-magenta-light: #EF5EDB;
+    --evolea-mint-light: #A3F4E6;
+    --evolea-coral-light: #FF9B82;
+    --evolea-coral-dark: #C96861;
+    --evolea-yellow-vivid: #FFD23F;
+    --evolea-pink-light: #FFDEDE;
+    --evolea-sky-vivid: #3A86FF;
+    --evolea-teal: #2EC4B6;
+    --evolea-orange: #FF6B35;
     --evolea-charcoal-light: #2D2A32;
 
-    /* Shadows - Vibrant with magenta undertones */
+    /* Shadows */
     --shadow-soft: 0 4px 20px rgba(186, 83, 173, 0.15);
     --shadow-card: 0 8px 30px rgba(186, 83, 173, 0.2);
     --shadow-elevated: 0 20px 50px rgba(186, 83, 173, 0.25);
     --shadow-prism: 0 0 100px rgba(233, 123, 241, 0.4), 0 0 150px rgba(123, 237, 213, 0.3);
     --shadow-text: 0 2px 4px rgba(0, 0, 0, 0.1), 0 4px 20px rgba(138, 61, 158, 0.3);
     --shadow-glow: 0 0 60px rgba(221, 72, 224, 0.5);
+    --shadow-btn-rest:  0 2px 8px rgba(186, 83, 173, 0.30);   /* spec §5.6 */
+    --shadow-btn-hover: 0 4px 12px rgba(186, 83, 173, 0.40);  /* spec §5.6 */
 
-    /* THE evolea.ch SIGNATURE PRISM GRADIENT */
-    --gradient-prism: linear-gradient(118deg, #7BEDD5 0%, #FFE066 21%, #FFFFFF 48%, #E97BF1 81%, #CD87F8 100%);
+    /* SIGNATURE GRADIENTS — verbatim spec values */
+    --gradient-prism: linear-gradient(90deg, #7BEDD5, #FFE066, #FF9ECC, #E97BF1, #CD87F8);
+    --gradient-spectrum: linear-gradient(90deg, #7BEDD5, #FFE066, #FF7E5D, #EF8EAE, #E97BF1, #CD87F8 80%, #7BEDD5);   /* spec "Prism Extended" */
+    --gradient-magenta: linear-gradient(135deg, #BA53AD, #DD48E0);              /* spec primary */
+    --gradient-magenta-hover: linear-gradient(135deg, #DD48E0, #BA53AD);        /* spec primary inverted */
+    --gradient-spenden: linear-gradient(135deg, #BA53AD, #8A3D7E, #5C2854);     /* /spenden/ closer */
+    --gradient-portrait: linear-gradient(135deg, #FF9ECC, #DD48E0);             /* team portrait backplate */
+    --gradient-vision-dark: linear-gradient(180deg, #1A1A2E, #2D2A32);          /* vision/philosophy sections */
+
+    /* LEGACY GRADIENTS — kept for back-compat. Audit + prune later. */
     --gradient-prism-vivid: linear-gradient(118deg, #7BEDD5 0%, #FFE066 15%, #FFDEDE 35%, #E97BF1 65%, #CD87F8 85%, #DD48E0 100%);
-
-    /* Hero & Primary Gradients */
     --gradient-hero: linear-gradient(135deg, #7BEDD5 0%, #FFE066 25%, #E97BF1 50%, #CD87F8 75%, #DD48E0 100%);
-    --gradient-spectrum: linear-gradient(90deg, #7BEDD5 0%, #FFE066 16%, #FF7E5D 32%, #EF8EAE 48%, #E97BF1 64%, #CD87F8 80%, #7BEDD5 100%);
-
-    /* Warm Gradients */
     --gradient-sunset: linear-gradient(135deg, #FF7E5D 0%, #EF8EAE 50%, #E97BF1 100%);
     --gradient-warmth: linear-gradient(135deg, #FFE066 0%, #FF7E5D 50%, #C96861 100%);
-
-    /* Cool Gradients */
     --gradient-ocean: linear-gradient(135deg, #7BEDD5 0%, #5DADE2 50%, #CD87F8 100%);
     --gradient-dream: linear-gradient(135deg, #EF8EAE 0%, #CD87F8 50%, #7BEDD5 100%);
-
-    /* Magenta & Lavender */
-    --gradient-magenta: linear-gradient(135deg, #BA53AD 0%, #DD48E0 50%, #E97BF1 100%);
     --gradient-lavender: linear-gradient(135deg, #CD87F8 0%, #E97BF1 50%, #EF8EAE 100%);
-
-    /* Mint family */
-    --gradient-mint: linear-gradient(135deg, #7BEDD5 0%, #A3F4E6 50%, #DCD49F 100%);
+    --gradient-mint: linear-gradient(135deg, #7BEDD5 0%, #A3F4E6 50%, #E8B86D 100%);
 
     /* ============================================
        BREAKPOINT REFERENCE VARIABLES
