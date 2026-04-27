@@ -351,9 +351,9 @@ const DOWNLOADS = [
     name: isDE ? 'Aquarell · Kind & Schmetterlinge' : 'Watercolor · child & butterflies',
     desc: isDE ? 'Kind mit aufsteigenden Schmetterlingen — Hero der Spenden-Seite.' : 'Child with rising butterflies — donate-page hero.',
     tag: 'Aquarell',
-    thumb: { src: `${base}/images/hero/spenden-hero.png`, mode: 'cover' as const },
+    thumb: { src: `${base}/images/hero/kind-schmetterlinge.png`, mode: 'cover' as const },
     formats: [
-      { label: 'PNG', size: 'Web', url: `${base}/images/hero/spenden-hero.png`, primary: true, isFile: true },
+      { label: 'PNG', size: 'Web', url: `${base}/images/hero/kind-schmetterlinge.png`, primary: true, isFile: true },
     ],
   },
   {
@@ -361,9 +361,9 @@ const DOWNLOADS = [
     name: isDE ? 'Aquarell · Spektrum-Kreis' : 'Watercolor · spectrum circle',
     desc: isDE ? 'Abstrakter Aquarell-Kreis im Farbspektrum — Blog-Illustration „Im Spektrum“.' : 'Abstract watercolor disc in spectrum colors — blog illustration "In the spectrum".',
     tag: 'Aquarell',
-    thumb: { src: `${base}/images/blog/im-spektrum.webp`, mode: 'cover' as const },
+    thumb: { src: `${base}/images/blog/spektrum-kreis.webp`, mode: 'cover' as const },
     formats: [
-      { label: 'WEBP', size: 'Web', url: `${base}/images/blog/im-spektrum.webp`, primary: true, isFile: true },
+      { label: 'WEBP', size: 'Web', url: `${base}/images/blog/spektrum-kreis.webp`, primary: true, isFile: true },
     ],
   },
   {
@@ -371,9 +371,9 @@ const DOWNLOADS = [
     name: isDE ? 'Aquarell · Evolea Schloss' : 'Watercolor · Evolea castle',
     desc: isDE ? 'Kinder beim Spielen und Malen vor dem Evolea-Schloss — Angebote-Hero.' : 'Children playing and painting in front of the Evolea castle — programs hero.',
     tag: 'Aquarell',
-    thumb: { src: `${base}/images/hero/angebote-hero.png`, mode: 'cover' as const },
+    thumb: { src: `${base}/images/hero/evolea-schloss.png`, mode: 'cover' as const },
     formats: [
-      { label: 'PNG', size: 'Web', url: `${base}/images/hero/angebote-hero.png`, primary: true, isFile: true },
+      { label: 'PNG', size: 'Web', url: `${base}/images/hero/evolea-schloss.png`, primary: true, isFile: true },
     ],
   },
   {
@@ -400,9 +400,9 @@ const DOWNLOADS = [
 ];
 
 const WATERCOLORS = [
-  { src: `${base}/images/blog/im-spektrum.webp`, name: isDE ? 'Spektrum-Kreis' : 'Spectrum circle' },
-  { src: `${base}/images/hero/spenden-hero.png`, name: isDE ? 'Kind & Schmetterlinge' : 'Child & butterflies' },
-  { src: `${base}/images/hero/angebote-hero.png`, name: isDE ? 'Evolea Schloss' : 'Evolea castle' },
+  { src: `${base}/images/blog/spektrum-kreis.webp`, name: isDE ? 'Spektrum-Kreis' : 'Spectrum circle' },
+  { src: `${base}/images/hero/kind-schmetterlinge.png`, name: isDE ? 'Kind & Schmetterlinge' : 'Child & butterflies' },
+  { src: `${base}/images/hero/evolea-schloss.png`, name: isDE ? 'Evolea Schloss' : 'Evolea castle' },
 ];
 
 const TEAM = [
@@ -448,10 +448,10 @@ const TEAM = [
 
         <div class="brand-hero__art" aria-hidden="true">
           <div class="brand-frame brand-frame--f1">
-            <img src={`${base}/images/blog/im-spektrum.webp`} alt="" loading="lazy" />
+            <img src={`${base}/images/blog/spektrum-kreis.webp`} alt="" loading="lazy" />
           </div>
           <div class="brand-frame brand-frame--f2">
-            <img src={`${base}/images/hero/spenden-hero.png`} alt="" loading="lazy" />
+            <img src={`${base}/images/hero/kind-schmetterlinge.png`} alt="" loading="lazy" />
           </div>
           <div class="brand-frame brand-frame--f3">
             <img src={`${base}/images/team/gianna-spiess.png`} alt="" loading="lazy" />
@@ -796,7 +796,7 @@ const TEAM = [
           <article class="brand-comp-card">
             <h4>{t('comp', 'cardHeading')}</h4>
             <div class="brand-story-card">
-              <div class="brand-story-card__img" style={`background-image: url('${base}/images/blog/im-spektrum.webp')`}></div>
+              <div class="brand-story-card__img" style={`background-image: url('${base}/images/blog/spektrum-kreis.webp')`}></div>
               <div class="brand-story-card__body">
                 <span class="brand-story-card__eyebrow">{t('comp', 'cardEyebrow')}</span>
                 <h4>{t('comp', 'cardTitle')}</h4>

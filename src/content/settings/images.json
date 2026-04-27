@@ -8,11 +8,12 @@
     "miniProjekte": "/images/programs/mini-projekte-hero.png",
     "miniTurnen": "/images/programs/mini-turnen-hero.png",
     "miniMuseum": "/images/programs/mini-museum-hero.png",
+    "miniAbenteuercamp": null,
     "miniRestaurantPoster": null,
     "tagesschule": "/images/hero/homepage-hero.png",
-    "angeboteIndex": "/images/hero/angebote-hero.png",
+    "angeboteIndex": "/images/hero/evolea-schloss.png",
     "evoleaCafe": "/images/hero/evolea-cafe-hero.png",
-    "spenden": "/images/hero/spenden-hero.png"
+    "spenden": "/images/hero/kind-schmetterlinge.png"
   },
   "programmeKarten": {
     "miniGarten": null,
