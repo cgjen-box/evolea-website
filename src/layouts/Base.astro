@@ -52,7 +52,7 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
     {alternates.map(({ lang, href }) => (
       <link rel="alternate" hreflang={lang} href={new URL(href, Astro.site)} />
     ))}
-    <link rel="alternate" hreflang="x-default" href={Astro.site} />
+    <link rel="alternate" hreflang="x-default" href={new URL(alternates.find((a) => a.lang === 'de')?.href ?? '/', Astro.site)} />
 
     <!-- Open Graph -->
     <meta property="og:type" content="website" />

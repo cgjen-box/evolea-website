@@ -82,8 +82,8 @@
     },
     "absaetze": [
       {
-        "de": "Ein inklusives Feriencamp für <strong class=\"text-evolea-mint\">junge Abenteurer:innen.</strong> Viele Ferienangebote sind für Kinder im Autismus-Spektrum oft schwer zugänglich – zu gross, zu unvorhersehbar, zu wenig individuell.",
-        "en": "An inclusive holiday camp for <strong class=\"text-evolea-mint\">young adventurers.</strong> Many holiday programs are often difficult for children on the autism spectrum to access – too large, too unpredictable, too impersonal."
+        "de": "Ein inklusives Feriencamp für <strong class=\"text-evolea-green\">junge Abenteurer:innen.</strong> Viele Ferienangebote sind für Kinder im Autismus-Spektrum oft schwer zugänglich – zu gross, zu unvorhersehbar, zu wenig individuell.",
+        "en": "An inclusive holiday camp for <strong class=\"text-evolea-green\">young adventurers.</strong> Many holiday programs are often difficult for children on the autism spectrum to access – too large, too unpredictable, too impersonal."
       },
       {
         "de": "Unser Mini Abenteuercamp bietet einen sicheren, naturnahen Rahmen, in dem Kinder gemeinsam die Welt draussen entdecken. Im Mittelpunkt steht ein Burgbauprojekt aus Naturmaterialien: Äste, Steine, Moos und Erde werden zu einer echten Burg. Jeden Tag kommt ein neues Thema dazu – Entdecken, Bauen, Bewegen, Forschen und Feiern.",
@@ -278,7 +278,7 @@
   },
   "ziele": {
     "titel": {
-      "de": "Projekt Ziele",
+      "de": "Projektziele",
       "en": "Project Goals"
     },
     "untertitel": {
@@ -440,7 +440,7 @@
       "email": "hello@evolea.ch"
     },
     "wichtig": {
-      "de": "Wichtig: Wir treffen uns jeden Morgen um <strong>09:00 Uhr</strong> an der Stapferstrasse 10. Bitte seid 5 Minuten vor Beginn vor Ort. Abholung ist um <strong>16:00 Uhr</strong>. Am Freitag (Fest-Tag) sind Eltern und Geschwister ab <strong>14:00 Uhr</strong> zur Burgeinweihung willkommen.",
+      "de": "Wichtig: Wir treffen uns jeden Morgen um <strong>09:00 Uhr</strong> an der Stapferstrasse 10. Bitte seien Sie 5 Minuten vor Beginn vor Ort. Abholung ist um <strong>16:00 Uhr</strong>. Am Freitag (Fest-Tag) sind Eltern und Geschwister ab <strong>14:00 Uhr</strong> zur Burgeinweihung willkommen.",
       "en": "Important: We meet every morning at <strong>09:00</strong> at Stapferstrasse 10. Please be on site 5 minutes before the start. Pick-up is at <strong>16:00</strong>. On Friday (Celebration Day), parents and siblings are welcome from <strong>14:00</strong> for the castle inauguration."
     }
   }

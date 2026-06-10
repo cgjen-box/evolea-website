@@ -36,6 +36,12 @@ export function useTranslatedPath(lang: Lang) {
   return function translatePath(path: string, l: Lang = lang): string {
     const base = getBase();
     const normalizedPath = path.startsWith('/') ? path : `/${path}`;
+    // Routes with different slugs per language (e.g. /spenden/ -> /en/donate/)
+    // must resolve to the real translated page, not the fallback redirect stub
+    if (l !== defaultLang) {
+      const mapped = routeMappings[defaultLang]?.[normalizedPath];
+      if (mapped) return `${base}${mapped}`;
+    }
     const langPath = !showDefaultLang && l === defaultLang
       ? normalizedPath
       : `/${l}${normalizedPath}`;
@@ -56,9 +62,25 @@ export function getAlternateLang(lang: Lang): Lang {
 const routeMappings: Record<string, Record<string, string>> = {
   de: {
     '/spenden/': '/en/donate/',
+    '/ueber-uns/': '/en/about/',
+    '/kontakt/': '/en/contact/',
+    '/impressum/': '/en/legal/',
+    '/datenschutz/': '/en/privacy/',
+    '/angebote/': '/en/programs/',
+    '/angebote/mini-garten/': '/en/programs/mini-garden/',
+    '/angebote/mini-projekte/': '/en/programs/mini-projects/',
+    '/angebote/mini-turnen/': '/en/programs/mini-sports/',
   },
   en: {
     '/donate/': '/spenden/',
+    '/about/': '/ueber-uns/',
+    '/contact/': '/kontakt/',
+    '/legal/': '/impressum/',
+    '/privacy/': '/datenschutz/',
+    '/programs/': '/angebote/',
+    '/programs/mini-garden/': '/angebote/mini-garten/',
+    '/programs/mini-projects/': '/angebote/mini-projekte/',
+    '/programs/mini-sports/': '/angebote/mini-turnen/',
   },
 };
 

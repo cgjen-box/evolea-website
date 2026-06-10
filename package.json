@@ -7,7 +7,7 @@
     "dev": "astro dev",
     "start": "astro dev",
     "build": "astro check && astro build",
-    "build:cloudflare": "npm install @astrojs/cloudflare@^12.6.13 --no-save && astro check && astro build",
+    "build:cloudflare": "npm install @astrojs/cloudflare@12.6.13 --no-save && astro check && astro build",
     "preview": "astro preview",
     "astro": "astro",
     "prepare": "husky || true",

@@ -23,7 +23,10 @@ if (!isGitHubPages) {
     });
     keystaticIntegration = (await import('@keystatic/astro')).default();
     useCloudflare = true;
-  } catch {
+  } catch (err) {
+    // On Cloudflare Pages a failed adapter import must fail the build —
+    // a silent static fallback would deploy with the wrong base/site URLs.
+    if (process.env.CF_PAGES === '1') throw err;
     // Packages not available locally, fall back to static build
   }
 }
@@ -54,13 +57,14 @@ export default defineConfig({
   build: {
     assets: 'assets',
   },
-  // Fix for Keystatic environment variables on Cloudflare Pages
+  // Keystatic env vars on Cloudflare Pages: with compatibility_date >= 2025-04-01
+  // and nodejs_compat (see wrangler.toml), process.env is populated at runtime,
+  // so the OAuth/session secrets are no longer inlined into the build artifact.
+  // Only the public OAuth client ID stays inlined as a fallback.
   // See: https://github.com/Thinkmill/keystatic/issues/1229
   vite: {
     define: {
       'process.env.KEYSTATIC_GITHUB_CLIENT_ID': JSON.stringify(process.env.KEYSTATIC_GITHUB_CLIENT_ID),
-      'process.env.KEYSTATIC_GITHUB_CLIENT_SECRET': JSON.stringify(process.env.KEYSTATIC_GITHUB_CLIENT_SECRET),
-      'process.env.KEYSTATIC_SECRET': JSON.stringify(process.env.KEYSTATIC_SECRET),
     },
   },
 });

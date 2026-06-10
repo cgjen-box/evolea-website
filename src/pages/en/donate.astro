@@ -20,6 +20,11 @@ const page = spendenEntry?.data;
 const heroImage = base + '/images/hero/kind-schmetterlinge.png';
 
 // Helper to get bilingual text
+// scrolling="no" is deprecated HTML but remains the only way to suppress the
+// scrollbar inside the cross-origin Instagram embed (Instagram's own embed.js
+// sets it on every iframe it creates). Spread to avoid the TS deprecation hint.
+const legacyIframeScroll = { scrolling: 'no' };
+
 const getText = (obj: { de?: string; en?: string } | undefined, fallback: string = '') => {
   if (!obj) return fallback;
   return lang === 'de' ? (obj.de || fallback) : (obj.en || obj.de || fallback);
@@ -72,6 +77,7 @@ const cardColorClasses: Record<string, { bg: string; icon: string }> = {
             <iframe
               src={page?.successStory?.instagramReelUrl || "https://www.instagram.com/reel/DRcoCiaDJ-r/embed/"}
               class="instagram-reel-iframe"
+              {...legacyIframeScroll}
               allowtransparency="true"
               allowfullscreen="true"
               title="EVOLEA Mini Restaurant - Instagram Reel"

@@ -93,7 +93,7 @@ const skillColors: Record<string, string> = {
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
               </svg>
             </a>
-            <a href={hero.zweitButtonLink || '#programm'} class="btn-outline">
+            <a href={hero.zweitButtonLink || '#programm'} class="btn-secondary">
               {getText(hero.zweitButtonText, 'Programm ansehen')}
             </a>
           </div>
@@ -234,7 +234,7 @@ const skillColors: Record<string, string> = {
                     {session.date}
                   </span>
                   <span class="flex items-center gap-1">
-                    <Icon name="chart" size="xs" />
+                    <Icon name="clock" size="xs" />
                     {session.time}
                   </span>
                   <span class="flex items-center gap-1">
@@ -271,7 +271,7 @@ const skillColors: Record<string, string> = {
   <section class="py-16 bg-white">
     <div class="container mx-auto max-w-4xl px-4">
       <h2 class="text-3xl font-display font-bold text-evolea-purple mb-8 text-center">
-        {getText(ziele.titel, 'Projekt Ziele')}
+        {getText(ziele.titel, 'Projektziele')}
       </h2>
       <p class="text-lg text-evolea-text-light text-center mb-12 max-w-2xl mx-auto">
         {getText(ziele.untertitel, 'Kinder erleben bei uns, wie sie im Miteinander stark sein können – Schritt für Schritt, mit Freude und Erfolg.')}
@@ -302,7 +302,7 @@ const skillColors: Record<string, string> = {
         <ul class="space-y-3 mb-6">
           {(aufnahme.kriterien || []).map((kriterium: any) => (
             <li class="flex items-start gap-3">
-              <span class="flex-shrink-0 w-6 h-6 bg-evolea-mint/20 rounded-full flex items-center justify-center text-evolea-mint font-bold text-sm">✓</span>
+              <span class="flex-shrink-0 w-6 h-6 bg-evolea-mint/20 rounded-full flex items-center justify-center text-evolea-green font-bold text-sm">✓</span>
               <span class="text-evolea-text-light">
                 <strong class="text-evolea-purple">{getText(kriterium.titel, '')}</strong>
                 {getText(kriterium.text, '') && ` - ${getText(kriterium.text, '')}`}
@@ -329,7 +329,7 @@ const skillColors: Record<string, string> = {
           <div class="flex items-start gap-4">
             <Icon name="location" size="md" />
             <div>
-              <h4 class="font-display font-bold text-evolea-purple mb-2">{lang === 'de' ? 'Standorte' : 'Locations'}</h4>
+              <h3 class="font-display font-bold text-evolea-purple mb-2">{lang === 'de' ? 'Standorte' : 'Locations'}</h3>
               {praktischeInfos.standorte?.hauptstandort && (
                 <p class="text-evolea-text-light text-sm mb-2">
                   <strong>{getText(praktischeInfos.standorte.hauptstandort.label, 'Tag 1-5:')}</strong><br/>
@@ -349,7 +349,7 @@ const skillColors: Record<string, string> = {
           <div class="flex items-start gap-4">
             <Icon name="mail" size="md" />
             <div>
-              <h4 class="font-display font-bold text-evolea-purple mb-2">{getText(praktischeInfos.kontakt?.titel, 'Kontakt & Anmeldung')}</h4>
+              <h3 class="font-display font-bold text-evolea-purple mb-2">{getText(praktischeInfos.kontakt?.titel, 'Kontakt & Anmeldung')}</h3>
               <p class="text-evolea-text-light text-sm mb-2">
                 {getText(praktischeInfos.kontakt?.text, 'Für ein kostenloses Erstgespräch und Anmeldung:')}
               </p>
@@ -362,7 +362,7 @@ const skillColors: Record<string, string> = {
       </div>
 
       <div class="bg-evolea-purple/5 rounded-evolea-lg p-6 text-center">
-        <p class="text-evolea-text-light mb-4" set:html={getText(praktischeInfos.wichtig, '<strong class="text-evolea-purple">Wichtig:</strong> Wir treffen uns jeweils um <strong>09:00 Uhr</strong>. Bitte seid 5 Minuten vor Beginn vor Ort. Tag 6 beginnt um <strong>13:00 Uhr</strong> und findet mit Begleitung der Eltern statt.')} />
+        <p class="text-evolea-text-light mb-4" set:html={getText(praktischeInfos.wichtig, '<strong class="text-evolea-purple">Wichtig:</strong> Wir treffen uns jeweils um <strong>09:00 Uhr</strong>. Bitte seien Sie 5 Minuten vor Beginn vor Ort. Tag 6 beginnt um <strong>13:00 Uhr</strong> und findet mit Begleitung der Eltern statt.')} />
       </div>
     </div>
   </section>

@@ -1582,7 +1582,7 @@ export default config({
               }
             ),
           },
-          { label: 'Projekt Ziele' }
+          { label: 'Projektziele' }
         ),
 
         // --- AUFNAHME ---
@@ -1764,7 +1764,7 @@ export default config({
               }
             ),
           },
-          { label: 'Projekt Ziele' }
+          { label: 'Projektziele' }
         ),
 
         // --- AUFNAHME ---
