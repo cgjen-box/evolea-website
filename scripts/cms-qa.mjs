@@ -520,12 +520,6 @@ const getFirstContentSlug = (dirPath) => {
   }
 };
 
-const findAssetPathInText = (text) => {
-  if (!text) return '';
-  const match = text.match(/\/(?:images|videos|uploads|files)\/[^\s)]+/i);
-  return match ? match[0] : '';
-};
-
 const getFileFieldAssetPath = async (locator) => {
   return locator.evaluate((el) => {
     const root =

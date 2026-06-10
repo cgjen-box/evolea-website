@@ -157,7 +157,7 @@ function getExpectedPages(relativePath) {
 /**
  * Determine suggested DOM selector based on field path
  */
-function suggestSelector(fieldPath, type) {
+function suggestSelector(fieldPath) {
   // Hero titles
   if (fieldPath.includes('hero.titel')) return 'h1, [data-hero-title]';
   if (fieldPath.includes('hero.untertitel')) return '[data-hero-subtitle], .hero-subtitle';
@@ -218,7 +218,7 @@ function main() {
       expectedPages,
       fields: fields.map(f => ({
         ...f,
-        selector: suggestSelector(f.path, f.type),
+        selector: suggestSelector(f.path),
         verified: false,
         testMarker: null
       }))
@@ -244,7 +244,7 @@ function main() {
           file: relativePath,
           path: field.path,
           value: field.value,
-          selector: suggestSelector(field.path, field.type)
+          selector: suggestSelector(field.path)
         });
       }
     }
