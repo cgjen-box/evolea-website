@@ -184,7 +184,7 @@ const faqItems = getArray(faq.items);
     <GradientCTA
       title={getText(cta.titel, '')}
       description={getText(cta.beschreibung, '')}
-      buttonText={getText(cta.buttonText, 'Kontakt')}
+      buttonText={getText(cta.buttonText, isEnglish ? 'Contact' : 'Kontakt')}
       buttonHref={translatePath ? translatePath('/kontakt/') : '/kontakt/'}
     />
   )}

@@ -158,6 +158,8 @@ export function getLanguageAlternates(url: URL): Array<{ lang: Lang; href: strin
 
   return [
     { lang: 'de', href: `${base}${basePath}` },
-    { lang: 'en', href: `${base}/en${basePath === '/' ? '' : basePath}` },
+    // Keep the trailing slash on the EN homepage so hreflang matches the
+    // canonical and sitemap URL (/en/, not /en)
+    { lang: 'en', href: `${base}/en${basePath}` },
   ];
 }

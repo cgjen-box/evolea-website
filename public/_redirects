@@ -1,5 +1,40 @@
 # Cloudflare Pages redirects (evaluated before the server worker).
-# The EN cafe page moved under /en/programs/ with the other program routes.
-# GitHub Pages ignores this file; the astro.config.mjs `redirects` entry covers it there.
+# GitHub Pages ignores this file.
+#
+# 1. Normalize the EN homepage to the trailing-slash canonical.
+/en /en/ 301
+#
+# 2. Legacy /en/angebote/* URLs (old language-switcher targets and the moved
+#    cafe page). The Cloudflare server build 404s these instead of serving
+#    the Astro i18n fallback, so redirect explicitly to the EN routes.
+/en/angebote/ /en/programs/ 301
+/en/angebote /en/programs/ 301
+/en/angebote/mini-turnen/ /en/programs/mini-sports/ 301
+/en/angebote/mini-turnen /en/programs/mini-sports/ 301
+/en/angebote/mini-garten/ /en/programs/mini-garden/ 301
+/en/angebote/mini-garten /en/programs/mini-garden/ 301
+/en/angebote/mini-projekte/ /en/programs/mini-projects/ 301
+/en/angebote/mini-projekte /en/programs/mini-projects/ 301
+/en/angebote/mini-projekte/mini-restaurant/ /en/programs/mini-projects/mini-restaurant/ 301
+/en/angebote/mini-projekte/mini-restaurant /en/programs/mini-projects/mini-restaurant/ 301
+/en/angebote/mini-abenteuercamp/ /en/programs/mini-adventure-camp/ 301
+/en/angebote/mini-abenteuercamp /en/programs/mini-adventure-camp/ 301
+/en/angebote/mini-museum/ /en/programs/mini-museum/ 301
+/en/angebote/mini-museum /en/programs/mini-museum/ 301
+/en/angebote/tagesschule/ /en/programs/day-school/ 301
+/en/angebote/tagesschule /en/programs/day-school/ 301
 /en/angebote/evolea-cafe/ /en/programs/evolea-cafe/ 301
 /en/angebote/evolea-cafe /en/programs/evolea-cafe/ 301
+#
+# 3. German-slug URLs under /en/ used to 302 English visitors to the GERMAN
+#    page via the i18n fallback; send them to the English equivalent instead.
+/en/kontakt/ /en/contact/ 301
+/en/kontakt /en/contact/ 301
+/en/spenden/ /en/donate/ 301
+/en/spenden /en/donate/ 301
+/en/ueber-uns/ /en/about/ 301
+/en/ueber-uns /en/about/ 301
+/en/impressum/ /en/legal/ 301
+/en/impressum /en/legal/ 301
+/en/datenschutz/ /en/privacy/ 301
+/en/datenschutz /en/privacy/ 301

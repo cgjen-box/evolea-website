@@ -73,10 +73,10 @@ const skillColors: Record<string, string> = {
           {hero.titel || 'Mini Abenteuercamp'}
         </h1>
         <p class="text-xl md:text-2xl text-evolea-text-light mb-4 leading-relaxed">
-          {getText(hero.untertitel, 'Raus in die Natur, rein ins Abenteuer!')}
+          {getText(hero.untertitel, lang === 'de' ? 'Raus in die Natur, rein ins Abenteuer!' : 'Out into nature, into adventure!')}
         </p>
         <p class="text-lg text-evolea-text-light mb-8">
-          {getText(hero.beschreibung, 'In diesem inklusiven Feriencamp erkunden Kinder die Natur, bauen gemeinsam eine Burg aus Naturmaterialien und erleben eine Woche voller Bewegung, Entdeckungen und Teamwork.')}
+          {getText(hero.beschreibung, lang === 'de' ? 'In diesem inklusiven Feriencamp erkunden Kinder die Natur, bauen gemeinsam eine Burg aus Naturmaterialien und erleben eine Woche voller Bewegung, Entdeckungen und Teamwork.' : 'In this inclusive holiday camp, children explore nature, build a castle together from natural materials and experience a week full of movement, discoveries and teamwork.')}
         </p>
         <div class="flex flex-wrap gap-4">
           <a href={buttonLink} class="btn-primary">
@@ -128,7 +128,7 @@ const skillColors: Record<string, string> = {
         {getText(konzept.titel, lang === 'de' ? 'Das Konzept' : 'The Concept')}
       </h2>
       <p class="text-lg text-evolea-text-light max-w-2xl mx-auto">
-        {getText(konzept.untertitel, 'Eine Woche Natur, Abenteuer und gemeinsames Wachsen.')}
+        {getText(konzept.untertitel, lang === 'de' ? 'Eine Woche Natur, Abenteuer und gemeinsames Wachsen.' : 'A week of nature, adventure and growing together.')}
       </p>
     </div>
 
@@ -203,7 +203,7 @@ const skillColors: Record<string, string> = {
         {getText(ablauf.titel, lang === 'de' ? 'Der Ablauf' : 'The Schedule')}
       </h2>
       <p class="text-lg text-evolea-text-light">
-        {getText(ablauf.untertitel, '5 Tage voller Abenteuer, Natur und Entdeckungen')}
+        {getText(ablauf.untertitel, lang === 'de' ? '5 Tage voller Abenteuer, Natur und Entdeckungen' : '5 days full of adventure, nature and discoveries')}
       </p>
     </div>
 
@@ -266,7 +266,7 @@ const skillColors: Record<string, string> = {
       {getText(ziele.titel, lang === 'de' ? 'Projektziele' : 'Project Goals')}
     </h2>
     <p class="text-lg text-evolea-text-light text-center mb-12 max-w-2xl mx-auto">
-      {getText(ziele.untertitel, 'Kinder erleben bei uns, wie sie in der Natur und im Miteinander über sich hinauswachsen können – Schritt für Schritt, mit Freude und Erfolg.')}
+      {getText(ziele.untertitel, lang === 'de' ? 'Kinder erleben bei uns, wie sie in der Natur und im Miteinander über sich hinauswachsen können – Schritt für Schritt, mit Freude und Erfolg.' : 'Children experience with us how they can grow beyond themselves in nature and together – step by step, with joy and success.')}
     </p>
 
     <div class="space-y-6">
@@ -289,7 +289,7 @@ const skillColors: Record<string, string> = {
 
     <div class="bg-white rounded-evolea-lg p-8 shadow-soft">
       <p class="text-evolea-text-light mb-6">
-        {getText(aufnahme.einleitung, 'Die Teilnahme am Mini Abenteuercamp erfolgt projektbezogen und beginnt mit einem persönlichen Gespräch mit den Bezugspersonen, sowie einem Kennenlernen des Kindes. Zur Orientierung stellen wir eine Checkliste zur Verfügung:')}
+        {getText(aufnahme.einleitung, lang === 'de' ? 'Die Teilnahme am Mini Abenteuercamp erfolgt projektbezogen und beginnt mit einem persönlichen Gespräch mit den Bezugspersonen, sowie einem Kennenlernen des Kindes. Zur Orientierung stellen wir eine Checkliste zur Verfügung:' : 'Participation in the Mini Abenteuercamp is project-specific and begins with a personal conversation with the caregivers, as well as getting to know the child. For guidance, we provide a checklist:')}
       </p>
       <ul class="space-y-3 mb-6">
         {(aufnahme.kriterien || []).map((kriterium: any) => (
@@ -303,7 +303,7 @@ const skillColors: Record<string, string> = {
         ))}
       </ul>
       <p class="text-sm text-evolea-text-light bg-evolea-purple/5 rounded-evolea p-4 mb-0">
-        {getText(aufnahme.hinweis, 'Diese Punkte dienen als Richtlinie und ersetzen keine individuelle Beurteilung. Die endgültige Entscheidung wird stets situationsbezogen und im Sinne des Kindes getroffen.')}
+        {getText(aufnahme.hinweis, lang === 'de' ? 'Diese Punkte dienen als Richtlinie und ersetzen keine individuelle Beurteilung. Die endgültige Entscheidung wird stets situationsbezogen und im Sinne des Kindes getroffen.' : 'These points serve as guidelines and do not replace individual assessment. The final decision is always made situationally and in the best interest of the child.')}
       </p>
     </div>
   </div>
