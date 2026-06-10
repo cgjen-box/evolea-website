@@ -138,7 +138,7 @@ https://api.cloudflare.com/client/v4/accounts/{account_id}/pages/projects/{proje
 
 ### Authentication
 ```bash
-curl -H "Authorization: Bearer YOUR_API_TOKEN" ...
+curl -H "Authorization: Bearer YOUR_API_TOKEN" ...  # gitleaks:allow (placeholder)
 ```
 
 ### List Deployments
