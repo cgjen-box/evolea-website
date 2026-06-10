@@ -1,0 +1,5 @@
+# Cloudflare Pages redirects (evaluated before the server worker).
+# The EN cafe page moved under /en/programs/ with the other program routes.
+# GitHub Pages ignores this file; the astro.config.mjs `redirects` entry covers it there.
+/en/angebote/evolea-cafe/ /en/programs/evolea-cafe/ 301
+/en/angebote/evolea-cafe /en/programs/evolea-cafe/ 301
