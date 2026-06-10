@@ -1,0 +1,325 @@
+---
+import FloatingShapes from '@components/FloatingShapes.astro';
+import GradientCTA from '@components/GradientCTA.astro';
+import Icon from '@components/Icon.astro';
+
+const { content, lang, translatePath, heroImage } = Astro.props;
+
+// Helper to get bilingual text
+const getText = (obj: { de?: string; en?: string } | undefined, fallback: string = '') => {
+  if (!obj) return fallback;
+  return lang === 'de' ? (obj.de || fallback) : (obj.en || obj.de || fallback);
+};
+
+// CMS link values starting with '/' must resolve to the language-specific route
+const resolveLink = (link: string | undefined, fallback: string) => {
+  const value = link || fallback;
+  return value.startsWith('/') ? translatePath(value) : value;
+};
+
+// Page content with fallbacks
+const hero = content?.hero || {};
+const infoKarten = content?.infoKarten || [];
+const fuerWen = content?.fuerWen || {};
+const training = content?.training || {};
+const vorteile = content?.vorteile || {};
+const praktischeInfos = content?.praktischeInfos || {};
+const cta = content?.cta || {};
+
+const primaryButtonHref = resolveLink(hero.buttonLink, '#anmeldung');
+const secondaryButtonHref = resolveLink(hero.zweitButtonLink, '/kontakt/');
+---
+
+<!-- Hero Section -->
+<section class="relative py-20 md:py-28 bg-gradient-to-br from-evolea-sky/10 to-evolea-cream overflow-hidden">
+  <FloatingShapes variant="minimal" />
+  <div class="container mx-auto max-w-6xl px-4 relative z-10">
+    <nav class="mb-8 text-sm text-evolea-text-light">
+      <a href={translatePath('/')} class="hover:text-evolea-purple transition-colors">{lang === 'de' ? 'Startseite' : 'Home'}</a>
+      <span class="mx-2">/</span>
+      <a href={translatePath('/angebote/')} class="hover:text-evolea-purple transition-colors">{lang === 'de' ? 'Angebote' : 'Programs'}</a>
+      <span class="mx-2">/</span>
+      <span class="text-evolea-purple font-medium">{hero.titel || 'Mini Turnen'}</span>
+    </nav>
+
+    <div class="grid lg:grid-cols-2 gap-12 items-center">
+      <div>
+        <div class="inline-flex items-center gap-2 bg-evolea-sky/20 text-evolea-sky px-4 py-2 rounded-full text-sm font-medium mb-6">
+          <Icon name="ball" size="sm" />
+          <span>{getText(hero.badge, lang === 'de' ? 'Inklusives Sportangebot' : 'Inclusive Sports Program')}</span>
+        </div>
+        <h1 class="text-4xl md:text-5xl lg:text-6xl font-display font-bold text-evolea-purple mb-6 leading-tight">
+          {hero.titel || 'Mini Turnen'}
+        </h1>
+        <p class="text-xl md:text-2xl text-evolea-text-light mb-4 leading-relaxed">
+          {getText(hero.untertitel, lang === 'de' ? 'Spiel und Spass stehen im Fokus' : 'Play and fun are the focus')}
+        </p>
+        <p class="text-lg text-evolea-text-light mb-8">
+          {getText(hero.beschreibung, lang === 'de' ? 'Ein sicherer, klar strukturierter Rahmen für Kinder, die in regulären Freizeitangeboten oft überfordert sind. Polysportiv und bewegungsfreudig.' : 'A safe, clearly structured environment for children who are often overwhelmed in regular recreational activities. Multi-sport and movement-focused.')}
+        </p>
+        <div class="flex flex-wrap gap-4">
+          <a href={primaryButtonHref} class="btn-primary">
+            {getText(hero.buttonText, lang === 'de' ? 'Jetzt anmelden' : 'Register now')}
+            <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+            </svg>
+          </a>
+          <a href={secondaryButtonHref} class="btn-secondary">
+            {getText(hero.zweitButtonText, lang === 'de' ? 'Kostenlose Beratung' : 'Free consultation')}
+          </a>
+        </div>
+      </div>
+      <div class="relative">
+        <img
+          src={heroImage}
+          alt={getText(hero.untertitel, lang === 'de' ? 'Kinder beim Sport und Turnen' : 'Children doing sports and gymnastics')}
+          class="rounded-evolea-lg shadow-elevated w-full object-cover aspect-card"
+        />
+        <div class="absolute -bottom-4 -left-4 bg-white rounded-evolea p-4 shadow-card">
+          <div class="text-3xl font-display font-bold text-evolea-sky">{hero.alter || '5-8'}</div>
+          <div class="text-sm text-evolea-text-light">{lang === 'de' ? 'Jahre' : 'Years'}</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Key Info Cards -->
+<section class="py-16 bg-white">
+  <div class="container mx-auto max-w-6xl px-4">
+    <div class="grid md:grid-cols-4 gap-6">
+      {infoKarten.length > 0 ? (
+        infoKarten.map((karte: any) => (
+          <div class="bg-evolea-cream rounded-evolea-lg p-6 text-center">
+            <div class="flex justify-center mb-3"><Icon name={karte.icon || 'sparkle'} size="lg" /></div>
+            <div class="font-display font-bold text-evolea-purple text-lg">{getText(karte.label, '')}</div>
+            <div class="text-evolea-text-light">{getText(karte.wert, '')}</div>
+          </div>
+        ))
+      ) : (
+        <>
+          <div class="bg-evolea-cream rounded-evolea-lg p-6 text-center">
+            <div class="flex justify-center mb-3"><Icon name="sparkle" size="lg" /></div>
+            <div class="font-display font-bold text-evolea-purple text-lg">{lang === 'de' ? 'Alter' : 'Age'}</div>
+            <div class="text-evolea-text-light">{lang === 'de' ? '5-8 Jahre' : '5-8 years'}</div>
+          </div>
+          <div class="bg-evolea-cream rounded-evolea-lg p-6 text-center">
+            <div class="flex justify-center mb-3"><Icon name="clipboard" size="lg" /></div>
+            <div class="font-display font-bold text-evolea-purple text-lg">{lang === 'de' ? 'Wann' : 'When'}</div>
+            <div class="text-evolea-text-light">{lang === 'de' ? 'Mittwoch 18:00-19:30' : 'Wednesday 18:00-19:30'}</div>
+          </div>
+          <div class="bg-evolea-cream rounded-evolea-lg p-6 text-center">
+            <div class="flex justify-center mb-3"><Icon name="chart" size="lg" /></div>
+            <div class="font-display font-bold text-evolea-purple text-lg">{lang === 'de' ? 'Start' : 'Start'}</div>
+            <div class="text-evolea-text-light">{lang === 'de' ? 'Januar 2025' : 'January 2025'}</div>
+          </div>
+          <div class="bg-evolea-cream rounded-evolea-lg p-6 text-center">
+            <div class="flex justify-center mb-3"><Icon name="target" size="lg" /></div>
+            <div class="font-display font-bold text-evolea-purple text-lg">{lang === 'de' ? 'Wo' : 'Where'}</div>
+            <div class="text-evolea-text-light">Wallisellen</div>
+          </div>
+        </>
+      )}
+    </div>
+  </div>
+</section>
+
+<!-- Main Content -->
+<section class="py-16 md:py-24">
+  <div class="container mx-auto max-w-4xl px-4">
+    <div class="prose prose-lg max-w-none">
+
+      <h2 class="text-3xl font-display font-bold text-evolea-purple mb-6 flex items-center gap-3">
+        <span class="text-evolea-sky">●</span>
+        {getText(fuerWen.titel, lang === 'de' ? 'Für wen ist Mini Turnen?' : 'Who is Mini Turnen for?')}
+      </h2>
+      <p class="text-evolea-text-light mb-8 text-lg leading-relaxed">
+        {getText(fuerWen.text, lang === 'de' ? 'Mini Turnen richtet sich an Kinder im Autismus Spektrum oder mit ADHS im Alter von 5-8 Jahren. Das Angebot ist ideal für Kinder, die Freude an Bewegung haben, aber in regulären Sportvereinen oft überfordert sind.' : 'Mini Turnen is aimed at children on the autism spectrum or with ADHD aged 5-8 years. The program is ideal for children who enjoy movement but are often overwhelmed in regular sports clubs.')}
+      </p>
+
+      <div class="bg-evolea-sky/10 border-l-4 border-evolea-sky rounded-r-evolea p-6 mb-12">
+        <h3 class="font-display font-bold text-evolea-purple text-xl mb-2">{getText(fuerWen.voraussetzungenTitel, lang === 'de' ? 'Voraussetzungen für die Teilnahme' : 'Prerequisites for participation')}</h3>
+        <ul class="text-evolea-text-light mb-0 space-y-2">
+          {fuerWen.voraussetzungen?.length > 0 ? (
+            fuerWen.voraussetzungen.map((v: any) => (
+              <li>✓ {getText(v, '')}</li>
+            ))
+          ) : (
+            <>
+              <li>✓ {lang === 'de' ? 'Funktionelle Kommunikation' : 'Functional communication'}</li>
+              <li>✓ {lang === 'de' ? 'Interesse an sozialem Kontakt und Sport' : 'Interest in social contact and sports'}</li>
+              <li>✓ {lang === 'de' ? 'Kann Anweisungen und Regeln folgen' : 'Can follow instructions and rules'}</li>
+              <li>✓ {lang === 'de' ? 'Altersgerechte Selbstständigkeit' : 'Age-appropriate independence'}</li>
+              <li>✓ {lang === 'de' ? 'Keine selbst- oder fremdverletzenden Verhaltensweisen' : 'No self-harming or aggressive behaviors'}</li>
+            </>
+          )}
+        </ul>
+      </div>
+
+      <h2 class="text-3xl font-display font-bold text-evolea-purple mb-6 flex items-center gap-3">
+        <span class="text-evolea-green">●</span>
+        {getText(training.titel, lang === 'de' ? 'Was trainieren wir?' : 'What do we train?')}
+      </h2>
+      <p class="text-evolea-text-light mb-6 text-lg leading-relaxed">
+        {getText(training.text, lang === 'de' ? 'Die Lektionen sind polysportiv gestaltet – wir bieten vielfältige Bewegungserfahrungen in einem strukturierten, sicheren Rahmen.' : 'The lessons are multi-sport. We offer diverse movement experiences in a structured, safe environment.')}
+      </p>
+
+      <div class="grid md:grid-cols-3 gap-4 mb-12">
+        {training.aktivitaeten?.length > 0 ? (
+          training.aktivitaeten.map((aktivitaet: any) => (
+            <div class="bg-white border border-evolea-purple/10 rounded-evolea-lg p-6 text-center">
+              <div class="flex justify-center mb-3"><Icon name={aktivitaet.icon || 'running'} size="lg" /></div>
+              <h3 class="font-display font-bold text-evolea-purple text-lg mb-2">{getText(aktivitaet.titel, '')}</h3>
+              <p class="text-evolea-text-light text-sm mb-0">{getText(aktivitaet.beschreibung, '')}</p>
+            </div>
+          ))
+        ) : (
+          <>
+            <div class="bg-white border border-evolea-purple/10 rounded-evolea-lg p-6 text-center">
+              <div class="flex justify-center mb-3"><Icon name="running" size="lg" /></div>
+              <h3 class="font-display font-bold text-evolea-purple text-lg mb-2">{lang === 'de' ? 'Laufen & Rennen' : 'Running & Racing'}</h3>
+              <p class="text-evolea-text-light text-sm mb-0">{lang === 'de' ? 'Koordination und Ausdauer' : 'Coordination and endurance'}</p>
+            </div>
+            <div class="bg-white border border-evolea-purple/10 rounded-evolea-lg p-6 text-center">
+              <div class="flex justify-center mb-3"><Icon name="leaf" size="lg" /></div>
+              <h3 class="font-display font-bold text-evolea-purple text-lg mb-2">{lang === 'de' ? 'Klettern' : 'Climbing'}</h3>
+              <p class="text-evolea-text-light text-sm mb-0">{lang === 'de' ? 'Kraft und Mut' : 'Strength and courage'}</p>
+            </div>
+            <div class="bg-white border border-evolea-purple/10 rounded-evolea-lg p-6 text-center">
+              <div class="flex justify-center mb-3"><Icon name="target" size="lg" /></div>
+              <h3 class="font-display font-bold text-evolea-purple text-lg mb-2">{lang === 'de' ? 'Balance' : 'Balance'}</h3>
+              <p class="text-evolea-text-light text-sm mb-0">{lang === 'de' ? 'Gleichgewicht und Körpergefühl' : 'Balance and body awareness'}</p>
+            </div>
+            <div class="bg-white border border-evolea-purple/10 rounded-evolea-lg p-6 text-center">
+              <div class="flex justify-center mb-3"><Icon name="ball" size="lg" /></div>
+              <h3 class="font-display font-bold text-evolea-purple text-lg mb-2">{lang === 'de' ? 'Ballspiele' : 'Ball games'}</h3>
+              <p class="text-evolea-text-light text-sm mb-0">{lang === 'de' ? 'Teamwork und Reaktion' : 'Teamwork and reaction'}</p>
+            </div>
+            <div class="bg-white border border-evolea-purple/10 rounded-evolea-lg p-6 text-center">
+              <div class="flex justify-center mb-3"><Icon name="gymnast" size="lg" /></div>
+              <h3 class="font-display font-bold text-evolea-purple text-lg mb-2">{lang === 'de' ? 'Turnen' : 'Gymnastics'}</h3>
+              <p class="text-evolea-text-light text-sm mb-0">{lang === 'de' ? 'Beweglichkeit und Stärke' : 'Flexibility and strength'}</p>
+            </div>
+            <div class="bg-white border border-evolea-purple/10 rounded-evolea-lg p-6 text-center">
+              <div class="flex justify-center mb-3"><Icon name="handshake" size="lg" /></div>
+              <h3 class="font-display font-bold text-evolea-purple text-lg mb-2">{lang === 'de' ? 'Feinmotorik' : 'Fine motor skills'}</h3>
+              <p class="text-evolea-text-light text-sm mb-0">{lang === 'de' ? 'Geschicklichkeit' : 'Dexterity'}</p>
+            </div>
+          </>
+        )}
+      </div>
+
+      <h2 class="text-3xl font-display font-bold text-evolea-purple mb-6 flex items-center gap-3">
+        <span class="text-evolea-orange">●</span>
+        {getText(vorteile.titel, lang === 'de' ? 'Warum Mini Turnen?' : 'Why Mini Turnen?')}
+      </h2>
+      <div class="space-y-4 mb-12">
+        {vorteile.liste?.length > 0 ? (
+          vorteile.liste.map((vorteil: any) => (
+            <div class="flex items-start gap-4 p-4 bg-evolea-cream/50 rounded-evolea">
+              <div class="flex-shrink-0"><Icon name={vorteil.icon || 'sparkle'} size="lg" /></div>
+              <div>
+                <h4 class="font-display font-bold text-evolea-purple">{getText(vorteil.titel, '')}</h4>
+                <p class="text-evolea-text-light mb-0">{getText(vorteil.text, '')}</p>
+              </div>
+            </div>
+          ))
+        ) : (
+          <>
+            <div class="flex items-start gap-4 p-4 bg-evolea-cream/50 rounded-evolea">
+              <div class="flex-shrink-0"><Icon name="sparkle" size="lg" /></div>
+              <div>
+                <h4 class="font-display font-bold text-evolea-purple">{lang === 'de' ? 'Selbstvertrauen aufbauen' : 'Build self-confidence'}</h4>
+                <p class="text-evolea-text-light mb-0">{lang === 'de' ? 'Durch Bewegungserfolge wächst das Selbstbewusstsein.' : 'Self-confidence grows through movement successes.'}</p>
+              </div>
+            </div>
+            <div class="flex items-start gap-4 p-4 bg-evolea-cream/50 rounded-evolea">
+              <div class="flex-shrink-0"><Icon name="clipboard" size="lg" /></div>
+              <div>
+                <h4 class="font-display font-bold text-evolea-purple">{lang === 'de' ? 'Klare Strukturen' : 'Clear structures'}</h4>
+                <p class="text-evolea-text-light mb-0">{lang === 'de' ? 'Vorhersehbare Abläufe und Routinen geben Sicherheit.' : 'Predictable processes and routines provide security.'}</p>
+              </div>
+            </div>
+            <div class="flex items-start gap-4 p-4 bg-evolea-cream/50 rounded-evolea">
+              <div class="flex-shrink-0"><Icon name="heart" size="lg" /></div>
+              <div>
+                <h4 class="font-display font-bold text-evolea-purple">{lang === 'de' ? 'Freude an Bewegung' : 'Joy in movement'}</h4>
+                <p class="text-evolea-text-light mb-0">{lang === 'de' ? 'Positive Erfahrungen mit Sport und Gemeinschaft.' : 'Positive experiences with sports and community.'}</p>
+              </div>
+            </div>
+            <div class="flex items-start gap-4 p-4 bg-evolea-cream/50 rounded-evolea">
+              <div class="flex-shrink-0"><Icon name="people" size="lg" /></div>
+              <div>
+                <h4 class="font-display font-bold text-evolea-purple">{lang === 'de' ? 'Zugehörigkeit erleben' : 'Experience belonging'}</h4>
+                <p class="text-evolea-text-light mb-0">{lang === 'de' ? 'Teil einer Gruppe sein und gemeinsam Spass haben.' : 'Being part of a group and having fun together.'}</p>
+              </div>
+            </div>
+          </>
+        )}
+      </div>
+
+      <h2 class="text-3xl font-display font-bold text-evolea-purple mb-6 flex items-center gap-3" id="anmeldung">
+        <span class="text-evolea-coral">●</span>
+        {getText(praktischeInfos.titel, lang === 'de' ? 'Praktische Informationen' : 'Practical Information')}
+      </h2>
+
+      <div class="bg-evolea-purple/5 rounded-evolea-lg p-8 mb-12">
+        <div class="space-y-4">
+          {praktischeInfos.infos?.length > 0 ? (
+            praktischeInfos.infos.map((info: any) => (
+              <div class="flex items-start gap-3">
+                <Icon name={info.icon || 'calendar'} size="sm" />
+                <div>
+                  <strong class="text-evolea-purple">{getText(info.label, '')}</strong>
+                  <p class="text-evolea-text-light mb-0">{getText(info.wert, '')}</p>
+                </div>
+              </div>
+            ))
+          ) : (
+            <>
+              <div class="flex items-start gap-3">
+                <Icon name="calendar" size="sm" />
+                <div>
+                  <strong class="text-evolea-purple">{lang === 'de' ? 'Zeiten' : 'Times'}</strong>
+                  <p class="text-evolea-text-light mb-0">{lang === 'de' ? 'Jeden Mittwoch während der Schulzeit, 18:00–19:30 Uhr (Treffpunkt 15 Min. vorher)' : 'Every Wednesday during school term, 18:00–19:30 (meeting point 15 min. before)'}</p>
+                </div>
+              </div>
+              <div class="flex items-start gap-3">
+                <Icon name="calendar" size="sm" />
+                <div>
+                  <strong class="text-evolea-purple">{lang === 'de' ? 'Startdatum' : 'Start date'}</strong>
+                  <p class="text-evolea-text-light mb-0">{lang === 'de' ? 'Januar 2025' : 'January 2025'}</p>
+                </div>
+              </div>
+              <div class="flex items-start gap-3">
+                <Icon name="location" size="sm" />
+                <div>
+                  <strong class="text-evolea-purple">{lang === 'de' ? 'Standort' : 'Location'}</strong>
+                  <p class="text-evolea-text-light mb-0">{lang === 'de' ? 'Turnhalle Unten, Schulhaus Mösli, Im Mösli 2, 8304 Wallisellen' : 'Lower Gym, Mösli School, Im Mösli 2, 8304 Wallisellen'}</p>
+                </div>
+              </div>
+              <div class="flex items-start gap-3">
+                <Icon name="mail" size="sm" />
+                <div>
+                  <strong class="text-evolea-purple">{lang === 'de' ? 'Kontakt' : 'Contact'}</strong>
+                  <p class="text-evolea-text-light mb-0">{lang === 'de' ? 'hello@evolea.ch – Kostenlose Erstberatung möglich' : 'hello@evolea.ch – Free initial consultation available'}</p>
+                </div>
+              </div>
+            </>
+          )}
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- CTA Section from CMS (only if content exists) -->
+{(cta.titel?.de || cta.titel?.en) && (
+  <GradientCTA
+    title={getText(cta.titel, '')}
+    description={getText(cta.beschreibung, '')}
+    buttonText={getText(cta.buttonText, lang === 'de' ? 'Kontakt' : 'Contact')}
+    buttonHref={translatePath('/kontakt/')}
+  />
+)}

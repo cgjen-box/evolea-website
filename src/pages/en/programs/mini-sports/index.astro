@@ -1,54 +1,30 @@
 ---
 import Base from '@layouts/Base.astro';
-import Icon from '@components/Icon.astro';
-import { getLangFromUrl, useTranslations, useTranslatedPath } from '@i18n/utils';
+import MiniTurnenPage from '@components/programs/MiniTurnenPage.astro';
+import { getLangFromUrl, useTranslatedPath } from '@i18n/utils';
+import { getEntry } from 'astro:content';
 
 const lang = getLangFromUrl(Astro.url);
-const t = useTranslations(lang);
 const translatePath = useTranslatedPath(lang);
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+
+// Get CMS content
+const pageEntry = await getEntry('pages', 'mini-turnen');
+const page = pageEntry?.data;
+
+// Get site images from CMS
+const siteImagesEntry = await getEntry('settings', 'images');
+const siteImages = siteImagesEntry?.data;
+const heroImage = siteImages?.programmeHeroes?.miniTurnen
+  ? base + siteImages.programmeHeroes.miniTurnen
+  : base + "/images/programs/mini-turnen-hero.png";
+
+const pageTitle = page?.hero?.titel || 'Mini Turnen';
+const pageDescription = lang === 'de'
+  ? 'Inklusives Sportangebot für Kinder im Autismus Spektrum oder mit ADHS (5-8 Jahre). Spiel und Spass in strukturiertem Rahmen.'
+  : 'Inclusive sports program for children on the autism spectrum or with ADHD (ages 5-8). Play and fun in a structured setting.';
 ---
 
-<Base title="Mini Sports" description="Sports group for children on the autism spectrum or with ADHD (ages 5-8).">
-  <section class="py-20 px-4">
-    <div class="container mx-auto max-w-4xl">
-      <nav class="mb-8 text-sm text-evolea-text-light">
-        <a href={translatePath('/')} class="hover:text-evolea-purple">Home</a>
-        <span class="mx-2">/</span>
-        <a href={translatePath('/programs/')} class="hover:text-evolea-purple">Programs</a>
-        <span class="mx-2">/</span>
-        <span class="text-evolea-purple">Mini Sports</span>
-      </nav>
-
-      <div class="mb-6"><Icon name="ball" size="2xl" /></div>
-      <h1 class="text-4xl md:text-5xl font-bold text-evolea-purple mb-6">
-        Mini Sports
-      </h1>
-      <p class="text-xl text-evolea-text-light mb-8">
-        Sports group for children on the spectrum or with ADHD
-      </p>
-      
-      <div class="prose prose-lg max-w-none">
-        <h2 class="text-2xl font-semibold text-evolea-purple mt-12 mb-4">Who is it for?</h2>
-        <p class="text-evolea-text-light mb-6">
-          This program is designed for children on the autism spectrum or with ADHD aged 5-8 who enjoy physical activity.
-        </p>
-        
-        <h2 class="text-2xl font-semibold text-evolea-purple mt-12 mb-4">What do we do?</h2>
-        <p class="text-evolea-text-light mb-6">
-          In our sports group, we combine movement with social interaction. We do gymnastics, play group games, and develop motor skills in a safe environment.
-        </p>
-        
-        <h2 class="text-2xl font-semibold text-evolea-purple mt-12 mb-4">Our approach</h2>
-        <p class="text-evolea-text-light mb-6">
-          Sessions are clearly structured and predictable. We work with visual aids and small groups. Each child can participate at their own pace.
-        </p>
-      </div>
-      
-      <div class="mt-12">
-        <a href={translatePath('/contact/')} class="btn-primary">
-          {t('common.contact')}
-        </a>
-      </div>
-    </div>
-  </section>
+<Base title={pageTitle} description={pageDescription}>
+  <MiniTurnenPage content={page} lang={lang} translatePath={translatePath} heroImage={heroImage} />
 </Base>

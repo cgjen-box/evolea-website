@@ -69,7 +69,12 @@ const routeMappings: Record<string, Record<string, string>> = {
     '/angebote/': '/en/programs/',
     '/angebote/mini-garten/': '/en/programs/mini-garden/',
     '/angebote/mini-projekte/': '/en/programs/mini-projects/',
+    '/angebote/mini-projekte/mini-restaurant/': '/en/programs/mini-projects/mini-restaurant/',
     '/angebote/mini-turnen/': '/en/programs/mini-sports/',
+    '/angebote/mini-abenteuercamp/': '/en/programs/mini-adventure-camp/',
+    '/angebote/mini-museum/': '/en/programs/mini-museum/',
+    '/angebote/evolea-cafe/': '/en/programs/evolea-cafe/',
+    '/angebote/tagesschule/': '/en/programs/day-school/',
   },
   en: {
     '/donate/': '/spenden/',
@@ -80,7 +85,12 @@ const routeMappings: Record<string, Record<string, string>> = {
     '/programs/': '/angebote/',
     '/programs/mini-garden/': '/angebote/mini-garten/',
     '/programs/mini-projects/': '/angebote/mini-projekte/',
+    '/programs/mini-projects/mini-restaurant/': '/angebote/mini-projekte/mini-restaurant/',
     '/programs/mini-sports/': '/angebote/mini-turnen/',
+    '/programs/mini-adventure-camp/': '/angebote/mini-abenteuercamp/',
+    '/programs/mini-museum/': '/angebote/mini-museum/',
+    '/programs/evolea-cafe/': '/angebote/evolea-cafe/',
+    '/programs/day-school/': '/angebote/tagesschule/',
   },
 };
 

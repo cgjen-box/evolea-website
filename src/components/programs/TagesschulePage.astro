@@ -1,0 +1,411 @@
+---
+import FloatingShapes from '@components/FloatingShapes.astro';
+import GradientCTA from '@components/GradientCTA.astro';
+import Icon from '@components/Icon.astro';
+
+const { content, lang, translatePath, heroImage } = Astro.props;
+
+const page = content;
+
+// Helper to get bilingual text
+const getText = (obj: { de?: string; en?: string } | undefined, fallback: string = '') => {
+  if (!obj) return fallback;
+  return lang === 'de' ? (obj.de || fallback) : (obj.en || obj.de || fallback);
+};
+
+// Page content with fallbacks
+const hero = page?.hero || {};
+const statusBanner = page?.statusBanner || { aktiv: true };
+const infoKarten = page?.infoKarten || [];
+const wasIst = page?.wasIst || {};
+const fuerWen = page?.fuerWen || {};
+const ansatz = page?.ansatz || {};
+const typischerTag = page?.typischerTag || {};
+const interesse = page?.interesse || {};
+const weitereAngebote = page?.weitereAngebote || {};
+const cta = page?.cta || {};
+---
+
+<!-- Hero Section -->
+<section class="relative py-20 md:py-28 bg-gradient-to-br from-evolea-purple/10 to-evolea-cream overflow-hidden">
+  <FloatingShapes variant="minimal" />
+  <div class="container mx-auto max-w-6xl px-4 relative z-10">
+    <nav class="mb-8 text-sm text-evolea-text-light">
+      <a href={translatePath('/')} class="hover:text-evolea-purple transition-colors">{lang === 'de' ? 'Startseite' : 'Home'}</a>
+      <span class="mx-2">/</span>
+      <a href={translatePath('/angebote/')} class="hover:text-evolea-purple transition-colors">{lang === 'de' ? 'Angebote' : 'Programs'}</a>
+      <span class="mx-2">/</span>
+      <span class="text-evolea-purple font-medium">{hero.titel || 'Tagesschule'}</span>
+    </nav>
+
+    <div class="grid lg:grid-cols-2 gap-12 items-center">
+      <div>
+        <div class="inline-flex items-center gap-2 bg-evolea-purple/20 text-evolea-purple px-4 py-2 rounded-full text-sm font-medium mb-6">
+          <Icon name="book" size="sm" />
+          <span>{getText(hero.badge, lang === 'de' ? 'Tagesstruktur mit Lernförderung' : 'Day structure with learning support')}</span>
+        </div>
+        <h1 class="text-4xl md:text-5xl lg:text-6xl font-display font-bold text-evolea-purple mb-6 leading-tight">
+          {hero.titel || 'Tagesschule'}
+        </h1>
+        <p class="text-xl md:text-2xl text-evolea-text-light mb-8 leading-relaxed">
+          {getText(hero.untertitel, lang === 'de' ? 'Strukturierte Tagesbetreuung mit individueller Förderung für Kinder im Spektrum' : 'Structured day care with individual support for children on the spectrum')}
+        </p>
+        <div class="flex flex-wrap gap-4">
+          <a href={hero.buttonLink || '#interesse'} class="btn-primary">
+            {getText(hero.buttonText, lang === 'de' ? 'Interesse anmelden' : 'Express interest')}
+            <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+            </svg>
+          </a>
+          <a href={hero.zweitButtonLink || translatePath('/kontakt/')} class="btn-secondary">
+            {getText(hero.zweitButtonText, lang === 'de' ? 'Fragen? Kontaktieren Sie uns' : 'Questions? Contact us')}
+          </a>
+        </div>
+      </div>
+      <div class="relative">
+        <img
+          src={heroImage}
+          alt={getText(hero.untertitel, lang === 'de' ? 'Kinder in strukturierter Lernumgebung' : 'Children in a structured learning environment')}
+          class="rounded-evolea-lg shadow-elevated w-full object-cover aspect-card"
+        />
+        <div class="absolute -bottom-4 -left-4 bg-white rounded-evolea p-4 shadow-card">
+          <div class="text-3xl font-display font-bold text-evolea-purple">{hero.alter || '6-12'}</div>
+          <div class="text-sm text-evolea-text-light">{lang === 'de' ? 'Jahre' : 'Years'}</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Status Banner -->
+{statusBanner.aktiv && (
+  <section class="bg-evolea-purple text-white py-6">
+    <div class="container mx-auto max-w-6xl px-4">
+      <div class="flex items-center justify-center gap-4">
+        <Icon name="sparkle" size="md" />
+        <span class="text-lg">{getText(statusBanner.text, lang === 'de' ? 'Dieses Programm befindet sich in der Aufbauphase - Interessensanmeldungen sind willkommen' : 'This program is currently being developed - expressions of interest are welcome')}</span>
+      </div>
+    </div>
+  </section>
+)}
+
+<!-- Key Info Cards -->
+<section class="py-16 bg-white">
+  <div class="container mx-auto max-w-6xl px-4">
+    <div class="grid md:grid-cols-4 gap-6">
+      {infoKarten.length > 0 ? (
+        infoKarten.map((karte: any) => (
+          <div class="bg-evolea-cream rounded-evolea-lg p-6 text-center">
+            <Icon name="sparkle" size="lg" />
+            <div class="font-display font-bold text-evolea-purple text-lg mt-3">{getText(karte.label, '')}</div>
+            <div class="text-evolea-text-light">{getText(karte.wert, '')}</div>
+          </div>
+        ))
+      ) : (
+        <>
+          <div class="bg-evolea-cream rounded-evolea-lg p-6 text-center">
+            <Icon name="sparkle" size="lg" />
+            <div class="font-display font-bold text-evolea-purple text-lg mt-3">{lang === 'de' ? 'Alter' : 'Age'}</div>
+            <div class="text-evolea-text-light">{lang === 'de' ? '6-12 Jahre' : '6-12 years'}</div>
+          </div>
+          <div class="bg-evolea-cream rounded-evolea-lg p-6 text-center">
+            <Icon name="people" size="lg" />
+            <div class="font-display font-bold text-evolea-purple text-lg mt-3">{lang === 'de' ? 'Betreuung' : 'Care'}</div>
+            <div class="text-evolea-text-light">{lang === 'de' ? 'Kleine Gruppen' : 'Small groups'}</div>
+          </div>
+          <div class="bg-evolea-cream rounded-evolea-lg p-6 text-center">
+            <Icon name="clipboard" size="lg" />
+            <div class="font-display font-bold text-evolea-purple text-lg mt-3">{lang === 'de' ? 'Zeiten' : 'Hours'}</div>
+            <div class="text-evolea-text-light">{lang === 'de' ? 'Ganztags' : 'Full day'}</div>
+          </div>
+          <div class="bg-evolea-cream rounded-evolea-lg p-6 text-center">
+            <Icon name="target" size="lg" />
+            <div class="font-display font-bold text-evolea-purple text-lg mt-3">{lang === 'de' ? 'Wo' : 'Where'}</div>
+            <div class="text-evolea-text-light">{lang === 'de' ? 'Zürich' : 'Zurich'}</div>
+          </div>
+        </>
+      )}
+    </div>
+  </div>
+</section>
+
+<!-- Main Content -->
+<section class="py-16 md:py-24">
+  <div class="container mx-auto max-w-4xl px-4">
+    <div class="prose prose-lg max-w-none">
+
+      <h2 class="text-3xl font-display font-bold text-evolea-purple mb-6 flex items-center gap-3">
+        <span class="text-evolea-green">●</span>
+        {getText(wasIst.titel, lang === 'de' ? 'Was ist die EVOLEA Tagesschule?' : 'What is the EVOLEA Tagesschule?')}
+      </h2>
+      <p class="text-evolea-text-light mb-8 text-lg leading-relaxed">
+        {getText(wasIst.text, lang === 'de' ? 'Die EVOLEA Tagesschule bietet eine strukturierte Tagesbetreuung mit integrierter Lernförderung für Kinder im Autismus Spektrum. In kleinen Gruppen mit hohem Betreuungsschlüssel schaffen wir einen geschützten Rahmen, der individuelles Lernen und soziale Entwicklung ermöglicht.' : 'The EVOLEA Tagesschule offers structured day care with integrated learning support for children on the autism spectrum. In small groups with a high staff-to-child ratio, we create a protected setting that enables individual learning and social development.')}
+      </p>
+
+      <div class="bg-evolea-purple/5 border-l-4 border-evolea-purple rounded-r-evolea p-6 mb-12">
+        <h3 class="font-display font-bold text-evolea-purple text-xl mb-2">{getText(wasIst.konzeptTitel, lang === 'de' ? 'Unser Konzept' : 'Our Concept')}</h3>
+        <p class="text-evolea-text-light mb-0">
+          {getText(wasIst.konzeptText, lang === 'de' ? 'Evidenzbasierte Methoden + Individuelle Förderpläne + Strukturierter Tagesablauf - Diese Kombination ermöglicht es jedem Kind, in seinem eigenen Tempo zu lernen und seine Stärken zu entfalten.' : 'Evidence-based methods + individual support plans + a structured daily routine. This combination allows every child to learn at their own pace and develop their strengths.')}
+        </p>
+      </div>
+
+      <h2 class="text-3xl font-display font-bold text-evolea-purple mb-6 flex items-center gap-3">
+        <span class="text-evolea-orange">●</span>
+        {getText(fuerWen.titel, lang === 'de' ? 'Für wen ist die Tagesschule?' : 'Who is the Tagesschule for?')}
+      </h2>
+      <p class="text-evolea-text-light mb-6 text-lg leading-relaxed">
+        {getText(fuerWen.text, lang === 'de' ? 'Unser Angebot richtet sich an Kinder im Alter von 6-12 Jahren, die:' : 'Our program is designed for children aged 6-12 who:')}
+      </p>
+      <ul class="space-y-3 mb-12">
+        {fuerWen.kriterien?.length > 0 ? (
+          fuerWen.kriterien.map((k: any) => (
+            <li class="flex items-start gap-3 text-evolea-text-light">
+              <span class="text-evolea-green mt-1">●</span>
+              <span>{getText(k, '')}</span>
+            </li>
+          ))
+        ) : (
+          <>
+            <li class="flex items-start gap-3 text-evolea-text-light">
+              <span class="text-evolea-green mt-1">●</span>
+              <span>{lang === 'de' ? 'Im Autismus Spektrum diagnostiziert sind oder eine ADHS-Diagnose haben' : 'Are on the autism spectrum or have an ADHD diagnosis'}</span>
+            </li>
+            <li class="flex items-start gap-3 text-evolea-text-light">
+              <span class="text-evolea-green mt-1">●</span>
+              <span>{lang === 'de' ? 'Von einer kleineren Lernumgebung mit intensiver Betreuung profitieren' : 'Benefit from a smaller learning environment with intensive support'}</span>
+            </li>
+            <li class="flex items-start gap-3 text-evolea-text-light">
+              <span class="text-evolea-green mt-1">●</span>
+              <span>{lang === 'de' ? 'Einen strukturierten, vorhersehbaren Tagesablauf benötigen' : 'Need a structured, predictable daily routine'}</span>
+            </li>
+            <li class="flex items-start gap-3 text-evolea-text-light">
+              <span class="text-evolea-green mt-1">●</span>
+              <span>{lang === 'de' ? 'In der Regelschule zusätzliche Unterstützung brauchen' : 'Need additional support in mainstream school'}</span>
+            </li>
+          </>
+        )}
+      </ul>
+
+      <h2 class="text-3xl font-display font-bold text-evolea-purple mb-6 flex items-center gap-3">
+        <span class="text-evolea-sky">●</span>
+        {getText(ansatz.titel, lang === 'de' ? 'Unser Ansatz' : 'Our Approach')}
+      </h2>
+      <p class="text-evolea-text-light mb-6 text-lg leading-relaxed">
+        {getText(ansatz.text, lang === 'de' ? 'Die EVOLEA Tagesschule basiert auf bewährten, evidenzbasierten Methoden und verbindet strukturiertes Lernen mit individueller Förderung.' : 'The EVOLEA Tagesschule is built on proven, evidence-based methods and combines structured learning with individual support.')}
+      </p>
+
+      <div class="grid md:grid-cols-2 gap-4 mb-12">
+        {ansatz.features?.length > 0 ? (
+          ansatz.features.map((feature: any) => (
+            <div class="bg-white border border-evolea-purple/10 rounded-evolea p-4">
+              <strong class="text-evolea-purple">{getText(feature.titel, '')}</strong>
+              <p class="text-sm text-evolea-text-light mb-0">{getText(feature.text, '')}</p>
+            </div>
+          ))
+        ) : (
+          <>
+            <div class="bg-white border border-evolea-purple/10 rounded-evolea p-4">
+              <strong class="text-evolea-purple">{lang === 'de' ? 'Individuelle Lernpläne' : 'Individual learning plans'}</strong>
+              <p class="text-sm text-evolea-text-light mb-0">{lang === 'de' ? 'Auf jedes Kind abgestimmte Ziele und Aktivitäten' : 'Goals and activities tailored to each child'}</p>
+            </div>
+            <div class="bg-white border border-evolea-purple/10 rounded-evolea p-4">
+              <strong class="text-evolea-purple">{lang === 'de' ? 'Visuelle Strukturen' : 'Visual structures'}</strong>
+              <p class="text-sm text-evolea-text-light mb-0">{lang === 'de' ? 'Klare Ablaufpläne und visuelle Unterstützung' : 'Clear schedules and visual supports'}</p>
+            </div>
+            <div class="bg-white border border-evolea-purple/10 rounded-evolea p-4">
+              <strong class="text-evolea-purple">{lang === 'de' ? 'Kleine Gruppen' : 'Small groups'}</strong>
+              <p class="text-sm text-evolea-text-light mb-0">{lang === 'de' ? 'Hoher Betreuungsschlüssel für optimale Förderung' : 'High staff-to-child ratio for optimal support'}</p>
+            </div>
+            <div class="bg-white border border-evolea-purple/10 rounded-evolea p-4">
+              <strong class="text-evolea-purple">{lang === 'de' ? 'Positive Verstärkung' : 'Positive reinforcement'}</strong>
+              <p class="text-sm text-evolea-text-light mb-0">{lang === 'de' ? 'Motivation durch Erfolge und Anerkennung' : 'Motivation through success and recognition'}</p>
+            </div>
+            <div class="bg-white border border-evolea-purple/10 rounded-evolea p-4">
+              <strong class="text-evolea-purple">{lang === 'de' ? 'Akademische Förderung' : 'Academic support'}</strong>
+              <p class="text-sm text-evolea-text-light mb-0">{lang === 'de' ? 'Angepasster Lehrplan für schulische Inhalte' : 'Adapted curriculum for school subjects'}</p>
+            </div>
+            <div class="bg-white border border-evolea-purple/10 rounded-evolea p-4">
+              <strong class="text-evolea-purple">{lang === 'de' ? 'Soziale Kompetenz' : 'Social skills'}</strong>
+              <p class="text-sm text-evolea-text-light mb-0">{lang === 'de' ? 'Gezielte Förderung sozialer Fähigkeiten' : 'Targeted development of social skills'}</p>
+            </div>
+          </>
+        )}
+      </div>
+
+      <h2 class="text-3xl font-display font-bold text-evolea-purple mb-6 flex items-center gap-3">
+        <span class="text-evolea-coral">●</span>
+        {getText(typischerTag.titel, lang === 'de' ? 'Ein typischer Tag' : 'A Typical Day')}
+      </h2>
+      <p class="text-evolea-text-light mb-6 text-lg leading-relaxed">
+        {getText(typischerTag.text, lang === 'de' ? 'Unser strukturierter Tagesablauf bietet Sicherheit und Vorhersehbarkeit, während er gleichzeitig Raum für individuelle Bedürfnisse lässt.' : 'Our structured daily routine offers security and predictability while leaving room for individual needs.')}
+      </p>
+
+      <div class="bg-evolea-cream rounded-evolea-lg p-8 mb-12">
+        <div class="space-y-4">
+          {typischerTag.ablauf?.length > 0 ? (
+            typischerTag.ablauf.map((eintrag: any, idx: number, arr: any[]) => (
+              <div class:list={["flex items-center gap-4", idx < arr.length - 1 ? "pb-4 border-b border-evolea-purple/10" : ""]}>
+                <span class="text-evolea-purple font-mono font-bold w-16">{eintrag.zeit}</span>
+                <span class="text-evolea-text">{getText(eintrag.aktivitaet, '')}</span>
+              </div>
+            ))
+          ) : (
+            <>
+              <div class="flex items-center gap-4 pb-4 border-b border-evolea-purple/10">
+                <span class="text-evolea-purple font-mono font-bold w-16">08:30</span>
+                <span class="text-evolea-text">{lang === 'de' ? 'Ankommen und Morgenritual' : 'Arrival and morning routine'}</span>
+              </div>
+              <div class="flex items-center gap-4 pb-4 border-b border-evolea-purple/10">
+                <span class="text-evolea-purple font-mono font-bold w-16">09:00</span>
+                <span class="text-evolea-text">{lang === 'de' ? 'Individuelles Lernen (Block 1)' : 'Individual learning (block 1)'}</span>
+              </div>
+              <div class="flex items-center gap-4 pb-4 border-b border-evolea-purple/10">
+                <span class="text-evolea-purple font-mono font-bold w-16">10:30</span>
+                <span class="text-evolea-text">{lang === 'de' ? 'Pause und Bewegung' : 'Break and movement'}</span>
+              </div>
+              <div class="flex items-center gap-4 pb-4 border-b border-evolea-purple/10">
+                <span class="text-evolea-purple font-mono font-bold w-16">11:00</span>
+                <span class="text-evolea-text">{lang === 'de' ? 'Gruppenaktivitäten' : 'Group activities'}</span>
+              </div>
+              <div class="flex items-center gap-4 pb-4 border-b border-evolea-purple/10">
+                <span class="text-evolea-purple font-mono font-bold w-16">12:00</span>
+                <span class="text-evolea-text">{lang === 'de' ? 'Mittagessen und Erholung' : 'Lunch and rest'}</span>
+              </div>
+              <div class="flex items-center gap-4 pb-4 border-b border-evolea-purple/10">
+                <span class="text-evolea-purple font-mono font-bold w-16">13:30</span>
+                <span class="text-evolea-text">{lang === 'de' ? 'Individuelles Lernen (Block 2)' : 'Individual learning (block 2)'}</span>
+              </div>
+              <div class="flex items-center gap-4 pb-4 border-b border-evolea-purple/10">
+                <span class="text-evolea-purple font-mono font-bold w-16">15:00</span>
+                <span class="text-evolea-text">{lang === 'de' ? 'Kreative und praktische Aktivitäten' : 'Creative and practical activities'}</span>
+              </div>
+              <div class="flex items-center gap-4">
+                <span class="text-evolea-purple font-mono font-bold w-16">16:00</span>
+                <span class="text-evolea-text">{lang === 'de' ? 'Tagesabschluss und Abholen' : 'End of day and pick-up'}</span>
+              </div>
+            </>
+          )}
+        </div>
+      </div>
+
+      <h2 class="text-3xl font-display font-bold text-evolea-purple mb-6 flex items-center gap-3" id="interesse">
+        <span class="text-evolea-mint">●</span>
+        {getText(interesse.titel, lang === 'de' ? 'Interesse anmelden' : 'Express Interest')}
+      </h2>
+      <p class="text-evolea-text-light mb-6 text-lg leading-relaxed">
+        {getText(interesse.text, lang === 'de' ? 'Die EVOLEA Tagesschule befindet sich derzeit in der Aufbauphase. Wir sammeln Interessensbekundungen von Familien, um das Programm optimal auf die Bedürfnisse der Kinder auszurichten.' : 'The EVOLEA Tagesschule is currently being developed. We are collecting expressions of interest from families so we can shape the program around the needs of the children.')}
+      </p>
+
+      <div class="bg-evolea-purple/5 rounded-evolea-lg p-8 mb-12">
+        <h3 class="font-display font-bold text-evolea-purple text-xl mb-4">{getText(interesse.schritteTitel, lang === 'de' ? 'So geht es weiter' : 'How it works')}</h3>
+        <div class="space-y-4">
+          {interesse.schritte?.length > 0 ? (
+            interesse.schritte.map((schritt: any, idx: number) => (
+              <div class="flex items-start gap-3">
+                <span class="bg-evolea-purple text-white rounded-full w-6 h-6 flex items-center justify-center text-sm font-bold shrink-0">{idx + 1}</span>
+                <div>
+                  <strong class="text-evolea-purple">{getText(schritt.titel, '')}</strong>
+                  <p class="text-evolea-text-light mb-0">{getText(schritt.text, '')}</p>
+                </div>
+              </div>
+            ))
+          ) : (
+            <>
+              <div class="flex items-start gap-3">
+                <span class="bg-evolea-purple text-white rounded-full w-6 h-6 flex items-center justify-center text-sm font-bold shrink-0">1</span>
+                <div>
+                  <strong class="text-evolea-purple">{lang === 'de' ? 'Interesse bekunden' : 'Express your interest'}</strong>
+                  <p class="text-evolea-text-light mb-0">{lang === 'de' ? 'Kontaktieren Sie uns per E-Mail oder über unser Kontaktformular.' : 'Contact us by email or via our contact form.'}</p>
+                </div>
+              </div>
+              <div class="flex items-start gap-3">
+                <span class="bg-evolea-purple text-white rounded-full w-6 h-6 flex items-center justify-center text-sm font-bold shrink-0">2</span>
+                <div>
+                  <strong class="text-evolea-purple">{lang === 'de' ? 'Unverbindliches Gespräch' : 'No-obligation conversation'}</strong>
+                  <p class="text-evolea-text-light mb-0">{lang === 'de' ? 'Wir laden Sie zu einem Kennenlerngespräch ein, um Ihre Bedürfnisse zu verstehen.' : 'We invite you to a get-to-know-you conversation to understand your needs.'}</p>
+                </div>
+              </div>
+              <div class="flex items-start gap-3">
+                <span class="bg-evolea-purple text-white rounded-full w-6 h-6 flex items-center justify-center text-sm font-bold shrink-0">3</span>
+                <div>
+                  <strong class="text-evolea-purple">{lang === 'de' ? 'Informiert bleiben' : 'Stay informed'}</strong>
+                  <p class="text-evolea-text-light mb-0">{lang === 'de' ? 'Wir halten Sie über den Aufbau und den geplanten Start auf dem Laufenden.' : 'We keep you up to date on the development and the planned start.'}</p>
+                </div>
+              </div>
+            </>
+          )}
+        </div>
+      </div>
+
+      <div class="bg-evolea-green/10 border-l-4 border-evolea-green rounded-r-evolea p-6 mb-12">
+        <h3 class="font-display font-bold text-evolea-purple text-xl mb-2">{getText(interesse.kontaktTitel, lang === 'de' ? 'Kontakt aufnehmen' : 'Get in touch')}</h3>
+        <p class="text-evolea-text-light mb-4">
+          {getText(interesse.kontaktText, lang === 'de' ? 'Haben Sie Fragen oder möchten Sie Ihr Interesse anmelden? Wir freuen uns auf Ihre Nachricht.' : 'Do you have questions or would you like to express your interest? We look forward to hearing from you.')}
+        </p>
+        <div class="flex flex-wrap gap-4">
+          <a href={translatePath('/kontakt/')} class="inline-flex items-center gap-2 text-evolea-purple font-medium hover:underline">
+            <Icon name="mail" size="sm" />
+            hello@evolea.ch
+          </a>
+          <a href="https://wa.me/41789591974" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 text-evolea-green font-medium hover:underline">
+            <Icon name="heart" size="sm" />
+            WhatsApp
+          </a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- Related Programs -->
+<section class="py-16 bg-white">
+  <div class="container mx-auto max-w-6xl px-4">
+    <h2 class="text-3xl font-display font-bold text-evolea-purple mb-8 text-center">{getText(weitereAngebote.titel, lang === 'de' ? 'Weitere Angebote' : 'More Programs')}</h2>
+    <div class="grid md:grid-cols-3 gap-6">
+      {weitereAngebote.angebote?.length > 0 ? (
+        weitereAngebote.angebote.map((angebot: any) => (
+          <a href={translatePath(angebot.link)} class="group bg-evolea-cream rounded-evolea-lg p-6 hover:shadow-card transition-shadow">
+            <div class="flex items-center gap-3 mb-4">
+              <Icon name="sprout" size="lg" />
+              <h3 class="font-display font-bold text-evolea-purple group-hover:text-evolea-purple-light transition-colors">{angebot.titel}</h3>
+            </div>
+            <p class="text-sm text-evolea-text-light">{getText(angebot.beschreibung, '')}</p>
+          </a>
+        ))
+      ) : (
+        <>
+          <a href={translatePath('/angebote/mini-garten/')} class="group bg-evolea-cream rounded-evolea-lg p-6 hover:shadow-card transition-shadow">
+            <div class="flex items-center gap-3 mb-4">
+              <Icon name="sprout" size="lg" />
+              <h3 class="font-display font-bold text-evolea-purple group-hover:text-evolea-purple-light transition-colors">Mini Garten</h3>
+            </div>
+            <p class="text-sm text-evolea-text-light">{lang === 'de' ? 'Kindergartenvorbereitung für 3-6 Jahre' : 'Kindergarten preparation for ages 3-6'}</p>
+          </a>
+          <a href={translatePath('/angebote/mini-projekte/')} class="group bg-evolea-cream rounded-evolea-lg p-6 hover:shadow-card transition-shadow">
+            <div class="flex items-center gap-3 mb-4">
+              <Icon name="palette" size="lg" />
+              <h3 class="font-display font-bold text-evolea-purple group-hover:text-evolea-purple-light transition-colors">Mini Projekte</h3>
+            </div>
+            <p class="text-sm text-evolea-text-light">{lang === 'de' ? 'Soziale Kompetenzen für 5-8 Jahre' : 'Social skills for ages 5-8'}</p>
+          </a>
+          <a href={translatePath('/angebote/mini-turnen/')} class="group bg-evolea-cream rounded-evolea-lg p-6 hover:shadow-card transition-shadow">
+            <div class="flex items-center gap-3 mb-4">
+              <Icon name="ball" size="lg" />
+              <h3 class="font-display font-bold text-evolea-purple group-hover:text-evolea-purple-light transition-colors">Mini Turnen</h3>
+            </div>
+            <p class="text-sm text-evolea-text-light">{lang === 'de' ? 'Bewegung und Spass für 5-8 Jahre' : 'Movement and fun for ages 5-8'}</p>
+          </a>
+        </>
+      )}
+    </div>
+  </div>
+</section>
+
+<!-- CTA Section from CMS -->
+<GradientCTA
+  title={getText(cta.titel, lang === 'de' ? 'Fragen zur Tagesschule?' : 'Questions about the Tagesschule?')}
+  description={getText(cta.beschreibung, lang === 'de' ? 'Kontaktieren Sie uns für ein unverbindliches Gespräch über das Tagesschul-Programm.' : 'Contact us for a no-obligation conversation about the day school program.')}
+  buttonText={getText(cta.buttonText, lang === 'de' ? 'Jetzt Kontakt aufnehmen' : 'Get in touch now')}
+  buttonHref={translatePath('/kontakt/')}
+/>

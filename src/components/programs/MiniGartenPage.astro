@@ -1,0 +1,291 @@
+---
+import FloatingShapes from '@components/FloatingShapes.astro';
+import Icon from '@components/Icon.astro';
+
+const { content, lang, translatePath, heroImage } = Astro.props;
+
+// Helper to get bilingual text
+const getText = (obj: { de?: string; en?: string } | undefined, fallback: string = '') => {
+  if (!obj) return fallback;
+  return lang === 'de' ? (obj.de || fallback) : (obj.en || obj.de || fallback);
+};
+
+// CMS link values starting with '/' must resolve to the language-specific route
+const resolveLink = (link: string | undefined, fallback: string) => {
+  const value = link || fallback;
+  return value.startsWith('/') ? translatePath(value) : value;
+};
+
+// Page content with fallbacks
+const hero = content?.hero || {};
+const infoKarten = content?.infoKarten || [];
+const fuerWen = content?.fuerWen || {};
+const typischerTag = content?.typischerTag || {};
+const lernziele = content?.lernziele || {};
+const anmeldung = content?.anmeldung || {};
+
+const primaryButtonHref = resolveLink(hero.buttonLink, '#anmeldung');
+const secondaryButtonHref = resolveLink(hero.zweitButtonLink, '/kontakt/');
+---
+
+<!-- Hero Section -->
+<section class="relative py-20 md:py-28 bg-gradient-to-br from-evolea-green/10 to-evolea-cream overflow-hidden">
+  <FloatingShapes variant="minimal" />
+  <div class="container mx-auto max-w-6xl px-4 relative z-10">
+    <nav class="mb-8 text-sm text-evolea-text-light">
+      <a href={translatePath('/')} class="hover:text-evolea-purple transition-colors">{lang === 'de' ? 'Startseite' : 'Home'}</a>
+      <span class="mx-2">/</span>
+      <a href={translatePath('/angebote/')} class="hover:text-evolea-purple transition-colors">{lang === 'de' ? 'Angebote' : 'Programs'}</a>
+      <span class="mx-2">/</span>
+      <span class="text-evolea-purple font-medium">{hero.titel || 'Mini Garten'}</span>
+    </nav>
+
+    <div class="grid lg:grid-cols-2 gap-12 items-center">
+      <div>
+        <div class="inline-flex items-center gap-2 bg-evolea-green/20 text-evolea-green px-4 py-2 rounded-full text-sm font-medium mb-6">
+          <Icon name="sprout" size="sm" />
+          <span>{getText(hero.badge, lang === 'de' ? 'Kindergartenvorbereitung' : 'Kindergarten Preparation')}</span>
+        </div>
+        <h1 class="text-4xl md:text-5xl lg:text-6xl font-display font-bold text-evolea-purple mb-6 leading-tight">
+          {hero.titel || 'Mini Garten'}
+        </h1>
+        <p class="text-xl md:text-2xl text-evolea-text-light mb-8 leading-relaxed">
+          {getText(hero.untertitel, lang === 'de' ? 'Gruppensetting zur Vorbereitung für den Kindergarten' : 'Group setting for kindergarten preparation')}
+        </p>
+        <div class="flex flex-wrap gap-4">
+          <a href={primaryButtonHref} class="btn-primary">
+            {getText(hero.buttonText, lang === 'de' ? 'Jetzt anmelden' : 'Register now')}
+            <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+            </svg>
+          </a>
+          <a href={secondaryButtonHref} class="btn-secondary">
+            {getText(hero.zweitButtonText, lang === 'de' ? 'Fragen? Kontaktieren Sie uns' : 'Questions? Contact us')}
+          </a>
+        </div>
+      </div>
+      <div class="relative">
+        <img
+          src={heroImage}
+          alt={getText(hero.untertitel, lang === 'de' ? 'Kinder lernen spielerisch im Garten' : 'Children learning playfully in the garden')}
+          class="rounded-evolea-lg shadow-elevated w-full object-cover aspect-card"
+        />
+        <div class="absolute -bottom-4 -left-4 bg-white rounded-evolea p-4 shadow-card">
+          <div class="text-3xl font-display font-bold text-evolea-green">{hero.alter || '3-6'}</div>
+          <div class="text-sm text-evolea-text-light">{lang === 'de' ? 'Jahre' : 'Years'}</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Key Info Cards -->
+<section class="py-16 bg-white">
+  <div class="container mx-auto max-w-6xl px-4">
+    <div class="grid md:grid-cols-4 gap-6">
+      {infoKarten.length > 0 ? (
+        infoKarten.map((karte: any) => (
+          <div class="bg-evolea-cream rounded-evolea-lg p-6 text-center">
+            <div class="flex justify-center mb-3"><Icon name={karte.icon || 'sparkle'} size="lg" /></div>
+            <div class="font-display font-bold text-evolea-purple text-lg">{getText(karte.label, '')}</div>
+            <div class="text-evolea-text-light">{getText(karte.wert, '')}</div>
+          </div>
+        ))
+      ) : (
+        <>
+          <div class="bg-evolea-cream rounded-evolea-lg p-6 text-center">
+            <div class="flex justify-center mb-3"><Icon name="sparkle" size="lg" /></div>
+            <div class="font-display font-bold text-evolea-purple text-lg">{lang === 'de' ? 'Alter' : 'Age'}</div>
+            <div class="text-evolea-text-light">{lang === 'de' ? '3-6 Jahre' : '3-6 years'}</div>
+          </div>
+          <div class="bg-evolea-cream rounded-evolea-lg p-6 text-center">
+            <div class="flex justify-center mb-3"><Icon name="people" size="lg" /></div>
+            <div class="font-display font-bold text-evolea-purple text-lg">{lang === 'de' ? 'Gruppengrösse' : 'Group size'}</div>
+            <div class="text-evolea-text-light">{lang === 'de' ? '4 + 2 Kinder' : '4 + 2 children'}</div>
+          </div>
+          <div class="bg-evolea-cream rounded-evolea-lg p-6 text-center">
+            <div class="flex justify-center mb-3"><Icon name="clipboard" size="lg" /></div>
+            <div class="font-display font-bold text-evolea-purple text-lg">{lang === 'de' ? 'Wann' : 'When'}</div>
+            <div class="text-evolea-text-light">{lang === 'de' ? 'Montag 13:30-16:30' : 'Monday 13:30-16:30'}</div>
+          </div>
+          <div class="bg-evolea-cream rounded-evolea-lg p-6 text-center">
+            <div class="flex justify-center mb-3"><Icon name="target" size="lg" /></div>
+            <div class="font-display font-bold text-evolea-purple text-lg">{lang === 'de' ? 'Wo' : 'Where'}</div>
+            <div class="text-evolea-text-light">{lang === 'de' ? 'Zürich' : 'Zurich'}</div>
+          </div>
+        </>
+      )}
+    </div>
+  </div>
+</section>
+
+<!-- Main Content -->
+<section class="py-16 md:py-24">
+  <div class="container mx-auto max-w-4xl px-4">
+    <div class="prose prose-lg max-w-none">
+
+      <h2 class="text-3xl font-display font-bold text-evolea-purple mb-6 flex items-center gap-3">
+        <span class="text-evolea-green">●</span>
+        {getText(fuerWen.titel, lang === 'de' ? 'Für wen ist Mini Garten?' : 'Who is Mini Garten for?')}
+      </h2>
+      <p class="text-evolea-text-light mb-8 text-lg leading-relaxed">
+        {getText(fuerWen.text, lang === 'de' ? 'Mini Garten richtet sich an Kinder im Autismus Spektrum im Alter von 3-6 Jahren, die sich auf den Kindergarten vorbereiten. Auch neurotypische Kinder sind herzlich willkommen und bereichern die Gruppe durch natürliche soziale Interaktionen.' : 'Mini Garten is aimed at children on the autism spectrum aged 3-6 years who are preparing for kindergarten. Neurotypical children are also welcome and enrich the group through natural social interactions.')}
+      </p>
+
+      <div class="bg-evolea-green/10 border-l-4 border-evolea-green rounded-r-evolea p-6 mb-12">
+        <h3 class="font-display font-bold text-evolea-purple text-xl mb-2">{getText(fuerWen.highlightTitel, lang === 'de' ? 'Inklusive Gruppenstruktur' : 'Inclusive Group Structure')}</h3>
+        <p class="text-evolea-text-light mb-0">
+          {getText(fuerWen.highlightText, lang === 'de' ? '4 Kinder im Spektrum + 2 neurotypische Kinder + 2 Fachpersonen – diese bewährte Zusammensetzung ermöglicht intensive Betreuung und natürliche Peer-Interaktionen.' : '4 children on the spectrum + 2 neurotypical children + 2 specialists – this proven composition enables intensive care and natural peer interactions.')}
+        </p>
+      </div>
+
+      <h2 class="text-3xl font-display font-bold text-evolea-purple mb-6 flex items-center gap-3">
+        <span class="text-evolea-orange">●</span>
+        {getText(typischerTag.titel, lang === 'de' ? 'Ein typischer Nachmittag' : 'A typical afternoon')}
+      </h2>
+      <p class="text-evolea-text-light mb-6 text-lg leading-relaxed">
+        {getText(typischerTag.text, lang === 'de' ? 'Unsere Nachmittage sind bewusst strukturiert und ahmen den Kindergartenalltag nach. Mit visuellen Ablaufplänen und klaren Routinen schaffen wir Sicherheit und Vorhersehbarkeit.' : 'Our afternoons are deliberately structured and mimic kindergarten daily life. With visual schedules and clear routines, we create security and predictability.')}
+      </p>
+
+      <div class="grid md:grid-cols-2 gap-4 mb-12">
+        {typischerTag.aktivitaeten?.length > 0 ? (
+          typischerTag.aktivitaeten.map((aktivitaet: any) => (
+            <div class="bg-white border border-evolea-purple/10 rounded-evolea p-4 flex items-center gap-4">
+              <Icon name={aktivitaet.icon || 'sparkle'} size="md" />
+              <span class="text-evolea-text">{getText(aktivitaet.name, '')}</span>
+            </div>
+          ))
+        ) : (
+          <>
+            <div class="bg-white border border-evolea-purple/10 rounded-evolea p-4 flex items-center gap-4">
+              <Icon name="handshake" size="md" />
+              <span class="text-evolea-text">{lang === 'de' ? 'Begrüssungskreis' : 'Welcome circle'}</span>
+            </div>
+            <div class="bg-white border border-evolea-purple/10 rounded-evolea p-4 flex items-center gap-4">
+              <Icon name="clipboard" size="md" />
+              <span class="text-evolea-text">{lang === 'de' ? 'Tischaktivitäten' : 'Table activities'}</span>
+            </div>
+            <div class="bg-white border border-evolea-purple/10 rounded-evolea p-4 flex items-center gap-4">
+              <Icon name="gamepad" size="md" />
+              <span class="text-evolea-text">{lang === 'de' ? 'Gruppenspiele' : 'Group games'}</span>
+            </div>
+            <div class="bg-white border border-evolea-purple/10 rounded-evolea p-4 flex items-center gap-4">
+              <Icon name="book" size="md" />
+              <span class="text-evolea-text">{lang === 'de' ? 'Geschichtenzeit' : 'Story time'}</span>
+            </div>
+            <div class="bg-white border border-evolea-purple/10 rounded-evolea p-4 flex items-center gap-4">
+              <Icon name="palette" size="md" />
+              <span class="text-evolea-text">{lang === 'de' ? 'Basteln' : 'Crafts'}</span>
+            </div>
+            <div class="bg-white border border-evolea-purple/10 rounded-evolea p-4 flex items-center gap-4">
+              <Icon name="sparkle" size="md" />
+              <span class="text-evolea-text">{lang === 'de' ? 'Freies Spiel' : 'Free play'}</span>
+            </div>
+          </>
+        )}
+      </div>
+
+      <h2 class="text-3xl font-display font-bold text-evolea-purple mb-6 flex items-center gap-3">
+        <span class="text-evolea-sky">●</span>
+        {getText(lernziele.titel, lang === 'de' ? 'Lernziele' : 'Learning Goals')}
+      </h2>
+      <p class="text-evolea-text-light mb-6 text-lg leading-relaxed">
+        {getText(lernziele.text, lang === 'de' ? 'Gemeinsam mit den Eltern entwickeln wir individuelle Lernziele für jedes Kind. Typische Bereiche sind:' : 'Together with parents, we develop individual learning goals for each child. Typical areas are:')}
+      </p>
+      <ul class="space-y-3 mb-12">
+        {lernziele.ziele?.length > 0 ? (
+          lernziele.ziele.map((ziel: any) => (
+            <li class="flex items-start gap-3 text-evolea-text-light">
+              <span class="text-evolea-green mt-1">✓</span>
+              <span><strong>{getText(ziel.titel, '')}</strong> – {getText(ziel.beschreibung, '')}</span>
+            </li>
+          ))
+        ) : (
+          <>
+            <li class="flex items-start gap-3 text-evolea-text-light">
+              <span class="text-evolea-green mt-1">✓</span>
+              <span><strong>{lang === 'de' ? 'Kommunikation' : 'Communication'}</strong> – {lang === 'de' ? 'Wünsche ausdrücken, auf Ansprache reagieren' : 'Expressing wishes, responding to speech'}</span>
+            </li>
+            <li class="flex items-start gap-3 text-evolea-text-light">
+              <span class="text-evolea-green mt-1">✓</span>
+              <span><strong>{lang === 'de' ? 'Instruktionen folgen' : 'Following instructions'}</strong> – {lang === 'de' ? 'Gruppenanweisungen verstehen und umsetzen' : 'Understanding and implementing group instructions'}</span>
+            </li>
+            <li class="flex items-start gap-3 text-evolea-text-light">
+              <span class="text-evolea-green mt-1">✓</span>
+              <span><strong>{lang === 'de' ? 'Imitation' : 'Imitation'}</strong> – {lang === 'de' ? 'Von Gleichaltrigen und Erwachsenen lernen' : 'Learning from peers and adults'}</span>
+            </li>
+            <li class="flex items-start gap-3 text-evolea-text-light">
+              <span class="text-evolea-green mt-1">✓</span>
+              <span><strong>{lang === 'de' ? 'Zuhören' : 'Listening'}</strong> – {lang === 'de' ? 'Aufmerksamkeit in der Gruppe' : 'Attention in the group'}</span>
+            </li>
+            <li class="flex items-start gap-3 text-evolea-text-light">
+              <span class="text-evolea-green mt-1">✓</span>
+              <span><strong>{lang === 'de' ? 'Abwechseln' : 'Taking turns'}</strong> – {lang === 'de' ? 'Warten und Teilen üben' : 'Practice waiting and sharing'}</span>
+            </li>
+            <li class="flex items-start gap-3 text-evolea-text-light">
+              <span class="text-evolea-green mt-1">✓</span>
+              <span><strong>{lang === 'de' ? 'Übergänge' : 'Transitions'}</strong> – {lang === 'de' ? 'Flexibel zwischen Aktivitäten wechseln' : 'Flexibly switch between activities'}</span>
+            </li>
+          </>
+        )}
+      </ul>
+
+      <h2 class="text-3xl font-display font-bold text-evolea-purple mb-6 flex items-center gap-3" id="anmeldung">
+        <span class="text-evolea-coral">●</span>
+        {getText(anmeldung.titel, lang === 'de' ? 'Anmeldung & Ablauf' : 'Registration & Process')}
+      </h2>
+      <p class="text-evolea-text-light mb-6 text-lg leading-relaxed">
+        {getText(anmeldung.text, lang === 'de' ? 'Die Aufnahme erfolgt nach einem persönlichen Kennenlerngespräch und einer Einschätzung Ihres Kindes. Wir nehmen uns Zeit, um sicherzustellen, dass Mini Garten das richtige Angebot für Ihre Familie ist.' : 'Admission takes place after a personal introductory meeting and an assessment of your child. We take the time to ensure that Mini Garten is the right program for your family.')}
+      </p>
+
+      <div class="bg-evolea-purple/5 rounded-evolea-lg p-8 mb-12">
+        <h3 class="font-display font-bold text-evolea-purple text-xl mb-4">{getText(anmeldung.infoTitel, lang === 'de' ? 'Praktische Informationen' : 'Practical Information')}</h3>
+        <div class="space-y-4">
+          {anmeldung.infos?.length > 0 ? (
+            anmeldung.infos.map((info: any) => (
+              <div class="flex items-start gap-3">
+                <Icon name={info.icon || 'target'} size="sm" />
+                <div>
+                  <strong class="text-evolea-purple">{getText(info.label, '')}</strong>
+                  <p class="text-evolea-text-light mb-0">{getText(info.wert, '')}</p>
+                </div>
+              </div>
+            ))
+          ) : (
+            <>
+              <div class="flex items-start gap-3">
+                <Icon name="target" size="sm" />
+                <div>
+                  <strong class="text-evolea-purple">{lang === 'de' ? 'Standort' : 'Location'}</strong>
+                  <p class="text-evolea-text-light mb-0">{lang === 'de' ? 'Stapferstrasse 10, 8006 Zürich (Nähe Seilbahn Rigiblick)' : 'Stapferstrasse 10, 8006 Zurich (near Rigiblick cable car)'}</p>
+                </div>
+              </div>
+              <div class="flex items-start gap-3">
+                <Icon name="clipboard" size="sm" />
+                <div>
+                  <strong class="text-evolea-purple">{lang === 'de' ? 'Zeiten' : 'Times'}</strong>
+                  <p class="text-evolea-text-light mb-0">{lang === 'de' ? 'Montagnachmittag, 13:30–16:30 Uhr (ab September, ausserhalb Schulferien)' : 'Monday afternoon, 13:30–16:30 (from September, outside school holidays)'}</p>
+                </div>
+              </div>
+              <div class="flex items-start gap-3">
+                <Icon name="running" size="sm" />
+                <div>
+                  <strong class="text-evolea-purple">Transport</strong>
+                  <p class="text-evolea-text-light mb-0">{lang === 'de' ? 'Unterstützung beim Transport auf Anfrage möglich' : 'Transport support available on request'}</p>
+                </div>
+              </div>
+              <div class="flex items-start gap-3">
+                <Icon name="heart" size="sm" />
+                <div>
+                  <strong class="text-evolea-purple">{lang === 'de' ? 'Kontakt' : 'Contact'}</strong>
+                  <p class="text-evolea-text-light mb-0">hello@evolea.ch</p>
+                </div>
+              </div>
+            </>
+          )}
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>

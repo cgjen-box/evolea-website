@@ -1,0 +1,374 @@
+---
+import FloatingShapes from '@components/FloatingShapes.astro';
+import Icon from '@components/Icon.astro';
+import EditLink from '@components/EditLink.astro';
+
+const { content, lang, translatePath, heroImage } = Astro.props;
+
+// Helper to get bilingual text
+const getText = (obj: { de?: string; en?: string } | undefined, fallback: string = '') => {
+  if (!obj) return fallback;
+  return lang === 'de' ? (obj.de || fallback) : (obj.en || obj.de || fallback);
+};
+
+// CMS links store German routes - internal paths ('/...') get translated, hashes ('#...') pass through
+const resolveLink = (link: string | undefined, fallback: string) => {
+  if (!link) return fallback;
+  return link.startsWith('/') ? translatePath(link) : link;
+};
+
+// Page content with fallbacks
+const hero = content?.hero || {};
+const infoKarten = content?.infoKarten || [];
+const konzept = content?.konzept || {};
+const ablauf = content?.ablauf || {};
+const ziele = content?.ziele || {};
+const aufnahme = content?.aufnahme || {};
+const praktischeInfos = content?.praktischeInfos || {};
+
+const buttonLink = resolveLink(hero.buttonLink, `${translatePath('/kontakt/')}?programm=mini-abenteuercamp`);
+const zweitButtonLink = resolveLink(hero.zweitButtonLink, '#programm');
+
+// Schedule data from CMS
+const schedule = (ablauf.termine || []).map((termin: any) => ({
+  day: termin.tag,
+  title: getText(termin.titel),
+  date: getText(termin.datum),
+  time: termin.zeit,
+  focus: getText(termin.fokus),
+  location: getText(termin.standort),
+  isSpecial: termin.istBesonders
+}));
+
+// Color mappings for skills
+const skillColors: Record<string, string> = {
+  mint: 'bg-evolea-mint/20',
+  coral: 'bg-evolea-coral/20',
+  purple: 'bg-evolea-purple/20',
+  orange: 'bg-evolea-orange/20'
+};
+---
+
+<!-- Hero Section -->
+<section class="relative py-20 md:py-28 bg-gradient-to-br from-evolea-mint/10 to-evolea-cream overflow-hidden">
+  <FloatingShapes variant="minimal" />
+  <div class="container mx-auto max-w-6xl px-4 relative z-10">
+    <nav class="mb-8 text-sm text-evolea-text-light">
+      <a href={translatePath('/')} class="hover:text-evolea-purple transition-colors">{lang === 'de' ? 'Startseite' : 'Home'}</a>
+      <span class="mx-2">/</span>
+      <a href={translatePath('/angebote/')} class="hover:text-evolea-purple transition-colors">{lang === 'de' ? 'Angebote' : 'Programs'}</a>
+      <span class="mx-2">/</span>
+      <a href={translatePath('/angebote/mini-projekte/')} class="hover:text-evolea-purple transition-colors">{lang === 'de' ? 'Mini Projekte' : 'Mini Projects'}</a>
+      <span class="mx-2">/</span>
+      <span class="text-evolea-purple font-medium">{hero.titel || 'Mini Abenteuercamp'}</span>
+    </nav>
+
+    <div class="grid lg:grid-cols-2 gap-12 items-center">
+      <div>
+        <div class="inline-flex items-center gap-2 bg-evolea-mint/20 text-evolea-green px-4 py-2 rounded-full text-sm font-medium mb-6">
+          <Icon name="leaf" size="sm" />
+          <span>{getText(hero.badge, lang === 'de' ? 'Natur-Abenteuercamp' : 'Nature Adventure Camp')}</span>
+        </div>
+        <h1 class="text-4xl md:text-5xl lg:text-6xl font-display font-bold text-evolea-purple mb-6 leading-tight">
+          {hero.titel || 'Mini Abenteuercamp'}
+        </h1>
+        <p class="text-xl md:text-2xl text-evolea-text-light mb-4 leading-relaxed">
+          {getText(hero.untertitel, 'Raus in die Natur, rein ins Abenteuer!')}
+        </p>
+        <p class="text-lg text-evolea-text-light mb-8">
+          {getText(hero.beschreibung, 'In diesem inklusiven Feriencamp erkunden Kinder die Natur, bauen gemeinsam eine Burg aus Naturmaterialien und erleben eine Woche voller Bewegung, Entdeckungen und Teamwork.')}
+        </p>
+        <div class="flex flex-wrap gap-4">
+          <a href={buttonLink} class="btn-primary">
+            {getText(hero.buttonText, lang === 'de' ? 'Jetzt anmelden' : 'Register now')}
+            <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+            </svg>
+          </a>
+          <a href={zweitButtonLink} class="btn-secondary">
+            {getText(hero.zweitButtonText, lang === 'de' ? 'Programm ansehen' : 'View program')}
+          </a>
+        </div>
+      </div>
+      <div class="relative">
+        <img
+          src={heroImage}
+          alt={getText(hero.untertitel, lang === 'de' ? 'Kinder beim Abenteuercamp in der Natur' : 'Children at the adventure camp in nature')}
+          class="rounded-evolea-lg shadow-elevated w-full object-cover aspect-card"
+        />
+        <div class="absolute -bottom-4 -right-4 bg-white rounded-evolea p-4 shadow-card">
+          <div class="text-3xl font-display font-bold text-evolea-green">{hero.alter || '5-10'}</div>
+          <div class="text-sm text-evolea-text-light">{lang === 'de' ? 'Jahre' : 'Years'}</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Key Info Cards -->
+<section class="py-16 bg-white">
+  <div class="container mx-auto max-w-6xl px-4">
+    <div class="grid md:grid-cols-4 gap-6">
+      {infoKarten.map((karte: any) => (
+        <div class="bg-evolea-cream rounded-evolea-lg p-6 text-center">
+          <div class="flex justify-center mb-3"><Icon name={karte.icon || 'sparkle'} size="lg" /></div>
+          <div class="font-display font-bold text-evolea-purple text-lg">{getText(karte.label, '')}</div>
+          <div class="text-evolea-text-light">{getText(karte.wert, '')}</div>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+
+<!-- Program Concept -->
+<section class="py-16 md:py-24 bg-evolea-cream/30">
+  <div class="container mx-auto max-w-4xl px-4">
+    <div class="text-center mb-12">
+      <h2 class="text-3xl md:text-4xl font-display font-bold text-evolea-purple mb-4">
+        {getText(konzept.titel, lang === 'de' ? 'Das Konzept' : 'The Concept')}
+      </h2>
+      <p class="text-lg text-evolea-text-light max-w-2xl mx-auto">
+        {getText(konzept.untertitel, 'Eine Woche Natur, Abenteuer und gemeinsames Wachsen.')}
+      </p>
+    </div>
+
+    <!-- Lead paragraph - the challenge -->
+    <div class="bg-white rounded-evolea-lg p-8 shadow-soft mb-8">
+      <p class="text-xl md:text-2xl text-evolea-purple font-display font-semibold leading-relaxed mb-4" set:html={getText(konzept.absaetze?.[0], '')} />
+    </div>
+
+    <!-- What we offer - main content -->
+    <div class="grid md:grid-cols-2 gap-6 mb-8">
+      <div class="bg-evolea-mint/10 rounded-evolea-lg p-6 border-l-4 border-evolea-mint">
+        <div class="flex items-start gap-4">
+          <div class="flex-shrink-0">
+            <Icon name="leaf" size="lg" />
+          </div>
+          <div>
+            <h3 class="font-display font-bold text-evolea-purple text-lg mb-3">{lang === 'de' ? 'Das Abenteuercamp' : 'The Adventure Camp'}</h3>
+            <p class="text-evolea-text-light leading-relaxed mb-0" set:html={getText(konzept.absaetze?.[1], '')} />
+          </div>
+        </div>
+      </div>
+
+      <div class="bg-evolea-coral/10 rounded-evolea-lg p-6 border-l-4 border-evolea-coral">
+        <div class="flex items-start gap-4">
+          <div class="flex-shrink-0">
+            <Icon name="heart" size="lg" />
+          </div>
+          <div>
+            <h3 class="font-display font-bold text-evolea-purple text-lg mb-3">{lang === 'de' ? 'Individuelle Begleitung' : 'Individual Support'}</h3>
+            <p class="text-evolea-text-light leading-relaxed mb-0" set:html={getText(konzept.absaetze?.[2], '')} />
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Highlight: The culmination -->
+    <div class="bg-gradient-to-r from-evolea-magenta/10 to-evolea-coral/10 rounded-evolea-lg p-6 mb-12 border border-evolea-magenta/20">
+      <div class="flex items-center gap-4">
+        <div class="flex-shrink-0 w-16 h-16 bg-evolea-magenta/20 rounded-full flex items-center justify-center">
+          <Icon name="sparkle" size="lg" />
+        </div>
+        <div>
+          <h3 class="font-display font-bold text-evolea-magenta text-lg mb-1">{lang === 'de' ? 'Der krönende Abschluss' : 'The Grand Finale'}</h3>
+          <p class="text-evolea-text leading-relaxed mb-0" set:html={getText(konzept.absaetze?.[3], '')} />
+        </div>
+      </div>
+    </div>
+
+    <!-- Skills grid -->
+    <h3 class="text-2xl font-display font-bold text-evolea-purple mb-6 text-center">{lang === 'de' ? 'Was die Kinder lernen' : 'What children learn'}</h3>
+    <div class="grid md:grid-cols-2 gap-6">
+      {(konzept.faehigkeiten || []).map((skill: any) => (
+        <div class="bg-white rounded-evolea-lg p-6 shadow-soft">
+          <div class="flex justify-center mb-4">
+            <div class={`w-12 h-12 ${skillColors[skill.farbe] || 'bg-evolea-purple/20'} rounded-full flex items-center justify-center`}>
+              <Icon name={skill.icon || 'sparkle'} size="md" />
+            </div>
+          </div>
+          <h3 class="font-display font-bold text-evolea-purple text-lg mb-2 text-center">{getText(skill.titel, '')}</h3>
+          <p class="text-evolea-text-light text-center mb-0">{getText(skill.beschreibung, '')}</p>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+
+<!-- Program Schedule -->
+<section class="py-16 md:py-24" id="programm">
+  <div class="container mx-auto max-w-4xl px-4">
+    <div class="text-center mb-12">
+      <h2 class="text-3xl md:text-4xl font-display font-bold text-evolea-purple mb-4">
+        {getText(ablauf.titel, lang === 'de' ? 'Der Ablauf' : 'The Schedule')}
+      </h2>
+      <p class="text-lg text-evolea-text-light">
+        {getText(ablauf.untertitel, '5 Tage voller Abenteuer, Natur und Entdeckungen')}
+      </p>
+    </div>
+
+    <div class="space-y-4">
+      {schedule.map((session: { day: number; title: string; date: string; time: string; focus: string; location: string; isSpecial?: boolean }) => (
+        <div class={`rounded-evolea-lg p-6 border-l-4 ${session.isSpecial ? 'bg-gradient-to-r from-evolea-magenta/10 to-evolea-coral/10 border-evolea-magenta' : 'bg-white border-evolea-purple shadow-soft'}`}>
+          <div class="flex flex-col md:flex-row md:items-center gap-4">
+            <div class={`flex-shrink-0 w-12 h-12 rounded-full flex items-center justify-center font-display font-bold text-lg ${session.isSpecial ? 'bg-evolea-magenta text-white' : 'bg-evolea-purple/20 text-evolea-purple'}`}>
+              {session.day}
+            </div>
+            <div class="flex-grow">
+              <h3 class="font-display font-bold text-evolea-purple text-lg mb-1">
+                {session.title}
+                {session.isSpecial && <span class="ml-2 text-sm bg-evolea-magenta/20 text-evolea-magenta px-2 py-0.5 rounded-full">{lang === 'de' ? 'Abschlussfeier' : 'Closing celebration'}</span>}
+              </h3>
+              <p class="text-evolea-text-light text-sm mb-2">{session.focus}</p>
+              <div class="flex flex-wrap gap-4 text-sm text-evolea-text-light">
+                <span class="flex items-center gap-1">
+                  <Icon name="calendar" size="xs" />
+                  {session.date}
+                </span>
+                <span class="flex items-center gap-1">
+                  <Icon name="clock" size="xs" />
+                  {session.time}
+                </span>
+                <span class="flex items-center gap-1">
+                  <Icon name="location" size="xs" />
+                  {session.location}
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+      ))}
+    </div>
+
+    <!-- Special Note about Celebration -->
+    {ablauf.hinweis && (
+      <div class="mt-8 bg-evolea-purple/5 rounded-evolea-lg p-6">
+        <div class="flex items-start gap-4">
+          <div class="flex-shrink-0">
+            <Icon name="heart" size="lg" />
+          </div>
+          <div>
+            <h4 class="font-display font-bold text-evolea-purple mb-2">{getText(ablauf.hinweis.titel, lang === 'de' ? 'Einweihungsfeier am Freitag' : 'Inauguration celebration on Friday')}</h4>
+            <p class="text-evolea-text-light mb-0">
+              {getText(ablauf.hinweis.text, '')}
+            </p>
+          </div>
+        </div>
+      </div>
+    )}
+  </div>
+</section>
+
+<!-- Project Goals -->
+<section class="py-16 bg-white">
+  <div class="container mx-auto max-w-4xl px-4">
+    <h2 class="text-3xl font-display font-bold text-evolea-purple mb-8 text-center">
+      {getText(ziele.titel, lang === 'de' ? 'Projektziele' : 'Project Goals')}
+    </h2>
+    <p class="text-lg text-evolea-text-light text-center mb-12 max-w-2xl mx-auto">
+      {getText(ziele.untertitel, 'Kinder erleben bei uns, wie sie in der Natur und im Miteinander über sich hinauswachsen können – Schritt für Schritt, mit Freude und Erfolg.')}
+    </p>
+
+    <div class="space-y-6">
+      {(ziele.liste || []).map((ziel: any) => (
+        <div class="bg-evolea-cream/50 rounded-evolea-lg p-6">
+          <h3 class="font-display font-bold text-evolea-purple mb-2">{getText(ziel.titel, '')}</h3>
+          <p class="text-evolea-text-light mb-0">{getText(ziel.text, '')}</p>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+
+<!-- Admission Criteria -->
+<section class="py-16 bg-evolea-cream/30">
+  <div class="container mx-auto max-w-4xl px-4">
+    <h2 class="text-3xl font-display font-bold text-evolea-purple mb-8 text-center">
+      {getText(aufnahme.titel, lang === 'de' ? 'Aufnahmekriterien' : 'Admission Criteria')}
+    </h2>
+
+    <div class="bg-white rounded-evolea-lg p-8 shadow-soft">
+      <p class="text-evolea-text-light mb-6">
+        {getText(aufnahme.einleitung, 'Die Teilnahme am Mini Abenteuercamp erfolgt projektbezogen und beginnt mit einem persönlichen Gespräch mit den Bezugspersonen, sowie einem Kennenlernen des Kindes. Zur Orientierung stellen wir eine Checkliste zur Verfügung:')}
+      </p>
+      <ul class="space-y-3 mb-6">
+        {(aufnahme.kriterien || []).map((kriterium: any) => (
+          <li class="flex items-start gap-3">
+            <span class="flex-shrink-0 w-6 h-6 bg-evolea-mint/20 rounded-full flex items-center justify-center text-evolea-green font-bold text-sm">✓</span>
+            <span class="text-evolea-text-light">
+              <strong class="text-evolea-purple">{getText(kriterium.titel, '')}</strong>
+              {getText(kriterium.text, '') && ` - ${getText(kriterium.text, '')}`}
+            </span>
+          </li>
+        ))}
+      </ul>
+      <p class="text-sm text-evolea-text-light bg-evolea-purple/5 rounded-evolea p-4 mb-0">
+        {getText(aufnahme.hinweis, 'Diese Punkte dienen als Richtlinie und ersetzen keine individuelle Beurteilung. Die endgültige Entscheidung wird stets situationsbezogen und im Sinne des Kindes getroffen.')}
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- Practical Info -->
+<section class="py-16 md:py-24" id="anmeldung">
+  <div class="container mx-auto max-w-4xl px-4">
+    <h2 class="text-3xl font-display font-bold text-evolea-purple mb-8 text-center">
+      {getText(praktischeInfos.titel, lang === 'de' ? 'Praktische Informationen' : 'Practical Information')}
+    </h2>
+
+    <div class="grid md:grid-cols-2 gap-6 mb-12">
+      <div class="bg-evolea-cream rounded-evolea-lg p-6">
+        <div class="flex items-start gap-4">
+          <Icon name="location" size="md" />
+          <div>
+            <h3 class="font-display font-bold text-evolea-purple mb-2">{lang === 'de' ? 'Standorte' : 'Locations'}</h3>
+            {praktischeInfos.standorte?.hauptstandort && (
+              <p class="text-evolea-text-light text-sm mb-2">
+                <strong>{getText(praktischeInfos.standorte.hauptstandort.label, lang === 'de' ? 'Basisstandort (Tag 1-5):' : 'Base location (Day 1-5):')}</strong><br/>
+                <span set:html={getText(praktischeInfos.standorte.hauptstandort.adresse, '').replace(/\n/g, '<br/>')} />
+              </p>
+            )}
+            {praktischeInfos.standorte?.eroeffnung && (
+              <p class="text-evolea-text-light text-sm mb-0">
+                <strong>{getText(praktischeInfos.standorte.eroeffnung.label, lang === 'de' ? 'Waldausflüge:' : 'Forest excursions:')}</strong><br/>
+                <span set:html={getText(praktischeInfos.standorte.eroeffnung.adresse, '').replace(/\n/g, '<br/>')} />
+              </p>
+            )}
+          </div>
+        </div>
+      </div>
+      <div class="bg-evolea-cream rounded-evolea-lg p-6">
+        <div class="flex items-start gap-4">
+          <Icon name="mail" size="md" />
+          <div>
+            <h3 class="font-display font-bold text-evolea-purple mb-2">{getText(praktischeInfos.kontakt?.titel, lang === 'de' ? 'Kontakt & Anmeldung' : 'Contact & Registration')}</h3>
+            <p class="text-evolea-text-light text-sm mb-2">
+              {getText(praktischeInfos.kontakt?.text, lang === 'de' ? 'Für ein kostenloses Erstgespräch und Anmeldung:' : 'For a free initial consultation and registration:')}
+            </p>
+            <a href={`mailto:${praktischeInfos.kontakt?.email || 'hello@evolea.ch'}`} class="text-evolea-magenta hover:text-evolea-purple transition-colors font-semibold">
+              {praktischeInfos.kontakt?.email || 'hello@evolea.ch'}
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="bg-evolea-purple/5 rounded-evolea-lg p-6 text-center">
+      <p class="text-evolea-text-light mb-4" set:html={getText(praktischeInfos.wichtig, lang === 'de' ? '<strong class="text-evolea-purple">Wichtig:</strong> Wir treffen uns jeden Morgen um <strong>09:00 Uhr</strong> an der Stapferstrasse 10. Bitte seien Sie 5 Minuten vor Beginn vor Ort. Abholung ist um <strong>16:00 Uhr</strong>.' : '<strong class="text-evolea-purple">Important:</strong> We meet every morning at <strong>09:00</strong> at Stapferstrasse 10. Please arrive 5 minutes before the start. Pick-up is at <strong>16:00</strong>.')} />
+    </div>
+  </div>
+</section>
+
+<!-- Back to Mini Projekte -->
+<section class="py-8 border-t border-evolea-purple/10">
+  <div class="container mx-auto max-w-4xl px-4">
+    <a href={translatePath('/angebote/mini-projekte/')} class="text-evolea-purple hover:text-evolea-purple-light transition-colors flex items-center gap-2">
+      <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16l-4-4m0 0l4-4m-4 4h18" />
+      </svg>
+      {lang === 'de' ? 'Zurück zu Mini Projekte' : 'Back to Mini Projects'}
+    </a>
+  </div>
+</section>
+
+<EditLink type="singleton" collection="miniAbenteuercamp" label={lang === 'de' ? 'Mini Abenteuercamp bearbeiten' : 'Edit Mini Abenteuercamp'} />

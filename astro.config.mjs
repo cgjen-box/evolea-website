@@ -37,6 +37,11 @@ export default defineConfig({
   base: isGitHubPages || !useCloudflare ? '/evolea-website' : '/',
   output: useCloudflare ? 'server' : 'static',
   adapter: cloudflareAdapter,
+  redirects: {
+    // The EN cafe page moved under /en/programs/ to match the other program routes.
+    // The target must carry the base path explicitly — Astro does not prefix redirect targets.
+    '/en/angebote/evolea-cafe/': `${isGitHubPages || !useCloudflare ? '/evolea-website' : ''}/en/programs/evolea-cafe/`,
+  },
   integrations: [
     sitemap(),
     tailwind(),

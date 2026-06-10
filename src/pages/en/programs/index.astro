@@ -1,43 +1,33 @@
 ---
 import Base from '@layouts/Base.astro';
-import ProgramCard from '@components/ProgramCard.astro';
+import AngeboteIndexPage from '@components/programs/AngeboteIndexPage.astro';
+import { getEntry } from 'astro:content';
 import { getLangFromUrl, useTranslations, useTranslatedPath } from '@i18n/utils';
 
 const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
 const translatePath = useTranslatedPath(lang);
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+
+// Get CMS content
+const pageEntry = await getEntry('pages', 'angebote-index');
+const page = pageEntry?.data;
+
+// Hero image
+const heroImage = base + '/images/hero/evolea-schloss.png';
+
+// Helper to get bilingual text
+const getText = (obj: { de?: string; en?: string } | undefined, fallback: string = '') => {
+  if (!obj) return fallback;
+  return lang === 'de' ? (obj.de || fallback) : (obj.en || obj.de || fallback);
+};
+
+const pageTitle = getText(page?.hero?.titel, lang === 'de' ? 'Angebote' : 'Programs');
+const pageDescription = lang === 'de'
+  ? 'EVOLEA bietet verschiedene Förderprogramme für Kinder im Autismus Spektrum oder mit ADHS an: Mini Garten, Mini Projekte, Mini Turnen, Tagesschule und mehr.'
+  : 'EVOLEA offers a range of support programs for children on the autism spectrum or with ADHD: Mini Garten, Mini Projekte, Mini Turnen, day school and more.';
 ---
 
-<Base title="Programs" description="EVOLEA offers various support programs for children on the autism spectrum or with ADHD: Mini Garden, Mini Projects, and Mini Sports.">
-  <section class="py-20 px-4">
-    <div class="container mx-auto max-w-6xl">
-      <h1 class="text-4xl md:text-5xl font-bold text-evolea-purple mb-6 text-center">
-        {t('nav.programs')}
-      </h1>
-      <p class="text-xl text-evolea-text-light text-center max-w-2xl mx-auto mb-16">
-        Our programs are specially designed for children on the spectrum and with ADHD. All programs are evidence-based.
-      </p>
-      
-      <div class="grid md:grid-cols-2 gap-8">
-        <ProgramCard
-          title={t('programs.miniGarten')}
-          description={t('programs.miniGarten.desc')}
-          href={translatePath('/programs/mini-garden/')}
-          icon="sprout"
-        />
-        <ProgramCard
-          title={t('programs.miniProjekte')}
-          description={t('programs.miniProjekte.desc')}
-          href={translatePath('/programs/mini-projects/')}
-          icon="palette"
-        />
-        <ProgramCard
-          title={t('programs.miniTurnen')}
-          description={t('programs.miniTurnen.desc')}
-          href={translatePath('/programs/mini-sports/')}
-          icon="ball"
-        />
-      </div>
-    </div>
-  </section>
+<Base title={pageTitle} description={pageDescription} transparentHeader={true}>
+  <AngeboteIndexPage content={page} lang={lang} t={t} translatePath={translatePath} heroImage={heroImage} />
 </Base>

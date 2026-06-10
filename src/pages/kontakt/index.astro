@@ -34,22 +34,30 @@ const adresse = contact?.adresse || siteSettings?.adresse || {};
 const strasse = adresse.strasse || 'Stapferstrasse 10';
 const plz = adresse.plz || '8006';
 const ort = adresse.ort || 'Zürich';
-const land = adresse.land || 'Schweiz';
-const hinweis = getText(adresse.hinweis, 'Nähe Seilbahn Rigiblick');
+// CMS stores the country as a plain German string; localize the known value for EN
+const landRaw = adresse.land || 'Schweiz';
+const land = lang === 'en' && landRaw === 'Schweiz' ? 'Switzerland' : landRaw;
+const hinweis = getText(adresse.hinweis, lang === 'de' ? 'Nähe Seilbahn Rigiblick' : 'Near Rigiblick cable car');
 
 // Form subjects from contact singleton
 const betreffs = contact?.formular?.betreffs || [];
 const formspreeId = contact?.formular?.formspreeId || 'xpznqrjk';
 ---
 
-<Base title="Kontakt" description={`Kontaktieren Sie EVOLEA - wir freuen uns auf Ihre Anfrage. Standort: ${strasse}, ${plz} ${ort}.`} transparentHeader={true}>
+<Base
+  title={lang === 'de' ? 'Kontakt' : 'Contact'}
+  description={lang === 'de'
+    ? `Kontaktieren Sie EVOLEA - wir freuen uns auf Ihre Anfrage. Standort: ${strasse}, ${plz} ${ort}.`
+    : `Contact EVOLEA - we look forward to your inquiry. Location: ${strasse}, ${plz} ${ort}.`}
+  transparentHeader={true}
+>
   <!-- Edit Link for Keystatic -->
   <EditLink type="singleton" collection="contact" label="Kontakt bearbeiten" />
 
   <!-- Premium Hero with Prism Gradient -->
   <InnerPageHero
     title={getText(contact?.hero?.titel, t('contact.title'))}
-    subtitle={getText(contact?.hero?.untertitel, "Haben Sie Fragen zu unseren Angeboten? Wir freuen uns auf Ihre Nachricht.")}
+    subtitle={getText(contact?.hero?.untertitel, lang === 'de' ? "Haben Sie Fragen zu unseren Angeboten? Wir freuen uns auf Ihre Nachricht." : "Do you have questions about our programs? We look forward to hearing from you.")}
     breadcrumbs={[
       { label: lang === 'de' ? 'Startseite' : 'Home', href: translatePath('/') },
       { label: lang === 'de' ? 'Kontakt' : 'Contact' }
@@ -64,7 +72,7 @@ const formspreeId = contact?.formular?.formspreeId || 'xpznqrjk';
       <div class="grid lg:grid-cols-2 gap-12">
         <!-- Contact Info -->
         <div>
-          <h2 class="text-2xl font-display font-bold text-evolea-purple mb-8">{getText(contact?.kontaktInfo?.sectionTitel, "So erreichen Sie uns")}</h2>
+          <h2 class="text-2xl font-display font-bold text-evolea-purple mb-8">{getText(contact?.kontaktInfo?.sectionTitel, lang === 'de' ? "So erreichen Sie uns" : "How to reach us")}</h2>
 
           <div class="space-y-6">
             <!-- Email -->
@@ -75,7 +83,7 @@ const formspreeId = contact?.formular?.formspreeId || 'xpznqrjk';
                 </svg>
               </div>
               <div>
-                <h3 class="font-display font-bold text-evolea-purple">E-Mail</h3>
+                <h3 class="font-display font-bold text-evolea-purple">{lang === 'de' ? 'E-Mail' : 'Email'}</h3>
                 <a href={`mailto:${email}`} class="text-evolea-text-light hover:text-evolea-purple transition-colors">
                   {email}
                 </a>
@@ -139,16 +147,16 @@ const formspreeId = contact?.formular?.formspreeId || 'xpznqrjk';
 
           <!-- Free consultation info -->
           <div class="mt-8 p-6 bg-evolea-cream/50 rounded-evolea-lg">
-            <h3 class="font-display font-bold text-evolea-purple mb-2">{getText(contact?.erstgespraech?.titel, "Kostenloses Erstgespräch")}</h3>
+            <h3 class="font-display font-bold text-evolea-purple mb-2">{getText(contact?.erstgespraech?.titel, lang === 'de' ? "Kostenloses Erstgespräch" : "Free Initial Consultation")}</h3>
             <p class="text-evolea-text-light text-sm">
-              {getText(contact?.erstgespraech?.text, "Möchten Sie mehr über unsere Angebote erfahren? Vereinbaren Sie ein unverbindliches Kennenlerngespräch – telefonisch oder vor Ort.")}
+              {getText(contact?.erstgespraech?.text, lang === 'de' ? "Möchten Sie mehr über unsere Angebote erfahren? Vereinbaren Sie ein unverbindliches Kennenlerngespräch – telefonisch oder vor Ort." : "Would you like to learn more about our programs? Schedule a no-obligation consultation. By phone or in person.")}
             </p>
           </div>
         </div>
 
         <!-- Contact Form -->
         <div class="bg-white rounded-evolea-lg p-8 shadow-card">
-          <h2 class="text-2xl font-display font-bold text-evolea-purple mb-6">{getText(contact?.formular?.titel, "Anfrage senden")}</h2>
+          <h2 class="text-2xl font-display font-bold text-evolea-purple mb-6">{getText(contact?.formular?.titel, lang === 'de' ? "Anfrage senden" : "Send Inquiry")}</h2>
           <form action={`https://formspree.io/f/${formspreeId}`} method="POST" class="space-y-6">
             <div>
               <label for="name" class="block text-sm font-medium text-evolea-text mb-2">Name *</label>

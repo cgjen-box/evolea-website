@@ -1,54 +1,37 @@
 ---
 import Base from '@layouts/Base.astro';
-import Icon from '@components/Icon.astro';
-import { getLangFromUrl, useTranslations, useTranslatedPath } from '@i18n/utils';
+import MiniGartenPage from '@components/programs/MiniGartenPage.astro';
+import { getLangFromUrl, useTranslatedPath } from '@i18n/utils';
+import { getEntry } from 'astro:content';
 
 const lang = getLangFromUrl(Astro.url);
-const t = useTranslations(lang);
 const translatePath = useTranslatedPath(lang);
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+
+// Get CMS content
+const pageEntry = await getEntry('pages', 'mini-garten');
+const page = pageEntry?.data;
+
+// Get site images from CMS
+const siteImagesEntry = await getEntry('settings', 'images');
+const siteImages = siteImagesEntry?.data;
+const heroImage = siteImages?.programmeHeroes?.miniGarten
+  ? base + siteImages.programmeHeroes.miniGarten
+  : base + "/images/programs/mini-garten-hero.png";
+
+// Helper to get bilingual text
+const getText = (obj: { de?: string; en?: string } | undefined, fallback: string = '') => {
+  if (!obj) return fallback;
+  return lang === 'de' ? (obj.de || fallback) : (obj.en || obj.de || fallback);
+};
+
+const pageTitle = page?.hero?.titel || 'Mini Garten';
+const fallbackDescription = lang === 'de'
+  ? 'Gruppensetting zur Vorbereitung für den Kindergarten für Kinder im Autismus Spektrum (3-6 Jahre) in Zürich.'
+  : 'Group setting preparing children on the autism spectrum (ages 3-6) for kindergarten in Zurich.';
+const pageDescription = getText(page?.hero?.untertitel, fallbackDescription);
 ---
 
-<Base title="Mini Garden" description="Group setting to prepare for kindergarten for children on the autism spectrum (ages 3-6).">
-  <section class="py-20 px-4">
-    <div class="container mx-auto max-w-4xl">
-      <nav class="mb-8 text-sm text-evolea-text-light">
-        <a href={translatePath('/')} class="hover:text-evolea-purple">Home</a>
-        <span class="mx-2">/</span>
-        <a href={translatePath('/programs/')} class="hover:text-evolea-purple">Programs</a>
-        <span class="mx-2">/</span>
-        <span class="text-evolea-purple">Mini Garden</span>
-      </nav>
-
-      <div class="mb-6"><Icon name="sprout" size="2xl" /></div>
-      <h1 class="text-4xl md:text-5xl font-bold text-evolea-purple mb-6">
-        Mini Garden
-      </h1>
-      <p class="text-xl text-evolea-text-light mb-8">
-        Group setting to prepare for kindergarten
-      </p>
-      
-      <div class="prose prose-lg max-w-none">
-        <h2 class="text-2xl font-semibold text-evolea-purple mt-12 mb-4">Who is it for?</h2>
-        <p class="text-evolea-text-light mb-6">
-          This program is designed for children on the autism spectrum aged 3-6 who are preparing for kindergarten.
-        </p>
-        
-        <h2 class="text-2xl font-semibold text-evolea-purple mt-12 mb-4">What do we do?</h2>
-        <p class="text-evolea-text-light mb-6">
-          In small groups, we playfully practice skills important for kindergarten: social interaction, playing together, group activities, and the structure of a kindergarten day.
-        </p>
-        
-        <h2 class="text-2xl font-semibold text-evolea-purple mt-12 mb-4">Our approach</h2>
-        <p class="text-evolea-text-light mb-6">
-          We work evidence-based and individually. Each child is met where they are. Group sizes are intentionally small to ensure individual attention.
-        </p>
-      </div>
-      
-      <div class="mt-12">
-        <a href={translatePath('/contact/')} class="btn-primary">
-          {t('common.contact')}
-        </a>
-      </div>
-    </div>
-  </section>
+<Base title={pageTitle} description={pageDescription}>
+  <MiniGartenPage content={page} lang={lang} translatePath={translatePath} heroImage={heroImage} />
 </Base>
