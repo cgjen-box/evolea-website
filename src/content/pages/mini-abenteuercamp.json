@@ -1,0 +1,447 @@
+{
+  "hero": {
+    "badge": {
+      "de": "Natur-Abenteuercamp",
+      "en": "Nature Adventure Camp"
+    },
+    "titel": "Mini Abenteuercamp",
+    "untertitel": {
+      "de": "Raus in die Natur, rein ins Abenteuer!",
+      "en": "Out into nature, into adventure!"
+    },
+    "beschreibung": {
+      "de": "In diesem inklusiven Feriencamp erkunden Kinder die Natur, bauen gemeinsam eine Burg aus Naturmaterialien und erleben eine Woche voller Bewegung, Entdeckungen und Teamwork.",
+      "en": "In this inclusive holiday camp, children explore nature, build a castle together from natural materials and experience a week full of movement, discoveries and teamwork."
+    },
+    "buttonText": {
+      "de": "Jetzt anmelden",
+      "en": "Register now"
+    },
+    "buttonLink": "#anmeldung",
+    "zweitButtonText": {
+      "de": "Programm ansehen",
+      "en": "View program"
+    },
+    "zweitButtonLink": "#programm",
+    "alter": "5-10"
+  },
+  "infoKarten": [
+    {
+      "icon": "sparkle",
+      "label": {
+        "de": "Alter",
+        "en": "Age"
+      },
+      "wert": {
+        "de": "5-10 Jahre",
+        "en": "5-10 years"
+      }
+    },
+    {
+      "icon": "calendar",
+      "label": {
+        "de": "Wann",
+        "en": "When"
+      },
+      "wert": {
+        "de": "20.–24. Juli 2026 (Mo–Fr)",
+        "en": "20–24 July 2026 (Mon–Fri)"
+      }
+    },
+    {
+      "icon": "clock",
+      "label": {
+        "de": "Tageszeit",
+        "en": "Daily hours"
+      },
+      "wert": {
+        "de": "09:00 – 16:00 Uhr",
+        "en": "09:00 – 16:00"
+      }
+    },
+    {
+      "icon": "people",
+      "label": {
+        "de": "Gruppengrösse",
+        "en": "Group size"
+      },
+      "wert": {
+        "de": "Max. 8 Kinder",
+        "en": "Max. 8 children"
+      }
+    }
+  ],
+  "konzept": {
+    "titel": {
+      "de": "Das Konzept",
+      "en": "The Concept"
+    },
+    "untertitel": {
+      "de": "Eine Woche Natur, Abenteuer und gemeinsames Wachsen.",
+      "en": "A week of nature, adventure and growing together."
+    },
+    "absaetze": [
+      {
+        "de": "Ein inklusives Feriencamp für <strong class=\"text-evolea-mint\">junge Abenteurer:innen.</strong> Viele Ferienangebote sind für Kinder im Autismus-Spektrum oft schwer zugänglich – zu gross, zu unvorhersehbar, zu wenig individuell.",
+        "en": "An inclusive holiday camp for <strong class=\"text-evolea-mint\">young adventurers.</strong> Many holiday programs are often difficult for children on the autism spectrum to access – too large, too unpredictable, too impersonal."
+      },
+      {
+        "de": "Unser Mini Abenteuercamp bietet einen sicheren, naturnahen Rahmen, in dem Kinder gemeinsam die Welt draussen entdecken. Im Mittelpunkt steht ein Burgbauprojekt aus Naturmaterialien: Äste, Steine, Moos und Erde werden zu einer echten Burg. Jeden Tag kommt ein neues Thema dazu – Entdecken, Bauen, Bewegen, Forschen und Feiern.",
+        "en": "Our Mini Abenteuercamp offers a safe, nature-based environment where children discover the outdoor world together. At the centre is a castle-building project from natural materials: branches, stones, moss and earth become a real castle. Each day brings a new theme – discovering, building, moving, researching and celebrating."
+      },
+      {
+        "de": "Dabei werden die Kinder individuell von unseren Fachpersonen begleitet, im Verhältnis 1:2 bis 1:3. Visuelle Tagespläne, Morgen- und Abschlusskreise sowie Rückzugsorte für sensorische Pausen sorgen für Orientierung und Sicherheit. So können die Kinder Neues wagen, Verantwortung übernehmen und Selbstvertrauen aufbauen.",
+        "en": "The children are individually supported by our specialists at a 1:2 to 1:3 ratio. Visual daily schedules, morning and closing circles, and retreat spaces for sensory breaks provide orientation and security. This allows children to try new things, take responsibility and build self-confidence."
+      },
+      {
+        "de": "Am letzten Tag feiern die Kinder die Einweihung ihrer Burg mit Spielen, einem Picknick und einer Diplomübergabe – ein krönender Abschluss einer unvergesslichen Woche.",
+        "en": "On the last day, the children celebrate the inauguration of their castle with games, a picnic and a diploma ceremony – a crowning finale to an unforgettable week."
+      }
+    ],
+    "faehigkeiten": [
+      {
+        "icon": "leaf",
+        "titel": {
+          "de": "Naturverbindung",
+          "en": "Nature Connection"
+        },
+        "beschreibung": {
+          "de": "Die Natur mit allen Sinnen erleben, Tiere beobachten und die Umwelt schätzen lernen.",
+          "en": "Experience nature with all senses, observe animals and learn to appreciate the environment."
+        },
+        "farbe": "mint"
+      },
+      {
+        "icon": "handshake",
+        "titel": {
+          "de": "Teamwork",
+          "en": "Teamwork"
+        },
+        "beschreibung": {
+          "de": "Gemeinsam planen, bauen und Aufgaben aufteilen – zusammen sind wir stark.",
+          "en": "Planning, building and sharing tasks together – we are strong as a team."
+        },
+        "farbe": "coral"
+      },
+      {
+        "icon": "running",
+        "titel": {
+          "de": "Bewegung",
+          "en": "Movement"
+        },
+        "beschreibung": {
+          "de": "Hindernisparcours, Staffelläufe und kooperative Spiele an der frischen Luft.",
+          "en": "Obstacle courses, relay races and cooperative games in the fresh air."
+        },
+        "farbe": "orange"
+      },
+      {
+        "icon": "sparkle",
+        "titel": {
+          "de": "Selbstwirksamkeit",
+          "en": "Self-efficacy"
+        },
+        "beschreibung": {
+          "de": "Eigene Stärken entdecken und erleben, dass man etwas Grosses schaffen kann.",
+          "en": "Discovering your own strengths and experiencing that you can achieve something great."
+        },
+        "farbe": "purple"
+      }
+    ]
+  },
+  "ablauf": {
+    "titel": {
+      "de": "Der Ablauf",
+      "en": "The Schedule"
+    },
+    "untertitel": {
+      "de": "5 Tage voller Abenteuer, Natur und Entdeckungen",
+      "en": "5 days full of adventure, nature and discoveries"
+    },
+    "termine": [
+      {
+        "tag": 1,
+        "titel": {
+          "de": "Entdecker-Tag",
+          "en": "Discovery Day"
+        },
+        "datum": {
+          "de": "Montag, 20. Juli 2026",
+          "en": "Monday, 20 July 2026"
+        },
+        "zeit": "09:00 - 16:00",
+        "fokus": {
+          "de": "Wald erkunden, Sinneserfahrungen & Burgprojekt starten",
+          "en": "Forest exploration, sensory experiences & start castle project"
+        },
+        "standort": {
+          "de": "Stapferstrasse 10 + Waldgebiet, Zürich",
+          "en": "Stapferstrasse 10 + forest area, Zurich"
+        },
+        "istBesonders": false
+      },
+      {
+        "tag": 2,
+        "titel": {
+          "de": "Bau-Tag",
+          "en": "Building Day"
+        },
+        "datum": {
+          "de": "Dienstag, 21. Juli 2026",
+          "en": "Tuesday, 21 July 2026"
+        },
+        "zeit": "09:00 - 16:00",
+        "fokus": {
+          "de": "Burgbau aus Naturmaterialien, Teamarbeit & Natur-Schnitzeljagd",
+          "en": "Castle construction from natural materials, teamwork & nature scavenger hunt"
+        },
+        "standort": {
+          "de": "Stapferstrasse 10 + Waldgebiet, Zürich",
+          "en": "Stapferstrasse 10 + forest area, Zurich"
+        },
+        "istBesonders": false
+      },
+      {
+        "tag": 3,
+        "titel": {
+          "de": "Sport-Tag",
+          "en": "Sports Day"
+        },
+        "datum": {
+          "de": "Mittwoch, 22. Juli 2026",
+          "en": "Wednesday, 22 July 2026"
+        },
+        "zeit": "09:00 - 16:00",
+        "fokus": {
+          "de": "Hindernisparcours, Staffelläufe, kooperative Spiele & Burgbau",
+          "en": "Obstacle courses, relay races, cooperative sports & castle building"
+        },
+        "standort": {
+          "de": "Stapferstrasse 10 + Waldgebiet, Zürich",
+          "en": "Stapferstrasse 10 + forest area, Zurich"
+        },
+        "istBesonders": false
+      },
+      {
+        "tag": 4,
+        "titel": {
+          "de": "Forscher-Tag",
+          "en": "Research Day"
+        },
+        "datum": {
+          "de": "Donnerstag, 23. Juli 2026",
+          "en": "Thursday, 23 July 2026"
+        },
+        "zeit": "09:00 - 16:00",
+        "fokus": {
+          "de": "Wildtiere beobachten, Spurenlesen, Insekten & Pflanzen entdecken, Burg fertigstellen",
+          "en": "Wildlife observation, animal tracking, discovering insects & plants, completing castle"
+        },
+        "standort": {
+          "de": "Stapferstrasse 10 + Waldgebiet, Zürich",
+          "en": "Stapferstrasse 10 + forest area, Zurich"
+        },
+        "istBesonders": false
+      },
+      {
+        "tag": 5,
+        "titel": {
+          "de": "Fest-Tag",
+          "en": "Celebration Day"
+        },
+        "datum": {
+          "de": "Freitag, 24. Juli 2026",
+          "en": "Friday, 24 July 2026"
+        },
+        "zeit": "09:00 - 16:00",
+        "fokus": {
+          "de": "Burgeinweihung, Feier-Spiele, Picknick & Diplomübergabe",
+          "en": "Castle inauguration, celebration games, picnic & diploma ceremony"
+        },
+        "standort": {
+          "de": "Stapferstrasse 10 + Waldgebiet, Zürich",
+          "en": "Stapferstrasse 10 + forest area, Zurich"
+        },
+        "istBesonders": true
+      }
+    ],
+    "hinweis": {
+      "titel": {
+        "de": "Einweihungsfeier am Freitag",
+        "en": "Inauguration celebration on Friday"
+      },
+      "text": {
+        "de": "Der krönende Abschluss des Abenteuercamps: Die Kinder weihen ihre selbstgebaute Burg feierlich ein, spielen gemeinsam und geniessen ein Picknick. Jedes Kind erhält ein Abenteuer-Diplom. Eltern und Geschwister sind herzlich zur Feier ab 14:00 Uhr eingeladen!",
+        "en": "The crowning finale of the adventure camp: The children ceremonially inaugurate their self-built castle, play together and enjoy a picnic. Every child receives an adventure diploma. Parents and siblings are warmly invited to join the celebration from 14:00!"
+      }
+    }
+  },
+  "ziele": {
+    "titel": {
+      "de": "Projekt Ziele",
+      "en": "Project Goals"
+    },
+    "untertitel": {
+      "de": "Kinder erleben bei uns, wie sie in der Natur und im Miteinander über sich hinauswachsen können – Schritt für Schritt, mit Freude und Erfolg.",
+      "en": "Children experience with us how they can grow beyond themselves in nature and together – step by step, with joy and success."
+    },
+    "liste": [
+      {
+        "titel": {
+          "de": "Förderung von Teamwork und sozialer Interaktion",
+          "en": "Promoting teamwork and social interaction"
+        },
+        "text": {
+          "de": "Die Kinder lernen, gemeinsam zu planen, Aufgaben aufzuteilen und sich beim Burgbau abzustimmen. Durch kooperative Spiele und gemeinsame Entdeckungen üben sie, aufeinander einzugehen und zusammenzuarbeiten.",
+          "en": "The children learn to plan together, divide tasks and coordinate during castle building. Through cooperative games and shared discoveries, they practice responding to each other and working as a team."
+        }
+      },
+      {
+        "titel": {
+          "de": "Stärkung der Naturverbindung und Umweltbewusstsein",
+          "en": "Strengthening nature connection and environmental awareness"
+        },
+        "text": {
+          "de": "Durch tägliche Waldausflüge, Sinneserfahrungen und Tierbeobachtungen entwickeln die Kinder eine Beziehung zur Natur. Sie lernen, natürliche Materialien wertschätzend zu nutzen und die Umwelt zu respektieren.",
+          "en": "Through daily forest excursions, sensory experiences and wildlife observation, the children develop a relationship with nature. They learn to use natural materials respectfully and to respect the environment."
+        }
+      },
+      {
+        "titel": {
+          "de": "Förderung von Grobmotorik, Koordination und Bewegungsfreude",
+          "en": "Promoting gross motor skills, coordination and joy of movement"
+        },
+        "text": {
+          "de": "Hindernisparcours, Staffelläufe und Bauen mit Naturmaterialien stärken die motorischen Fähigkeiten. Die Kinder erleben, wie gut sich Bewegung an der frischen Luft anfühlt und gewinnen Vertrauen in ihren Körper.",
+          "en": "Obstacle courses, relay races and building with natural materials strengthen motor skills. The children experience how good movement in the fresh air feels and gain confidence in their bodies."
+        }
+      },
+      {
+        "titel": {
+          "de": "Selbstwirksamkeit und Selbstvertrauen aufbauen",
+          "en": "Building self-efficacy and self-confidence"
+        },
+        "text": {
+          "de": "Vom ersten Ast bis zur fertigen Burg erleben die Kinder, wie aus kleinen Schritten etwas Grosses entsteht. Die täglichen Fortschritte und das gemeinsame Feiern stärken das Vertrauen in die eigenen Fähigkeiten.",
+          "en": "From the first branch to the finished castle, children experience how small steps create something great. Daily progress and shared celebrations strengthen confidence in their own abilities."
+        }
+      },
+      {
+        "titel": {
+          "de": "Strukturiertes Lernen in einem naturnahen Rahmen",
+          "en": "Structured learning in a nature-based environment"
+        },
+        "text": {
+          "de": "Durch visuelle Tagespläne, wiederkehrende Rituale und klare Abläufe gewinnen die Kinder Sicherheit – auch in der ungewohnten Umgebung des Waldes. So können sie sich auf das Abenteuer einlassen und Neues wagen.",
+          "en": "Through visual daily schedules, recurring rituals and clear routines, children gain security – even in the unfamiliar forest environment. This allows them to embrace the adventure and try new things."
+        }
+      }
+    ]
+  },
+  "aufnahme": {
+    "titel": {
+      "de": "Aufnahmekriterien",
+      "en": "Admission Criteria"
+    },
+    "einleitung": {
+      "de": "Die Teilnahme am Mini Abenteuercamp erfolgt projektbezogen und beginnt mit einem persönlichen Gespräch mit den Bezugspersonen, sowie einem Kennenlernen des Kindes. Zur Orientierung stellen wir eine Checkliste zur Verfügung:",
+      "en": "Participation in the Mini Abenteuercamp is project-specific and begins with a personal conversation with the caregivers, as well as getting to know the child. For guidance, we provide a checklist:"
+    },
+    "kriterien": [
+      {
+        "titel": {
+          "de": "Funktionelle Kommunikation",
+          "en": "Functional communication"
+        },
+        "text": {
+          "de": "verbal oder unterstützt",
+          "en": "verbal or supported"
+        }
+      },
+      {
+        "titel": {
+          "de": "Interesse an sozialen Kontakten",
+          "en": "Interest in social contacts"
+        },
+        "text": {
+          "de": "mit anderen Kindern",
+          "en": "with other children"
+        }
+      },
+      {
+        "titel": {
+          "de": "Verständnis von Anweisungen",
+          "en": "Understanding instructions"
+        },
+        "text": {
+          "de": "und Regeln",
+          "en": "and rules"
+        }
+      },
+      {
+        "titel": {
+          "de": "Grundlegende Selbstständigkeit",
+          "en": "Basic independence"
+        },
+        "text": {
+          "de": "Händewaschen, An- und Ausziehen, Toilettengang",
+          "en": "Hand washing, dressing and undressing, using the toilet"
+        }
+      },
+      {
+        "titel": {
+          "de": "Keine selbst- oder fremdverletzenden Verhaltensweisen",
+          "en": "No self-harming or aggressive behaviors"
+        },
+        "text": {}
+      }
+    ],
+    "hinweis": {
+      "de": "Diese Punkte dienen als Richtlinie und ersetzen keine individuelle Beurteilung. Die endgültige Entscheidung wird stets situationsbezogen und im Sinne des Kindes getroffen.",
+      "en": "These points serve as guidelines and do not replace individual assessment. The final decision is always made situationally and in the best interest of the child."
+    }
+  },
+  "praktischeInfos": {
+    "titel": {
+      "de": "Praktische Informationen",
+      "en": "Practical Information"
+    },
+    "standorte": {
+      "hauptstandort": {
+        "label": {
+          "de": "Basisstandort (Tag 1-5):",
+          "en": "Base location (Day 1-5):"
+        },
+        "adresse": {
+          "de": "Stapferstrasse 10\n8006 Zürich",
+          "en": "Stapferstrasse 10\n8006 Zurich"
+        }
+      },
+      "eroeffnung": {
+        "label": {
+          "de": "Waldausflüge:",
+          "en": "Forest excursions:"
+        },
+        "adresse": {
+          "de": "Waldgebiete in der Umgebung\n(genaue Infos vor Campstart)",
+          "en": "Forest areas in the vicinity\n(exact details before camp start)"
+        }
+      }
+    },
+    "kontakt": {
+      "titel": {
+        "de": "Kontakt & Anmeldung",
+        "en": "Contact & Registration"
+      },
+      "text": {
+        "de": "Für ein kostenloses Erstgespräch und Anmeldung:",
+        "en": "For a free initial consultation and registration:"
+      },
+      "email": "hello@evolea.ch"
+    },
+    "wichtig": {
+      "de": "Wichtig: Wir treffen uns jeden Morgen um <strong>09:00 Uhr</strong> an der Stapferstrasse 10. Bitte seid 5 Minuten vor Beginn vor Ort. Abholung ist um <strong>16:00 Uhr</strong>. Am Freitag (Fest-Tag) sind Eltern und Geschwister ab <strong>14:00 Uhr</strong> zur Burgeinweihung willkommen.",
+      "en": "Important: We meet every morning at <strong>09:00</strong> at Stapferstrasse 10. Please be on site 5 minutes before the start. Pick-up is at <strong>16:00</strong>. On Friday (Celebration Day), parents and siblings are welcome from <strong>14:00</strong> for the castle inauguration."
+    }
+  }
+}

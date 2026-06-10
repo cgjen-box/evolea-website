@@ -207,10 +207,11 @@
           "en": "July 2026"
         },
         "status": {
-          "de": "Bald verfügbar",
-          "en": "Coming soon"
+          "de": "Anmeldung offen",
+          "en": "Registration open"
         },
-        "statusFarbe": "orange",
+        "statusFarbe": "green",
+        "link": "/angebote/mini-abenteuercamp/",
         "farbe": "green"
       }
     ]
