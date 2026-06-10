@@ -1,10 +1,11 @@
 # Cloudflare Pages redirects (evaluated before the server worker).
 # GitHub Pages ignores this file.
 #
-# 1. Normalize the EN homepage to the trailing-slash canonical.
-/en /en/ 301
+# NOTE: do NOT add a `/en /en/` rule here — Cloudflare strips the trailing
+# slash before matching, so the rule also catches /en/ itself and the
+# resulting self-redirect loop makes the EN homepage return 404.
 #
-# 2. Legacy /en/angebote/* URLs (old language-switcher targets and the moved
+# 1. Legacy /en/angebote/* URLs (old language-switcher targets and the moved
 #    cafe page). The Cloudflare server build 404s these instead of serving
 #    the Astro i18n fallback, so redirect explicitly to the EN routes.
 /en/angebote/ /en/programs/ 301
@@ -26,7 +27,7 @@
 /en/angebote/evolea-cafe/ /en/programs/evolea-cafe/ 301
 /en/angebote/evolea-cafe /en/programs/evolea-cafe/ 301
 #
-# 3. German-slug URLs under /en/ used to 302 English visitors to the GERMAN
+# 2. German-slug URLs under /en/ used to 302 English visitors to the GERMAN
 #    page via the i18n fallback; send them to the English equivalent instead.
 /en/kontakt/ /en/contact/ 301
 /en/kontakt /en/contact/ 301
