@@ -62,7 +62,11 @@ Decimal phases appear between their surrounding integers in numeric order.
   3. axe-core reports 0 violations: the two Header `<nav>` landmarks carry distinguishing DE/EN-aware `aria-label`s and the `evolea-green` contrast is ≥4.5:1 on affected program pages
   4. A branded, bilingual 404 page (prism hero, page closer, no emojis) links back to Angebote/Blog and renders in both DE and EN
   5. Playwright smoke suite passes (DE/EN homepage load, both contact forms render, donate language switcher, all program pages 200, header-drift guard on one SSR and one prerendered blog route) and `npm run build` + `GITHUB_PAGES=true npm run build` stay green
-**Plans**: TBD
+**Plans**: 4 plans
+  - [ ] 03-01-PLAN.md — Convert images in place to WebP (manifest-driven sharp script), flip all CMS/MDX/hardcoded references, two-way grep gate, delete originals
+  - [ ] 03-02-PLAN.md — Darken evolea-green to #236247 in both token files + brand-compliant bilingual 404 page per 03-UI-SPEC.md
+  - [ ] 03-03-PLAN.md — width/height on every img, lazy/fetchpriority LCP policy, Base preloadImage poster preload, Header + breadcrumb nav aria-labels
+  - [ ] 03-04-PLAN.md — Playwright smoke/a11y/headers suite (@playwright/test 1.57.0, wrangler pages dev), homepage budget measurement + conditional SSIM-gated video re-encode
 **UI hint**: yes
 
 ## Progress
@@ -74,4 +78,4 @@ Phases execute in numeric order: 1 → 2 → 3
 |-------|----------------|--------|-----------|
 | 1. Foundation & Security | 3/3 | Complete   | 2026-06-12 |
 | 2. SEO & Structured Data | 5/5 | Complete   | 2026-06-12 |
-| 3. Performance, A11y & Testing | 0/TBD | Not started | - |
+| 3. Performance, A11y & Testing | 0/4 | Not started | - |
