@@ -58,7 +58,7 @@ After this project, independent audits (Mozilla Observatory, axe-core, crawler a
 ### Out of Scope
 
 - **CSP enforcement mode** — needs ≥1 week of Report-Only data first; flip is a follow-up task, not this project
-- **Plan Phase 3 ongoing work** (blog cadence, monthly benchmark monitoring, CrUX/PSI field data) — recurring operations, not one-shot phases
+- **Improvement-plan doc "Phase 3" ongoing work** (blog cadence, monthly benchmark monitoring, CrUX/PSI field data) — recurring operations, not one-shot phases. Note: distinct from GSD roadmap Phase 3 (Performance, A11y & Testing), which IS in scope
 - **Hero video re-encode (AV1/H.265 ladder)** — Phase 3 item; revisit after image wins land
 - **Migrating images to `src/assets` + `<Image />`** — decided against; convert-in-place is faster and avoids template churn on SSR pages
 - **FAQPage markup** — Google removed FAQ rich results (May 2026); no SERP value, deprioritized
@@ -92,14 +92,14 @@ After this project, independent audits (Mozilla Observatory, axe-core, crawler a
 | Security headers via Astro middleware + `public/_headers` backstop, not Cloudflare Transform Rules | Versioned in git, testable on preview deploys; middleware covers SSR responses, `_headers` covers static assets and prerendered blog HTML (middleware never runs for those) — single source constant feeds both | — Pending |
 | CSP ships Report-Only first | Formspree/Instagram/inline-script/Keystatic breakage risk; enforce after ~1 week of reports | — Pending |
 | Convert images in place (sharp/squoosh → WebP in `public/`) | Avoids touching every template; SSR can't transform at request time anyway | — Pending |
-| Scope = plan Phases 1+2 + repo hygiene; Phase 3 excluded | P3 is recurring content/monitoring work, not a one-shot project | — Pending |
+| Scope = improvement-plan doc Phases 1+2 + repo hygiene; the doc's "Phase 3" excluded | The doc's P3 is recurring content/monitoring work, not a one-shot project (GSD roadmap Phase 3 = perf/a11y/testing, in scope) | — Pending |
 | Cache-Control for `/assets/*` via `public/_headers` (not middleware, not dashboard Cache Rule) | Middleware never fires for static files on Cloudflare Pages; `_headers` is the only in-repo mechanism that reaches them | — Pending |
 
 ## Evolution
 
 This document evolves at phase transitions and milestone boundaries.
 
-**After each phase transition** (via `/gsd-transition`):
+**After each phase transition** (via `/gsd-progress` or `/gsd-verify-work`):
 1. Requirements invalidated? → Move to Out of Scope with reason
 2. Requirements validated? → Move to Validated with phase reference
 3. New requirements emerged? → Add to Active

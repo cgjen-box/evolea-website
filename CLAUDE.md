@@ -516,3 +516,302 @@ Available skills in `.claude/skills/`:
 2. Check if the pattern already exists in the codebase
 3. Ask user for approval before adding new CSS variables or breakpoints
 4. Test changes at all breakpoints (375px, 768px, 1024px, 1440px, 1920px)
+
+<!-- GSD:project-start source:PROJECT.md -->
+## Project
+
+**EVOLEA Website Quality Lift (B → A)**
+
+A targeted improvement pass on the live EVOLEA website (www.evolea.ch) — a bilingual DE/EN Astro 5.x site for a Swiss non-profit serving children on the autism spectrum or with ADHD. Based on the 2026-06-12 benchmark against eatplanted.com, this project closes the security, SEO, performance, and accessibility gaps to move the site from overall B (~76) to a solid A (90+) and beat eatplanted.com in all four audit categories, plus clears repo hygiene debt found during codebase mapping.
+
+**Core Value:** After this project, independent audits (Mozilla Observatory, axe-core, crawler audit) score evolea.ch ahead of eatplanted.com in **all four** categories — security, SEO, performance, accessibility — without regressing any live functionality (forms, CMS, donations, language switching).
+
+### Constraints
+
+- **Tech stack**: Astro 5.x + Cloudflare Pages SSR — no replatforming; fixes are config/template-level only
+- **Brand**: EVOLEA Brand Guide v3.0 is non-negotiable (no emojis, Fredoka headlines, prism gradient heroes, page closers, real photos) — the 404 page and any template edits must comply
+- **Bilingual parity**: every user-facing change ships in DE and EN simultaneously; hreflang correctness is an existing advantage to preserve
+- **Live site**: production NGO site — changes must not break Formspree forms, Keystatic CMS, donations, or language switching; CSP starts Report-Only for this reason
+- **Visual fidelity**: image conversion must not visibly degrade photos (team/program photography is brand-critical)
+- **Git**: cgjen-box GitHub account; gitleaks + check_secrets.py pre-commit hooks mandatory; no `--no-verify`
+<!-- GSD:project-end -->
+
+<!-- GSD:stack-start source:codebase/STACK.md -->
+## Technology Stack
+
+## Languages
+- TypeScript 5.9.3 (installed) / ^5.7.2 (specified) - All source files, Astro frontmatter, config files
+- HTML/CSS - Astro component templates and `src/styles/global.css`
+- JavaScript (ES modules) - Config files (`astro.config.mjs`, `tailwind.config.mjs`), build scripts
+- MDX - Blog content in `src/content/blog/` and `src/content/blogEn/`
+- Python 3 - Dev tooling scripts (`scripts/check_secrets.py`, `scripts/generate_image.py`)
+- PowerShell - Windows-targeted Cloudflare queue management (`scripts/Cancel-CloudflareDeployments.ps1`)
+## Runtime
+- Node.js 20 (pinned in CI via `actions/setup-node@v4`); local dev uses Node 26.0.0 (system)
+- Cloudflare Workers runtime (production SSR via `@astrojs/cloudflare` adapter)
+- npm 11.12.1
+- Lockfile: `package-lock.json` present (lockfileVersion 3); `pnpm-lock.yaml` is untracked detritus — use npm
+## Frameworks
+- Astro 5.16.4 (installed) / ^5.1.1 (specified) - Full-stack static/SSR framework; primary build target
+- React 18.3.1 - Used for interactive island components; registered via `@astrojs/react`
+- Keystatic 0.5.48 (`@keystatic/core`) + `@keystatic/astro` 5.0.6 - GitHub-backed headless CMS, active only on Cloudflare build
+- Tailwind CSS 3.4.18 - Utility-first CSS; custom EVOLEA theme in `tailwind.config.mjs`
+- `@astrojs/tailwind` 6.0.2 - Astro integration
+- GSAP 3.14.2 - Scroll animations and page transitions; used in `src/scripts/gsap-animations.ts` and `src/layouts/Base.astro`
+- `@astrojs/mdx` 4.3.13 - MDX support for rich blog posts
+- `@astrojs/check` 0.9.4 - TypeScript type-checking at build time (`astro check`)
+- `@astrojs/sitemap` 3.2.1 - Auto-generates sitemap at build
+- Husky 9.1.7 - Git hooks (pre-commit)
+- `playwright-core` 1.57.0 - Browser automation used in dev QA scripts (`scripts/brand-qa.mjs`, `scripts/cms-qa.mjs`)
+## Key Dependencies
+- `astro` ^5.1.1 - Everything runs through this; SSR output depends on adapter injection
+- `@astrojs/cloudflare` 12.6.13 - NOT in `package.json` dependencies; installed at Cloudflare build time via `npm run build:cloudflare`. The adapter is not available on Windows ARM64 and will silently fall back to static if `CF_PAGES != 1`
+- `@keystatic/core` ^0.5.48 - CMS UI + GitHub OAuth content storage; requires three runtime env vars
+- `@astrojs/react` ^4.4.2 - React island hydration
+- `gsap` ^3.14.2 - Client-side animations
+- `tailwindcss` ^3.4.18 - Design token system; hex literals in `tailwind.config.mjs` are duplicated as CSS vars in `src/styles/global.css` (both must be updated together)
+- `typescript` ^5.7.2 - Strict mode; `tsconfig.json` extends `astro/tsconfigs/strict`
+## Configuration
+- `.env.example` documents the three required vars (names only): `KEYSTATIC_GITHUB_CLIENT_ID`, `KEYSTATIC_GITHUB_CLIENT_SECRET`, `KEYSTATIC_SECRET`
+- `.env` present locally (pointer-only, no real values)
+- Cloudflare Pages: secrets set via Cloudflare Dashboard; `KEYSTATIC_GITHUB_CLIENT_ID` is the only var inlined at build time (public OAuth client ID); all others are read at runtime via `process.env` (requires `nodejs_compat` flag + `compatibility_date >= 2025-04-01`)
+- Local dev uses file-based Keystatic mode (no OAuth needed)
+- `astro.config.mjs` - Main Astro config; dual-mode (static for GitHub Pages when `GITHUB_PAGES=true`, SSR for Cloudflare otherwise)
+- `tailwind.config.mjs` - Full token system; content paths cover `src/**/*.{astro,html,js,jsx,md,mdx,svelte,ts,tsx,vue}`
+- `tsconfig.json` - Strict mode with path aliases: `@/` → `src/`, `@components/` → `src/components/`, `@layouts/` → `src/layouts/`, `@i18n/` → `src/i18n/`, `@content/` → `src/content/`
+- `wrangler.toml` - Cloudflare Pages config; `compatibility_date = "2025-04-01"`, `compatibility_flags = ["nodejs_compat"]`
+- Astro built-in i18n routing; locales `['de', 'en']`; German is `defaultLocale` with no prefix; English prefixed at `/en/`
+- Fallback chain: `en → de`
+- `prefixDefaultLocale: false` means German pages live at root paths (`/angebote/`, not `/de/angebote/`)
+## Platform Requirements
+- Node.js ≥ 20 recommended (CI pins to 20; local runs Node 26)
+- Python 3 for `scripts/check_secrets.py` (runs in pre-commit hook)
+- gitleaks binary required (pre-commit hook fails without it); install via `brew install gitleaks`
+- Windows ARM64: cannot install `@astrojs/cloudflare` locally; static build used for local dev/preview
+- Primary: Cloudflare Pages (`evolea-website` project) — SSR mode, custom domain `www.evolea.ch`
+- Fallback: GitHub Pages (`cgjen-box/evolea-website`) — static output, base `/evolea-website`
+- Build command on Cloudflare: `npm run build:cloudflare` (installs adapter before build)
+- Output directory: `./dist`
+<!-- GSD:stack-end -->
+
+<!-- GSD:conventions-start source:CONVENTIONS.md -->
+## Conventions
+
+## Naming Patterns
+- Astro components: PascalCase — `InnerPageHero.astro`, `FooterDonationCTA.astro`
+- Page files: `index.astro` inside a named directory (e.g. `src/pages/angebote/mini-garten/index.astro`)
+- TypeScript modules: camelCase — `gsap-animations.ts`, `utils.ts`, `ui.ts`
+- Config files: camelCase — `tailwind.config.mjs`, `astro.config.mjs`
+- Component subdirectories: lowercase, plural — `src/components/programs/`, `src/components/brand/`
+- Pure utilities: camelCase — `getLangFromUrl`, `useTranslations`, `useTranslatedPath`, `getAlternateLang`
+- React-style hooks (returning closures): `use*` prefix — `useTranslations(lang)` returns `t`, `useTranslatedPath(lang)` returns `translatePath`
+- Local helpers defined inline inside frontmatter: camelCase — `getText`, `resolveLink`, `getArray`
+- Standard camelCase — `siteSettings`, `homepageEntry`, `translatePath`
+- Destructured Astro props: `const { title, variant = 'cream' } = Astro.props`
+- The `lang` variable is always `'de' | 'en'` (derived from URL, never passed as prop)
+- Interfaces: PascalCase — `interface Props { ... }`, `interface BreadcrumbItem { ... }`
+- Union string types use string literals — `variant?: 'default' | 'calm' | 'sunset' | 'hero'`
+- The `Lang` type is exported from `src/i18n/ui.ts` as `keyof typeof languages`
+## Code Style
+- No separate Prettier or ESLint config detected — formatting is enforced only by the TypeScript compiler via `astro check` (runs as part of `npm run build`)
+- The pre-commit hook runs `npm run build` (`astro check && astro build`), which enforces TypeScript strict mode as the sole pre-commit style gate
+- Strict mode via `"extends": "astro/tsconfig/strict"` in `tsconfig.json`
+- `any` types are present in CMS-data-consuming code (program page components and `CafePage.astro`) where CMS schema uses `z.any()` — this is a known gap, not policy
+- Content collection schemas (`src/content/config.ts`) use `z.any()` for `pages` and `settings` singletons because Keystatic manages those shapes
+## Import Organization
+- `@/` → `src/`
+- `@components/` → `src/components/`
+- `@layouts/` → `src/layouts/`
+- `@i18n/` → `src/i18n/`
+- `@content/` → `src/content/`
+## Astro Component Structure
+- `interface Props` is ALWAYS defined at the top of the frontmatter (never skipped)
+- Default values are set in the destructuring line, not in the interface
+- `class:list` is used for conditional class application; plain `class` for static
+- `aria-hidden="true"` is mandatory on all decorative elements (orbs, butterflies, wave SVGs)
+- `<style>` blocks are scoped per component; global overrides go in `src/styles/global.css`
+## i18n Pattern
+- ALWAYS derived from `getLangFromUrl(Astro.url)` inside the component
+- NEVER passed as a prop from parent — `Base.astro` does not accept a `lang` prop
+- Components that need `lang` (e.g. program page components) receive it as an explicit prop from their parent page wrapper
+## DE/EN Page Parity Pattern
+- The English file lives at a different path (different route slug)
+- Fallback strings in `getText()` calls use English
+- The `Base` title and description props use English
+## Tailwind Usage
+- Colors: `bg-evolea-magenta`, `text-evolea-purple`, `border-evolea-coral`
+- Opacity modifiers work because hex literals are in `tailwind.config.mjs`: `bg-evolea-magenta/10`
+- Custom gradients: `bg-gradient-prism`, `bg-gradient-magenta`
+- Custom shadows: `shadow-soft`, `shadow-card`, `shadow-elevated`
+- Custom border-radius: `rounded-evolea`, `rounded-evolea-lg`
+- Custom z-index: `z-header` (50), `z-modal` (100), `z-float` (10)
+## Brand Design Conventions in Code
+- All scroll animations use GSAP via `src/scripts/gsap-animations.ts`
+- All entrance animations (hero elements) use CSS `@keyframes` defined in component `<style>` blocks
+- Both GSAP and CSS animations must include `@media (prefers-reduced-motion: reduce)` overrides that set opacity to 1 and disable transforms
+## Error Handling
+- Optional chaining (`?.`) is the primary guard against null CMS data — `homepageEntry?.data`, `page?.hero?.titel`
+- Fallback values are provided at every getText call, never null-safe cascades left to fail
+- The middleware's try/catch silently swallows errors during Keystatic HTML injection to avoid breaking page responses
+- No application-level error boundaries or custom error pages beyond Astro's default 404
+## Logging
+- GSAP animations log prefixed with `[GSAP]` — `console.log('[GSAP] ...')` — kept intentionally for debugging animation issues
+- Form copy errors log with `console.error('Failed to copy:', err)` in `/spenden/` and `/en/donate/`
+- No logging in production SSR routes or middleware (errors are swallowed silently)
+## Comments
+- Component docblocks at the top of frontmatter describe non-obvious features
+- HTML `<!-- section label comments -->` mark major layout blocks
+- `// helper` inline labels on local utility functions
+- CSS sections are separated by `/* ===== SECTION NAME ===== */` banners
+- Configuration inline comments explain sync requirements (e.g. tailwind.config.mjs)
+## Module Design
+- `src/i18n/ui.ts` — named exports: `languages`, `defaultLang`, `showDefaultLang`, `ui`, `Lang`
+- `src/i18n/utils.ts` — named exports: `getLangFromUrl`, `useTranslations`, `useTranslatedPath`, `getAlternateLang`, `getAlternatePath`, `getLanguageAlternates`
+- `src/scripts/gsap-animations.ts` — named export: `initScrollAnimations`
+- `src/content/config.ts` — named export: `collections`
+<!-- GSD:conventions-end -->
+
+<!-- GSD:architecture-start source:ARCHITECTURE.md -->
+## Architecture
+
+## System Overview
+```text
+```
+## Component Responsibilities
+| Component | Responsibility | File |
+|-----------|----------------|------|
+| Base.astro | Single layout: `<head>`, `<Header>`, `<main slot>`, `<FooterDonationCTA>`, `<Footer>`, GSAP bootstrap | `src/layouts/Base.astro` |
+| Header.astro | Fixed navbar with scroll-hide/show, prism gradient on scroll, mobile full-screen overlay, gold Spenden button | `src/components/Header.astro` |
+| Footer.astro | Site footer, links, language picker | `src/components/Footer.astro` |
+| FooterDonationCTA.astro | Gold gradient CTA above footer (hidden on donate pages via `hideFooterCTA` prop on Base) | `src/components/FooterDonationCTA.astro` |
+| Icon.astro | SVG icon system (~35 named icons, gradient support) | `src/components/Icon.astro` |
+| VideoHero.astro | Homepage video background hero | `src/components/VideoHero.astro` |
+| InnerPageHero.astro | Gradient hero for inner pages | `src/components/InnerPageHero.astro` |
+| AngeboteSectionV3.astro | Programs grid used on both DE and EN homepages | `src/components/AngeboteSectionV3.astro` |
+| FloatingShapes.astro | Decorative SVG background shapes | `src/components/FloatingShapes.astro` |
+| GradientCTA.astro | Reusable call-to-action section block | `src/components/GradientCTA.astro` |
+| EditLink.astro | Keystatic edit button (only shown on staging, not production) | `src/components/EditLink.astro` |
+| LanguagePicker.astro | DE/EN switcher using `getAlternatePath` | `src/components/LanguagePicker.astro` |
+| Program page bodies | One component per program page, shared by DE and EN page wrappers | `src/components/programs/*.astro` |
+| i18n/utils.ts | `getLangFromUrl`, `useTranslations`, `useTranslatedPath`, `routeMappings`, `getAlternatePath`, `getLanguageAlternates` | `src/i18n/utils.ts` |
+| middleware.ts | Injects Keystatic UI enhancements into `/keystatic/*` HTML responses | `src/middleware.ts` |
+## Pattern Overview
+- Single `Base.astro` layout wraps every page; no other layouts exist
+- DE pages live at root (`/`), EN pages live at `/en/`; DE is the Astro `defaultLocale`
+- Program pages use a "thin wrapper + shared body component" pattern: both `src/pages/angebote/mini-garten/index.astro` and `src/pages/en/programs/mini-garden/index.astro` are byte-identical thin wrappers that both render `src/components/programs/MiniGartenPage.astro` — bilingual rendering is handled inside the component via `lang` prop
+- CMS content is stored as JSON/MDX under `src/content/`; pages pull it at render time via `getEntry`/`getCollection` from `astro:content`
+- React is included (`@astrojs/react`) but Astro components are the primary authoring format
+- GSAP is used for scroll animations; initialized in `Base.astro` via `src/scripts/gsap-animations.ts`
+## Layers
+- Purpose: URL routing. Each file = one route. Thin frontmatter only — no inline business logic.
+- Location: `src/pages/` (DE) and `src/pages/en/` (EN)
+- Contains: Route entrypoints, `getStaticPaths` for blog dynamic routes (`export const prerender = true`)
+- Depends on: Layout, Components, i18n utils, content collections
+- Used by: Astro build router
+- Purpose: Shared HTML shell for every page
+- Location: `src/layouts/Base.astro`
+- Contains: `<head>` meta/SEO/hreflang, skip link, Header, Footer, FooterDonationCTA, GSAP bootstrap
+- Depends on: i18n utils (lang detection), content `settings/site` singleton, Header, Footer, FooterDonationCTA, global.css
+- Props: `title`, `description?`, `image?`, `transparentHeader?`, `hideFooterCTA?`
+- Purpose: Reusable UI. Program page bodies are full-page components shared across DE/EN wrappers.
+- Location: `src/components/`, `src/components/programs/`, `src/components/brand/`
+- Depends on: i18n utils (lang detection from URL), Icon.astro, content collections
+- Purpose: Language detection, string translation, path translation, route mappings, hreflang generation
+- Location: `src/i18n/ui.ts`, `src/i18n/utils.ts`
+- `ui.ts`: Static key-value string table for DE and EN
+- `utils.ts`: `getLangFromUrl` strips base URL before language prefix detection; `routeMappings` maps between DE slugs (`/spenden/`, `/angebote/mini-garten/`) and EN slugs (`/en/donate/`, `/en/programs/mini-garden/`) bidirectionally
+- Purpose: CMS-managed structured data and MDX blog posts
+- Location: `src/content/`
+- Collections: `blog` (DE MDX), `blogEn` (EN MDX), `team`, `programs`, `principles`, `testimonials`, `pages` (singletons), `settings`
+- Schema: `src/content/config.ts` defines Zod schemas; bilingual fields use `{ de?: string; en?: string }` objects
+- Managed via: Keystatic CMS at `/keystatic/` (GitHub OAuth, GitHub-mode storage — commits directly to repo)
+- Purpose: Request interception for Keystatic CMS pages only
+- Location: `src/middleware.ts`
+- Intercepts: All `GET /keystatic/*` HTML responses; injects client-side JS that hides the Deploy button and adds save-success/failure toasts
+- All other requests pass through unmodified
+## Data Flow
+### Standard Page Request (Cloudflare SSR)
+### Blog Dynamic Route (prerendered SSR)
+### Language Switch
+### CMS Edit Flow
+### Dual Build Mode
+| Variable | Output | Adapter | Site URL | Base Path |
+|----------|--------|---------|----------|-----------|
+| `GITHUB_PAGES=true` | `static` | None | `https://cgjen-box.github.io` | `/evolea-website` |
+| (unset, Cloudflare) | `server` | `@astrojs/cloudflare` | `https://www.evolea.ch` | `/` |
+- No client-side state store. All state is URL-driven (lang from `Astro.url.pathname`). CMS content is read at render time from `src/content/` files. GSAP scroll state is ephemeral in-memory.
+## Key Abstractions
+- Purpose: Represents content that has both a German and English version
+- Pattern: `{ de?: string; en?: string }` — used throughout `src/content/config.ts` schemas and CMS JSON files
+- Helper: `const getText = (obj, fallback) => lang === 'de' ? (obj.de || fallback) : (obj.en || obj.de || fallback)` — defined inline in each page/component (not centralized)
+- Purpose: Tracks DE↔EN slug differences where paths differ by more than a language prefix
+- Location: `src/i18n/utils.ts` (`routeMappings` constant)
+- Example: DE `/spenden/` ↔ EN `/en/donate/`; DE `/angebote/mini-garten/` ↔ EN `/en/programs/mini-garden/`
+- Used by: `useTranslatedPath`, `getAlternatePath`, `getLanguageAlternates`
+- Purpose: Each program has a full-page body component shared by both DE and EN wrapper pages
+- Location: `src/components/programs/*.astro`
+- Pattern: Component receives `content`, `lang`, `translatePath`, `heroImage` as props and handles bilingual rendering internally using `getText(obj, fallback)`
+- Purpose: CMS-managed page-level content overrides (hero text, section descriptions)
+- Collections: `pages/homepage.json`, `pages/mini-garten.json`, `settings/site.json`, `settings/images.json`
+- Access: `await getEntry('pages', 'homepage')` or `await getEntry('settings', 'site')`
+- All fields are optional; every use provides a hardcoded fallback string
+## Entry Points
+- Location: `src/pages/index.astro`
+- Triggers: Request to `/` (Cloudflare) or `/evolea-website/` (GitHub Pages)
+- Location: `src/pages/en/index.astro`
+- Triggers: Request to `/en/`
+- Note: This is a physical file, not an Astro i18n fallback
+- Location: `src/pages/blog/[...slug].astro` (DE), `src/pages/en/blog/[...slug].astro` (EN)
+- Triggers: `getStaticPaths()` over `getCollection('blog')` / `getCollection('blogEn')`
+- DE: `src/pages/spenden.astro` → URL `/spenden/`
+- EN: `src/pages/en/donate.astro` → URL `/en/donate/`
+- Base layout used with `hideFooterCTA={true}`
+- Entry: `/keystatic/` route (injected by `@keystatic/astro` integration)
+- Auth: GitHub OAuth via `KEYSTATIC_GITHUB_CLIENT_ID` / `KEYSTATIC_GITHUB_CLIENT_SECRET`
+- Config: `keystatic.config.ts` (87KB — all collections, singletons, field definitions)
+## Architectural Constraints
+- **Threading:** Astro SSR runs in Cloudflare Workers (single-threaded, no Node.js threads). For static build, Astro uses Node.js with standard async file I/O.
+- **Global state:** None at module level. `import.meta.env.BASE_URL` is the only global, set at build time. The `routeMappings` object in `src/i18n/utils.ts` is a module-level constant (read-only).
+- **Circular imports:** None detected. The dependency direction is: `pages → layouts → components → i18n`. Content collections are only accessed from pages and components (not from each other).
+- **Base URL handling:** Every file that constructs asset or navigation paths must use `import.meta.env.BASE_URL.replace(/\/$/, '')` before prefixing image/video paths. Failure to do so causes 404s on GitHub Pages (`/evolea-website` base). This pattern is repeated in every page file and must be preserved.
+- **Blog prerender:** Blog detail pages use `export const prerender = true` so they are statically generated even in SSR mode. This is required because blog content is file-based and does not need runtime data.
+## Anti-Patterns
+### Inline `getText` helper duplication
+### Hardcoded brand values in Header and Footer
+## Error Handling
+- CMS entries: `const entry = await getEntry(...); const data = entry?.data;` — missing entries return `undefined`, content falls back to hardcoded strings
+- Blog not found: `src/pages/blog/[...slug].astro` redirects to `/blog/` if post not found
+- Middleware: Wraps HTML mutation in try/catch; returns original response if modification fails
+## Cross-Cutting Concerns
+<!-- GSD:architecture-end -->
+
+<!-- GSD:skills-start source:skills/ -->
+## Project Skills
+
+| Skill | Description | Path |
+|-------|-------------|------|
+| breakpoints | Use this skill when implementing responsive design, optimizing layouts for different screen sizes, or working on responsive components for the EVOLEA website. Provides the EVOLEA breakpoint system, fluid typography scales, and responsive CSS patterns following 2025 best practices with EVOLEA brand adherence. | `.claude/skills/breakpoints/SKILL.md` |
+| cloudflare | Use this skill for Cloudflare Pages deployment management, cache purging, and API operations. Includes scripts for cleaning up queued deployments, managing the deployment pipeline, and interacting with Cloudflare APIs. | `.claude/skills/cloudflare/SKILL.md` |
+| image | ImageAgent - Generate EVOLEA Brand Images with Reinforcement Learning | `.claude/skills/image-generation-rl/SKILL.md` |
+| website-review | Use this skill when performing QA reviews of the EVOLEA website (Astro frontend at localhost:4321), Admin Dashboard V2 (localhost:5175), or production sites (planted.com, admin.planted.com). Orchestrates visual inspection, console/network error detection, accessibility auditing, Core Web Vitals measurement, and interactive testing using Chrome DevTools MCP. (project) | `.claude/skills/website-review/SKILL.md` |
+<!-- GSD:skills-end -->
+
+<!-- GSD:workflow-start source:GSD defaults -->
+## GSD Workflow Enforcement
+
+Before using Edit, Write, or other file-changing tools, start work through a GSD command so planning artifacts and execution context stay in sync.
+
+Use these entry points:
+- `/gsd-quick` for small fixes, doc updates, and ad-hoc tasks
+- `/gsd-debug` for investigation and bug fixing
+- `/gsd-execute-phase` for planned phase work
+
+Do not make direct repo edits outside a GSD workflow unless the user explicitly asks to bypass it.
+<!-- GSD:workflow-end -->
+
+<!-- GSD:profile-start -->
+## Developer Profile
+
+> Profile not yet configured. Run `/gsd-profile-user` to generate your developer profile.
+> This section is managed by `generate-claude-profile` -- do not edit manually.
+<!-- GSD:profile-end -->

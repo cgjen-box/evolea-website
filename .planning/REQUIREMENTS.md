@@ -91,13 +91,43 @@ Which phases cover which requirements. Updated during roadmap creation.
 
 | Requirement | Phase | Status |
 |-------------|-------|--------|
-| (populated by roadmap) | | |
+| SEC-01 | Phase 1 | Pending |
+| SEC-02 | Phase 1 | Pending |
+| SEC-03 | Phase 1 | Pending |
+| SEC-04 | Phase 1 | Pending |
+| SEC-05 | Phase 1 | Pending |
+| PERF-04 | Phase 1 | Pending |
+| PERF-05 | Phase 1 | Pending |
+| HYG-01 | Phase 1 | Pending |
+| HYG-02 | Phase 1 | Pending |
+| HYG-03 | Phase 1 | Pending |
+| SEO-01 | Phase 2 | Pending |
+| SEO-02 | Phase 2 | Pending |
+| SEO-03 | Phase 2 | Pending |
+| SEO-04 | Phase 2 | Pending |
+| SEO-05 | Phase 2 | Pending |
+| SEO-06 | Phase 2 | Pending |
+| SEO-07 | Phase 2 | Pending |
+| SEO-08 | Phase 2 | Pending |
+| SEO-09 | Phase 2 | Pending |
+| PERF-01 | Phase 3 | Pending |
+| PERF-02 | Phase 3 | Pending |
+| PERF-03 | Phase 3 | Pending |
+| A11Y-01 | Phase 3 | Pending |
+| A11Y-02 | Phase 3 | Pending |
+| A11Y-03 | Phase 3 | Pending |
+| HYG-04 | Phase 3 | Pending |
 
 **Coverage:**
-- v1 requirements: 21 total
-- Mapped to phases: 0
-- Unmapped: 21 ⚠️ (pending roadmap)
+- v1 requirements: 26 total (enumerated count; the earlier "21 total" footer was stale — likely predated the SEO expansion to 9 items)
+- Mapped to phases: 26
+- Unmapped: 0 ✓
+
+**By phase:**
+- Phase 1 (Foundation & Security): SEC-01..05, PERF-04, PERF-05, HYG-01..03 (10)
+- Phase 2 (SEO & Structured Data): SEO-01..09 (9)
+- Phase 3 (Performance, A11y & Testing): PERF-01..03, A11Y-01..03, HYG-04 (7)
 
 ---
 *Requirements defined: 2026-06-12*
-*Last updated: 2026-06-12 after initial definition*
+*Last updated: 2026-06-12 after roadmap creation*
