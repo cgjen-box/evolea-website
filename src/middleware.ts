@@ -97,9 +97,9 @@ const securityHeaders = defineMiddleware(async (context, next) => {
     for (const [key, value] of Object.entries(SECURITY_HEADERS)) {
       response.headers.set(key, value);
     }
-    const csp = context.url.pathname.startsWith('/keystatic')
-      ? CSP_REPORT_ONLY_KEYSTATIC
-      : CSP_REPORT_ONLY;
+    const { pathname } = context.url;
+    const isKeystatic = pathname === '/keystatic' || pathname.startsWith('/keystatic/');
+    const csp = isKeystatic ? CSP_REPORT_ONLY_KEYSTATIC : CSP_REPORT_ONLY;
     response.headers.set('Content-Security-Policy-Report-Only', csp);
   } catch {
     // If header mutation fails, return the response untouched — never break a page.
@@ -117,7 +117,8 @@ const keystaticEnhancements = defineMiddleware(async (context, next) => {
   const response = await next();
 
   // Only the /keystatic path gets enhanced; everything else passes through.
-  if (!url.pathname.startsWith('/keystatic')) {
+  // Exact-or-slash match so unrelated paths like /keystatic-foo don't qualify.
+  if (!(url.pathname === '/keystatic' || url.pathname.startsWith('/keystatic/'))) {
     return response;
   }
 

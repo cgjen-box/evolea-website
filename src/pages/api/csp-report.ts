@@ -6,11 +6,11 @@ import type { APIRoute } from 'astro';
 //
 // SEC-04 endpoint behaviour:
 //   - Cloudflare (SSR): prerender=false → live POST sink for CSP violation reports.
-//   - Static build: prerender=true → the route is prerendered to a harmless
-//     static 204 response and the server endpoint is excluded, so the build
-//     does NOT hit NoAdapterInstalled. GitHub Pages has no CSP report-uri source
-//     anyway (public/_headers is Cloudflare-only), so losing the live sink there
-//     is acceptable.
+//   - Static build: prerender=true → the route emits NO file (the prerendered
+//     204 body is empty, so Astro skips writing it; GitHub Pages serves a 404)
+//     and the server endpoint is excluded, so the build does NOT hit
+//     NoAdapterInstalled. GitHub Pages has no CSP report-uri source anyway
+//     (public/_headers is Cloudflare-only), so the missing sink is acceptable.
 declare const __SSR_BUILD__: boolean;
 
 export const prerender = !__SSR_BUILD__;

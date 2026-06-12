@@ -51,8 +51,9 @@ export const CSP_REPORT_ONLY =
   'report-uri /api/csp-report';
 
 /**
- * Looser /keystatic variant: allows Keystatic's GitHub PUT saves
- * (connect-src https://api.github.com) on top of the site-wide allowlist.
+ * /keystatic variant: identical to the site-wide policy except connect-src
+ * swaps https://formspree.io for https://api.github.com so Keystatic's
+ * GitHub PUT saves are allowed (no Formspree forms exist under /keystatic).
  */
 export const CSP_REPORT_ONLY_KEYSTATIC =
   "default-src 'self'; " +
