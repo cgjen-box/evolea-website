@@ -44,7 +44,12 @@ Decimal phases appear between their surrounding integers in numeric order.
   3. Google Rich Results test passes for the homepage (Organization/NGO + WebSite with a stable `@id`), a blog post (`BlogPosting` with `og:type=article`, publisher referencing the Organization `@id`), an Angebote page (`Service` + `BreadcrumbList`), and the EVOLEA Cafe page (one recurring `Event`)
   4. Homepage and `/angebote/*` titles follow `<primary keyword> – EVOLEA` in both DE and EN
   5. `npm run build` and `GITHUB_PAGES=true npm run build` both stay green
-**Plans**: TBD
+**Plans**: 5 plans
+  - [ ] 02-01-PLAN.md — Trailing-slash 301 middleware, hostname-keyed robots.txt, /sitemap.xml redirect + brand filter, Base head fixes (canonical/og:url/ogType/rel=sitemap/separator/noindex)
+  - [ ] 02-02-PLAN.md — JSON-LD foundation: seo.ts schema builders + JsonLd.astro + site-wide NGO/WebSite @graph from Base
+  - [ ] 02-03-PLAN.md — Keyword titles ('<primary keyword> – EVOLEA') on homepage + all Angebote pages, DE/EN, CMS-decoupled
+  - [ ] 02-04-PLAN.md — BreadcrumbList (InnerPageHero + 7 program components) + Service JSON-LD on program pages
+  - [ ] 02-05-PLAN.md — BlogPosting + og:type article + blog breadcrumbs (DE/EN) and recurring Cafe Event JSON-LD
 **UI hint**: yes
 
 ### Phase 3: Performance, A11y & Testing
@@ -68,5 +73,5 @@ Phases execute in numeric order: 1 → 2 → 3
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
 | 1. Foundation & Security | 3/3 | Complete   | 2026-06-12 |
-| 2. SEO & Structured Data | 0/TBD | Not started | - |
+| 2. SEO & Structured Data | 0/5 | Planned | - |
 | 3. Performance, A11y & Testing | 0/TBD | Not started | - |
