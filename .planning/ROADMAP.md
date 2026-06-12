@@ -46,8 +46,8 @@ Decimal phases appear between their surrounding integers in numeric order.
   5. `npm run build` and `GITHUB_PAGES=true npm run build` both stay green
 **Plans**: 5 plans
   - [x] 02-01-PLAN.md — Trailing-slash 301 middleware, hostname-keyed robots.txt, /sitemap.xml redirect + brand filter, Base head fixes (canonical/og:url/ogType/rel=sitemap/separator/noindex)
-  - [ ] 02-02-PLAN.md — JSON-LD foundation: seo.ts schema builders + JsonLd.astro + site-wide NGO/WebSite @graph from Base
-  - [ ] 02-03-PLAN.md — Keyword titles ('<primary keyword> – EVOLEA') on homepage + all Angebote pages, DE/EN, CMS-decoupled
+  - [x] 02-02-PLAN.md — JSON-LD foundation: seo.ts schema builders + JsonLd.astro + site-wide NGO/WebSite @graph from Base
+  - [x] 02-03-PLAN.md — Keyword titles ('<primary keyword> – EVOLEA') on homepage + all Angebote pages, DE/EN, CMS-decoupled
   - [ ] 02-04-PLAN.md — BreadcrumbList (InnerPageHero + 7 program components) + Service JSON-LD on program pages
   - [ ] 02-05-PLAN.md — BlogPosting + og:type article + blog breadcrumbs (DE/EN) and recurring Cafe Event JSON-LD
 **UI hint**: yes
@@ -73,5 +73,5 @@ Phases execute in numeric order: 1 → 2 → 3
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
 | 1. Foundation & Security | 3/3 | Complete   | 2026-06-12 |
-| 2. SEO & Structured Data | 1/5 | In Progress|  |
+| 2. SEO & Structured Data | 3/5 | In Progress|  |
 | 3. Performance, A11y & Testing | 0/TBD | Not started | - |
