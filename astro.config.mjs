@@ -70,6 +70,12 @@ export default defineConfig({
   vite: {
     define: {
       'process.env.KEYSTATIC_GITHUB_CLIENT_ID': JSON.stringify(process.env.KEYSTATIC_GITHUB_CLIENT_ID),
+      // SSR-mode flag consumed by server-only routes (e.g. /api/csp-report).
+      // True only when the Cloudflare adapter is active (output: 'server').
+      // In static builds (GitHub Pages, or adapter-absent local) this is false
+      // so prerender=false server endpoints opt out of the static output and
+      // avoid the NoAdapterInstalled build error.
+      '__SSR_BUILD__': JSON.stringify(useCloudflare),
     },
   },
 });

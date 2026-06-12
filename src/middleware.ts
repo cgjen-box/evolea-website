@@ -1,4 +1,9 @@
-import { defineMiddleware } from 'astro:middleware';
+import { defineMiddleware, sequence } from 'astro:middleware';
+import {
+  SECURITY_HEADERS,
+  CSP_REPORT_ONLY,
+  CSP_REPORT_ONLY_KEYSTATIC,
+} from '@/lib/security-headers';
 
 // Script to enhance Keystatic CMS:
 // 1. Hide the Deploy button (doesn't work without Keystatic Cloud)
@@ -82,40 +87,67 @@ const keystaticEnhancementsScript = `<script>
 })();
 </script>`;
 
-export const onRequest = defineMiddleware(async (context, next) => {
-  const { url } = context;
+// Security headers middleware: applies the SECURITY_HEADERS constant to every
+// response and sets Content-Security-Policy-Report-Only (looser variant under
+// /keystatic). Silent-safe: header failures never break a page response.
+const securityHeaders = defineMiddleware(async (context, next) => {
+  const response = await next();
 
-  // Inject script to hide Deploy button on /keystatic pages
-  if (url.pathname.startsWith('/keystatic')) {
-    const response = await next();
-
-    // Only modify HTML responses
-    const contentType = response.headers.get('content-type');
-    if (!contentType || !contentType.includes('text/html')) {
-      return response;
+  try {
+    for (const [key, value] of Object.entries(SECURITY_HEADERS)) {
+      response.headers.set(key, value);
     }
-
-    try {
-      const html = await response.text();
-      // Inject script at end of document
-      let modifiedHtml = html;
-      if (html.includes('</body>')) {
-        modifiedHtml = html.replace('</body>', keystaticEnhancementsScript + '</body>');
-      } else {
-        modifiedHtml = html + keystaticEnhancementsScript;
-      }
-      return new Response(modifiedHtml, {
-        status: response.status,
-        statusText: response.statusText,
-        headers: new Headers(response.headers),
-      });
-    } catch {
-      // If anything fails, return original
-    }
-
-    return next();
+    const csp = context.url.pathname.startsWith('/keystatic')
+      ? CSP_REPORT_ONLY_KEYSTATIC
+      : CSP_REPORT_ONLY;
+    response.headers.set('Content-Security-Policy-Report-Only', csp);
+  } catch {
+    // If header mutation fails, return the response untouched — never break a page.
+    return response;
   }
 
-  // Pass through all other requests
-  return next();
+  return response;
 });
+
+// Keystatic enhancement middleware: injects the deploy-button-hide + save-toast
+// script into /keystatic HTML responses. Fixes the prior double-next() bug by
+// cloning the body before reading and returning the original response on failure.
+const keystaticEnhancements = defineMiddleware(async (context, next) => {
+  const { url } = context;
+  const response = await next();
+
+  // Only the /keystatic path gets enhanced; everything else passes through.
+  if (!url.pathname.startsWith('/keystatic')) {
+    return response;
+  }
+
+  // Only modify HTML responses
+  const contentType = response.headers.get('content-type');
+  if (!contentType || !contentType.includes('text/html')) {
+    return response;
+  }
+
+  try {
+    // Clone before consuming so the original body stays intact if injection fails.
+    const html = await response.clone().text();
+    // Inject script at end of document
+    let modifiedHtml = html;
+    if (html.includes('</body>')) {
+      modifiedHtml = html.replace('</body>', keystaticEnhancementsScript + '</body>');
+    } else {
+      modifiedHtml = html + keystaticEnhancementsScript;
+    }
+    return new Response(modifiedHtml, {
+      status: response.status,
+      statusText: response.statusText,
+      headers: new Headers(response.headers),
+    });
+  } catch {
+    // If anything fails, return the original (un-consumed) response — NEVER call next() again.
+    return response;
+  }
+});
+
+// securityHeaders runs first in the sequence so it wraps outermost (applies its
+// headers on the way out, after keystaticEnhancements has rebuilt the Response).
+export const onRequest = sequence(securityHeaders, keystaticEnhancements);
