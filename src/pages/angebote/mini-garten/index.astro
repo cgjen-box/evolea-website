@@ -25,13 +25,14 @@ const getText = (obj: { de?: string; en?: string } | undefined, fallback: string
   return lang === 'de' ? (obj.de || fallback) : (obj.en || obj.de || fallback);
 };
 
-const pageTitle = page?.hero?.titel || 'Mini Garten';
+// SEO-09: keyword title is intentionally NOT CMS-overridable (decoupled from hero.titel per D6)
+const seoTitle = lang === 'de' ? 'Mini Garten – Kindergartenvorbereitung' : 'Mini Garden – Kindergarten Preparation';
 const fallbackDescription = lang === 'de'
   ? 'Gruppensetting zur Vorbereitung für den Kindergarten für Kinder im Autismus Spektrum (3-6 Jahre) in Zürich.'
   : 'Group setting preparing children on the autism spectrum (ages 3-6) for kindergarten in Zurich.';
 const pageDescription = getText(page?.hero?.untertitel, fallbackDescription);
 ---
 
-<Base title={pageTitle} description={pageDescription}>
+<Base title={seoTitle} description={pageDescription}>
   <MiniGartenPage content={page} lang={lang} translatePath={translatePath} heroImage={heroImage} />
 </Base>
