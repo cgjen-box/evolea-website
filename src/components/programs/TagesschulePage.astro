@@ -2,6 +2,8 @@
 import FloatingShapes from '@components/FloatingShapes.astro';
 import GradientCTA from '@components/GradientCTA.astro';
 import Icon from '@components/Icon.astro';
+import JsonLd from '@components/JsonLd.astro';
+import { breadcrumbSchema, serviceSchema } from '@/lib/seo';
 
 const { content, lang, translatePath, heroImage } = Astro.props;
 
@@ -24,6 +26,20 @@ const typischerTag = page?.typischerTag || {};
 const interesse = page?.interesse || {};
 const weitereAngebote = page?.weitereAngebote || {};
 const cta = page?.cta || {};
+
+// SEO-06: BreadcrumbList items mirror the visible breadcrumb nav below exactly.
+const pageTitle = hero.titel || 'Tagesschule';
+const breadcrumbItems = [
+  { label: lang === 'de' ? 'Startseite' : 'Home', href: translatePath('/') },
+  { label: lang === 'de' ? 'Angebote' : 'Programs', href: translatePath('/angebote/') },
+  { label: pageTitle },
+];
+
+// SEO-07: Service schema. Tagesschule is a vision-stage program with no published
+// ages — omit minAge/maxAge so serviceSchema emits no audience block.
+const canonicalPath = Astro.url.pathname.endsWith('/') ? Astro.url.pathname : `${Astro.url.pathname}/`;
+const canonicalUrl = new URL(canonicalPath, Astro.site).href;
+const serviceDescription = getText(hero.untertitel, lang === 'de' ? 'Strukturierte Tagesbetreuung mit individueller Förderung für Kinder im Spektrum' : 'Structured day care with individual support for children on the spectrum');
 ---
 
 <!-- Hero Section -->
@@ -37,6 +53,8 @@ const cta = page?.cta || {};
       <span class="mx-2">/</span>
       <span class="text-evolea-purple font-medium">{hero.titel || 'Tagesschule'}</span>
     </nav>
+    <JsonLd schema={breadcrumbSchema(breadcrumbItems, Astro.site)} />
+    <JsonLd schema={serviceSchema({ name: pageTitle, description: serviceDescription, url: canonicalUrl, lang })} />
 
     <div class="grid lg:grid-cols-2 gap-12 items-center">
       <div>
