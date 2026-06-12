@@ -1,0 +1,31 @@
+---
+/**
+ * JsonLd.astro
+ *
+ * Emits a single schema.org JSON-LD data block as
+ * <script type="application/ld+json">.
+ *
+ * The stringified schema has every `<` replaced with its `<` unicode
+ * escape BEFORE emission. CMS editors (Keystatic) control many of the strings
+ * that flow into these schemas, so an unescaped `<` could let CMS or attacker
+ * content break out of the data block via a literal `</script>` sequence. The
+ * escape neutralises that breakout without changing how parsers read the JSON
+ * (JSON string parsers decode `<` back to `<`).
+ *
+ * `type="application/ld+json"` blocks are inert DATA, not executable scripts,
+ * so the existing Content-Security-Policy needs no change to allow them
+ * (RESEARCH A3 — verify zero CSP-report noise at phase verification).
+ *
+ * This is the repo's `set:html` injection analog of FontFaces.astro: a value
+ * computed in frontmatter and emitted verbatim with `is:inline set:html`.
+ */
+interface Props {
+  schema: Record<string, unknown>;
+}
+
+const { schema } = Astro.props;
+
+const json = JSON.stringify(schema).replace(/</g, '\\u003c');
+---
+
+<script type="application/ld+json" is:inline set:html={json} />
