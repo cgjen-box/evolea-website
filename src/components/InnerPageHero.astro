@@ -13,6 +13,8 @@
  * - Entrance animations
  */
 import Butterfly from './Butterfly.astro';
+import JsonLd from '@components/JsonLd.astro';
+import { breadcrumbSchema } from '@/lib/seo';
 
 interface BreadcrumbItem {
   label: string;
@@ -49,6 +51,14 @@ const sizeClasses = {
 ---
 
 <section class:list={['inner-page-hero', sizeClasses[size], { 'has-hero-image': hasHeroImage }]}>
+  {/* BreadcrumbList JSON-LD — emitted ONCE here, mirroring the visible breadcrumb
+      nav that is rendered twice below (image vs no-image layouts). The breadcrumbs
+      prop IS the items array; its hrefs are already translatePath()-resolved and
+      base-prefixed, so breadcrumbSchema absolutizes against Astro.site without
+      re-prefixing the base (Pitfall 7). SEO-06 visible-match holds because both
+      the schema and the nav consume the same prop. */}
+  {breadcrumbs.length > 0 && <JsonLd schema={breadcrumbSchema(breadcrumbs, Astro.site)} />}
+
   <!-- Animated Prism Gradient Background -->
   <div class="hero-prism-bg"></div>
 
