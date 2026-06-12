@@ -509,7 +509,13 @@ const cafeEventSchema = {
 | A6 | GitHub Pages 301-normalizes slashless directory URLs | Responsibility map | If wrong, fallback mirror has duplicate forms — but it's de-indexed anyway (noindex meta), so impact ~zero |
 | A7 | `nonprofitStatus` property value format | NGO schema | Validator warning; safe to omit if unverified |
 
-## Open Questions
+## Open Questions (RESOLVED)
+
+> Resolution (2026-06-12, plan-phase orchestrator, autonomous run): Q1 → locked
+> decision D3 — city-level PostalAddress ships (02-02/02-05); street-address
+> upgrade recorded as a deferred item pending user confirmation. Q2 → locked
+> decision D4 — the researcher's DE/EN title proposals are adopted as-is (02-03).
+> Q3 → no action beyond the noindex meta, implemented in 02-01 T3.
 
 1. **EVOLEA Cafe venue address (blocks SEO-08 final form)**
    - What we know: page publishes "Genauer Ort auf Anfrage"; org address Germaniastrasse 55, 8006 Zürich exists in `settings/site.json`; Google requires `location` with `address` (street-level detail recommended, city-level validates with warnings).
