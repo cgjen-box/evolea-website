@@ -92,3 +92,7 @@ Single source-of-truth security header constant feeding a `sequence()`-composed 
 
 - Any edit to `src/lib/security-headers.ts` MUST be mirrored in `public/_headers` or the build (and pre-commit hook) fails. This is by design (SEC-02).
 - The `__SSR_BUILD__` Vite flag is now available repo-wide for any future server-only route that must opt out of the static build cleanly.
+
+## Self-Check: PASSED
+
+All 6 created/modified files present; all 4 commits (1c80887, 5d43211, c2ac0e5, 3906765) verified in git log.
