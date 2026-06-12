@@ -85,3 +85,9 @@ None - plan executed exactly as written.
 ## Known Stubs
 
 None.
+
+## Self-Check: PASSED
+
+- `public/images/programs/tagesschule-hero.png` — tracked (FOUND)
+- `.planning/phases/01-foundation-security/01-03-SUMMARY.md` — exists (FOUND)
+- Commits cfdb198, b9a450b, 51d8146 — all present in git log (FOUND)
