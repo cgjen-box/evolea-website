@@ -3,14 +3,14 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: executing
-stopped_at: Phase 1 verified (5/5), starting Phase 2 planning
-last_updated: "2026-06-12T15:30:00.000Z"
-last_activity: 2026-06-12 -- Phase 1 complete and verified; Phase 2 next
+stopped_at: ROADMAP.md and STATE.md written, REQUIREMENTS.md traceability updated
+last_updated: "2026-06-12T19:23:11.355Z"
+last_activity: 2026-06-12
 progress:
   total_phases: 3
   completed_phases: 1
-  total_plans: 9
-  completed_plans: 3
+  total_plans: 8
+  completed_plans: 4
   percent: 33
 ---
 
@@ -21,15 +21,16 @@ progress:
 See: .planning/PROJECT.md (updated 2026-06-12)
 
 **Core value:** Independent audits score evolea.ch ahead of eatplanted.com in all four categories (security, SEO, performance, accessibility) without regressing any live functionality.
-**Current focus:** Phase 1 — Foundation & Security
+**Current focus:** Phase 02 — seo-structured-data
 
 ## Current Position
 
-Phase: 2 (SEO & Structured Data) — NOT STARTED (planning next)
+Phase: 02 (seo-structured-data) — EXECUTING
+Plan: 2 of 5
 Phase 1: COMPLETE — verified 5/5 must-haves (01-VERIFICATION.md, re-verified after gap closure c7ca31a)
-Last activity: 2026-06-12 -- Phase 1 complete and verified; Phase 2 next
+Last activity: 2026-06-12
 
-Progress: [███░░░░░░░] 33%
+Progress: [█████░░░░░] 50%
 
 ## Performance Metrics
 
@@ -51,6 +52,7 @@ Progress: [███░░░░░░░] 33%
 - Trend: -
 
 *Updated after each plan completion*
+| Phase 02 P02-01 | 5 | 3 tasks | 5 files |
 
 ## Accumulated Context
 
@@ -63,6 +65,8 @@ Recent decisions affecting current work:
 - [Phase 1]: CSP ships Report-Only with an in-stack `/api/csp-report` sink; enforcement deferred to v2
 - [Phase 1]: Convert images in place to WebP (sharp); no `src/assets`/`<Image />` migration
 - [Scope]: GSD scope = improvement-plan doc Phases 1+2 + repo hygiene. The improvement-plan doc's "Phase 3" (recurring content/monitoring ops) is excluded — NOT to be confused with GSD roadmap Phase 3 (Performance, A11y & Testing), which is in scope
+- [Phase ?]: [Phase 2 / 02-01]: Trailing-slash via first-in-sequence middleware 301 with /api,/keystatic,/_,file-ext exemptions + leading-slash collapse open-redirect guard
+- [Phase ?]: [Phase 2 / 02-01]: robots.txt default-deny SSR endpoint keyed on exact PROD_HOST; public/_headers left untouched, preview de-indexing via middleware X-Robots-Tag + deny robots.txt
 
 ### Pending Todos
 
@@ -85,6 +89,6 @@ Items acknowledged and carried forward from previous milestone close:
 
 ## Session Continuity
 
-Last session: 2026-06-12
+Last session: 2026-06-12T19:23:00.264Z
 Stopped at: ROADMAP.md and STATE.md written, REQUIREMENTS.md traceability updated
 Resume file: None
