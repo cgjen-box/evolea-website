@@ -28,7 +28,10 @@ Decimal phases appear between their surrounding integers in numeric order.
   3. Base.astro emits no Google Fonts `<link>` — Fredoka/Poppins load from `public/fonts/` via `@font-face`; the middleware no longer double-calls `next()` and is composed via `sequence()`
   4. `git ls-files public/images/generated/` returns nothing, `Final images/` and superseded logo originals are gone, dead components are deleted, and the tagesschule-hero resolves from `public/images/programs/` in both DE and EN with no broken-image references
   5. `npm run build` and `GITHUB_PAGES=true npm run build` both stay green
-**Plans**: TBD
+**Plans**: 3 plans
+  - [ ] 01-01-PLAN.md — Security headers constant, sequence() middleware refactor + double-next() fix, CSP Report-Only sink, public/_headers + immutable /assets cache
+  - [ ] 01-02-PLAN.md — Self-host Fredoka/Poppins via @font-face, remove Google Fonts link, base-prefixed preloads
+  - [ ] 01-03-PLAN.md — Relocate tagesschule hero, untrack generated/, delete Final images + logo originals + dead components
 **UI hint**: yes
 
 ### Phase 2: SEO & Structured Data
@@ -64,6 +67,6 @@ Phases execute in numeric order: 1 → 2 → 3
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
-| 1. Foundation & Security | 0/TBD | Not started | - |
+| 1. Foundation & Security | 0/3 | Not started | - |
 | 2. SEO & Structured Data | 0/TBD | Not started | - |
 | 3. Performance, A11y & Testing | 0/TBD | Not started | - |
