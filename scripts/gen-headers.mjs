@@ -56,9 +56,11 @@ function extractCsp(name) {
   // The CSP value is a `+`-concatenation of quoted fragments that themselves
   // contain `;`, so we must NOT terminate on the first `;` — instead grab the
   // whole assignment block and collect every quoted fragment within it.
+  // NO 'm' flag: with 'm', the `$` in the lookahead matches the first
+  // end-of-line and truncates extraction to `default-src 'self';` (CR-01).
+  // Without it, `$` anchors to end-of-input only.
   const re = new RegExp(
-    `export const ${name}\\s*=\\s*([\\s\\S]*?)(?=\\nexport const |\\n\\/\\*|$)`,
-    'm'
+    `export const ${name}\\s*=\\s*([\\s\\S]*?)(?=\\nexport const |\\n\\/\\*|$)`
   );
   const block = constantSrc.match(re);
   if (!block) return null;
@@ -76,6 +78,26 @@ const cspSiteWide = extractCsp('CSP_REPORT_ONLY');
 const cspKeystatic = extractCsp('CSP_REPORT_ONLY_KEYSTATIC');
 if (!cspSiteWide || !cspKeystatic) {
   console.error('PARITY FAIL: could not extract CSP_REPORT_ONLY / CSP_REPORT_ONLY_KEYSTATIC values');
+  process.exit(1);
+}
+
+// Sanity assertions: fail loudly if extraction ever regresses to a truncated
+// prefix again (the CR-01 failure mode made the parity check vacuous).
+for (const [label, csp] of [
+  ['site-wide', cspSiteWide],
+  ['keystatic', cspKeystatic],
+]) {
+  if (!csp.endsWith('report-uri /api/csp-report') || csp.length <= 200) {
+    console.error(
+      `PARITY FAIL: ${label} CSP extraction truncated (len=${csp.length}): "${csp}"`
+    );
+    process.exit(1);
+  }
+}
+if (cspSiteWide === cspKeystatic) {
+  console.error(
+    'PARITY FAIL: site-wide and keystatic CSP extracted identically — extraction is broken'
+  );
   process.exit(1);
 }
 
