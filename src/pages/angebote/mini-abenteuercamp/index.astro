@@ -26,13 +26,14 @@ const getText = (obj: { de?: string; en?: string } | undefined, fallback: string
 };
 
 const hero = page?.hero || {};
-const pageTitle = `${hero.titel || 'Mini Abenteuercamp'} - ${lang === 'de' ? 'Mini Projekte' : 'Mini Projects'}`;
+// SEO-09: keyword title is intentionally NOT CMS-overridable (decoupled from hero.titel per D6)
+const seoTitle = lang === 'de' ? 'Mini Abenteuercamp – Inklusives Feriencamp' : 'Mini Adventure Camp – Inclusive Holiday Camp';
 const fallbackDescription = lang === 'de'
   ? 'Mini Abenteuercamp: Raus in die Natur, rein ins Abenteuer! Ein inklusives Feriencamp für Kinder im Autismus-Spektrum (5-10 Jahre). Gemeinsam eine Burg bauen und die Natur entdecken.'
   : 'Mini Adventure Camp: Out into nature, into adventure! An inclusive holiday camp for children on the autism spectrum (ages 5-10). Building a castle together and exploring nature.';
 const pageDescription = getText(hero.beschreibung, fallbackDescription);
 ---
 
-<Base title={pageTitle} description={pageDescription}>
+<Base title={seoTitle} description={pageDescription}>
   <MiniAbenteuercampPage content={page} lang={lang} translatePath={translatePath} heroImage={heroImage} />
 </Base>
