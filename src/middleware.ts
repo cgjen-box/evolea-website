@@ -137,10 +137,15 @@ const keystaticEnhancements = defineMiddleware(async (context, next) => {
     } else {
       modifiedHtml = html + keystaticEnhancementsScript;
     }
+    const headers = new Headers(response.headers);
+    // The body just grew by the injected script; a copied upstream
+    // Content-Length would truncate the response on length-honoring servers
+    // (dev/preview). Delete it so the runtime recomputes the correct length.
+    headers.delete('content-length');
     return new Response(modifiedHtml, {
       status: response.status,
       statusText: response.statusText,
-      headers: new Headers(response.headers),
+      headers,
     });
   } catch {
     // If anything fails, return the original (un-consumed) response — NEVER call next() again.
