@@ -19,12 +19,13 @@ const heroImage = siteImages?.programmeHeroes?.tagesschule
   ? base + siteImages.programmeHeroes.tagesschule
   : base + "/images/programs/tagesschule-hero.png";
 
-const pageTitle = page?.hero?.titel || (lang === 'de' ? 'Tagesschule' : 'Day School');
+// SEO-09: keyword title is intentionally NOT CMS-overridable (decoupled from hero.titel per D6)
+const seoTitle = lang === 'de' ? 'Tagesschule – Schule für Kinder im Spektrum' : 'Day School – For Children on the Spectrum';
 const pageDescription = lang === 'de'
   ? 'Strukturiertes Tagesschulprogramm mit individueller Förderung für Kinder im Autismus Spektrum in Zürich.'
   : 'Structured day school program with individual support for children on the autism spectrum in Zurich.';
 ---
 
-<Base title={pageTitle} description={pageDescription}>
+<Base title={seoTitle} description={pageDescription}>
   <TagesschulePage content={page} lang={lang} translatePath={translatePath} heroImage={heroImage} />
 </Base>

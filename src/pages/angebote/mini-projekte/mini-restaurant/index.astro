@@ -19,13 +19,14 @@ const posterSrc = siteImages?.programmeHeroes?.miniRestaurantPoster
   ? base + siteImages.programmeHeroes.miniRestaurantPoster
   : `${base}/images/mini-restaurant-poster.jpg`;
 
-const pageTitle = 'Mini Restaurant - Mini Projekte';
+// SEO-09: keyword title is intentionally NOT CMS-overridable (decoupled from hero.titel per D6)
+const seoTitle = lang === 'de' ? 'Mini Restaurant – Inklusives Kochprojekt' : 'Mini Restaurant – Inclusive Cooking Project';
 const pageDescription = lang === 'de'
   ? 'Mini Restaurant: ich bin ein Kochprofi! Ein inklusives Projekt für Kinder im Autismus-Spektrum (5-8 Jahre). Kochen, Servieren und Teamwork spielerisch lernen.'
   : 'Mini Restaurant: I am a cooking pro! An inclusive project for children on the autism spectrum (ages 5-8). Learning cooking, serving and teamwork playfully.';
 ---
 
-<Base title={pageTitle} description={pageDescription} transparentHeader={true}>
+<Base title={seoTitle} description={pageDescription} transparentHeader={true}>
   <MiniRestaurantPage
     lang={lang}
     translatePath={translatePath}

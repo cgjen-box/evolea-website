@@ -21,17 +21,17 @@ const getText = (value: any, fallback = '') => {
   return selected || value.de || value.en || fallback;
 };
 
-const fallbackTitle = isEnglish
-  ? 'EVOLEA Cafe | Parent Community'
-  : 'EVOLEA Cafe | Austausch fuer Eltern';
+// SEO-09: keyword title is intentionally NOT CMS-overridable (decoupled from cafe.seo.title per D6)
+const seoTitle = isEnglish
+  ? 'EVOLEA Cafe – Parent Meetup in Zurich'
+  : 'EVOLEA Cafe – Elterntreff in Zürich';
 const fallbackDescription = isEnglish
   ? 'Every 2nd Wednesday, parents of children on the spectrum meet for exchange. No registration needed. Just drop by.'
   : 'Jeden 2. Mittwoch treffen sich Eltern von Kindern im Spektrum zum Austausch. Keine Anmeldung noetig. Einfach vorbeikommen.';
 
-const pageTitle = getText(cafe?.seo?.title, fallbackTitle);
 const pageDescription = getText(cafe?.seo?.description, fallbackDescription);
 ---
 
-<Base title={pageTitle} description={pageDescription}>
+<Base title={seoTitle} description={pageDescription}>
   <CafePage content={cafe} lang={lang} translatePath={translatePath} heroImage={heroImage} />
 </Base>
