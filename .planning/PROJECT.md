@@ -40,7 +40,7 @@ After this project, independent audits (Mozilla Observatory, axe-core, crawler a
 **Performance (homepage ~7MB → ≤1.5MB)**
 - [ ] Convert team/program/blog/logo PNGs to WebP at display size in place (`public/`), with explicit width/height (team ~50–100KB, heroes ≤200KB, logo ≤60KB or SVG)
 - [ ] `loading="lazy"` on below-fold images; preload the hero poster (LCP element)
-- [ ] `Cache-Control: public, max-age=31536000, immutable` for `/assets/*` via middleware
+- [ ] `Cache-Control: public, max-age=31536000, immutable` for `/assets/*` via `public/_headers` (research finding: middleware never runs for static assets)
 
 **Accessibility (axe 2 → 0)**
 - [ ] aria-labels distinguishing the two `<nav>` landmarks in Header.astro
@@ -89,11 +89,11 @@ After this project, independent audits (Mozilla Observatory, axe-core, crawler a
 
 | Decision | Rationale | Outcome |
 |----------|-----------|---------|
-| Security headers via Astro middleware, not Cloudflare Transform Rules | Versioned in git, testable locally, applies to all SSR responses, no dashboard/API dependency | — Pending |
+| Security headers via Astro middleware + `public/_headers` backstop, not Cloudflare Transform Rules | Versioned in git, testable on preview deploys; middleware covers SSR responses, `_headers` covers static assets and prerendered blog HTML (middleware never runs for those) — single source constant feeds both | — Pending |
 | CSP ships Report-Only first | Formspree/Instagram/inline-script/Keystatic breakage risk; enforce after ~1 week of reports | — Pending |
 | Convert images in place (sharp/squoosh → WebP in `public/`) | Avoids touching every template; SSR can't transform at request time anyway | — Pending |
 | Scope = plan Phases 1+2 + repo hygiene; Phase 3 excluded | P3 is recurring content/monitoring work, not a one-shot project | — Pending |
-| Cache-Control for `/assets/*` via middleware (not dashboard Cache Rule) | Keeps the fix in-repo alongside the other header logic | — Pending |
+| Cache-Control for `/assets/*` via `public/_headers` (not middleware, not dashboard Cache Rule) | Middleware never fires for static files on Cloudflare Pages; `_headers` is the only in-repo mechanism that reaches them | — Pending |
 
 ## Evolution
 
