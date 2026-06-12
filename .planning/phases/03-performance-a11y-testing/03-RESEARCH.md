@@ -398,7 +398,14 @@ export default defineConfig({
 | A5 | Astro auto-sets status 404 when rendering `404.astro` on demand (no manual `Astro.response.status` needed) | Pattern 2 | One-line fix; smoke test asserts status anyway |
 | A6 | fetchpriority browser-support versions | State of the Art | None material — attribute is ignored gracefully |
 
-## Open Questions
+## Open Questions (RESOLVED)
+
+> Resolution (2026-06-12, orchestrator, autonomous run): Q1 (budget vs deferred
+> video) → locked decision 2: measure-first in 03-04 T3, SSIM >= 0.95 gated
+> conditional re-encode, budget documented as video-excluded if the gate fails.
+> Q2 (og:image WebP) → JPEG retained for og:image feeders (03-01 T2 keep-list).
+> Q3 (logo WebP tuning) → executor discretion q82/q75 rule in 03-01 T1.
+
 
 1. **The ≤1.5MB homepage budget vs the 1.33MB hero video (deferred PERF-V2-01)**
    - What we know: video alone is 1330KB; converted poster+logo ≈ 96KB; fonts 96KB on disk; CSS/JS unmeasured. Estimate 1.6–1.7MB total.
