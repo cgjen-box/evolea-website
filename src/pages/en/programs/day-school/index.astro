@@ -17,7 +17,7 @@ const siteImagesEntry = await getEntry('settings', 'images');
 const siteImages = siteImagesEntry?.data;
 const heroImage = siteImages?.programmeHeroes?.tagesschule
   ? base + siteImages.programmeHeroes.tagesschule
-  : base + "/images/generated/tagesschule-hero.png";
+  : base + "/images/programs/tagesschule-hero.png";
 
 const pageTitle = page?.hero?.titel || (lang === 'de' ? 'Tagesschule' : 'Day School');
 const pageDescription = lang === 'de'
