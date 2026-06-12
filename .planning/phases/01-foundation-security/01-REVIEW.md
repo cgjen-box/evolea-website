@@ -20,7 +20,8 @@ findings:
   warning: 5
   info: 7
   total: 13
-status: issues_found
+status: fixed
+fixed_at: 2026-06-12T16:57:00Z
 ---
 
 # Phase 1: Code Review Report
@@ -176,6 +177,29 @@ and use `{ogImage}` for both `og:image` and `twitter:image`.
 
 ---
 
+## Fixes Applied
+
+**Fixed:** 2026-06-12 (gsd-code-fixer). Scope: all Critical + Warning findings, plus one-line risk-free Info items. Each fix committed atomically with the `fix(01-review):` prefix; pre-commit hooks (check_secrets.py, gitleaks, full `npm run build`) ran on every commit. Final verification: `npm run build` and `GITHUB_PAGES=true npm run build` both exit 0.
+
+| Finding | Status | Commit | Fix |
+|---------|--------|--------|-----|
+| CR-01 | fixed | 79335ce | Dropped the `'m'` regex flag in `extractCsp()` so `$` anchors to end-of-input; added sanity assertions (extraction must end with `report-uri /api/csp-report`, be > 200 chars, and the two CSPs must differ). Proven by mutation test: a hostile `connect-src https://evil.example` rewrite in `security-headers.ts` now fails `node scripts/gen-headers.mjs` (exit 1); reverted, the check passes. |
+| WR-01 | fixed | c7efa7a | `/api/csp-report` no longer buffers unbounded bodies: Content-Length gate rejects > 16 KB unread (`request.body?.cancel()`), and a streaming reader aborts as soon as 16 KB is exceeded. Always returns 204. |
+| WR-02 | fixed | 6f4abf3 | Rebuilt `/keystatic` Response now deletes `content-length` from the copied headers so the runtime recomputes it for the enlarged body. |
+| WR-03 | fixed | 15b83a1 | `og:image`/`twitter:image` now use `new URL(\`${base}${image}\`, Astro.site)`. Verified in the `GITHUB_PAGES=true` build: `dist/index.html` now emits `https://cgjen-box.github.io/evolea-website/images/og-default.jpg`. |
+| WR-04 | fixed | 20a9db1 | `gen-headers.mjs` now parses `_headers` into per-path blocks and asserts two-way, scope-aware parity: exact values under `/*`, each CSP under its own scope, no unknown headers under `/*`, no enforcing `Content-Security-Policy` anywhere, exact immutable Cache-Control under `/assets/*` and `/fonts/*`. Mutation-tested: rogue header, enforcing CSP, and swapped CSP scopes all fail; clean file passes. |
+| WR-05 | fixed | c7efa7a | Sink now logs one compact line per report (`[csp-report] directive=... blocked-uri=...`), fields stripped to `[\w\-./:]` and truncated to 200 chars, parsed defensively from the capped read (handles both `csp-report`-wrapped and bare JSON). Over-cap or unparseable bodies skip logging; 204 always. Combined with WR-01 since both reshape the same handler. |
+| IN-01 | fixed | b49a95d | Keystatic CSP docstring now says connect-src *swaps* formspree.io for api.github.com (not a superset). |
+| IN-02 | fixed | b49a95d | `/keystatic` matching is now exact-or-slash (`=== '/keystatic' \|\| startsWith('/keystatic/')`) in both middleware sites. |
+| IN-03 | not fixed | — | Left documented: dead clone/read + `innerHTML` sink in the injected Keystatic script is a multi-line behavioral change inside an inline script string, not a one-line risk-free edit. |
+| IN-04 | fixed | b49a95d | Comment corrected: static builds emit no file for `/api/csp-report` (404 on GitHub Pages), not a prerendered 204. |
+| IN-05 | fixed | b49a95d | `og:locale` for English pages is now `en_US` (was invalid bare `en`). |
+| IN-06 | not fixed | — | Left documented: CMS data decision (`programmeHeroes.tagesschule` points at the homepage hero) — needs a content-owner call, not a code fix. |
+| IN-07 | not fixed | — | Left documented: title-fallback design choice (bilingual `hero.titel` vs proper-noun literal) — not one-line risk-free. |
+
+---
+
 _Reviewed: 2026-06-12T14:46:37Z_
 _Reviewer: Claude (gsd-code-reviewer)_
 _Depth: standard_
+_Fixed: 2026-06-12T16:57:00Z (Claude, gsd-code-fixer)_
