@@ -34,7 +34,7 @@ export default {
           'bright-pink': '#E97BF1',         // canonical (spec)
           'magenta-vivid': '#E97BF1',       // alias of bright-pink
           sky: '#5DADE2',
-          green: '#2D7A57',                 // success/WhatsApp green; fixes silent-failure of bg-evolea-green/* used in Footer/kontakt/mini-turnen/spenden
+          green: '#236247',                 // success/WhatsApp green (darkened for WCAG AA contrast on /20 tint); hex literal preserved for /10 /20 opacity modifiers
 
           // GOLD — Spenden CTAs only
           gold: '#E8B86D',                  // spec (was #DCD49F)

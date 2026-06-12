@@ -34,7 +34,7 @@
     --evolea-bright-pink: #E97BF1;          /* canonical (spec) */
     --evolea-magenta-vivid: var(--evolea-bright-pink);  /* alias */
     --evolea-sky: #5DADE2;
-    --evolea-green: #2D7A57;                /* spec do/don't success green; success/WhatsApp accents */
+    --evolea-green: #236247;                /* spec do/don't success green (darkened for WCAG AA contrast); success/WhatsApp accents */
 
     /* GOLD — Spenden CTAs only */
     --evolea-gold: #E8B86D;                 /* spec — fixed from prior #DCD49F */
