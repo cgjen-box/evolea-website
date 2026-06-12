@@ -3,6 +3,8 @@ import Base from '@layouts/Base.astro';
 import FloatingShapes from '@components/FloatingShapes.astro';
 import GradientCTA from '@components/GradientCTA.astro';
 import EditLink from '@components/EditLink.astro';
+import JsonLd from '@components/JsonLd.astro';
+import { blogPostingSchema, breadcrumbSchema } from '@/lib/seo';
 import { getCollection, type CollectionEntry } from 'astro:content';
 import { getLangFromUrl, useTranslatedPath } from '@i18n/utils';
 
@@ -58,9 +60,40 @@ const relatedPosts = allPosts
   .filter(p => p.slug !== post.slug)
   .filter(p => getTags(p).some(tag => tags.includes(tag)))
   .slice(0, 2);
+
+// Trailing-slash canonical (mainEntityOfPage) resolved against Astro.site.
+const canonicalPath = Astro.url.pathname.endsWith('/')
+  ? Astro.url.pathname
+  : `${Astro.url.pathname}/`;
+const canonicalUrl = new URL(canonicalPath, Astro.site).href;
+
+// BlogPosting JSON-LD: datePublished gated on the same valid-date guard as the
+// visible <time> element; image emitted only when the post supplies one.
+const postSchema = blogPostingSchema({
+  headline: post.data.title,
+  description: post.data.description,
+  ...(hasValidPubDate ? { datePublished: pubDate.toISOString() } : {}),
+  authorName: post.data.author,
+  ...(post.data.image
+    ? { imageUrl: new URL(`${base}${post.data.image}`, Astro.site).href }
+    : {}),
+  canonicalUrl,
+  lang,
+});
+
+// BreadcrumbList mirrors the visible inline nav exactly (Startseite → Blog → title).
+const breadcrumbItems = [
+  { label: 'Startseite', href: translatePath('/') },
+  { label: 'Blog', href: translatePath('/blog/') },
+  { label: post.data.title },
+];
+const blogBreadcrumbSchema = breadcrumbSchema(breadcrumbItems, Astro.site);
 ---
 
-<Base title={post.data.title} description={post.data.description}>
+<Base title={post.data.title} description={post.data.description} ogType="article">
+  <!-- BlogPosting + BreadcrumbList JSON-LD (SEO-05/SEO-06) -->
+  <JsonLd schema={postSchema} />
+  <JsonLd schema={blogBreadcrumbSchema} />
   <!-- Hero Section -->
   <section class="relative py-16 md:py-24 bg-gradient-to-br from-evolea-purple/10 to-evolea-cream overflow-hidden">
     <FloatingShapes variant="minimal" />
