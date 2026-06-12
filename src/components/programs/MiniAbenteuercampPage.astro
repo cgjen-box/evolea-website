@@ -2,6 +2,8 @@
 import FloatingShapes from '@components/FloatingShapes.astro';
 import Icon from '@components/Icon.astro';
 import EditLink from '@components/EditLink.astro';
+import JsonLd from '@components/JsonLd.astro';
+import { breadcrumbSchema, serviceSchema } from '@/lib/seo';
 
 const { content, lang, translatePath, heroImage } = Astro.props;
 
@@ -47,6 +49,21 @@ const skillColors: Record<string, string> = {
   purple: 'bg-evolea-purple/20',
   orange: 'bg-evolea-orange/20'
 };
+
+// SEO-06: BreadcrumbList mirrors the 4-level visible nav below (Mini Projekte is
+// an intermediate level — this is a sub-program of Mini Projekte).
+const pageTitle = hero.titel || 'Mini Abenteuercamp';
+const breadcrumbItems = [
+  { label: lang === 'de' ? 'Startseite' : 'Home', href: translatePath('/') },
+  { label: lang === 'de' ? 'Angebote' : 'Programs', href: translatePath('/angebote/') },
+  { label: lang === 'de' ? 'Mini Projekte' : 'Mini Projects', href: translatePath('/angebote/mini-projekte/') },
+  { label: pageTitle },
+];
+
+// SEO-07: Service schema. Canonical URL = slash-normalized pathname against Astro.site.
+const canonicalPath = Astro.url.pathname.endsWith('/') ? Astro.url.pathname : `${Astro.url.pathname}/`;
+const canonicalUrl = new URL(canonicalPath, Astro.site).href;
+const serviceDescription = getText(hero.untertitel, lang === 'de' ? 'Raus in die Natur, rein ins Abenteuer!' : 'Out into nature, into adventure!');
 ---
 
 <!-- Hero Section -->
@@ -62,6 +79,8 @@ const skillColors: Record<string, string> = {
       <span class="mx-2">/</span>
       <span class="text-evolea-purple font-medium">{hero.titel || 'Mini Abenteuercamp'}</span>
     </nav>
+    <JsonLd schema={breadcrumbSchema(breadcrumbItems, Astro.site)} />
+    <JsonLd schema={serviceSchema({ name: pageTitle, description: serviceDescription, url: canonicalUrl, lang, minAge: 5, maxAge: 10 })} />
 
     <div class="grid lg:grid-cols-2 gap-12 items-center">
       <div>

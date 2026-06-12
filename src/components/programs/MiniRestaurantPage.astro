@@ -1,5 +1,7 @@
 ---
 import Icon from '@components/Icon.astro';
+import JsonLd from '@components/JsonLd.astro';
+import { breadcrumbSchema, serviceSchema } from '@/lib/seo';
 
 const { lang, translatePath, videoSrc, videoSrcMobile, posterSrc } = Astro.props;
 
@@ -8,6 +10,24 @@ const getText = (obj: { de?: string; en?: string } | undefined, fallback: string
   if (!obj) return fallback;
   return lang === 'de' ? (obj.de || fallback) : (obj.en || obj.de || fallback);
 };
+
+// SEO-06: BreadcrumbList mirrors the 4-level visible nav below EXACTLY. The visible
+// nav hardcodes 'Mini Projekte' and 'Mini Restaurant' (no ternary) in both languages,
+// so the schema labels match those literals verbatim.
+const breadcrumbItems = [
+  { label: lang === 'de' ? 'Startseite' : 'Home', href: translatePath('/') },
+  { label: lang === 'de' ? 'Angebote' : 'Programs', href: translatePath('/angebote/') },
+  { label: 'Mini Projekte', href: translatePath('/angebote/mini-projekte/') },
+  { label: 'Mini Restaurant' },
+];
+
+// SEO-07: Service schema. This component has no `content` prop — name/description
+// are bilingual ternaries consistent with the visible page copy.
+const canonicalPath = Astro.url.pathname.endsWith('/') ? Astro.url.pathname : `${Astro.url.pathname}/`;
+const canonicalUrl = new URL(canonicalPath, Astro.site).href;
+const serviceDescription = lang === 'de'
+  ? 'Kochprojekt für Kinder im Spektrum: gemeinsam Gäste empfangen, servieren und kochen.'
+  : 'Cooking project for children on the spectrum: welcoming guests, serving and cooking together.';
 
 // Program schedule data
 const schedule = [
@@ -105,6 +125,8 @@ const schedule = [
       <span class="mx-2">/</span>
       <span class="text-white font-medium">Mini Restaurant</span>
     </nav>
+    <JsonLd schema={breadcrumbSchema(breadcrumbItems, Astro.site)} />
+    <JsonLd schema={serviceSchema({ name: 'Mini Restaurant', description: serviceDescription, url: canonicalUrl, lang, minAge: 5, maxAge: 8 })} />
 
     <div class="max-w-2xl">
       <div class="inline-flex items-center gap-2 bg-white/20 backdrop-blur-sm text-white px-4 py-2 rounded-full text-sm font-medium mb-6">
