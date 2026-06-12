@@ -2,6 +2,8 @@
 import FloatingShapes from '@components/FloatingShapes.astro';
 import Icon from '@components/Icon.astro';
 import GradientCTA from '@components/GradientCTA.astro';
+import JsonLd from '@components/JsonLd.astro';
+import { cafeEventSchema } from '@/lib/seo';
 
 const { content, lang, translatePath, heroImage } = Astro.props;
 
@@ -30,9 +32,22 @@ const scheduleCards = getArray(schedule.cards);
 const scheduleDates = getArray(schedule.daten);
 const expectItems = getArray(expect.items);
 const faqItems = getArray(faq.items);
+
+// Recurring Event JSON-LD (SEO-08). startDate is COMPUTED (next 2nd Wednesday,
+// 20:00 Europe/Zurich) by cafeEventSchema/nextCafeDate — the CMS daten[] rows
+// are stale and intentionally NOT read here. City-level address only (D3).
+// No BreadcrumbList: this page has no visible breadcrumb nav.
+const eventDescription = getText(
+  hero.tagline,
+  isEnglish
+    ? 'A relaxed parent meetup hosted by EVOLEA in Zürich.'
+    : 'Ein entspannter Elterntreff von EVOLEA in Zürich.',
+);
 ---
 
 <main class="cafe-page">
+  <!-- Recurring Event JSON-LD (SEO-08) -->
+  <JsonLd schema={cafeEventSchema({ lang, description: eventDescription })} />
   <!-- Hero Section with Prism Gradient and Image -->
   <section class="cafe-hero">
     <FloatingShapes variant="minimal" />
