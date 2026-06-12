@@ -31,6 +31,9 @@ const lang = getLangFromUrl(Astro.url);
 const alternates = getLanguageAlternates(Astro.url);
 const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+// OG/Twitter image must honor the configured base path (e.g. /evolea-website
+// on GitHub Pages) — same base-URL invariant as fonts/favicons below.
+const ogImage = new URL(`${base}${image}`, Astro.site);
 ---
 
 <!doctype html>
@@ -60,7 +63,7 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
     <meta property="og:url" content={Astro.url} />
     <meta property="og:title" content={`${title} | EVOLEA`} />
     <meta property="og:description" content={description} />
-    <meta property="og:image" content={new URL(image, Astro.site)} />
+    <meta property="og:image" content={ogImage} />
     <meta property="og:locale" content={lang === 'de' ? 'de_CH' : 'en'} />
 
     <!-- Twitter -->
@@ -68,7 +71,7 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
     <meta property="twitter:url" content={Astro.url} />
     <meta property="twitter:title" content={`${title} | EVOLEA`} />
     <meta property="twitter:description" content={description} />
-    <meta property="twitter:image" content={new URL(image, Astro.site)} />
+    <meta property="twitter:image" content={ogImage} />
 
     <!-- Favicon -->
     <link rel="icon" type="image/svg+xml" href={`${base}/favicon.svg`} />
