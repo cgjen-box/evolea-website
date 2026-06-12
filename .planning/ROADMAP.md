@@ -13,7 +13,7 @@ A brownfield hardening pass on the live bilingual EVOLEA site (Astro 5 SSR / Clo
 Decimal phases appear between their surrounding integers in numeric order.
 
 - [x] **Phase 1: Foundation & Security** - Clean repo, self-hosted fonts, refactored middleware, security headers + CSP Report-Only + cache backstop (completed 2026-06-12)
-- [ ] **Phase 2: SEO & Structured Data** - Canonical URL form, robots/sitemap discovery, and full JSON-LD coverage
+- [x] **Phase 2: SEO & Structured Data** - Canonical URL form, robots/sitemap discovery, and full JSON-LD coverage (completed 2026-06-12)
 - [ ] **Phase 3: Performance, A11y & Testing** - WebP/CLS/LCP image work, two axe fixes, branded 404, Playwright smoke net
 
 ## Phase Details
@@ -48,8 +48,8 @@ Decimal phases appear between their surrounding integers in numeric order.
   - [x] 02-01-PLAN.md — Trailing-slash 301 middleware, hostname-keyed robots.txt, /sitemap.xml redirect + brand filter, Base head fixes (canonical/og:url/ogType/rel=sitemap/separator/noindex)
   - [x] 02-02-PLAN.md — JSON-LD foundation: seo.ts schema builders + JsonLd.astro + site-wide NGO/WebSite @graph from Base
   - [x] 02-03-PLAN.md — Keyword titles ('<primary keyword> – EVOLEA') on homepage + all Angebote pages, DE/EN, CMS-decoupled
-  - [ ] 02-04-PLAN.md — BreadcrumbList (InnerPageHero + 7 program components) + Service JSON-LD on program pages
-  - [ ] 02-05-PLAN.md — BlogPosting + og:type article + blog breadcrumbs (DE/EN) and recurring Cafe Event JSON-LD
+  - [x] 02-04-PLAN.md — BreadcrumbList (InnerPageHero + 7 program components) + Service JSON-LD on program pages
+  - [x] 02-05-PLAN.md — BlogPosting + og:type article + blog breadcrumbs (DE/EN) and recurring Cafe Event JSON-LD
 **UI hint**: yes
 
 ### Phase 3: Performance, A11y & Testing
@@ -73,5 +73,5 @@ Phases execute in numeric order: 1 → 2 → 3
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
 | 1. Foundation & Security | 3/3 | Complete   | 2026-06-12 |
-| 2. SEO & Structured Data | 3/5 | In Progress|  |
+| 2. SEO & Structured Data | 5/5 | Complete   | 2026-06-12 |
 | 3. Performance, A11y & Testing | 0/TBD | Not started | - |
