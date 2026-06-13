@@ -71,6 +71,7 @@ const colorClasses: Record<string, string> = {
   title="Förderung für Kinder im Autismus-Spektrum in Zürich"
   description={getText(siteSettings?.siteDescription, "EVOLEA Verein - Bildungsangebote für Kinder im Autismus Spektrum oder mit ADHS in Zürich.")}
   transparentHeader={true}
+  preloadImage={siteImages?.startseite?.videoPoster ? base + siteImages.startseite.videoPoster : base + "/images/hero-poster.webp"}
 >
   <!-- Hero Section with Video Background - Vision Statement Style -->
   <VideoHero

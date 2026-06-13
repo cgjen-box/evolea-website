@@ -71,6 +71,7 @@ const colorClasses: Record<string, string> = {
   title="Programs for Children on the Autism Spectrum in Zurich"
   description={getText(siteSettings?.siteDescription, "EVOLEA Verein - Educational programs for children on the autism spectrum or with ADHD in Zürich.")}
   transparentHeader={true}
+  preloadImage={siteImages?.startseite?.videoPoster ? base + siteImages.startseite.videoPoster : base + "/images/hero-poster.webp"}
 >
   <!-- Hero Section with Video Background - Vision Statement Style -->
   <VideoHero
