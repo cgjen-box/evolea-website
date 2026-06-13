@@ -16,8 +16,9 @@ export default {
 
           // PRIMARY — Magenta / Deep Purple / Lavender
           magenta: '#DD48E0',
-          'deep-purple': '#BA53AD',         // canonical (spec)
-          purple: '#BA53AD',                // alias of deep-purple
+          'magenta-aa': '#B832BB',          // AA-compliant magenta for TEXT on white (white-on-#DD48E0 / #DD48E0-on-white is only 3.45:1; #B832BB is 4.99:1). Brand magenta #DD48E0 stays for accents/fills/highlights.
+          'deep-purple': '#AD49A0',         // canonical AA-corrected deep purple (purple text on cream is 4.81:1)
+          purple: '#AD49A0',                // alias of deep-purple (same darkened value)
           lavender: '#CD87F8',              // canonical (spec)
           'purple-light': '#CD87F8',        // alias of lavender
           'purple-dark': '#8A3D7E',         // spec "Deep Purple Mid" (was #8A3D9E)
@@ -34,7 +35,7 @@ export default {
           'bright-pink': '#E97BF1',         // canonical (spec)
           'magenta-vivid': '#E97BF1',       // alias of bright-pink
           sky: '#5DADE2',
-          green: '#2D7A57',                 // success/WhatsApp green; fixes silent-failure of bg-evolea-green/* used in Footer/kontakt/mini-turnen/spenden
+          green: '#236247',                 // success/WhatsApp green (darkened for WCAG AA contrast on /20 tint); hex literal preserved for /10 /20 opacity modifiers
 
           // GOLD — Spenden CTAs only
           gold: '#E8B86D',                  // spec (was #DCD49F)
@@ -81,9 +82,9 @@ export default {
         'evolea-2xl': '48px',
       },
       boxShadow: {
-        'soft': '0 4px 20px rgba(186, 83, 173, 0.15)',
-        'card': '0 8px 30px rgba(186, 83, 173, 0.2)',
-        'elevated': '0 20px 50px rgba(186, 83, 173, 0.25)',
+        'soft': '0 4px 20px rgba(173, 73, 160, 0.15)',
+        'card': '0 8px 30px rgba(173, 73, 160, 0.2)',
+        'elevated': '0 20px 50px rgba(173, 73, 160, 0.25)',
         'glow-magenta': '0 0 60px rgba(221, 72, 224, 0.5)',
         'glow-purple': '0 0 60px rgba(205, 135, 248, 0.5)',
         'glow-mint': '0 0 60px rgba(123, 237, 213, 0.5)',
@@ -92,8 +93,8 @@ export default {
         'glow-gold': '0 0 60px rgba(232, 184, 109, 0.6)',     // updated to spec gold #E8B86D
         'spectrum': '0 0 80px rgba(221, 72, 224, 0.4), 0 0 120px rgba(123, 237, 213, 0.3)',
         'prism': '0 0 100px rgba(233, 123, 241, 0.4), 0 0 150px rgba(123, 237, 213, 0.3)',
-        'btn-rest': '0 2px 8px rgba(186, 83, 173, 0.30)',     // spec §5.6
-        'btn-hover': '0 4px 12px rgba(186, 83, 173, 0.40)',   // spec §5.6
+        'btn-rest': '0 2px 8px rgba(173, 73, 160, 0.30)',     // spec §5.6
+        'btn-hover': '0 4px 12px rgba(173, 73, 160, 0.40)',   // spec §5.6
       },
       backgroundImage: {
         // ==========================================================
@@ -102,9 +103,9 @@ export default {
         // ==========================================================
         'gradient-prism': 'linear-gradient(90deg, #7BEDD5, #FFE066, #FF9ECC, #E97BF1, #CD87F8)',
         'gradient-spectrum': 'linear-gradient(90deg, #7BEDD5, #FFE066, #FF7E5D, #EF8EAE, #E97BF1, #CD87F8 80%, #7BEDD5)',  // spec "Prism Extended"
-        'gradient-magenta': 'linear-gradient(135deg, #BA53AD, #DD48E0)',                                                  // spec primary
-        'gradient-magenta-hover': 'linear-gradient(135deg, #DD48E0, #BA53AD)',                                            // spec primary inverted
-        'gradient-spenden': 'linear-gradient(135deg, #BA53AD, #8A3D7E, #5C2854)',                                         // /spenden/ closer
+        'gradient-magenta': 'linear-gradient(135deg, #AD49A0, #DD48E0)',                                                  // spec primary
+        'gradient-magenta-hover': 'linear-gradient(135deg, #DD48E0, #AD49A0)',                                            // spec primary inverted
+        'gradient-spenden': 'linear-gradient(135deg, #AD49A0, #8A3D7E, #5C2854)',                                         // /spenden/ closer
         'gradient-portrait': 'linear-gradient(135deg, #FF9ECC, #DD48E0)',                                                 // team-portrait backplate
         'gradient-vision-dark': 'linear-gradient(180deg, #1A1A2E, #2D2A32)',                                              // vision/philosophy
 
@@ -123,9 +124,9 @@ export default {
         'mesh-prism': 'radial-gradient(at 0% 50%, rgba(123, 237, 213, 0.6) 0px, transparent 50%), radial-gradient(at 100% 50%, rgba(233, 123, 241, 0.6) 0px, transparent 50%), radial-gradient(at 50% 0%, rgba(255, 224, 102, 0.5) 0px, transparent 50%), radial-gradient(at 50% 100%, rgba(205, 135, 248, 0.5) 0px, transparent 50%)',
 
         // Hero overlays
-        'hero-overlay': 'linear-gradient(to bottom, rgba(45, 42, 50, 0.2) 0%, rgba(186, 83, 173, 0.5) 100%)',
-        'hero-overlay-spectrum': 'linear-gradient(135deg, rgba(123, 237, 213, 0.3) 0%, rgba(255, 224, 102, 0.2) 25%, rgba(233, 123, 241, 0.4) 75%, rgba(186, 83, 173, 0.5) 100%)',
-        'card-overlay': 'linear-gradient(to top, rgba(186, 83, 173, 0.95) 0%, rgba(221, 72, 224, 0.7) 50%, transparent 100%)',
+        'hero-overlay': 'linear-gradient(to bottom, rgba(45, 42, 50, 0.2) 0%, rgba(173, 73, 160, 0.5) 100%)',
+        'hero-overlay-spectrum': 'linear-gradient(135deg, rgba(123, 237, 213, 0.3) 0%, rgba(255, 224, 102, 0.2) 25%, rgba(233, 123, 241, 0.4) 75%, rgba(173, 73, 160, 0.5) 100%)',
+        'card-overlay': 'linear-gradient(to top, rgba(173, 73, 160, 0.95) 0%, rgba(221, 72, 224, 0.7) 50%, transparent 100%)',
       },
       animation: {
         'fade-in': 'fadeIn 0.8s ease forwards',

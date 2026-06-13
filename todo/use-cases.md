@@ -114,7 +114,7 @@ The Mini Museum page (`/angebote/mini-museum/`) currently uses an emoji in the h
 
 **Expected Result**:
 - Hero section has `::before` pseudo-element OR direct `background` with prism gradient
-- Gradient colors visible: Purple (#BA53AD) → Magenta (#DD48E0) → Coral (#FF7E5D)
+- Gradient colors visible: Purple (#AD49A0) → Magenta (#DD48E0) → Coral (#FF7E5D)
 - Text has proper shadow for readability on gradient
 - Gradient `z-index: -1` or `z-index: 0` (behind text)
 
@@ -227,7 +227,7 @@ Options:
 **Expected Result**:
 Prompt includes:
 - Style: "Warm, soft watercolor illustration"
-- Colors: "Cream (#FFFBF7), Pink (#FF9ECC), Purple (#BA53AD), Mint (#7BEDD5)"
+- Colors: "Cream (#FFFBF7), Pink (#FF9ECC), Purple (#AD49A0), Mint (#7BEDD5)"
 - Cultural context: "Swiss/Central European children"
 - No religious symbols or head coverings on children
 - Subject-specific details (e.g., "children ages 5-8 creating art in museum")
@@ -391,7 +391,7 @@ Hover effects wrapped in media query:
 @media (hover: hover) and (pointer: fine) {
   .card:hover {
     transform: translateY(-8px);
-    box-shadow: 0 12px 40px rgba(186, 83, 173, 0.15);
+    box-shadow: 0 12px 40px rgba(173, 73, 160, 0.15);
   }
 }
 ```
@@ -460,7 +460,7 @@ Touch devices receive simpler interaction:
 @media (hover: hover) and (pointer: fine) {
   .card:hover {
     transform: translateY(-8px);
-    box-shadow: 0 12px 40px rgba(186, 83, 173, 0.15);
+    box-shadow: 0 12px 40px rgba(173, 73, 160, 0.15);
   }
 }
 

@@ -14,7 +14,7 @@ const pageEntry = await getEntry('pages', 'angebote-index');
 const page = pageEntry?.data;
 
 // Hero image
-const heroImage = base + '/images/hero/evolea-schloss.png';
+const heroImage = base + '/images/hero/evolea-schloss.webp';
 
 // Helper to get bilingual text
 const getText = (obj: { de?: string; en?: string } | undefined, fallback: string = '') => {
@@ -22,12 +22,13 @@ const getText = (obj: { de?: string; en?: string } | undefined, fallback: string
   return lang === 'de' ? (obj.de || fallback) : (obj.en || obj.de || fallback);
 };
 
-const pageTitle = getText(page?.hero?.titel, lang === 'de' ? 'Angebote' : 'Programs');
+// SEO-09: keyword title is intentionally NOT CMS-overridable (decoupled from hero.titel per D6)
+const seoTitle = lang === 'de' ? 'Angebote für Kinder im Spektrum' : 'Programs for Children on the Spectrum';
 const pageDescription = lang === 'de'
   ? 'EVOLEA bietet verschiedene Förderprogramme für Kinder im Autismus Spektrum oder mit ADHS an: Mini Garten, Mini Projekte, Mini Turnen, Tagesschule und mehr.'
   : 'EVOLEA offers a range of support programs for children on the autism spectrum or with ADHD: Mini Garten, Mini Projekte, Mini Turnen, day school and more.';
 ---
 
-<Base title={pageTitle} description={pageDescription} transparentHeader={true}>
+<Base title={seoTitle} description={pageDescription} transparentHeader={true}>
   <AngeboteIndexPage content={page} lang={lang} t={t} translatePath={translatePath} heroImage={heroImage} />
 </Base>

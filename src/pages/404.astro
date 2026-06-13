@@ -1,0 +1,126 @@
+---
+/**
+ * 404 - Branded bilingual "page not found"
+ *
+ * Single bilingual page (DE content first, EN block below). NOT split into
+ * src/pages/en/404.astro: Astro's i18n fallback ({ en: 'de' }) 302-strips the
+ * /en/ prefix from unmatched URLs before the 404 renders, so getLangFromUrl
+ * always returns 'de'. Both languages are therefore written statically here.
+ *
+ * Security: the requested URL/path/query is NEVER interpolated into the body
+ * (reflected-content sink). All copy is fully static.
+ *
+ * Rendered on-demand in SSR (Astro auto-sets status 404); builds to
+ * dist/404.html on static builds. No static-generation export, no client JS.
+ */
+import Base from '@layouts/Base.astro';
+import InnerPageHero from '@components/InnerPageHero.astro';
+import Icon from '@components/Icon.astro';
+
+// Base-URL invariant (GitHub Pages `/evolea-website`). Both language link sets
+// are hardcoded — translatePath() is not used (lang context is always 'de' on 404s).
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+
+const deLinks = [
+  { href: `${base}/`, icon: 'sprout', label: 'Zur Startseite' },
+  { href: `${base}/angebote/`, icon: 'school', label: 'Unsere Angebote' },
+  { href: `${base}/blog/`, icon: 'book', label: 'Zum Blog' },
+] as const;
+
+const enLinks = [
+  { href: `${base}/en/`, icon: 'sprout', label: 'Back to home' },
+  { href: `${base}/en/programs/`, icon: 'school', label: 'Our programs' },
+  { href: `${base}/en/blog/`, icon: 'book', label: 'To the blog' },
+] as const;
+---
+
+<Base
+  title="Seite nicht gefunden"
+  description="Diese Seite wurde nicht gefunden. Entdecken Sie die Angebote von EVOLEA für Kinder im Spektrum. This page was not found."
+>
+  <!-- Prism gradient hero (commandment #7). Empty breadcrumbs suppress BreadcrumbList JSON-LD. -->
+  <InnerPageHero
+    title="Seite nicht gefunden"
+    subtitle="Diese Seite ist weitergeflattert. Hier finden Sie schnell zurück."
+    breadcrumbs={[]}
+    label="404"
+    size="md"
+  />
+
+  <!-- Content -->
+  <section class="py-16 md:py-24">
+    <div class="container mx-auto max-w-4xl px-4">
+      <!-- DE block -->
+      <p class="text-[1.0625rem] md:text-lg leading-relaxed text-evolea-text">
+        Die gesuchte Seite existiert nicht oder wurde verschoben. Entdecken Sie
+        stattdessen unsere Angebote für Kinder im Spektrum oder lesen Sie Neues
+        aus unserem Blog.
+      </p>
+
+      <div class="mt-8 grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6">
+        {deLinks.map((link) => (
+          <a href={link.href} class="link-card bg-white rounded-evolea shadow-soft p-6 flex flex-col items-center gap-3 text-center">
+            <Icon name={link.icon} size="lg" />
+            <span class="link-card-label">{link.label}</span>
+          </a>
+        ))}
+      </div>
+
+      <!-- EN block -->
+      <div lang="en" class="mt-12 md:mt-16 bg-white rounded-evolea-lg shadow-soft p-6 md:p-8">
+        <h2 class="font-display font-bold text-evolea-purple text-[clamp(1.75rem,4vw,2.25rem)] leading-tight">
+          Page not found
+        </h2>
+        <p class="mt-4 text-[1.0625rem] md:text-lg leading-relaxed text-evolea-text">
+          This page has fluttered on. The page you are looking for does not exist
+          or has moved. Discover our programs for children on the spectrum or read
+          the latest from our blog.
+        </p>
+
+        <div class="mt-8 grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6">
+          {enLinks.map((link) => (
+            <a href={link.href} class="link-card bg-white rounded-evolea shadow-soft p-6 flex flex-col items-center gap-3 text-center">
+              <Icon name={link.icon} size="lg" />
+              <span class="link-card-label">{link.label}</span>
+            </a>
+          ))}
+        </div>
+      </div>
+    </div>
+  </section>
+</Base>
+
+<style>
+  /* Base box/spacing comes from Tailwind utilities on the <a>; this layer adds
+     the hover lift, focus outline, label type, and reduced-motion override. */
+  .link-card {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+
+  .link-card:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-card);
+  }
+
+  .link-card:focus-visible {
+    outline: 3px solid var(--evolea-magenta);
+    outline-offset: 2px;
+  }
+
+  .link-card-label {
+    font-family: 'Fredoka', sans-serif;
+    font-weight: 600;
+    font-size: 1.125rem;
+    line-height: 1.3;
+    color: var(--evolea-purple-dark);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .link-card {
+      transition: none;
+    }
+    .link-card:hover {
+      transform: none;
+    }
+  }
+</style>

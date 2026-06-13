@@ -40,3 +40,8 @@ artifacts/
 
 # Image Generation Pipeline
 public/images/generated/
+
+# Playwright / wrangler test runtime output
+test-results/
+playwright-report/
+.wrangler/

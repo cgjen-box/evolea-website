@@ -17,7 +17,7 @@ const siteImagesEntry = await getEntry('settings', 'images');
 const siteImages = siteImagesEntry?.data;
 const heroImage = siteImages?.programmeHeroes?.miniMuseum
   ? base + siteImages.programmeHeroes.miniMuseum
-  : base + "/images/programs/mini-museum-hero.png";
+  : base + "/images/programs/mini-museum-hero.webp";
 
 // Helper to get bilingual text
 const getText = (obj: { de?: string; en?: string } | undefined, fallback: string = '') => {
@@ -26,13 +26,14 @@ const getText = (obj: { de?: string; en?: string } | undefined, fallback: string
 };
 
 const hero = page?.hero || {};
-const pageTitle = `${hero.titel || 'Mini Museum'} - ${lang === 'de' ? 'Mini Projekte' : 'Mini Projects'}`;
+// SEO-09: keyword title is intentionally NOT CMS-overridable (decoupled from hero.titel per D6)
+const seoTitle = lang === 'de' ? 'Mini Museum – Kunstprojekt für Kinder im Spektrum' : 'Mini Museum – Inclusive Art Project';
 const fallbackDescription = lang === 'de'
   ? 'Mini Museum: Wir werden kreativ! Ein inklusives Kunstprojekt für Kinder im Autismus-Spektrum (5-8 Jahre). Gemeinsam ein eigenes Museum gestalten und eröffnen.'
   : 'Mini Museum: Getting creative together! An inclusive art project for children on the autism spectrum (ages 5-8). Creating and opening their very own museum.';
 const pageDescription = getText(hero.beschreibung, fallbackDescription);
 ---
 
-<Base title={pageTitle} description={pageDescription}>
+<Base title={seoTitle} description={pageDescription}>
   <MiniMuseumPage content={page} lang={lang} translatePath={translatePath} heroImage={heroImage} />
 </Base>

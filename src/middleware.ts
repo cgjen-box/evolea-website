@@ -1,4 +1,10 @@
-import { defineMiddleware } from 'astro:middleware';
+import { defineMiddleware, sequence } from 'astro:middleware';
+import {
+  SECURITY_HEADERS,
+  CSP_REPORT_ONLY,
+  CSP_REPORT_ONLY_KEYSTATIC,
+} from '@/lib/security-headers';
+import { PROD_HOST } from '@/lib/seo';
 
 // Script to enhance Keystatic CMS:
 // 1. Hide the Deploy button (doesn't work without Keystatic Cloud)
@@ -82,40 +88,114 @@ const keystaticEnhancementsScript = `<script>
 })();
 </script>`;
 
-export const onRequest = defineMiddleware(async (context, next) => {
-  const { url } = context;
-
-  // Inject script to hide Deploy button on /keystatic pages
-  if (url.pathname.startsWith('/keystatic')) {
-    const response = await next();
-
-    // Only modify HTML responses
-    const contentType = response.headers.get('content-type');
-    if (!contentType || !contentType.includes('text/html')) {
-      return response;
-    }
-
-    try {
-      const html = await response.text();
-      // Inject script at end of document
-      let modifiedHtml = html;
-      if (html.includes('</body>')) {
-        modifiedHtml = html.replace('</body>', keystaticEnhancementsScript + '</body>');
-      } else {
-        modifiedHtml = html + keystaticEnhancementsScript;
-      }
-      return new Response(modifiedHtml, {
-        status: response.status,
-        statusText: response.statusText,
-        headers: new Headers(response.headers),
-      });
-    } catch {
-      // If anything fails, return original
-    }
-
-    return next();
+// Trailing-slash middleware: 301-redirects GET/HEAD requests whose pathname
+// lacks a trailing slash to the slash form (preserving the query string), so
+// the site serves exactly one canonical URL form. Unlike the post-processing
+// members below, this SHORT-CIRCUITS — it returns context.redirect(...) instead
+// of calling next(), so it must run FIRST in the sequence. Exemptions: /api/*
+// (incl. the slash-less /api/csp-report CSP sink and Keystatic OAuth routes),
+// /keystatic, /_-prefixed internal routes (/_image, /_astro), and any path with
+// a file extension. Leading slashes are collapsed before building the Location
+// so //evil.com can never become a protocol-relative open redirect.
+// Loop-safe: the guard only ever ADDS a slash, never removes one.
+const trailingSlash = defineMiddleware((context, next) => {
+  const { pathname, search } = context.url;
+  const method = context.request.method;
+  const hasExtension = /\.[^/]+$/.test(pathname);
+  const exempt =
+    pathname.startsWith('/api/') ||
+    pathname === '/keystatic' ||
+    pathname.startsWith('/keystatic/') ||
+    pathname.startsWith('/_'); // /_image, /_astro etc.
+  if (
+    (method === 'GET' || method === 'HEAD') &&
+    !pathname.endsWith('/') &&
+    !hasExtension &&
+    !exempt
+  ) {
+    // Collapse duplicate leading slashes — `//evil.com` would otherwise become a
+    // protocol-relative open redirect (open-redirect mitigation).
+    const safePath = pathname.replace(/^\/+/, '/');
+    return context.redirect(`${safePath}/${search}`, 301);
   }
-
-  // Pass through all other requests
   return next();
 });
+
+// Security headers middleware: applies the SECURITY_HEADERS constant to every
+// response and sets Content-Security-Policy-Report-Only (looser variant under
+// /keystatic). Silent-safe: header failures never break a page response.
+const securityHeaders = defineMiddleware(async (context, next) => {
+  const response = await next();
+
+  try {
+    for (const [key, value] of Object.entries(SECURITY_HEADERS)) {
+      response.headers.set(key, value);
+    }
+    const { pathname } = context.url;
+    const isKeystatic = pathname === '/keystatic' || pathname.startsWith('/keystatic/');
+    const csp = isKeystatic ? CSP_REPORT_ONLY_KEYSTATIC : CSP_REPORT_ONLY;
+    response.headers.set('Content-Security-Policy-Report-Only', csp);
+    // De-index non-production SSR responses (*.pages.dev preview hosts) as
+    // defense-in-depth alongside the default-deny robots.txt. Only the exact
+    // production host serves indexable SSR HTML.
+    if (context.url.hostname !== PROD_HOST) {
+      response.headers.set('X-Robots-Tag', 'noindex');
+    }
+  } catch {
+    // If header mutation fails, return the response untouched — never break a page.
+    return response;
+  }
+
+  return response;
+});
+
+// Keystatic enhancement middleware: injects the deploy-button-hide + save-toast
+// script into /keystatic HTML responses. Fixes the prior double-next() bug by
+// cloning the body before reading and returning the original response on failure.
+const keystaticEnhancements = defineMiddleware(async (context, next) => {
+  const { url } = context;
+  const response = await next();
+
+  // Only the /keystatic path gets enhanced; everything else passes through.
+  // Exact-or-slash match so unrelated paths like /keystatic-foo don't qualify.
+  if (!(url.pathname === '/keystatic' || url.pathname.startsWith('/keystatic/'))) {
+    return response;
+  }
+
+  // Only modify HTML responses
+  const contentType = response.headers.get('content-type');
+  if (!contentType || !contentType.includes('text/html')) {
+    return response;
+  }
+
+  try {
+    // Clone before consuming so the original body stays intact if injection fails.
+    const html = await response.clone().text();
+    // Inject script at end of document
+    let modifiedHtml = html;
+    if (html.includes('</body>')) {
+      modifiedHtml = html.replace('</body>', keystaticEnhancementsScript + '</body>');
+    } else {
+      modifiedHtml = html + keystaticEnhancementsScript;
+    }
+    const headers = new Headers(response.headers);
+    // The body just grew by the injected script; a copied upstream
+    // Content-Length would truncate the response on length-honoring servers
+    // (dev/preview). Delete it so the runtime recomputes the correct length.
+    headers.delete('content-length');
+    return new Response(modifiedHtml, {
+      status: response.status,
+      statusText: response.statusText,
+      headers,
+    });
+  } catch {
+    // If anything fails, return the original (un-consumed) response — NEVER call next() again.
+    return response;
+  }
+});
+
+// trailingSlash runs first and short-circuits with a 301 BEFORE securityHeaders
+// runs, so redirect responses carry no security headers — acceptable: 301s have
+// no body. For non-redirected requests, securityHeaders wraps outermost (applies
+// its headers on the way out, after keystaticEnhancements has rebuilt the Response).
+export const onRequest = sequence(trailingSlash, securityHeaders, keystaticEnhancements);

@@ -2,6 +2,8 @@
 import FloatingShapes from '@components/FloatingShapes.astro';
 import Icon from '@components/Icon.astro';
 import EditLink from '@components/EditLink.astro';
+import JsonLd from '@components/JsonLd.astro';
+import { breadcrumbSchema, serviceSchema } from '@/lib/seo';
 
 const { content, lang, translatePath, heroImage } = Astro.props;
 
@@ -47,13 +49,28 @@ const skillColors: Record<string, string> = {
   purple: 'bg-evolea-purple/20',
   orange: 'bg-evolea-orange/20'
 };
+
+// SEO-06: BreadcrumbList mirrors the 4-level visible nav below (Mini Projekte is
+// an intermediate level — this is a sub-program of Mini Projekte).
+const pageTitle = hero.titel || 'Mini Museum';
+const breadcrumbItems = [
+  { label: lang === 'de' ? 'Startseite' : 'Home', href: translatePath('/') },
+  { label: lang === 'de' ? 'Angebote' : 'Programs', href: translatePath('/angebote/') },
+  { label: lang === 'de' ? 'Mini Projekte' : 'Mini Projects', href: translatePath('/angebote/mini-projekte/') },
+  { label: pageTitle },
+];
+
+// SEO-07: Service schema. Canonical URL = slash-normalized pathname against Astro.site.
+const canonicalPath = Astro.url.pathname.endsWith('/') ? Astro.url.pathname : `${Astro.url.pathname}/`;
+const canonicalUrl = new URL(canonicalPath, Astro.site).href;
+const serviceDescription = getText(hero.untertitel, lang === 'de' ? 'Wir werden kreativ!' : "Let's get creative!");
 ---
 
 <!-- Hero Section -->
 <section class="relative py-20 md:py-28 bg-gradient-to-br from-evolea-lavender/10 to-evolea-cream overflow-hidden">
   <FloatingShapes variant="minimal" />
   <div class="container mx-auto max-w-6xl px-4 relative z-10">
-    <nav class="mb-8 text-sm text-evolea-text-light">
+    <nav class="mb-8 text-sm text-evolea-text-light" aria-label={lang === 'de' ? 'Brotkrumen' : 'Breadcrumb'}>
       <a href={translatePath('/')} class="hover:text-evolea-purple transition-colors">{lang === 'de' ? 'Startseite' : 'Home'}</a>
       <span class="mx-2">/</span>
       <a href={translatePath('/angebote/')} class="hover:text-evolea-purple transition-colors">{lang === 'de' ? 'Angebote' : 'Programs'}</a>
@@ -62,6 +79,8 @@ const skillColors: Record<string, string> = {
       <span class="mx-2">/</span>
       <span class="text-evolea-purple font-medium">{hero.titel || 'Mini Museum'}</span>
     </nav>
+    <JsonLd schema={breadcrumbSchema(breadcrumbItems, Astro.site)} />
+    <JsonLd schema={serviceSchema({ name: pageTitle, description: serviceDescription, url: canonicalUrl, lang, minAge: 5, maxAge: 8 })} />
 
     <div class="grid lg:grid-cols-2 gap-12 items-center">
       <div>
@@ -94,6 +113,9 @@ const skillColors: Record<string, string> = {
         <img
           src={heroImage}
           alt={getText(hero.untertitel, lang === 'de' ? 'Kinder beim kreativen Gestalten im Mini Museum' : 'Children creating art at the Mini Museum')}
+          fetchpriority="high"
+          width="1200"
+          height="670"
           class="rounded-evolea-lg shadow-elevated w-full object-cover aspect-card"
         />
         <div class="absolute -bottom-4 -right-4 bg-white rounded-evolea p-4 shadow-card">

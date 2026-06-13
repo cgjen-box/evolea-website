@@ -4,8 +4,17 @@ import { getEntry } from 'astro:content';
 import Header from '@components/Header.astro';
 import Footer from '@components/Footer.astro';
 import FooterDonationCTA from '@components/FooterDonationCTA.astro';
+import FontFaces from '@components/FontFaces.astro';
+import JsonLd from '@components/JsonLd.astro';
+import { siteGraph } from '@/lib/seo';
 
 import '../styles/global.css';
+
+// __SSR_BUILD__ is injected by astro.config.mjs (Vite `define`): true only when
+// the Cloudflare adapter is active (output: 'server'). False on static builds
+// (GitHub Pages mirror, adapter-absent local) — used to emit a noindex meta on
+// those builds so the de-indexed mirror never competes with production.
+declare const __SSR_BUILD__: boolean;
 
 interface Props {
   title: string;
@@ -13,6 +22,11 @@ interface Props {
   image?: string;
   transparentHeader?: boolean;
   hideFooterCTA?: boolean;
+  ogType?: 'website' | 'article';
+  // Already-base-prefixed image path to preload as the LCP candidate
+  // (e.g. the homepage video poster). Unlike `image` (og), Base does NOT
+  // re-prefix this — the caller passes the resolved, base-prefixed path.
+  preloadImage?: string;
 }
 
 const {
@@ -21,6 +35,8 @@ const {
   image = '/images/og-default.jpg',
   transparentHeader = false,
   hideFooterCTA = false,
+  ogType = 'website',
+  preloadImage,
 } = Astro.props;
 
 const siteSettingsEntry = await getEntry('settings', 'site');
@@ -28,8 +44,17 @@ const siteSettings = siteSettingsEntry?.data;
 
 const lang = getLangFromUrl(Astro.url);
 const alternates = getLanguageAlternates(Astro.url);
-const canonicalURL = new URL(Astro.url.pathname, Astro.site);
+// Slash-normalized canonical: every page advertises exactly one URL form (the
+// trailing-slash form the middleware 301s to), so og:url/twitter:url below can
+// mirror it and Google never sees two canonical variants (SEO-03).
+const canonicalPath = Astro.url.pathname.endsWith('/')
+  ? Astro.url.pathname
+  : `${Astro.url.pathname}/`;
+const canonicalURL = new URL(canonicalPath, Astro.site);
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+// OG/Twitter image must honor the configured base path (e.g. /evolea-website
+// on GitHub Pages) — same base-URL invariant as fonts/favicons below.
+const ogImage = new URL(`${base}${image}`, Astro.site);
 ---
 
 <!doctype html>
@@ -40,46 +65,56 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
     <meta name="generator" content={Astro.generator} />
 
     <!-- Primary Meta Tags -->
-    <title>{title} | EVOLEA</title>
-    <meta name="title" content={`${title} | EVOLEA`} />
+    <title>{title} – EVOLEA</title>
+    <meta name="title" content={`${title} – EVOLEA`} />
     <meta name="description" content={description} />
+
+    {/* Static-build (GitHub Pages mirror / adapter-absent local) noindex —
+        Cloudflare SSR pages never carry this. */}
+    {!__SSR_BUILD__ && <meta name="robots" content="noindex, nofollow" />}
 
     <!-- Theme color for mobile browsers -->
     <meta name="theme-color" content="#6B4C8A" />
 
     <!-- Canonical & Language Alternates -->
     <link rel="canonical" href={canonicalURL} />
+    <link rel="sitemap" type="application/xml" href={`${base}/sitemap-index.xml`} />
     {alternates.map(({ lang, href }) => (
       <link rel="alternate" hreflang={lang} href={new URL(href, Astro.site)} />
     ))}
     <link rel="alternate" hreflang="x-default" href={new URL(alternates.find((a) => a.lang === 'de')?.href ?? '/', Astro.site)} />
 
     <!-- Open Graph -->
-    <meta property="og:type" content="website" />
-    <meta property="og:url" content={Astro.url} />
-    <meta property="og:title" content={`${title} | EVOLEA`} />
+    <meta property="og:type" content={ogType} />
+    <meta property="og:url" content={canonicalURL} />
+    <meta property="og:title" content={`${title} – EVOLEA`} />
     <meta property="og:description" content={description} />
-    <meta property="og:image" content={new URL(image, Astro.site)} />
-    <meta property="og:locale" content={lang === 'de' ? 'de_CH' : 'en'} />
+    <meta property="og:image" content={ogImage} />
+    <meta property="og:locale" content={lang === 'de' ? 'de_CH' : 'en_US'} />
 
     <!-- Twitter -->
     <meta property="twitter:card" content="summary_large_image" />
-    <meta property="twitter:url" content={Astro.url} />
-    <meta property="twitter:title" content={`${title} | EVOLEA`} />
+    <meta property="twitter:url" content={canonicalURL} />
+    <meta property="twitter:title" content={`${title} – EVOLEA`} />
     <meta property="twitter:description" content={description} />
-    <meta property="twitter:image" content={new URL(image, Astro.site)} />
+    <meta property="twitter:image" content={ogImage} />
+
+    <!-- Site-wide structured data: NGO + WebSite @graph (SEO-04) -->
+    <JsonLd schema={siteGraph(siteSettings, lang, Astro.site, base)} />
 
     <!-- Favicon -->
     <link rel="icon" type="image/svg+xml" href={`${base}/favicon.svg`} />
     <link rel="apple-touch-icon" href={`${base}/apple-touch-icon.png`} />
 
-    <!-- Preload critical assets -->
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      rel="stylesheet"
-      href="https://fonts.googleapis.com/css2?family=Fredoka:wght@600;700&family=Poppins:wght@400;500;600;700&display=swap"
-    />
+    <!-- Self-hosted fonts (base-prefixed @font-face, dual-build-safe) -->
+    <FontFaces />
+
+    <!-- Preload critical above-the-fold font weights (base-prefixed for both build bases) -->
+    <link rel="preload" href={`${base}/fonts/Fredoka-SemiBold.woff2`} as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href={`${base}/fonts/Poppins-Regular.woff2`} as="font" type="font/woff2" crossorigin />
+
+    {/* LCP image preload — caller passes an already-base-prefixed path (e.g. homepage video poster) */}
+    {preloadImage && <link rel="preload" as="image" href={preloadImage} fetchpriority="high" />}
 
     <!-- Hero video is preloaded by the video element itself -->
   </head>

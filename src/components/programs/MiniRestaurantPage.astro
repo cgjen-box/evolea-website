@@ -1,5 +1,7 @@
 ---
 import Icon from '@components/Icon.astro';
+import JsonLd from '@components/JsonLd.astro';
+import { breadcrumbSchema, serviceSchema } from '@/lib/seo';
 
 const { lang, translatePath, videoSrc, videoSrcMobile, posterSrc } = Astro.props;
 
@@ -8,6 +10,24 @@ const getText = (obj: { de?: string; en?: string } | undefined, fallback: string
   if (!obj) return fallback;
   return lang === 'de' ? (obj.de || fallback) : (obj.en || obj.de || fallback);
 };
+
+// SEO-06: BreadcrumbList mirrors the 4-level visible nav below EXACTLY. The visible
+// nav hardcodes 'Mini Projekte' and 'Mini Restaurant' (no ternary) in both languages,
+// so the schema labels match those literals verbatim.
+const breadcrumbItems = [
+  { label: lang === 'de' ? 'Startseite' : 'Home', href: translatePath('/') },
+  { label: lang === 'de' ? 'Angebote' : 'Programs', href: translatePath('/angebote/') },
+  { label: 'Mini Projekte', href: translatePath('/angebote/mini-projekte/') },
+  { label: 'Mini Restaurant' },
+];
+
+// SEO-07: Service schema. This component has no `content` prop — name/description
+// are bilingual ternaries consistent with the visible page copy.
+const canonicalPath = Astro.url.pathname.endsWith('/') ? Astro.url.pathname : `${Astro.url.pathname}/`;
+const canonicalUrl = new URL(canonicalPath, Astro.site).href;
+const serviceDescription = lang === 'de'
+  ? 'Kochprojekt für Kinder im Spektrum: gemeinsam Gäste empfangen, servieren und kochen.'
+  : 'Cooking project for children on the spectrum: welcoming guests, serving and cooking together.';
 
 // Program schedule data
 const schedule = [
@@ -87,8 +107,8 @@ const schedule = [
     <source src={videoSrcMobile} type="video/mp4" />
   </video>
 
-  <!-- Poster fallback -->
-  <img src={posterSrc} alt="" class="video-poster-fallback" aria-hidden="true" />
+  <!-- Poster fallback (above-fold hero visual shown before the video paints) -->
+  <img src={posterSrc} alt="" fetchpriority="high" width="1280" height="720" class="video-poster-fallback" aria-hidden="true" />
 
   <!-- Pink/magenta gradient overlay matching brand style -->
   <div class="absolute inset-0 bg-gradient-to-b from-evolea-magenta/30 via-evolea-purple/20 to-evolea-lavender/40 z-10"></div>
@@ -96,7 +116,7 @@ const schedule = [
   <!-- Content -->
   <div class="container mx-auto max-w-6xl px-4 relative z-20 pt-24 pb-12">
     <!-- Breadcrumbs -->
-    <nav class="mb-8 text-sm text-white/80">
+    <nav class="mb-8 text-sm text-white/80" aria-label={lang === 'de' ? 'Brotkrumen' : 'Breadcrumb'}>
       <a href={translatePath('/')} class="hover:text-white transition-colors">{lang === 'de' ? 'Startseite' : 'Home'}</a>
       <span class="mx-2">/</span>
       <a href={translatePath('/angebote/')} class="hover:text-white transition-colors">{lang === 'de' ? 'Angebote' : 'Programs'}</a>
@@ -105,6 +125,8 @@ const schedule = [
       <span class="mx-2">/</span>
       <span class="text-white font-medium">Mini Restaurant</span>
     </nav>
+    <JsonLd schema={breadcrumbSchema(breadcrumbItems, Astro.site)} />
+    <JsonLd schema={serviceSchema({ name: 'Mini Restaurant', description: serviceDescription, url: canonicalUrl, lang, minAge: 5, maxAge: 8 })} />
 
     <div class="max-w-2xl">
       <div class="inline-flex items-center gap-2 bg-white/20 backdrop-blur-sm text-white px-4 py-2 rounded-full text-sm font-medium mb-6">

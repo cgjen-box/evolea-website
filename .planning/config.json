@@ -71,7 +71,9 @@
       "gsd-project-researcher": "gemini",
       "gsd-phase-researcher": "gemini",
       "gsd-research-synthesizer": "gemini",
-      "gsd-verifier": "openai"
+      "gsd-verifier": "openai",
+      "gsd-planner": "openai",
+      "gsd-plan-checker": "openai"
     }
   }
 }

@@ -1,0 +1,68 @@
+---
+/**
+ * FontFaces.astro
+ *
+ * Emits the self-hosted font-face declarations for the EVOLEA brand fonts.
+ *
+ * Source: design-system-assets/fonts/ (Fredoka 600/700, Poppins 400/500/600)
+ * plus a real downloaded Poppins-Bold.woff2 (latin subset, OFL) for weight 700.
+ *
+ * The src url() values are base-prefixed via import.meta.env.BASE_URL so they
+ * resolve on BOTH build bases — Cloudflare (base /) and GitHub Pages
+ * (base /evolea-website) — with no font 404. Plain CSS in global.css cannot
+ * interpolate the base path, so the declarations are built here from a
+ * template literal and injected with set:html, the same dual-build-safe pattern
+ * Base.astro already uses for icon hrefs.
+ */
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+
+const fontFaceCss = `
+/* ===== FREDOKA (display headlines) ===== */
+@font-face {
+  font-family: 'Fredoka';
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url('${base}/fonts/Fredoka-SemiBold.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'Fredoka';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url('${base}/fonts/Fredoka-Bold.woff2') format('woff2');
+}
+
+/* ===== POPPINS (body / UI) ===== */
+@font-face {
+  font-family: 'Poppins';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('${base}/fonts/Poppins-Regular.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'Poppins';
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url('${base}/fonts/Poppins-Medium.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'Poppins';
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url('${base}/fonts/Poppins-SemiBold.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'Poppins';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url('${base}/fonts/Poppins-Bold.woff2') format('woff2');
+}
+`;
+---
+
+<style is:inline set:html={fontFaceCss}></style>

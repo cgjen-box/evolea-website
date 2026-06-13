@@ -17,9 +17,9 @@ Requirements for this milestone. Each maps to roadmap phases.
 
 ### SEO
 
-- [ ] **SEO-01**: Hostname-aware robots.txt (`src/pages/robots.txt.ts`): production gets `Allow` + `Sitemap:` line and `Disallow: /keystatic/`; staging/GitHub Pages hosts get `Disallow: /`
-- [ ] **SEO-02**: `/sitemap.xml` 301-redirects to `/sitemap-index.xml` and `<link rel="sitemap">` is present in the head
-- [ ] **SEO-03**: One canonical URL form (trailing slash) enforced via 301; `og:url`/`twitter:url` use `canonicalURL` instead of raw `Astro.url`
+- [x] **SEO-01**: Hostname-aware robots.txt (`src/pages/robots.txt.ts`): production gets `Allow` + `Sitemap:` line and `Disallow: /keystatic/`; staging/GitHub Pages hosts get `Disallow: /`
+- [x] **SEO-02**: `/sitemap.xml` 301-redirects to `/sitemap-index.xml` and `<link rel="sitemap">` is present in the head
+- [x] **SEO-03**: One canonical URL form (trailing slash) enforced via 301; `og:url`/`twitter:url` use `canonicalURL` instead of raw `Astro.url`
 - [ ] **SEO-04**: Site-wide `Organization` (NGO) + `WebSite` JSON-LD emitted from Base.astro with a stable `@id`
 - [ ] **SEO-05**: Blog posts emit `BlogPosting` JSON-LD (headline, datePublished, author, image, publisher → Organization `@id`) and `og:type` switches to `article`
 - [ ] **SEO-06**: Nested pages emit `BreadcrumbList` JSON-LD matching the visible breadcrumbs
@@ -101,9 +101,9 @@ Which phases cover which requirements. Updated during roadmap creation.
 | HYG-01 | Phase 1 | Pending |
 | HYG-02 | Phase 1 | Pending |
 | HYG-03 | Phase 1 | Pending |
-| SEO-01 | Phase 2 | Pending |
-| SEO-02 | Phase 2 | Pending |
-| SEO-03 | Phase 2 | Pending |
+| SEO-01 | Phase 2 | Complete |
+| SEO-02 | Phase 2 | Complete |
+| SEO-03 | Phase 2 | Complete |
 | SEO-04 | Phase 2 | Pending |
 | SEO-05 | Phase 2 | Pending |
 | SEO-06 | Phase 2 | Pending |

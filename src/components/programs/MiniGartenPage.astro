@@ -1,6 +1,8 @@
 ---
 import FloatingShapes from '@components/FloatingShapes.astro';
 import Icon from '@components/Icon.astro';
+import JsonLd from '@components/JsonLd.astro';
+import { breadcrumbSchema, serviceSchema } from '@/lib/seo';
 
 const { content, lang, translatePath, heroImage } = Astro.props;
 
@@ -26,19 +28,35 @@ const anmeldung = content?.anmeldung || {};
 
 const primaryButtonHref = resolveLink(hero.buttonLink, '#anmeldung');
 const secondaryButtonHref = resolveLink(hero.zweitButtonLink, '/kontakt/');
+
+// SEO-06: BreadcrumbList items mirror the visible breadcrumb nav below exactly
+// (same labels, same translatePath hrefs, same order — current page omits href).
+const pageTitle = hero.titel || 'Mini Garten';
+const breadcrumbItems = [
+  { label: lang === 'de' ? 'Startseite' : 'Home', href: translatePath('/') },
+  { label: lang === 'de' ? 'Angebote' : 'Programs', href: translatePath('/angebote/') },
+  { label: pageTitle },
+];
+
+// SEO-07: Service schema. Canonical URL = slash-normalized pathname against Astro.site.
+const canonicalPath = Astro.url.pathname.endsWith('/') ? Astro.url.pathname : `${Astro.url.pathname}/`;
+const canonicalUrl = new URL(canonicalPath, Astro.site).href;
+const serviceDescription = getText(hero.untertitel, lang === 'de' ? 'Gruppensetting zur Vorbereitung für den Kindergarten' : 'Group setting for kindergarten preparation');
 ---
 
 <!-- Hero Section -->
 <section class="relative py-20 md:py-28 bg-gradient-to-br from-evolea-green/10 to-evolea-cream overflow-hidden">
   <FloatingShapes variant="minimal" />
   <div class="container mx-auto max-w-6xl px-4 relative z-10">
-    <nav class="mb-8 text-sm text-evolea-text-light">
+    <nav class="mb-8 text-sm text-evolea-text-light" aria-label={lang === 'de' ? 'Brotkrumen' : 'Breadcrumb'}>
       <a href={translatePath('/')} class="hover:text-evolea-purple transition-colors">{lang === 'de' ? 'Startseite' : 'Home'}</a>
       <span class="mx-2">/</span>
       <a href={translatePath('/angebote/')} class="hover:text-evolea-purple transition-colors">{lang === 'de' ? 'Angebote' : 'Programs'}</a>
       <span class="mx-2">/</span>
       <span class="text-evolea-purple font-medium">{hero.titel || 'Mini Garten'}</span>
     </nav>
+    <JsonLd schema={breadcrumbSchema(breadcrumbItems, Astro.site)} />
+    <JsonLd schema={serviceSchema({ name: pageTitle, description: serviceDescription, url: canonicalUrl, lang, minAge: 3, maxAge: 6 })} />
 
     <div class="grid lg:grid-cols-2 gap-12 items-center">
       <div>
@@ -68,6 +86,9 @@ const secondaryButtonHref = resolveLink(hero.zweitButtonLink, '/kontakt/');
         <img
           src={heroImage}
           alt={getText(hero.untertitel, lang === 'de' ? 'Kinder lernen spielerisch im Garten' : 'Children learning playfully in the garden')}
+          fetchpriority="high"
+          width="1200"
+          height="670"
           class="rounded-evolea-lg shadow-elevated w-full object-cover aspect-card"
         />
         <div class="absolute -bottom-4 -left-4 bg-white rounded-evolea p-4 shadow-card">

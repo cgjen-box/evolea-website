@@ -13,6 +13,9 @@
  * - Entrance animations
  */
 import Butterfly from './Butterfly.astro';
+import JsonLd from '@components/JsonLd.astro';
+import { breadcrumbSchema } from '@/lib/seo';
+import { getLangFromUrl } from '@i18n/utils';
 
 interface BreadcrumbItem {
   label: string;
@@ -41,6 +44,10 @@ const {
 
 const hasHeroImage = !!heroImage;
 
+// DE/EN-aware accessible name for the breadcrumb landmark (A11Y-01)
+const lang = getLangFromUrl(Astro.url);
+const breadcrumbLabel = lang === 'de' ? 'Brotkrumen' : 'Breadcrumb';
+
 const sizeClasses = {
   sm: 'hero-sm',
   md: 'hero-md',
@@ -49,6 +56,14 @@ const sizeClasses = {
 ---
 
 <section class:list={['inner-page-hero', sizeClasses[size], { 'has-hero-image': hasHeroImage }]}>
+  {/* BreadcrumbList JSON-LD — emitted ONCE here, mirroring the visible breadcrumb
+      nav that is rendered twice below (image vs no-image layouts). The breadcrumbs
+      prop IS the items array; its hrefs are already translatePath()-resolved and
+      base-prefixed, so breadcrumbSchema absolutizes against Astro.site without
+      re-prefixing the base (Pitfall 7). SEO-06 visible-match holds because both
+      the schema and the nav consume the same prop. */}
+  {breadcrumbs.length > 0 && <JsonLd schema={breadcrumbSchema(breadcrumbs, Astro.site)} />}
+
   <!-- Animated Prism Gradient Background -->
   <div class="hero-prism-bg"></div>
 
@@ -76,21 +91,23 @@ const sizeClasses = {
       <!-- Two-column layout with hero image -->
       <div class="hero-grid">
         <div class="hero-text">
-          <!-- Breadcrumb -->
-          <nav class="hero-breadcrumb hero-breadcrumb-left" aria-label="Breadcrumb">
-            {breadcrumbs.map((item, index) => (
-              <>
-                {item.href ? (
-                  <a href={item.href} class="breadcrumb-link">{item.label}</a>
-                ) : (
-                  <span class="breadcrumb-current">{item.label}</span>
-                )}
-                {index < breadcrumbs.length - 1 && (
-                  <span class="breadcrumb-separator">/</span>
-                )}
-              </>
-            ))}
-          </nav>
+          <!-- Breadcrumb (omit the landmark entirely when there are no items) -->
+          {breadcrumbs.length > 0 && (
+            <nav class="hero-breadcrumb hero-breadcrumb-left" aria-label={breadcrumbLabel}>
+              {breadcrumbs.map((item, index) => (
+                <>
+                  {item.href ? (
+                    <a href={item.href} class="breadcrumb-link">{item.label}</a>
+                  ) : (
+                    <span class="breadcrumb-current">{item.label}</span>
+                  )}
+                  {index < breadcrumbs.length - 1 && (
+                    <span class="breadcrumb-separator">/</span>
+                  )}
+                </>
+              ))}
+            </nav>
+          )}
 
           <!-- Optional Label -->
           {label && (
@@ -112,27 +129,32 @@ const sizeClasses = {
             alt={heroImageAlt}
             class="hero-image"
             loading="eager"
+            fetchpriority="high"
+            width="1200"
+            height="670"
           />
         </div>
       </div>
     ) : (
       <!-- Default centered layout -->
       <>
-        <!-- Breadcrumb -->
-        <nav class="hero-breadcrumb" aria-label="Breadcrumb">
-          {breadcrumbs.map((item, index) => (
-            <>
-              {item.href ? (
-                <a href={item.href} class="breadcrumb-link">{item.label}</a>
-              ) : (
-                <span class="breadcrumb-current">{item.label}</span>
-              )}
-              {index < breadcrumbs.length - 1 && (
-                <span class="breadcrumb-separator">/</span>
-              )}
-            </>
-          ))}
-        </nav>
+        <!-- Breadcrumb (omit the landmark entirely when there are no items) -->
+        {breadcrumbs.length > 0 && (
+          <nav class="hero-breadcrumb" aria-label={breadcrumbLabel}>
+            {breadcrumbs.map((item, index) => (
+              <>
+                {item.href ? (
+                  <a href={item.href} class="breadcrumb-link">{item.label}</a>
+                ) : (
+                  <span class="breadcrumb-current">{item.label}</span>
+                )}
+                {index < breadcrumbs.length - 1 && (
+                  <span class="breadcrumb-separator">/</span>
+                )}
+              </>
+            ))}
+          </nav>
+        )}
 
         <!-- Optional Label -->
         {label && (
@@ -330,7 +352,7 @@ const sizeClasses = {
   }
 
   .breadcrumb-link:hover {
-    color: var(--evolea-purple, #BA53AD);
+    color: var(--evolea-purple, #AD49A0);
   }
 
   .breadcrumb-separator {
@@ -348,12 +370,12 @@ const sizeClasses = {
     padding: 0.5rem 1.25rem;
     background: rgba(255, 255, 255, 0.3);
     backdrop-filter: blur(10px);
-    color: var(--evolea-purple, #BA53AD);
+    color: var(--evolea-purple, #AD49A0);
     border-radius: 100px;
     font-size: 0.875rem;
     font-weight: 600;
     margin-bottom: 1.5rem;
-    border: 1px solid rgba(186, 83, 173, 0.2);
+    border: 1px solid rgba(173, 73, 160, 0.2);
     opacity: 0;
     animation: fadeSlideDown 0.6s ease 0.15s forwards;
   }
@@ -363,7 +385,7 @@ const sizeClasses = {
     font-family: 'Fredoka', sans-serif;
     font-size: clamp(2.5rem, 7vw, 4.5rem);
     font-weight: 700;
-    color: var(--evolea-purple, #BA53AD);
+    color: var(--evolea-purple, #AD49A0);
     margin-bottom: 1.25rem;
     line-height: 1.1;
     text-shadow:

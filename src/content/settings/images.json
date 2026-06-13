@@ -4,16 +4,16 @@
     "ogImage": null
   },
   "programmeHeroes": {
-    "miniGarten": "/images/programs/mini-garten-hero.png",
-    "miniProjekte": "/images/programs/mini-projekte-hero.png",
-    "miniTurnen": "/images/programs/mini-turnen-hero.png",
-    "miniMuseum": "/images/programs/mini-museum-hero.png",
+    "miniGarten": "/images/programs/mini-garten-hero.webp",
+    "miniProjekte": "/images/programs/mini-projekte-hero.webp",
+    "miniTurnen": "/images/programs/mini-turnen-hero.webp",
+    "miniMuseum": "/images/programs/mini-museum-hero.webp",
     "miniAbenteuercamp": null,
     "miniRestaurantPoster": null,
-    "tagesschule": "/images/hero/homepage-hero.png",
-    "angeboteIndex": "/images/hero/evolea-schloss.png",
-    "evoleaCafe": "/images/hero/evolea-cafe-hero.png",
-    "spenden": "/images/hero/kind-schmetterlinge.png"
+    "tagesschule": "/images/programs/tagesschule-hero.webp",
+    "angeboteIndex": "/images/hero/evolea-schloss.webp",
+    "evoleaCafe": "/images/hero/evolea-cafe-hero.webp",
+    "spenden": "/images/hero/kind-schmetterlinge.webp"
   },
   "programmeKarten": {
     "miniGarten": null,

@@ -2,6 +2,8 @@
 import FloatingShapes from '@components/FloatingShapes.astro';
 import GradientCTA from '@components/GradientCTA.astro';
 import Icon from '@components/Icon.astro';
+import JsonLd from '@components/JsonLd.astro';
+import { breadcrumbSchema, serviceSchema } from '@/lib/seo';
 
 const { content, lang, translatePath, heroImage } = Astro.props;
 
@@ -24,19 +26,35 @@ const typischerTag = page?.typischerTag || {};
 const interesse = page?.interesse || {};
 const weitereAngebote = page?.weitereAngebote || {};
 const cta = page?.cta || {};
+
+// SEO-06: BreadcrumbList items mirror the visible breadcrumb nav below exactly.
+const pageTitle = hero.titel || 'Tagesschule';
+const breadcrumbItems = [
+  { label: lang === 'de' ? 'Startseite' : 'Home', href: translatePath('/') },
+  { label: lang === 'de' ? 'Angebote' : 'Programs', href: translatePath('/angebote/') },
+  { label: pageTitle },
+];
+
+// SEO-07: Service schema. Tagesschule is a vision-stage program with no published
+// ages — omit minAge/maxAge so serviceSchema emits no audience block.
+const canonicalPath = Astro.url.pathname.endsWith('/') ? Astro.url.pathname : `${Astro.url.pathname}/`;
+const canonicalUrl = new URL(canonicalPath, Astro.site).href;
+const serviceDescription = getText(hero.untertitel, lang === 'de' ? 'Strukturierte Tagesbetreuung mit individueller Förderung für Kinder im Spektrum' : 'Structured day care with individual support for children on the spectrum');
 ---
 
 <!-- Hero Section -->
 <section class="relative py-20 md:py-28 bg-gradient-to-br from-evolea-purple/10 to-evolea-cream overflow-hidden">
   <FloatingShapes variant="minimal" />
   <div class="container mx-auto max-w-6xl px-4 relative z-10">
-    <nav class="mb-8 text-sm text-evolea-text-light">
+    <nav class="mb-8 text-sm text-evolea-text-light" aria-label={lang === 'de' ? 'Brotkrumen' : 'Breadcrumb'}>
       <a href={translatePath('/')} class="hover:text-evolea-purple transition-colors">{lang === 'de' ? 'Startseite' : 'Home'}</a>
       <span class="mx-2">/</span>
       <a href={translatePath('/angebote/')} class="hover:text-evolea-purple transition-colors">{lang === 'de' ? 'Angebote' : 'Programs'}</a>
       <span class="mx-2">/</span>
       <span class="text-evolea-purple font-medium">{hero.titel || 'Tagesschule'}</span>
     </nav>
+    <JsonLd schema={breadcrumbSchema(breadcrumbItems, Astro.site)} />
+    <JsonLd schema={serviceSchema({ name: pageTitle, description: serviceDescription, url: canonicalUrl, lang })} />
 
     <div class="grid lg:grid-cols-2 gap-12 items-center">
       <div>
@@ -66,6 +84,9 @@ const cta = page?.cta || {};
         <img
           src={heroImage}
           alt={getText(hero.untertitel, lang === 'de' ? 'Kinder in strukturierter Lernumgebung' : 'Children in a structured learning environment')}
+          fetchpriority="high"
+          width="1200"
+          height="670"
           class="rounded-evolea-lg shadow-elevated w-full object-cover aspect-card"
         />
         <div class="absolute -bottom-4 -left-4 bg-white rounded-evolea p-4 shadow-card">

@@ -76,7 +76,7 @@ BRAND_COLORS = """
 - Soft Coral: #C96861 (muted accents, earthy warmth)
 - Gold: #DCD49F (luxury accents, sophistication)
 - Lavender: #CD87F8 (soft purple, calm energy)
-- Deep Purple: #BA53AD (text on light, deep accents)
+- Deep Purple: #AD49A0 (text on light, deep accents)
 - Sky Blue: #5DADE2 (cool accents, trust, clarity)
 
 **Neutrals:**
@@ -88,7 +88,7 @@ BRAND_COLORS = """
 **Signature Gradients:**
 - Prism: mint (#7BEDD5) → yellow (#FFE066) → white → fuchsia (#E97BF1) → lavender (#CD87F8)
 - Spectrum Flow: mint → yellow → coral → pink → fuchsia → lavender (loops back)
-- Magenta Burst: purple (#BA53AD) → magenta (#DD48E0) → fuchsia (#E97BF1)
+- Magenta Burst: purple (#AD49A0) → magenta (#DD48E0) → fuchsia (#E97BF1)
 - Ocean Dream: mint (#7BEDD5) → sky blue (#5DADE2) → lavender (#CD87F8)
 - Sunset Warmth: yellow (#FFE066) → coral (#FF7E5D) → fuchsia (#E97BF1)
 """

@@ -1,0 +1,49 @@
+import { defineConfig } from '@playwright/test';
+
+/**
+ * EVOLEA Playwright regression net (HYG-04).
+ *
+ * Default flow:
+ *   npm run test:e2e                 # builds Cloudflare output, then runs this suite
+ *
+ * Fast served-target flow:
+ *   npm run test:e2e:served          # assumes dist is current, or TEST_BASE_URL is set
+ *
+ * Serving mode (this machine: macOS arm64):
+ *   - DEFAULT (local wrangler):     baseURL http://127.0.0.1:8788; webServer boots
+ *     `npx wrangler pages dev dist --port 8788`, exercising the real workerd serving
+ *     path (_worker.js middleware headers on SSR routes + public/_headers on
+ *     prerendered/static routes). No Cloudflare auth needed for local pages dev;
+ *     absent Keystatic env vars only affect /keystatic, which this suite never touches.
+ *   - FALLBACK (staging preview):   if wrangler/workerd cannot run locally, run
+ *     `TEST_BASE_URL=https://evolea-website.pages.dev npm run test:e2e:served` (or the
+ *     current branch preview URL). When TEST_BASE_URL is set, webServer is skipped.
+ *
+ * Browser: system Google Chrome via `channel: 'chrome'` — no Playwright browser
+ * downloads (repo precedent: scripts/brand-qa.mjs).
+ */
+
+const BASE = process.env.TEST_BASE_URL || 'http://127.0.0.1:8788';
+
+export default defineConfig({
+  testDir: 'tests',
+  fullyParallel: true,
+  forbidOnly: !!process.env.CI,
+  retries: process.env.CI ? 1 : 0,
+  reporter: 'list',
+  use: {
+    baseURL: BASE,
+    channel: 'chrome',
+    trace: 'on-first-retry',
+  },
+  webServer: process.env.TEST_BASE_URL
+    ? undefined
+    : {
+        command: 'npx wrangler pages dev dist --port 8788',
+        url: 'http://127.0.0.1:8788',
+        // Reuse a running dev server locally for speed, but NEVER in CI — a stale
+        // wrangler serving an old dist/ would silently validate unbuilt code (WR-03).
+        reuseExistingServer: !process.env.CI,
+        timeout: 120_000,
+      },
+});

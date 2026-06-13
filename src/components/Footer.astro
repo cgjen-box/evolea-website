@@ -28,7 +28,7 @@ const translatePath = useTranslatedPath(lang);
 
 // Helper to construct asset paths that work on both GitHub Pages and Cloudflare
 const baseUrl = import.meta.env.BASE_URL || '';
-const logoPath = `${baseUrl}/images/logo/evolea-logo-new.png`.replace('//', '/');
+const logoPath = `${baseUrl}/images/logo/evolea-logo-new.webp`.replace('//', '/');
 
 const getText = (obj: { de?: string; en?: string } | undefined, fallback: string) => {
   if (!obj) return fallback;
@@ -75,6 +75,9 @@ const instagramUrl = siteSettings?.social?.instagram || 'https://www.instagram.c
             <img
               src={logoPath}
               alt="EVOLEA"
+              width="640"
+              height="173"
+              loading="lazy"
               class="h-12 w-auto opacity-90 group-hover:opacity-100 transition-opacity"
               style="filter: saturate(1.4) contrast(1.1) drop-shadow(0 2px 10px rgba(0,0,0,0.7));"
             />

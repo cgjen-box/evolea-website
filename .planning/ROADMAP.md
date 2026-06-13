@@ -12,9 +12,9 @@ A brownfield hardening pass on the live bilingual EVOLEA site (Astro 5 SSR / Clo
 
 Decimal phases appear between their surrounding integers in numeric order.
 
-- [ ] **Phase 1: Foundation & Security** - Clean repo, self-hosted fonts, refactored middleware, security headers + CSP Report-Only + cache backstop
-- [ ] **Phase 2: SEO & Structured Data** - Canonical URL form, robots/sitemap discovery, and full JSON-LD coverage
-- [ ] **Phase 3: Performance, A11y & Testing** - WebP/CLS/LCP image work, two axe fixes, branded 404, Playwright smoke net
+- [x] **Phase 1: Foundation & Security** - Clean repo, self-hosted fonts, refactored middleware, security headers + CSP Report-Only + cache backstop (completed 2026-06-12)
+- [x] **Phase 2: SEO & Structured Data** - Canonical URL form, robots/sitemap discovery, and full JSON-LD coverage (completed 2026-06-12)
+- [x] **Phase 3: Performance, A11y & Testing** - WebP/CLS/LCP image work, two axe fixes, branded 404, Playwright smoke net (completed 2026-06-13)
 
 ## Phase Details
 
@@ -29,9 +29,9 @@ Decimal phases appear between their surrounding integers in numeric order.
   4. `git ls-files public/images/generated/` returns nothing, `Final images/` and superseded logo originals are gone, dead components are deleted, and the tagesschule-hero resolves from `public/images/programs/` in both DE and EN with no broken-image references
   5. `npm run build` and `GITHUB_PAGES=true npm run build` both stay green
 **Plans**: 3 plans
-  - [ ] 01-01-PLAN.md — Security headers constant, sequence() middleware refactor + double-next() fix, CSP Report-Only sink, public/_headers + immutable /assets cache
-  - [ ] 01-02-PLAN.md — Self-host Fredoka/Poppins via @font-face, remove Google Fonts link, base-prefixed preloads
-  - [ ] 01-03-PLAN.md — Relocate tagesschule hero, untrack generated/, delete Final images + logo originals + dead components
+  - [x] 01-01-PLAN.md — Security headers constant, sequence() middleware refactor + double-next() fix, CSP Report-Only sink, public/_headers + immutable /assets cache
+  - [x] 01-02-PLAN.md — Self-host Fredoka/Poppins via @font-face, remove Google Fonts link, base-prefixed preloads
+  - [x] 01-03-PLAN.md — Relocate tagesschule hero, untrack generated/, delete Final images + logo originals + dead components
 **UI hint**: yes
 
 ### Phase 2: SEO & Structured Data
@@ -44,7 +44,12 @@ Decimal phases appear between their surrounding integers in numeric order.
   3. Google Rich Results test passes for the homepage (Organization/NGO + WebSite with a stable `@id`), a blog post (`BlogPosting` with `og:type=article`, publisher referencing the Organization `@id`), an Angebote page (`Service` + `BreadcrumbList`), and the EVOLEA Cafe page (one recurring `Event`)
   4. Homepage and `/angebote/*` titles follow `<primary keyword> – EVOLEA` in both DE and EN
   5. `npm run build` and `GITHUB_PAGES=true npm run build` both stay green
-**Plans**: TBD
+**Plans**: 5 plans
+  - [x] 02-01-PLAN.md — Trailing-slash 301 middleware, hostname-keyed robots.txt, /sitemap.xml redirect + brand filter, Base head fixes (canonical/og:url/ogType/rel=sitemap/separator/noindex)
+  - [x] 02-02-PLAN.md — JSON-LD foundation: seo.ts schema builders + JsonLd.astro + site-wide NGO/WebSite @graph from Base
+  - [x] 02-03-PLAN.md — Keyword titles ('<primary keyword> – EVOLEA') on homepage + all Angebote pages, DE/EN, CMS-decoupled
+  - [x] 02-04-PLAN.md — BreadcrumbList (InnerPageHero + 7 program components) + Service JSON-LD on program pages
+  - [x] 02-05-PLAN.md — BlogPosting + og:type article + blog breadcrumbs (DE/EN) and recurring Cafe Event JSON-LD
 **UI hint**: yes
 
 ### Phase 3: Performance, A11y & Testing
@@ -57,7 +62,11 @@ Decimal phases appear between their surrounding integers in numeric order.
   3. axe-core reports 0 violations: the two Header `<nav>` landmarks carry distinguishing DE/EN-aware `aria-label`s and the `evolea-green` contrast is ≥4.5:1 on affected program pages
   4. A branded, bilingual 404 page (prism hero, page closer, no emojis) links back to Angebote/Blog and renders in both DE and EN
   5. Playwright smoke suite passes (DE/EN homepage load, both contact forms render, donate language switcher, all program pages 200, header-drift guard on one SSR and one prerendered blog route) and `npm run build` + `GITHUB_PAGES=true npm run build` stay green
-**Plans**: TBD
+**Plans**: 4 plans
+  - [x] 03-01-PLAN.md — Convert images in place to WebP (manifest-driven sharp script), flip all CMS/MDX/hardcoded references, two-way grep gate, delete originals
+  - [x] 03-02-PLAN.md — Darken evolea-green to #236247 in both token files + brand-compliant bilingual 404 page per 03-UI-SPEC.md
+  - [x] 03-03-PLAN.md — width/height on every img, lazy/fetchpriority LCP policy, Base preloadImage poster preload, Header + breadcrumb nav aria-labels
+  - [x] 03-04-PLAN.md — Playwright smoke/a11y/headers suite (@playwright/test 1.57.0, wrangler pages dev), homepage budget measurement + conditional SSIM-gated video re-encode
 **UI hint**: yes
 
 ## Progress
@@ -67,6 +76,6 @@ Phases execute in numeric order: 1 → 2 → 3
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
-| 1. Foundation & Security | 0/3 | Not started | - |
-| 2. SEO & Structured Data | 0/TBD | Not started | - |
-| 3. Performance, A11y & Testing | 0/TBD | Not started | - |
+| 1. Foundation & Security | 3/3 | Complete   | 2026-06-12 |
+| 2. SEO & Structured Data | 5/5 | Complete   | 2026-06-12 |
+| 3. Performance, A11y & Testing | 4/4 | Complete   | 2026-06-13 |

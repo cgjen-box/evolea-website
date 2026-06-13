@@ -68,16 +68,17 @@ const colorClasses: Record<string, string> = {
 ---
 
 <Base
-  title="Startseite"
+  title="Förderung für Kinder im Autismus-Spektrum in Zürich"
   description={getText(siteSettings?.siteDescription, "EVOLEA Verein - Bildungsangebote für Kinder im Autismus Spektrum oder mit ADHS in Zürich.")}
   transparentHeader={true}
+  preloadImage={siteImages?.startseite?.videoPoster ? base + siteImages.startseite.videoPoster : base + "/images/hero-poster.webp"}
 >
   <!-- Hero Section with Video Background - Vision Statement Style -->
   <VideoHero
     title={getText(homepage?.hero?.titel, "Wo Kinder sich im Spektrum entfalten")}
     subtitle={getText(homepage?.hero?.untertitel, "Unsere Bildungsangebote schaffen Räume, damit sich Kinder im Spektrum entfalten können.")}
     videoSrc={base + "/videos/hero-mobile.mp4"}
-    posterSrc={siteImages?.startseite?.videoPoster ? base + siteImages.startseite.videoPoster : base + "/images/hero-poster.jpg"}
+    posterSrc={siteImages?.startseite?.videoPoster ? base + siteImages.startseite.videoPoster : base + "/images/hero-poster.webp"}
   />
 
   <!-- Angebote Section V3 - "Unsere Angebote" -->
@@ -197,7 +198,7 @@ const colorClasses: Record<string, string> = {
         {team.map((member, index) => (
           <div class={`reveal reveal-delay-${index + 1} text-center group`}>
             <div class="aspect-square rounded-full overflow-hidden mb-4 shadow-soft group-hover:shadow-elevated transition-shadow mx-auto w-32 md:w-40">
-              <img src={member.image} alt={member.name} class="w-full h-full object-cover object-top" loading="lazy" />
+              <img src={member.image} alt={member.name} width="800" height="996" class="w-full h-full object-cover object-top" loading="lazy" />
             </div>
             <h3 class="font-display font-bold text-evolea-purple text-base">{member.name}</h3>
             <p class="text-sm text-evolea-text-light">{member.credentials || member.role}</p>
