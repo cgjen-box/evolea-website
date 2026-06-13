@@ -38,9 +38,6 @@ export default defineConfig({
   output: useCloudflare ? 'server' : 'static',
   adapter: cloudflareAdapter,
   redirects: {
-    // The EN cafe page moved under /en/programs/ to match the other program routes.
-    // The target must carry the base path explicitly — Astro does not prefix redirect targets.
-    '/en/angebote/evolea-cafe/': `${isGitHubPages || !useCloudflare ? '/evolea-website' : ''}/en/programs/evolea-cafe/`,
     // /sitemap.xml → /sitemap-index.xml (the @astrojs/sitemap index name). Real
     // 301 on the Cloudflare adapter; a meta-refresh stub on the static build
     // (acceptable for the de-indexed mirror). Base-path explicit like above.

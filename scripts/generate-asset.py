@@ -73,7 +73,7 @@ EVOLEA is a Swiss non-profit organization in Zürich supporting children on the 
 - Magenta: #DD48E0 (primary accent)
 - Hot Pink: #EF5EDB (secondary)
 - Fuchsia Glow: #E97BF1 (gradients)
-- Purple: #BA53AD (text accents)
+- Purple: #AD49A0 (text accents)
 - Lavender: #CD87F8 (soft accents)
 - Mint Teal: #7BEDD5 (fresh, nature)
 - Sunshine Yellow: #FFE066 (joy, warmth)
@@ -229,7 +229,7 @@ Create an illustration for "Schulberatung" (school consultation):
 - Could show: parents, educator, and/or child in consultation
 - Professional but warm atmosphere
 - Include elements suggesting school (books, classroom elements)
-- Use purple (#BA53AD) and magenta (#DD48E0) as accents
+- Use purple (#AD49A0) and magenta (#DD48E0) as accents
 - Feeling of support, understanding, and guidance
 - A butterfly could appear as a decorative element
 

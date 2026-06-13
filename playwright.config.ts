@@ -3,10 +3,11 @@ import { defineConfig } from '@playwright/test';
 /**
  * EVOLEA Playwright regression net (HYG-04).
  *
- * Two-step flow (do NOT put the build inside webServer.command — build:cloudflare
- * re-installs the @astrojs/cloudflare adapter on every run, Pitfall 7):
- *   1. npm run build:cloudflare      # once — produces dist/_worker.js + dist/_headers
- *   2. npm run test:e2e              # webServer runs `npx wrangler pages dev dist`
+ * Default flow:
+ *   npm run test:e2e                 # builds Cloudflare output, then runs this suite
+ *
+ * Fast served-target flow:
+ *   npm run test:e2e:served          # assumes dist is current, or TEST_BASE_URL is set
  *
  * Serving mode (this machine: macOS arm64):
  *   - DEFAULT (local wrangler):     baseURL http://127.0.0.1:8788; webServer boots
@@ -15,7 +16,7 @@ import { defineConfig } from '@playwright/test';
  *     prerendered/static routes). No Cloudflare auth needed for local pages dev;
  *     absent Keystatic env vars only affect /keystatic, which this suite never touches.
  *   - FALLBACK (staging preview):   if wrangler/workerd cannot run locally, run
- *     `TEST_BASE_URL=https://evolea-website.pages.dev npm run test:e2e` (or the
+ *     `TEST_BASE_URL=https://evolea-website.pages.dev npm run test:e2e:served` (or the
  *     current branch preview URL). When TEST_BASE_URL is set, webServer is skipped.
  *
  * Browser: system Google Chrome via `channel: 'chrome'` — no Playwright browser

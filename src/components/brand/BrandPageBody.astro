@@ -250,7 +250,7 @@ const t = <K extends keyof typeof copy>(group: K, key: keyof typeof copy[K]): st
 // ----------------------------------------------------------------
 const PRIMARY = [
   { name: 'Magenta', hex: '#DD48E0', use: isDE ? 'CTAs, Akzente' : 'CTAs, accents' },
-  { name: 'Deep Purple', hex: '#BA53AD', use: isDE ? 'Headlines, Footer' : 'Headlines, footer' },
+  { name: 'Deep Purple', hex: '#AD49A0', use: isDE ? 'Headlines, Footer' : 'Headlines, footer' },
   { name: 'Lavender', hex: '#CD87F8', use: isDE ? 'Sanfte Akzente' : 'Soft accents' },
 ];
 
@@ -282,13 +282,13 @@ const GRADIENTS = [
   },
   {
     name: isDE ? 'Primary · Magenta' : 'Primary · Magenta',
-    css: 'linear-gradient(135deg, #BA53AD, #DD48E0)',
+    css: 'linear-gradient(135deg, #AD49A0, #DD48E0)',
     use: isDE ? 'Primäre Buttons, Highlights' : 'Primary buttons, highlights',
     var: '--gradient-magenta',
   },
   {
     name: isDE ? 'Spenden · Deep' : 'Donate · Deep',
-    css: 'linear-gradient(135deg, #BA53AD, #8A3D7E, #5C2854)',
+    css: 'linear-gradient(135deg, #AD49A0, #8A3D7E, #5C2854)',
     use: isDE ? 'Spenden-Bereich, Vereins-Sektion' : 'Donate section, Verein section',
     var: '--gradient-spenden',
   },

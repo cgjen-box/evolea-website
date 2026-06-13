@@ -1,12 +1,14 @@
 #!/usr/bin/env node
 /**
- * REFERENCED-IMAGE → WebP CONVERTER (manifest-driven, one-off + re-runnable gate).
+ * REFERENCED-IMAGE → WebP REFERENCE GATE + OPT-IN CONVERTER.
  *
- * Converts every team / program-hero / inner-page-hero / blog / logo / about
- * image that is actually referenced from src/ into a display-size WebP, IN
- * PLACE (locked decision: no src/assets migration). Originals are NOT deleted
- * here — deletion happens in a later step after the reference flip, so every
- * intermediate commit keeps the site rendering.
+ * Default mode is the safe, re-runnable reference gate for the current repo
+ * state, where original PNG/JPG sources have already been deleted. Regeneration
+ * from restored originals is explicit via --from-originals.
+ *
+ * --from-originals converts every team / program-hero / inner-page-hero / blog /
+ * logo / about image that is actually referenced from src/ into a display-size
+ * WebP, IN PLACE (locked decision: no src/assets migration).
  *
  * The manifest is an EXPLICIT array of { src, width } — NEVER glob
  * public/images/**, because that directory also holds ~6MB of verified orphans
@@ -20,12 +22,13 @@
  * non-sRGB output as a failure. Logo PNGs carry alpha (4 channels) — WebP
  * preserves it natively.
  *
- * Two modes:
- *   node scripts/convert-images.mjs            # convert + self-verify
- *   node scripts/convert-images.mjs --verify   # two-way grep gate only (no conversion)
+ * Modes:
+ *   node scripts/convert-images.mjs                  # two-way grep gate only
+ *   node scripts/convert-images.mjs --verify         # same, backwards compatible
+ *   node scripts/convert-images.mjs --from-originals # convert restored originals + self-verify
  *
- * Self-verify (after conversion): each output exists, is byte-smaller than its
- * source, and sharp metadata reports space:'srgb'.
+ * --from-originals self-verifies after conversion: each output exists, is
+ * byte-smaller than its source, and sharp metadata reports space:'srgb'.
  *
  * --verify (two-way reference gate, re-runnable after the reference flip):
  *   Gate A — no dangling old-extension refs in src/ outside the allowlist.
@@ -195,9 +198,14 @@ function verify() {
   process.exit(0);
 }
 
-if (process.argv.includes('--verify')) {
-  verify();
-} else {
+if (process.argv.includes('--from-originals')) {
   await convert();
   process.exit(0);
 }
+
+if (process.argv.includes('--verify') || process.argv.length === 2) {
+  verify();
+}
+
+console.error('Unknown option. Use no args, --verify, or --from-originals.');
+process.exit(1);

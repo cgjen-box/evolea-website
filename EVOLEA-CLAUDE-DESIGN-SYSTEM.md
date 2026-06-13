@@ -88,7 +88,7 @@ Dieser Satz ist das Herz der Marke. Jede Kommunikation sollte dieses Gefühl tra
 | Name | Hex | Verwendung |
 |---|---|---|
 | **Magenta** | `#DD48E0` | Primäre CTAs, Highlights, Buttons |
-| **Deep Purple** | `#BA53AD` | Headlines, Icon-Akzente, Footer-Gradient |
+| **Deep Purple** | `#AD49A0` | Headlines, Icon-Akzente, Footer-Gradient |
 | **Lavender** | `#CD87F8` | Sekundäre Akzente, sanfte Flächen |
 
 ### 3.2 Spektrum-Farben (gleichwertig, für Vielfalt)
@@ -130,8 +130,8 @@ linear-gradient(90deg, #7BEDD5, #FFE066, #FF7E5D, #EF8EAE, #E97BF1, #CD87F8 80%,
 
 **Primary Button** — magenta Diagonale:
 ```css
-linear-gradient(135deg, #BA53AD, #DD48E0);
-/* hover-reversed: linear-gradient(135deg, #DD48E0, #BA53AD); */
+linear-gradient(135deg, #AD49A0, #DD48E0);
+/* hover-reversed: linear-gradient(135deg, #DD48E0, #AD49A0); */
 ```
 
 **Vision Dark** — Philosophie-/Statement-Sektionen:
@@ -141,7 +141,7 @@ linear-gradient(180deg, #1A1A2E, #2D2A32);
 
 **Spenden Deep Purple** — Page-Closer auf `/spenden/`:
 ```css
-linear-gradient(135deg, #BA53AD, #8A3D7E, #5C2854);
+linear-gradient(135deg, #AD49A0, #8A3D7E, #5C2854);
 ```
 
 **Orb Radials** — schwebende, geblurrte Dekorformen:
@@ -194,7 +194,7 @@ Beide Schriften werden über Google Fonts geladen. **Niemals andere Schriften** 
 
 ### 4.4 Textfarben
 
-- **Headlines:** `#BA53AD` (Deep Purple) auf hellem Hintergrund · `#FFFFFF` auf Gradient/Dark.
+- **Headlines:** `#AD49A0` (Deep Purple) auf hellem Hintergrund · `#FFFFFF` auf Gradient/Dark.
 - **Body:** `#2D2A32` (Dark Text) auf Cream/Weiss.
 - **Sekundär:** `#5C5762` (Light Text).
 - **Auf Gradient:** Weiss mit `text-shadow: 0 2px 8px rgba(0,0,0,0.18)` für Tiefe.
@@ -256,8 +256,8 @@ Beide Schriften werden über Google Fonts geladen. **Niemals andere Schriften** 
 
 | Einsatz | CSS |
 |---|---|
-| Button Rest | `box-shadow: 0 2px 8px #BA53AD4D;` |
-| Button Hover | `box-shadow: 0 4px 12px #BA53AD66;` |
+| Button Rest | `box-shadow: 0 2px 8px #AD49A04D;` |
+| Button Hover | `box-shadow: 0 4px 12px #AD49A066;` |
 | Card Soft | `shadow-soft` (weich, niedrig) |
 | Card Elevated | `shadow-elevated`, `shadow-xl`, `shadow-2xl` |
 
@@ -281,7 +281,7 @@ Beide Schriften werden über Google Fonts geladen. **Niemals andere Schriften** 
 
 | Typ | Stil |
 |---|---|
-| **Primary** | Magenta-Gradient `#BA53AD → #DD48E0`, weisser Text, `rounded-full`, Fredoka 600, Purple-Shadow, Hover: Gradient invertiert + Lift. |
+| **Primary** | Magenta-Gradient `#AD49A0 → #DD48E0`, weisser Text, `rounded-full`, Fredoka 600, Purple-Shadow, Hover: Gradient invertiert + Lift. |
 | **Secondary** | Cream-Outline oder tonal, Deep-Purple-Text, `rounded-full`. |
 | **Donate Gold** | `#E8B86D`-Flächen-Gradient, weisser Text, `rounded-full`, `shadow-xl`. **Nur** für Spenden. |
 | **Ghost/Link** | Unterstrichener Link in Magenta oder Deep Purple. |
@@ -505,7 +505,7 @@ Logo (`/`) · Angebote (`/angebote/`) · Über uns (`/ueber-uns/`) · Team (`/te
 
 Wenn Du in diesem Projekt Artefakte erstellst, halte Dich an:
 
-- **Farben:** Primär Magenta `#DD48E0` + Deep Purple `#BA53AD`, Spektrum für Vielfalt, Gold `#E8B86D` nur für Spenden.
+- **Farben:** Primär Magenta `#DD48E0` + Deep Purple `#AD49A0`, Spektrum für Vielfalt, Gold `#E8B86D` nur für Spenden.
 - **Fonts:** Fredoka für Headlines, Poppins für alles andere.
 - **Hintergrund:** Cream `#FFFBF7` Standard, Prism-Gradient für Heroes.
 - **Buttons:** Immer `rounded-full`, Magenta-Gradient für Primary.

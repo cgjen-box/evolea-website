@@ -29,7 +29,7 @@ Location: `.claude/todo/EVOLEA-BRAND-GUIDE-V3.md`
 | Name | Hex | Usage |
 |------|-----|-------|
 | Magenta | #DD48E0 | Primary CTAs, highlights |
-| Deep Purple | #BA53AD | Headlines, accents |
+| Deep Purple | #AD49A0 | Headlines, accents (AA-corrected) |
 | Lavender | #CD87F8 | Secondary accents |
 
 **Spectrum Colors:**

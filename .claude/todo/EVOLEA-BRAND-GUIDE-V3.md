@@ -106,7 +106,7 @@ The EVOLEA logo has two parts:
 | Name | Hex | RGB | Usage |
 |------|-----|-----|-------|
 | Magenta | #DD48E0 | 221, 72, 224 | Primary CTAs, highlights |
-| Deep Purple | #BA53AD | 186, 83, 173 | Headlines, accents |
+| Deep Purple | #AD49A0 | 173, 73, 160 | Headlines, accents (AA-corrected) |
 | Lavender | #CD87F8 | 205, 135, 248 | Secondary accents |
 
 ### Spectrum Colors
@@ -178,7 +178,7 @@ The EVOLEA logo has two parts:
 
 | Name | CSS | Usage |
 |------|-----|-------|
-| Magenta Burst | `linear-gradient(135deg, #BA53AD 0%, #DD48E0 50%, #E97BF1 100%)` | Buttons, CTAs |
+| Magenta Burst | `linear-gradient(135deg, #AD49A0 0%, #DD48E0 50%, #E97BF1 100%)` | Buttons, CTAs |
 | Ocean Dream | `linear-gradient(135deg, #7BEDD5 0%, #5DADE2 50%, #CD87F8 100%)` | Cool sections |
 | Spectrum Line | `linear-gradient(90deg, #7BEDD5, #FFE066, #FF7E5D, #EF8EAE, #E97BF1, #CD87F8)` | Decorative lines |
 
@@ -748,7 +748,7 @@ Brand guide should have copyable code AND live examples.
 :root {
   /* Colors */
   --evolea-magenta: #DD48E0;
-  --evolea-purple: #BA53AD;
+  --evolea-purple: #AD49A0;
   --evolea-lavender: #CD87F8;
   --evolea-mint: #7BEDD5;
   --evolea-yellow: #FFE066;
@@ -760,7 +760,7 @@ Brand guide should have copyable code AND live examples.
   
   /* Gradients */
   --gradient-prism: linear-gradient(135deg, #7BEDD5 0%, #FFE066 25%, #FFD5E5 45%, #E97BF1 70%, #CD87F8 100%);
-  --gradient-magenta: linear-gradient(135deg, #BA53AD 0%, #DD48E0 50%, #E97BF1 100%);
+  --gradient-magenta: linear-gradient(135deg, #AD49A0 0%, #DD48E0 50%, #E97BF1 100%);
   --gradient-spectrum: linear-gradient(90deg, #7BEDD5, #FFE066, #FF7E5D, #EF8EAE, #E97BF1, #CD87F8);
   --gradient-rainbow-text: linear-gradient(90deg, #7BEDD5, #FFE066, #FF9ECC, #E97BF1, #CD87F8);
   
