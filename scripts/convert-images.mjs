@@ -43,7 +43,6 @@
  *     tagesschule.jpg, hero-main.jpg, homepage-hero.png, logo/evolea-logo-circle
  *     (circle IS converted — it is referenced from BrandPageBody)
  */
-import { readFileSync } from 'node:fs';
 import { stat } from 'node:fs/promises';
 import { fileURLToPath } from 'node:url';
 import { dirname, resolve, basename } from 'node:path';

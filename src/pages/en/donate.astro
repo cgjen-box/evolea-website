@@ -17,7 +17,7 @@ const spendenEntry = await getEntry('pages', 'spenden');
 const page = spendenEntry?.data;
 
 // Hero image
-const heroImage = base + '/images/hero/kind-schmetterlinge.png';
+const heroImage = base + '/images/hero/kind-schmetterlinge.webp';
 
 // Helper to get bilingual text
 // scrolling="no" is deprecated HTML but remains the only way to suppress the
@@ -372,7 +372,7 @@ const cardColorClasses: Record<string, { bg: string; icon: string }> = {
       <div class="flex flex-col md:flex-row items-center gap-8 text-center md:text-left">
         <div class="w-32 h-32 rounded-full overflow-hidden shadow-elevated flex-shrink-0 bg-white">
           <img
-            src={`${base}${page?.contactPerson?.foto || '/images/team/gianna-spiess.png'}`}
+            src={`${base}${page?.contactPerson?.foto || '/images/team/gianna-spiess.webp'}`}
             alt={page?.contactPerson?.name || 'Gianna Spiess'}
             class="w-full h-full object-cover"
           />

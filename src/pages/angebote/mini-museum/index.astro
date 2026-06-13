@@ -17,7 +17,7 @@ const siteImagesEntry = await getEntry('settings', 'images');
 const siteImages = siteImagesEntry?.data;
 const heroImage = siteImages?.programmeHeroes?.miniMuseum
   ? base + siteImages.programmeHeroes.miniMuseum
-  : base + "/images/programs/mini-museum-hero.png";
+  : base + "/images/programs/mini-museum-hero.webp";
 
 // Helper to get bilingual text
 const getText = (obj: { de?: string; en?: string } | undefined, fallback: string = '') => {

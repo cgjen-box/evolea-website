@@ -17,7 +17,7 @@ const siteImagesEntry = await getEntry('settings', 'images');
 const siteImages = siteImagesEntry?.data;
 const heroImage = siteImages?.programmeHeroes?.tagesschule
   ? base + siteImages.programmeHeroes.tagesschule
-  : base + "/images/programs/tagesschule-hero.png";
+  : base + "/images/programs/tagesschule-hero.webp";
 
 // SEO-09: keyword title is intentionally NOT CMS-overridable (decoupled from hero.titel per D6)
 const seoTitle = lang === 'de' ? 'Tagesschule – Schule für Kinder im Spektrum' : 'Day School – For Children on the Spectrum';
