@@ -96,7 +96,7 @@ const donatePath = lang === 'de' ? '/spenden/' : '/donate/';
       </div>
     </div>
 
-    <nav class="header-nav container mx-auto px-4 py-4 flex items-center justify-between">
+    <nav class="header-nav container mx-auto px-4 py-4 flex items-center justify-between" aria-label={lang === 'de' ? 'Hauptnavigation' : 'Main navigation'}>
       <!-- Logo -->
       <a
         href={translatePath('/')}
@@ -203,7 +203,7 @@ const donatePath = lang === 'de' ? '/spenden/' : '/donate/';
       />
     </a>
 
-    <nav class="flex flex-col gap-2 mb-auto">
+    <nav class="flex flex-col gap-2 mb-auto" aria-label={lang === 'de' ? 'Mobile Navigation' : 'Mobile navigation'}>
       {navItems.map(({ key, href }, index) => (
         <a
           href={translatePath(href)}

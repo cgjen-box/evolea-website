@@ -23,6 +23,10 @@ interface Props {
   transparentHeader?: boolean;
   hideFooterCTA?: boolean;
   ogType?: 'website' | 'article';
+  // Already-base-prefixed image path to preload as the LCP candidate
+  // (e.g. the homepage video poster). Unlike `image` (og), Base does NOT
+  // re-prefix this — the caller passes the resolved, base-prefixed path.
+  preloadImage?: string;
 }
 
 const {
@@ -32,6 +36,7 @@ const {
   transparentHeader = false,
   hideFooterCTA = false,
   ogType = 'website',
+  preloadImage,
 } = Astro.props;
 
 const siteSettingsEntry = await getEntry('settings', 'site');
@@ -107,6 +112,9 @@ const ogImage = new URL(`${base}${image}`, Astro.site);
     <!-- Preload critical above-the-fold font weights (base-prefixed for both build bases) -->
     <link rel="preload" href={`${base}/fonts/Fredoka-SemiBold.woff2`} as="font" type="font/woff2" crossorigin />
     <link rel="preload" href={`${base}/fonts/Poppins-Regular.woff2`} as="font" type="font/woff2" crossorigin />
+
+    {/* LCP image preload — caller passes an already-base-prefixed path (e.g. homepage video poster) */}
+    {preloadImage && <link rel="preload" as="image" href={preloadImage} fetchpriority="high" />}
 
     <!-- Hero video is preloaded by the video element itself -->
   </head>

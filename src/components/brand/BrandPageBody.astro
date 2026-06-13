@@ -448,13 +448,13 @@ const TEAM = [
 
         <div class="brand-hero__art" aria-hidden="true">
           <div class="brand-frame brand-frame--f1">
-            <img src={`${base}/images/blog/spektrum-kreis.webp`} alt="" loading="lazy" />
+            <img src={`${base}/images/blog/spektrum-kreis.webp`} alt="" width="1536" height="1024" loading="lazy" />
           </div>
           <div class="brand-frame brand-frame--f2">
-            <img src={`${base}/images/hero/kind-schmetterlinge.webp`} alt="" loading="lazy" />
+            <img src={`${base}/images/hero/kind-schmetterlinge.webp`} alt="" width="1200" height="670" loading="lazy" />
           </div>
           <div class="brand-frame brand-frame--f3">
-            <img src={`${base}/images/team/gianna-spiess.webp`} alt="" loading="lazy" />
+            <img src={`${base}/images/team/gianna-spiess.webp`} alt="" width="800" height="996" loading="lazy" />
           </div>
           <div class="brand-fly brand-fly--a"><Butterfly variant="spectrum" size="md" /></div>
           <div class="brand-fly brand-fly--b"><Butterfly variant="spectrum" size="sm" /></div>
@@ -507,7 +507,7 @@ const TEAM = [
         <div class="brand-logo-board">
           <div>
             <div class="brand-logo-stage">
-              <img src={`${base}/images/logo/evolea-logo-new.webp`} alt="EVOLEA Logo" loading="lazy" />
+              <img src={`${base}/images/logo/evolea-logo-new.webp`} alt="EVOLEA Logo" width="640" height="173" loading="lazy" />
             </div>
             <div class="brand-logo-label">
               <span class="brand-logo-label__name">{t('logo', 'creamLabel')}</span>
@@ -516,7 +516,7 @@ const TEAM = [
           </div>
           <div>
             <div class="brand-logo-stage brand-logo-stage--dark">
-              <img src={`${base}/images/logo/evolea-logo-new.webp`} alt="EVOLEA Logo on dark" loading="lazy" />
+              <img src={`${base}/images/logo/evolea-logo-new.webp`} alt="EVOLEA Logo on dark" width="640" height="173" loading="lazy" />
             </div>
             <div class="brand-logo-label">
               <span class="brand-logo-label__name">{t('logo', 'darkLabel')}</span>
@@ -563,7 +563,7 @@ const TEAM = [
                       {TEAM.map((p) => <div style={`background-image: url('${p.src}'); background-size: cover; background-position: center;`} aria-hidden="true"></div>)}
                     </div>
                   ) : 'src' in d.thumb && d.thumb.src ? (
-                    <img src={d.thumb.src} alt={d.name} loading="lazy" />
+                    <img src={d.thumb.src} alt={d.name} width="800" height="600" loading="lazy" />
                   ) : null}
                 </div>
                 <div class="brand-dl-meta">
@@ -728,7 +728,7 @@ const TEAM = [
         <div class="brand-img-grid">
           {WATERCOLORS.map((w) => (
             <article class="brand-img-tile">
-              <img src={w.src} alt={w.name} loading="lazy" />
+              <img src={w.src} alt={w.name} width="800" height="800" loading="lazy" />
               <div class="brand-img-tile__cap">
                 <span>{w.name}</span>
                 <a href={w.src} download class="brand-img-tile__dl">↓ {isDE ? 'Bild' : 'image'}</a>
@@ -742,7 +742,7 @@ const TEAM = [
           {TEAM.map((p) => (
             <article class="brand-team-card">
               <div class="brand-team-card__photo">
-                <img src={p.src} alt={p.name} loading="lazy" />
+                <img src={p.src} alt={p.name} width="800" height="1000" loading="lazy" />
               </div>
               <div class="brand-team-card__meta">
                 <span class="brand-team-card__name">{p.name}</span>

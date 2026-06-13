@@ -46,7 +46,7 @@ const serviceDescription = getText(hero.untertitel, lang === 'de' ? 'Strukturier
 <section class="relative py-20 md:py-28 bg-gradient-to-br from-evolea-purple/10 to-evolea-cream overflow-hidden">
   <FloatingShapes variant="minimal" />
   <div class="container mx-auto max-w-6xl px-4 relative z-10">
-    <nav class="mb-8 text-sm text-evolea-text-light">
+    <nav class="mb-8 text-sm text-evolea-text-light" aria-label={lang === 'de' ? 'Brotkrumen' : 'Breadcrumb'}>
       <a href={translatePath('/')} class="hover:text-evolea-purple transition-colors">{lang === 'de' ? 'Startseite' : 'Home'}</a>
       <span class="mx-2">/</span>
       <a href={translatePath('/angebote/')} class="hover:text-evolea-purple transition-colors">{lang === 'de' ? 'Angebote' : 'Programs'}</a>
@@ -84,6 +84,9 @@ const serviceDescription = getText(hero.untertitel, lang === 'de' ? 'Strukturier
         <img
           src={heroImage}
           alt={getText(hero.untertitel, lang === 'de' ? 'Kinder in strukturierter Lernumgebung' : 'Children in a structured learning environment')}
+          fetchpriority="high"
+          width="1200"
+          height="670"
           class="rounded-evolea-lg shadow-elevated w-full object-cover aspect-card"
         />
         <div class="absolute -bottom-4 -left-4 bg-white rounded-evolea p-4 shadow-card">
