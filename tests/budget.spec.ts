@@ -7,13 +7,16 @@ import { test, expect, type Response } from '@playwright/test';
  *
  * Mirrors the Phase 03 measurement contract: desktop viewport, load event,
  * no scroll, lazy images excluded, and hero-mobile.mp4 counted at full on-disk
- * size even if the browser only requests a byte range during autoplay.
+ * size. The homepage always references the hero video (VideoHero default), so it
+ * is counted UNCONDITIONALLY at disk size rather than gated on an autoplay request
+ * whose timing/range is environment-dependent (WR-05). The path is matched by
+ * basename so the GitHub Pages base prefix does not break the match.
  */
 
 const HOMEPAGE_BUDGET_BYTES = 1_536_000;
 const BASE_URL = process.env.TEST_BASE_URL || 'http://127.0.0.1:8788';
 const BASE_ORIGIN = new URL(BASE_URL).origin;
-const HERO_VIDEO_PATH = '/videos/hero-mobile.mp4';
+const HERO_VIDEO_BASENAME = 'hero-mobile.mp4';
 const HERO_VIDEO_DISK_BYTES = statSync(join(process.cwd(), 'public/videos/hero-mobile.mp4')).size;
 
 interface ResourceEntry {
@@ -31,9 +34,17 @@ function sameOrigin(url: string): boolean {
   }
 }
 
+function isHeroVideo(pathname: string): boolean {
+  return pathname.endsWith(`/${HERO_VIDEO_BASENAME}`) || pathname.endsWith(HERO_VIDEO_BASENAME);
+}
+
 async function responseBytes(response: Response): Promise<{ bytes: number; source: ResourceEntry['source'] }> {
+  // A 206 Partial Content carries only the requested byte range, so its
+  // content-length is the chunk size, not the asset size — fall back to the
+  // actual body length in that case so the budget is not silently under-counted
+  // (WR-04).
   const contentLength = response.headers()['content-length'];
-  if (contentLength) {
+  if (response.status() !== 206 && contentLength) {
     const parsed = Number(contentLength);
     if (Number.isFinite(parsed) && parsed >= 0) {
       return { bytes: parsed, source: 'content-length' };
@@ -73,25 +84,15 @@ test('homepage stays under the 1.5 MB transfer budget', async ({ page }) => {
 
   const entries: ResourceEntry[] = [];
   const pending: Promise<void>[] = [];
-  let countedHeroVideo = false;
 
   page.on('response', (response) => {
     if (!sameOrigin(response.url())) return;
+    const url = new URL(response.url());
+    // Hero video is counted at full disk size below (conservative, range-proof),
+    // so skip any actual (possibly ranged) video responses to avoid double counting.
+    if (isHeroVideo(url.pathname)) return;
 
     pending.push((async () => {
-      const url = new URL(response.url());
-      if (url.pathname === HERO_VIDEO_PATH) {
-        if (countedHeroVideo) return;
-        countedHeroVideo = true;
-        entries.push({
-          url: url.pathname,
-          type: 'video',
-          bytes: HERO_VIDEO_DISK_BYTES,
-          source: 'disk',
-        });
-        return;
-      }
-
       const { bytes, source } = await responseBytes(response);
       entries.push({
         url: url.pathname,
@@ -106,7 +107,14 @@ test('homepage stays under the 1.5 MB transfer budget', async ({ page }) => {
   expect(response?.status()).toBe(200);
   await Promise.all(pending);
 
-  expect(countedHeroVideo, 'Expected homepage autoplay video to be requested and counted').toBe(true);
+  // Count the hero video unconditionally at full on-disk weight — the homepage
+  // always references it, and counting the full file is the conservative budget.
+  entries.push({
+    url: `/videos/${HERO_VIDEO_BASENAME}`,
+    type: 'video',
+    bytes: HERO_VIDEO_DISK_BYTES,
+    source: 'disk',
+  });
 
   const total = entries.reduce((sum, entry) => sum + entry.bytes, 0);
   expect(

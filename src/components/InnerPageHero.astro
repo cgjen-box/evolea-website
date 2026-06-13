@@ -91,21 +91,23 @@ const sizeClasses = {
       <!-- Two-column layout with hero image -->
       <div class="hero-grid">
         <div class="hero-text">
-          <!-- Breadcrumb -->
-          <nav class="hero-breadcrumb hero-breadcrumb-left" aria-label={breadcrumbLabel}>
-            {breadcrumbs.map((item, index) => (
-              <>
-                {item.href ? (
-                  <a href={item.href} class="breadcrumb-link">{item.label}</a>
-                ) : (
-                  <span class="breadcrumb-current">{item.label}</span>
-                )}
-                {index < breadcrumbs.length - 1 && (
-                  <span class="breadcrumb-separator">/</span>
-                )}
-              </>
-            ))}
-          </nav>
+          <!-- Breadcrumb (omit the landmark entirely when there are no items) -->
+          {breadcrumbs.length > 0 && (
+            <nav class="hero-breadcrumb hero-breadcrumb-left" aria-label={breadcrumbLabel}>
+              {breadcrumbs.map((item, index) => (
+                <>
+                  {item.href ? (
+                    <a href={item.href} class="breadcrumb-link">{item.label}</a>
+                  ) : (
+                    <span class="breadcrumb-current">{item.label}</span>
+                  )}
+                  {index < breadcrumbs.length - 1 && (
+                    <span class="breadcrumb-separator">/</span>
+                  )}
+                </>
+              ))}
+            </nav>
+          )}
 
           <!-- Optional Label -->
           {label && (
@@ -136,21 +138,23 @@ const sizeClasses = {
     ) : (
       <!-- Default centered layout -->
       <>
-        <!-- Breadcrumb -->
-        <nav class="hero-breadcrumb" aria-label={breadcrumbLabel}>
-          {breadcrumbs.map((item, index) => (
-            <>
-              {item.href ? (
-                <a href={item.href} class="breadcrumb-link">{item.label}</a>
-              ) : (
-                <span class="breadcrumb-current">{item.label}</span>
-              )}
-              {index < breadcrumbs.length - 1 && (
-                <span class="breadcrumb-separator">/</span>
-              )}
-            </>
-          ))}
-        </nav>
+        <!-- Breadcrumb (omit the landmark entirely when there are no items) -->
+        {breadcrumbs.length > 0 && (
+          <nav class="hero-breadcrumb" aria-label={breadcrumbLabel}>
+            {breadcrumbs.map((item, index) => (
+              <>
+                {item.href ? (
+                  <a href={item.href} class="breadcrumb-link">{item.label}</a>
+                ) : (
+                  <span class="breadcrumb-current">{item.label}</span>
+                )}
+                {index < breadcrumbs.length - 1 && (
+                  <span class="breadcrumb-separator">/</span>
+                )}
+              </>
+            ))}
+          </nav>
+        )}
 
         <!-- Optional Label -->
         {label && (

@@ -41,7 +41,9 @@ export default defineConfig({
     : {
         command: 'npx wrangler pages dev dist --port 8788',
         url: 'http://127.0.0.1:8788',
-        reuseExistingServer: true,
+        // Reuse a running dev server locally for speed, but NEVER in CI — a stale
+        // wrangler serving an old dist/ would silently validate unbuilt code (WR-03).
+        reuseExistingServer: !process.env.CI,
         timeout: 120_000,
       },
 });
