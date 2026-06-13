@@ -15,6 +15,7 @@
 import Butterfly from './Butterfly.astro';
 import JsonLd from '@components/JsonLd.astro';
 import { breadcrumbSchema } from '@/lib/seo';
+import { getLangFromUrl } from '@i18n/utils';
 
 interface BreadcrumbItem {
   label: string;
@@ -42,6 +43,10 @@ const {
 } = Astro.props;
 
 const hasHeroImage = !!heroImage;
+
+// DE/EN-aware accessible name for the breadcrumb landmark (A11Y-01)
+const lang = getLangFromUrl(Astro.url);
+const breadcrumbLabel = lang === 'de' ? 'Brotkrumen' : 'Breadcrumb';
 
 const sizeClasses = {
   sm: 'hero-sm',
@@ -87,7 +92,7 @@ const sizeClasses = {
       <div class="hero-grid">
         <div class="hero-text">
           <!-- Breadcrumb -->
-          <nav class="hero-breadcrumb hero-breadcrumb-left" aria-label="Breadcrumb">
+          <nav class="hero-breadcrumb hero-breadcrumb-left" aria-label={breadcrumbLabel}>
             {breadcrumbs.map((item, index) => (
               <>
                 {item.href ? (
@@ -132,7 +137,7 @@ const sizeClasses = {
       <!-- Default centered layout -->
       <>
         <!-- Breadcrumb -->
-        <nav class="hero-breadcrumb" aria-label="Breadcrumb">
+        <nav class="hero-breadcrumb" aria-label={breadcrumbLabel}>
           {breadcrumbs.map((item, index) => (
             <>
               {item.href ? (
