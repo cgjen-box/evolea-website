@@ -1,21 +1,24 @@
 import { statSync } from 'node:fs';
 import { join } from 'node:path';
-import { test, expect, type Response } from '@playwright/test';
+import { test, expect } from '@playwright/test';
 
 /**
  * Homepage transfer budget guard.
  *
- * Mirrors the Phase 03 measurement contract: desktop viewport, load event,
- * no scroll, lazy images excluded, and hero-mobile.mp4 counted at full on-disk
- * size. The homepage always references the hero video (VideoHero default), so it
- * is counted UNCONDITIONALLY at disk size rather than gated on an autoplay request
- * whose timing/range is environment-dependent (WR-05). The path is matched by
- * basename so the GitHub Pages base prefix does not break the match.
+ * Measures over-the-wire weight via the Resource Timing API
+ * (performance.getEntriesByType) rather than intercepting response bodies — the
+ * latter races against late CDN responses ("response.body: Test ended") and is
+ * fragile against production timing. `transferSize` is the real compressed wire
+ * size (incl. response headers); the navigation entry covers the HTML document.
+ *
+ * Contract: desktop viewport, load event, no scroll (lazy images excluded). The
+ * hero video (hero-mobile.mp4) is counted UNCONDITIONALLY at full on-disk size —
+ * the homepage always references it (VideoHero default) and the browser only
+ * range-requests it, so its transferSize would understate the real weight. Path
+ * is matched by basename so the GitHub Pages base prefix does not break it.
  */
 
 const HOMEPAGE_BUDGET_BYTES = 1_536_000;
-const BASE_URL = process.env.TEST_BASE_URL || 'http://127.0.0.1:8788';
-const BASE_ORIGIN = new URL(BASE_URL).origin;
 const HERO_VIDEO_BASENAME = 'hero-mobile.mp4';
 const HERO_VIDEO_DISK_BYTES = statSync(join(process.cwd(), 'public/videos/hero-mobile.mp4')).size;
 
@@ -23,36 +26,6 @@ interface ResourceEntry {
   url: string;
   type: string;
   bytes: number;
-  source: 'content-length' | 'body' | 'disk';
-}
-
-function sameOrigin(url: string): boolean {
-  try {
-    return new URL(url).origin === BASE_ORIGIN;
-  } catch {
-    return false;
-  }
-}
-
-function isHeroVideo(pathname: string): boolean {
-  return pathname.endsWith(`/${HERO_VIDEO_BASENAME}`) || pathname.endsWith(HERO_VIDEO_BASENAME);
-}
-
-async function responseBytes(response: Response): Promise<{ bytes: number; source: ResourceEntry['source'] }> {
-  // A 206 Partial Content carries only the requested byte range, so its
-  // content-length is the chunk size, not the asset size — fall back to the
-  // actual body length in that case so the budget is not silently under-counted
-  // (WR-04).
-  const contentLength = response.headers()['content-length'];
-  if (response.status() !== 206 && contentLength) {
-    const parsed = Number(contentLength);
-    if (Number.isFinite(parsed) && parsed >= 0) {
-      return { bytes: parsed, source: 'content-length' };
-    }
-  }
-
-  const body = await response.body();
-  return { bytes: body.byteLength, source: 'body' };
 }
 
 function formatBytes(bytes: number): string {
@@ -70,51 +43,49 @@ function formatBreakdown(entries: ResourceEntry[]): string {
   const largestLines = [...entries]
     .sort((a, b) => b.bytes - a.bytes)
     .slice(0, 8)
-    .map((entry) => `  ${formatBytes(entry.bytes)} ${entry.type} ${entry.url} (${entry.source})`);
-  return [
-    'Resource type breakdown:',
-    ...typeLines,
-    'Largest resources:',
-    ...largestLines,
-  ].join('\n');
+    .map((entry) => `  ${formatBytes(entry.bytes)} ${entry.type} ${entry.url}`);
+  return ['Resource type breakdown:', ...typeLines, 'Largest resources:', ...largestLines].join('\n');
 }
 
 test('homepage stays under the 1.5 MB transfer budget', async ({ page }) => {
   await page.setViewportSize({ width: 1440, height: 900 });
 
-  const entries: ResourceEntry[] = [];
-  const pending: Promise<void>[] = [];
-
-  page.on('response', (response) => {
-    if (!sameOrigin(response.url())) return;
-    const url = new URL(response.url());
-    // Hero video is counted at full disk size below (conservative, range-proof),
-    // so skip any actual (possibly ranged) video responses to avoid double counting.
-    if (isHeroVideo(url.pathname)) return;
-
-    pending.push((async () => {
-      const { bytes, source } = await responseBytes(response);
-      entries.push({
-        url: url.pathname,
-        type: response.request().resourceType(),
-        bytes,
-        source,
-      });
-    })());
-  });
-
   const response = await page.goto('/', { waitUntil: 'load' });
   expect(response?.status()).toBe(200);
-  await Promise.all(pending);
+  // Let any load-event-triggered resource requests settle into the timing buffer.
+  await page.waitForLoadState('networkidle').catch(() => {});
 
-  // Count the hero video unconditionally at full on-disk weight — the homepage
-  // always references it, and counting the full file is the conservative budget.
-  entries.push({
-    url: `/videos/${HERO_VIDEO_BASENAME}`,
-    type: 'video',
-    bytes: HERO_VIDEO_DISK_BYTES,
-    source: 'disk',
+  // Collect over-the-wire transfer sizes from the Resource Timing API. The
+  // navigation entry is the HTML document; resource entries are everything else.
+  const raw = await page.evaluate(() => {
+    const nav = performance.getEntriesByType('navigation') as PerformanceResourceTiming[];
+    const res = performance.getEntriesByType('resource') as PerformanceResourceTiming[];
+    const pick = (e: PerformanceResourceTiming) => ({
+      url: e.name,
+      type: e.initiatorType || 'document',
+      bytes: e.transferSize || 0,
+    });
+    return [...nav.map(pick), ...res.map(pick)];
   });
+
+  const origin = new URL(page.url()).origin;
+  const entries: ResourceEntry[] = [];
+  for (const e of raw) {
+    let pathname = e.url;
+    try {
+      const u = new URL(e.url);
+      if (u.origin !== origin) continue; // same-origin only
+      pathname = u.pathname;
+    } catch {
+      // relative/blank navigation name — keep as-is
+    }
+    // Hero video counted from disk below; skip its (ranged) timing entry.
+    if (pathname.endsWith(`/${HERO_VIDEO_BASENAME}`) || pathname.endsWith(HERO_VIDEO_BASENAME)) continue;
+    entries.push({ url: pathname, type: e.type, bytes: e.bytes });
+  }
+
+  // Count the hero video unconditionally at full on-disk weight (conservative).
+  entries.push({ url: `/videos/${HERO_VIDEO_BASENAME}`, type: 'video', bytes: HERO_VIDEO_DISK_BYTES });
 
   const total = entries.reduce((sum, entry) => sum + entry.bytes, 0);
   expect(
