@@ -9,5 +9,10 @@
       "@i18n/*": ["src/i18n/*"],
       "@content/*": ["src/content/*"]
     }
-  }
+  },
+  "exclude": [
+    "dist",
+    "tests",
+    "playwright.config.ts"
+  ]
 }
