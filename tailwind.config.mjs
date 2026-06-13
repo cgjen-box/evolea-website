@@ -16,8 +16,8 @@ export default {
 
           // PRIMARY — Magenta / Deep Purple / Lavender
           magenta: '#DD48E0',
-          'deep-purple': '#BA53AD',         // canonical (spec)
-          purple: '#BA53AD',                // alias of deep-purple
+          'deep-purple': '#AD49A0',         // canonical (spec); darkened from #BA53AD for WCAG AA (purple text on cream was 4.14:1, now 4.81:1)
+          purple: '#AD49A0',                // alias of deep-purple (same darkened value)
           lavender: '#CD87F8',              // canonical (spec)
           'purple-light': '#CD87F8',        // alias of lavender
           'purple-dark': '#8A3D7E',         // spec "Deep Purple Mid" (was #8A3D9E)

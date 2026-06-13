@@ -16,7 +16,11 @@
 
     /* PRIMARY — Magenta / Deep Purple / Lavender */
     --evolea-magenta: #DD48E0;
-    --evolea-deep-purple: #BA53AD;          /* canonical (spec) */
+    /* AA-compliant magenta for white text on solid magenta fills (e.g. .btn-primary):
+       white on #DD48E0 is only 3.46:1 (WCAG AA needs 4.5:1); #B832BB is 4.99:1 and
+       stays in the magenta hue family. Brand accent/border/text usages keep #DD48E0. */
+    --evolea-magenta-aa: #B832BB;
+    --evolea-deep-purple: #AD49A0;          /* canonical (spec); darkened from #BA53AD for WCAG AA (purple text on cream 4.14:1 -> 4.81:1) */
     --evolea-purple: var(--evolea-deep-purple);  /* alias — back-compat */
     --evolea-lavender: #CD87F8;             /* canonical (spec) */
     --evolea-purple-light: var(--evolea-lavender);  /* alias */
@@ -200,12 +204,15 @@
   /* ===== BUTTONS - TRUE evolea.ch SPECTRUM ===== */
   .btn-primary {
     @apply inline-flex items-center justify-center gap-2
-           bg-evolea-magenta text-white font-semibold
+           text-white font-semibold
            px-8 py-4 rounded-full text-lg
            transition-all duration-300 ease-smooth-out
            hover:bg-evolea-purple hover:-translate-y-1 hover:shadow-elevated
            focus-visible:ring-2 focus-visible:ring-evolea-mint focus-visible:ring-offset-2
            active:scale-95;
+    /* AA contrast: white-on-magenta needs the darkened magenta (4.99:1). The
+       hover utility (bg-evolea-purple) still wins on hover via specificity/order. */
+    background-color: var(--evolea-magenta-aa);
   }
 
   .btn-secondary {
