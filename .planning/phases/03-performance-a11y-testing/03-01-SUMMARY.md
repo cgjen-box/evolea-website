@@ -159,6 +159,12 @@ None. Every reference flip points at a real converted file; Gate B enforces this
 - Homepage ≤1.5MB budget measurement is intentionally deferred to plan 03-04 (locked decision 2: measure-first AFTER image work with the wrangler/Playwright harness; conditional video re-encode lives there).
 - The conversion script's `--verify` mode is re-runnable and can back a future regression check.
 
+## Self-Check: PASSED
+
+- Created files exist: scripts/convert-images.mjs, public/images/hero-poster.webp, public/images/logo/evolea-logo-new.webp, src/content/settings/images.json, 03-01-SUMMARY.md
+- Commits exist: d601806 (Task 1), 0c04019 (Task 2), d86d1fd (Task 3), 0eb48bc (docs)
+- images.json contains .webp; two-way gate clean; both build modes exit 0
+
 ---
 *Phase: 03-performance-a11y-testing*
 *Completed: 2026-06-13*
