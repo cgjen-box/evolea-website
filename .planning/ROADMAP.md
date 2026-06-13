@@ -14,7 +14,7 @@ Decimal phases appear between their surrounding integers in numeric order.
 
 - [x] **Phase 1: Foundation & Security** - Clean repo, self-hosted fonts, refactored middleware, security headers + CSP Report-Only + cache backstop (completed 2026-06-12)
 - [x] **Phase 2: SEO & Structured Data** - Canonical URL form, robots/sitemap discovery, and full JSON-LD coverage (completed 2026-06-12)
-- [ ] **Phase 3: Performance, A11y & Testing** - WebP/CLS/LCP image work, two axe fixes, branded 404, Playwright smoke net
+- [x] **Phase 3: Performance, A11y & Testing** - WebP/CLS/LCP image work, two axe fixes, branded 404, Playwright smoke net (completed 2026-06-13)
 
 ## Phase Details
 
@@ -66,7 +66,7 @@ Decimal phases appear between their surrounding integers in numeric order.
   - [x] 03-01-PLAN.md — Convert images in place to WebP (manifest-driven sharp script), flip all CMS/MDX/hardcoded references, two-way grep gate, delete originals
   - [x] 03-02-PLAN.md — Darken evolea-green to #236247 in both token files + brand-compliant bilingual 404 page per 03-UI-SPEC.md
   - [x] 03-03-PLAN.md — width/height on every img, lazy/fetchpriority LCP policy, Base preloadImage poster preload, Header + breadcrumb nav aria-labels
-  - [ ] 03-04-PLAN.md — Playwright smoke/a11y/headers suite (@playwright/test 1.57.0, wrangler pages dev), homepage budget measurement + conditional SSIM-gated video re-encode
+  - [x] 03-04-PLAN.md — Playwright smoke/a11y/headers suite (@playwright/test 1.57.0, wrangler pages dev), homepage budget measurement + conditional SSIM-gated video re-encode
 **UI hint**: yes
 
 ## Progress
@@ -78,4 +78,4 @@ Phases execute in numeric order: 1 → 2 → 3
 |-------|----------------|--------|-----------|
 | 1. Foundation & Security | 3/3 | Complete   | 2026-06-12 |
 | 2. SEO & Structured Data | 5/5 | Complete   | 2026-06-12 |
-| 3. Performance, A11y & Testing | 3/4 | In Progress|  |
+| 3. Performance, A11y & Testing | 4/4 | Complete   | 2026-06-13 |
