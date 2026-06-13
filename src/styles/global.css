@@ -217,7 +217,7 @@
 
   .btn-secondary {
     @apply inline-flex items-center justify-center gap-2
-           bg-white text-evolea-magenta font-semibold
+           bg-white text-evolea-magenta-aa font-semibold
            px-8 py-4 rounded-full text-lg
            border-2 border-evolea-magenta
            transition-all duration-300 ease-smooth-out
@@ -228,7 +228,7 @@
 
   .btn-white {
     @apply inline-flex items-center justify-center gap-2
-           bg-white text-evolea-magenta font-semibold
+           bg-white text-evolea-magenta-aa font-semibold
            px-8 py-4 rounded-full text-lg
            transition-all duration-300 ease-smooth-out shadow-lg
            hover:bg-evolea-cream hover:-translate-y-1 hover:shadow-elevated
