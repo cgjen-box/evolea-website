@@ -17,7 +17,7 @@ const siteImagesEntry = await getEntry('settings', 'images');
 const siteImages = siteImagesEntry?.data;
 const heroImage = siteImages?.programmeHeroes?.miniAbenteuercamp
   ? base + siteImages.programmeHeroes.miniAbenteuercamp
-  : base + "/images/programs/mini-abenteuercamp-hero.png";
+  : base + "/images/programs/mini-abenteuercamp-hero.webp";
 
 // Helper to get bilingual text
 const getText = (obj: { de?: string; en?: string } | undefined, fallback: string = '') => {

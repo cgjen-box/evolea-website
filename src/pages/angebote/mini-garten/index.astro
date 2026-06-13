@@ -17,7 +17,7 @@ const siteImagesEntry = await getEntry('settings', 'images');
 const siteImages = siteImagesEntry?.data;
 const heroImage = siteImages?.programmeHeroes?.miniGarten
   ? base + siteImages.programmeHeroes.miniGarten
-  : base + "/images/programs/mini-garten-hero.png";
+  : base + "/images/programs/mini-garten-hero.webp";
 
 // Helper to get bilingual text
 const getText = (obj: { de?: string; en?: string } | undefined, fallback: string = '') => {

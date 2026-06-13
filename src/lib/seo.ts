@@ -90,7 +90,7 @@ export function siteGraph(
         url: 'https://www.evolea.ch/',
         logo: {
           '@type': 'ImageObject',
-          url: new URL(`${base}/images/logo/evolea-logo-new.png`, resolvedSite).href,
+          url: new URL(`${base}/images/logo/evolea-logo-new.webp`, resolvedSite).href,
         },
         email: s.kontakt?.email ?? 'hello@evolea.ch',
         telephone: s.kontakt?.telefon ?? '+41 78 959 19 74',

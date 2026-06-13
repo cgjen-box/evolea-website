@@ -310,9 +310,9 @@ const DOWNLOADS = [
     name: isDE ? 'Logo · Vollfarbe' : 'Logo · full color',
     desc: isDE ? 'Wortmarke mit Schmetterling, transparenter Hintergrund.' : 'Wordmark with butterfly, transparent background.',
     tag: 'Logo',
-    thumb: { src: `${base}/images/logo/evolea-logo-new.png`, mode: 'contain gradient' as const },
+    thumb: { src: `${base}/images/logo/evolea-logo-new.webp`, mode: 'contain gradient' as const },
     formats: [
-      { label: 'PNG', size: '2400 × 920', url: `${base}/images/logo/evolea-logo-new.png`, primary: true, isFile: true },
+      { label: 'WEBP', size: '640 × 173', url: `${base}/images/logo/evolea-logo-new.webp`, primary: true, isFile: true },
       { label: 'SVG', size: isDE ? 'auf Anfrage' : 'on request', url: requestKitMailto, primary: false, isFile: false },
     ],
   },
@@ -321,9 +321,9 @@ const DOWNLOADS = [
     name: isDE ? 'Logo · Circle' : 'Logo · circle',
     desc: isDE ? 'Quadratische Variante für Avatar, Favicon und Social-Media-Profile.' : 'Square variant for avatars, favicon and social media profiles.',
     tag: 'Logo',
-    thumb: { src: `${base}/images/logo/evolea-logo-circle.png`, mode: 'contain gradient' as const },
+    thumb: { src: `${base}/images/logo/evolea-logo-circle.webp`, mode: 'contain gradient' as const },
     formats: [
-      { label: 'PNG', size: '1024 × 1024', url: `${base}/images/logo/evolea-logo-circle.png`, primary: true, isFile: true },
+      { label: 'WEBP', size: '1024 × 1024', url: `${base}/images/logo/evolea-logo-circle.webp`, primary: true, isFile: true },
     ],
   },
   {
@@ -351,9 +351,9 @@ const DOWNLOADS = [
     name: isDE ? 'Aquarell · Kind & Schmetterlinge' : 'Watercolor · child & butterflies',
     desc: isDE ? 'Kind mit aufsteigenden Schmetterlingen — Hero der Spenden-Seite.' : 'Child with rising butterflies — donate-page hero.',
     tag: 'Aquarell',
-    thumb: { src: `${base}/images/hero/kind-schmetterlinge.png`, mode: 'cover' as const },
+    thumb: { src: `${base}/images/hero/kind-schmetterlinge.webp`, mode: 'cover' as const },
     formats: [
-      { label: 'PNG', size: 'Web', url: `${base}/images/hero/kind-schmetterlinge.png`, primary: true, isFile: true },
+      { label: 'WEBP', size: 'Web', url: `${base}/images/hero/kind-schmetterlinge.webp`, primary: true, isFile: true },
     ],
   },
   {
@@ -371,9 +371,9 @@ const DOWNLOADS = [
     name: isDE ? 'Aquarell · Evolea Schloss' : 'Watercolor · Evolea castle',
     desc: isDE ? 'Kinder beim Spielen und Malen vor dem Evolea-Schloss — Angebote-Hero.' : 'Children playing and painting in front of the Evolea castle — programs hero.',
     tag: 'Aquarell',
-    thumb: { src: `${base}/images/hero/evolea-schloss.png`, mode: 'cover' as const },
+    thumb: { src: `${base}/images/hero/evolea-schloss.webp`, mode: 'cover' as const },
     formats: [
-      { label: 'PNG', size: 'Web', url: `${base}/images/hero/evolea-schloss.png`, primary: true, isFile: true },
+      { label: 'WEBP', size: 'Web', url: `${base}/images/hero/evolea-schloss.webp`, primary: true, isFile: true },
     ],
   },
   {
@@ -401,15 +401,15 @@ const DOWNLOADS = [
 
 const WATERCOLORS = [
   { src: `${base}/images/blog/spektrum-kreis.webp`, name: isDE ? 'Spektrum-Kreis' : 'Spectrum circle' },
-  { src: `${base}/images/hero/kind-schmetterlinge.png`, name: isDE ? 'Kind & Schmetterlinge' : 'Child & butterflies' },
-  { src: `${base}/images/hero/evolea-schloss.png`, name: isDE ? 'Evolea Schloss' : 'Evolea castle' },
+  { src: `${base}/images/hero/kind-schmetterlinge.webp`, name: isDE ? 'Kind & Schmetterlinge' : 'Child & butterflies' },
+  { src: `${base}/images/hero/evolea-schloss.webp`, name: isDE ? 'Evolea Schloss' : 'Evolea castle' },
 ];
 
 const TEAM = [
-  { src: `${base}/images/team/alexandra-aleksic.jpg`, name: 'Alexandra Aleksic' },
-  { src: `${base}/images/team/annemarie-elias.png`, name: 'Annemarie Elias' },
-  { src: `${base}/images/team/christoph-jenny.png`, name: 'Christoph Jenny' },
-  { src: `${base}/images/team/gianna-spiess.png`, name: 'Gianna Spiess' },
+  { src: `${base}/images/team/alexandra-aleksic.webp`, name: 'Alexandra Aleksic' },
+  { src: `${base}/images/team/annemarie-elias.webp`, name: 'Annemarie Elias' },
+  { src: `${base}/images/team/christoph-jenny.webp`, name: 'Christoph Jenny' },
+  { src: `${base}/images/team/gianna-spiess.webp`, name: 'Gianna Spiess' },
 ];
 ---
 
@@ -451,10 +451,10 @@ const TEAM = [
             <img src={`${base}/images/blog/spektrum-kreis.webp`} alt="" loading="lazy" />
           </div>
           <div class="brand-frame brand-frame--f2">
-            <img src={`${base}/images/hero/kind-schmetterlinge.png`} alt="" loading="lazy" />
+            <img src={`${base}/images/hero/kind-schmetterlinge.webp`} alt="" loading="lazy" />
           </div>
           <div class="brand-frame brand-frame--f3">
-            <img src={`${base}/images/team/gianna-spiess.png`} alt="" loading="lazy" />
+            <img src={`${base}/images/team/gianna-spiess.webp`} alt="" loading="lazy" />
           </div>
           <div class="brand-fly brand-fly--a"><Butterfly variant="spectrum" size="md" /></div>
           <div class="brand-fly brand-fly--b"><Butterfly variant="spectrum" size="sm" /></div>
@@ -507,7 +507,7 @@ const TEAM = [
         <div class="brand-logo-board">
           <div>
             <div class="brand-logo-stage">
-              <img src={`${base}/images/logo/evolea-logo-new.png`} alt="EVOLEA Logo" loading="lazy" />
+              <img src={`${base}/images/logo/evolea-logo-new.webp`} alt="EVOLEA Logo" loading="lazy" />
             </div>
             <div class="brand-logo-label">
               <span class="brand-logo-label__name">{t('logo', 'creamLabel')}</span>
@@ -516,7 +516,7 @@ const TEAM = [
           </div>
           <div>
             <div class="brand-logo-stage brand-logo-stage--dark">
-              <img src={`${base}/images/logo/evolea-logo-new.png`} alt="EVOLEA Logo on dark" loading="lazy" />
+              <img src={`${base}/images/logo/evolea-logo-new.webp`} alt="EVOLEA Logo on dark" loading="lazy" />
             </div>
             <div class="brand-logo-label">
               <span class="brand-logo-label__name">{t('logo', 'darkLabel')}</span>

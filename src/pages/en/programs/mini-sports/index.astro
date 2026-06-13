@@ -17,7 +17,7 @@ const siteImagesEntry = await getEntry('settings', 'images');
 const siteImages = siteImagesEntry?.data;
 const heroImage = siteImages?.programmeHeroes?.miniTurnen
   ? base + siteImages.programmeHeroes.miniTurnen
-  : base + "/images/programs/mini-turnen-hero.png";
+  : base + "/images/programs/mini-turnen-hero.webp";
 
 // SEO-09: keyword title is intentionally NOT CMS-overridable (decoupled from hero.titel per D6)
 const seoTitle = lang === 'de' ? 'Mini Turnen – Turngruppe für Kinder im Spektrum' : 'Mini Sports – Inclusive Gymnastics Group';
