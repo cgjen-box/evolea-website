@@ -107,8 +107,8 @@ const schedule = [
     <source src={videoSrcMobile} type="video/mp4" />
   </video>
 
-  <!-- Poster fallback -->
-  <img src={posterSrc} alt="" class="video-poster-fallback" aria-hidden="true" />
+  <!-- Poster fallback (above-fold hero visual shown before the video paints) -->
+  <img src={posterSrc} alt="" fetchpriority="high" width="1280" height="720" class="video-poster-fallback" aria-hidden="true" />
 
   <!-- Pink/magenta gradient overlay matching brand style -->
   <div class="absolute inset-0 bg-gradient-to-b from-evolea-magenta/30 via-evolea-purple/20 to-evolea-lavender/40 z-10"></div>
@@ -116,7 +116,7 @@ const schedule = [
   <!-- Content -->
   <div class="container mx-auto max-w-6xl px-4 relative z-20 pt-24 pb-12">
     <!-- Breadcrumbs -->
-    <nav class="mb-8 text-sm text-white/80">
+    <nav class="mb-8 text-sm text-white/80" aria-label={lang === 'de' ? 'Brotkrumen' : 'Breadcrumb'}>
       <a href={translatePath('/')} class="hover:text-white transition-colors">{lang === 'de' ? 'Startseite' : 'Home'}</a>
       <span class="mx-2">/</span>
       <a href={translatePath('/angebote/')} class="hover:text-white transition-colors">{lang === 'de' ? 'Angebote' : 'Programs'}</a>
